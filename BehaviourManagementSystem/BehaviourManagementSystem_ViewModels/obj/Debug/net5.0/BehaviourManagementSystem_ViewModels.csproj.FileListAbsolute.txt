@@ -10,3 +10,15 @@ C:\Users\OS\Desktop\MockProject\T4\BehaviourManagementSystem\BehaviourManagement
 C:\Users\OS\Desktop\MockProject\T4\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\refint\BehaviourManagementSystem_ViewModels.dll
 C:\Users\OS\Desktop\MockProject\T4\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.pdb
 C:\Users\OS\Desktop\MockProject\T4\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\ref\BehaviourManagementSystem_ViewModels.dll
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\bin\Debug\net5.0\BehaviourManagementSystem_ViewModels.deps.json
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\bin\Debug\net5.0\BehaviourManagementSystem_ViewModels.dll
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\bin\Debug\net5.0\ref\BehaviourManagementSystem_ViewModels.dll
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\bin\Debug\net5.0\BehaviourManagementSystem_ViewModels.pdb
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.csproj.AssemblyReference.cache
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.AssemblyInfoInputs.cache
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.AssemblyInfo.cs
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.csproj.CoreCompileInputs.cache
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.dll
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\ref\BehaviourManagementSystem_ViewModels.dll
+C:\Users\DuyLH4\Desktop\Mock\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem\BehaviourManagementSystem_ViewModels\obj\Debug\net5.0\BehaviourManagementSystem_ViewModels.pdb
