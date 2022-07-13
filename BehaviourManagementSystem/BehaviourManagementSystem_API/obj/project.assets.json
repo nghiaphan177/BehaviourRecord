@@ -5758,19 +5758,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DuyLH4\\.nuget\\packages\\": {}
+    "C:\\Users\\HuyNQ6\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DuyLH4\\Desktop\\Mock\\FAHCM.HCM22_FR_NET_06\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\BehaviourManagementSystem_API.csproj",
+      "projectUniqueName": "C:\\Users\\HuyNQ6\\Desktop\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\BehaviourManagementSystem_API.csproj",
       "projectName": "BehaviourManagementSystem_API",
-      "projectPath": "C:\\Users\\DuyLH4\\Desktop\\Mock\\FAHCM.HCM22_FR_NET_06\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\BehaviourManagementSystem_API.csproj",
-      "packagesPath": "C:\\Users\\DuyLH4\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DuyLH4\\Desktop\\Mock\\FAHCM.HCM22_FR_NET_06\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\obj\\",
+      "projectPath": "C:\\Users\\HuyNQ6\\Desktop\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\BehaviourManagementSystem_API.csproj",
+      "packagesPath": "C:\\Users\\HuyNQ6\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HuyNQ6\\Desktop\\BehaviourManagementSystem\\BehaviourManagementSystem_API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DuyLH4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HuyNQ6\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5784,8 +5784,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\DuyLH4\\Desktop\\Mock\\FAHCM.HCM22_FR_NET_06\\BehaviourManagementSystem\\BehaviourManagementSystem_ViewModels\\BehaviourManagementSystem_ViewModels.csproj": {
-              "projectPath": "C:\\Users\\DuyLH4\\Desktop\\Mock\\FAHCM.HCM22_FR_NET_06\\BehaviourManagementSystem\\BehaviourManagementSystem_ViewModels\\BehaviourManagementSystem_ViewModels.csproj"
+            "C:\\Users\\HuyNQ6\\Desktop\\BehaviourManagementSystem\\BehaviourManagementSystem_ViewModels\\BehaviourManagementSystem_ViewModels.csproj": {
+              "projectPath": "C:\\Users\\HuyNQ6\\Desktop\\BehaviourManagementSystem\\BehaviourManagementSystem_ViewModels\\BehaviourManagementSystem_ViewModels.csproj"
             }
           }
         }
