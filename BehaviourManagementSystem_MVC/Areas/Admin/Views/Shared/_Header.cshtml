@@ -1,0 +1,236 @@
+﻿<div class="topbar">
+    <!-- LOGO -->
+    <div class="topbar-left">
+        <a href="#" class="logo">
+            <span>
+                <img src="~/images/logo-light.png" alt="" height="18">
+            </span>
+            <i>
+                <img src="~/images/logo-sm.png" alt="" height="22">
+            </i>
+        </a>
+    </div>
+
+    <nav class="navbar-custom">
+        <ul class="navbar-right d-flex list-inline float-right mb-0">
+            <li class="dropdown notification-list d-none d-sm-block">
+                <form role="search" class="app-search">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control" placeholder="Search..">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </li>
+
+            <li class="dropdown notification-list">
+                <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <i class="ti-bell noti-icon"></i>
+                    <span class="badge badge-pill badge-danger noti-icon-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+                    <!-- item-->
+                    <h6 class="dropdown-item-text">
+                        Notifications (258)
+                    </h6>
+                    <div class="slimscroll notification-item-list">
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                            <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
+                            <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
+                        </a>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
+                            <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
+                        </a>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-info"><i class="mdi mdi-martini"></i></div>
+                            <p class="notify-details">Your item is shipped<span class="text-muted">It is a long established fact that a reader will</span></p>
+                        </a>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
+                            <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
+                        </a>
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
+                            <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
+                        </a>
+                    </div>
+                    <!-- All-->
+                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
+                        View all <i class="fi-arrow-right"></i>
+                    </a>
+                </div>
+            </li>
+            <li class="dropdown notification-list">
+                <div class="dropdown notification-list nav-pro-img">
+                    <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="~/images/users/user-4.jpg" alt="user" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                        <!-- item-->
+                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>
+                        <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>
+                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i> Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="list-inline menu-left mb-0">
+            <li class="float-left">
+                <button class="button-menu-mobile open-left waves-effect">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="left side-menu">
+    <div class="slimscroll-menu" id="remove-scroll">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu" id="side-menu">
+                <li class="menu-title">Chức năng chính</li>
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-view-dashboard"></i><span> Trang chủ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-account-location"></i><span> Tài khoản </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i class="mdi mdi-account-card-details"></i><span> Học sinh </span>
+                    </a>
+                </li>
+                @*<li>
+                <a href="@Url.Action("Calendar","Dashboard")" class="waves-effect"><i class="mdi mdi-calendar-check"></i><span> Calendar </span></a>
+                </li>
+
+                <li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-email-outline"></i><span> Email <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                <ul class="submenu">
+                <li><a href="/email/inbox">Inbox</a></li>
+                <li><a href="/email/read">Email Read</a></li>
+                <li><a href="/email/compose">Email Compose</a></li>
+                </ul>
+                </li>*@
+
+                @*<li class="menu-title">Components</li>
+
+                <li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-buffer"></i> <span> UI Elements <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                <ul class="submenu">
+                <li><a href="/ui/alerts">Alerts</a></li>
+                <li><a href="/ui/buttons">Buttons</a></li>
+                <li><a href="/ui/badges">Badge</a></li>
+                <li><a href="/ui/cards">Cards</a></li>
+                <li><a href="/ui/Carousels">Carousel</a></li>
+                <li><a href="/ui/dropdowns">Dropdowns</a></li>
+                <li><a href="/ui/grid">Grid</a></li>
+                <li><a href="/ui/images">Images</a></li>
+                <li><a href="/ui/lightbox">Lightbox</a></li>
+                <li><a href="/ui/Modals">Modals</a></li>
+                <li><a href="/ui/pagination">Pagination</a></li>
+                <li><a href="/ui/PopoverTooltips">Popover & Tooltips</a></li>
+                <li><a href="/dashboard/RangeSlider">Range Slider</a></li>
+                <li><a href="/dashboard/SessionTimeout">Session Timeout</a></li>
+                <li><a href="/ui/Progressbars">Progress Bars</a></li>
+                <li><a href="/ui/SweetAlerts">Sweet-Alert</a></li>
+                <li><a href="/ui/TabAccordions">Tabs & Accordions</a></li>
+                <li><a href="/ui/typography">Typography</a></li>
+                <li><a href="/ui/video">Video</a></li>
+
+
+                </ul>
+                </li>*@
+
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-clipboard-outline"></i><span>Quản lý phân tích sự cố<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Trạng thái cảm xúc</a></li>
+                        <li><a href="#">Bối cảnh môi trường</a></li>
+                        <li><a href="#">Bối cảnh hoạt động</a></li>
+                    </ul>
+                </li>
+
+                @*<li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-chart-line"></i><span> Charts <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                <ul class="submenu">
+                <li><a href="/chart/morris">Morris Chart</a></li>
+                <li><a href="/chart/chartist">Chartist Chart</a></li>
+                <li><a href="/chart/chartjs">Chartjs Chart</a></li>
+                <li><a href="/chart/flot">Flot Chart</a></li>
+                <li><a href="/chart/c3">C3 Chart</a></li>
+                <li><a href="/chart/other">Jquery Knob Chart</a></li>
+                </ul>
+                </li>*@
+
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-emoticon"></i><span>Quản lý nâng cấp<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                    <ul class="submenu">
+                        <li><a href="#">Giai đoạn nhẹ</a></li>
+                        <li><a href="#">Giai đoạn trung bình</a></li>
+                        <li><a href="#">Giai đoạn khắc nghiệt</a></li>
+                        <li><a href="#">Giai đoạn phục hồi</a></li>
+                    </ul>
+                </li>
+
+                @*<li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-album"></i> <span> Icons  <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span></span> </a>
+                <ul class="submenu">
+                <li><a href="/icon/material">Material Design</a></li>
+                <li><a href="/icon/ion">Ion Icons</a></li>
+                <li><a href="/icon/fontawesome">Font Awesome</a></li>
+                <li><a href="/icon/themify">Themify Icons</a></li>
+                <li><a href="/icon/dripicons">Dripicons</a></li>
+                <li><a href="/icon/typicons">Typicons Icons</a></li>
+                </ul>
+                </li>
+
+                <li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-maps"></i><span> Maps <span class="badge badge-pill badge-danger float-right">2</span> </span></a>
+                <ul class="submenu">
+                <li><a href="/maps/google"> Google Map</a></li>
+                <li><a href="/maps/vector"> Vector Map</a></li>
+                </ul>
+                </li>*@
+
+
+
+                @*<li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Extra Pages <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                <ul class="submenu">
+                <li><a href="/pages/timeline">Timeline</a></li>
+                <li><a href="/pages/invoice">Invoice</a></li>
+                <li><a href="/pages/directory">Directory</a></li>
+                <li><a href="/pages/blank">Blank Page</a></li>
+                <li><a href="/pages/BadRequest">Error 404</a></li>
+                <li><a href="/pages/InternalServerError">Error 500</a></li>
+                </ul>
+                </li>*@
+
+            </ul>
+
+        </div>
+        <!-- Sidebar -->
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
+
