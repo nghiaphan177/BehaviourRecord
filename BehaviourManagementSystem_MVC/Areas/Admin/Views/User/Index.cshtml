@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Danh sách học sinh";
+﻿
+@{
+    ViewData["Title"] = "Danh sách tài khoản";
 }
 
 @section styles {
@@ -22,29 +23,30 @@
                         <table id="tech-companies-1" class="table  table-striped">
                             <thead>
                                 <tr>
-                                    <th >Số Thứ Tự</th>
-                                    <th data-priority="1">Tên Học sinh</th>
-                                    <th data-priority="3">Tên Lớp</th>
-                                    <th data-priority="1">Email</th>
-                                    <th data-priority="3">Giáo viên chủ nhiệm</th>
-                                    <th data-priority="6">Tùy Chọn</th>
+                                    <th width="2%">Số Thứ Tự</th>
+                                    <th data-priority="1">Tên đăng nhập</th>
+                                    <th data-priority="3">Email</th>
+                                    <th data-priority="1">Vài trò</th>
+                                    <th data-priority="3">Tình trạng</th>
+                                    <th data-priority="6" width="2%">Tùy Chọn</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>GOOG <span class="co-name">Google Inc.</span></th>
+                                    <th>1</th>
                                     <td>597.74</td>
                                     <td>12:12PM</td>
-                                    <td>14.81 (2.54%)</td>
-                                    <td>582.93</td>
-                                    @*<td>
-                                            <span style="font-size:14px; text-align:center;" class="badge badge-success">Đã Đăng Kí</span>
-                                        </td>*@
+                                    <td><span style="font-size:14px; text-align:center;" class="badge badge-info">Admin</span></td>
                                     <td>
-                                        <a href="/admin/Student/Details/" type="button" class="btn btn-primary waves-effect waves-light">Xem thông tin</a>
+                                            <span style="font-size:14px; text-align:center;" class="badge badge-success">Đang hoạt động</span>
+                                        </td>
+                                    <td>
+                                        <div class="button-items">
+                                            <a href="/admin/User/Detail/" type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
+                                            <a href="/admin/User/Detail/" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</a>
+                                        </div>
                                     </td>
-
                                 </tr>
 
                             </tbody>
@@ -62,4 +64,5 @@
 @section scripts {
     <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
 }
+
 
