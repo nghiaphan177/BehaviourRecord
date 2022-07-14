@@ -18,15 +18,18 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<string>> GetRoleNameByUserId(string id)
         {
-            var userRole = await _context.UserRoles.FindAsync(new Guid(id));
+            var user = await _context.Users.FindAsync(new Guid(id));
+            if (user == null)
+                return new ResponseResultError<string>("Tài khoản không tồn tại");
+
+            var userRole = _context.UserRoles.FirstOrDefault(prop => prop.UserId == user.Id);
+
             if (userRole == null)
-                return new ResponseResultError<string>(new string[] {
-                "Error",
-                "UserNotRole",
-                "Tải khoản chưa xét quyền truy cập"
-                });
+                return new ResponseResultError<string>("Tài khoản hiện tại chưa được cấp quyền");
 
             var role = await _context.Roles.FindAsync(userRole.RoleId);
+            if (role == null)
+                return new ResponseResultError<string>("Không có quyền truy cập hợp lệ");
 
             return new ResponseResultSuccess<string>(role.NormalizedName);
         }
