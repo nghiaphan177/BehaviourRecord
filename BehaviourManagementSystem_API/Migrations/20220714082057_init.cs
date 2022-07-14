@@ -8,7 +8,7 @@ namespace BehaviourManagementSystem_API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AnalyzeAntecedentActivity",
+                name: "AnalyzeAntecedentActivities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -18,11 +18,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnalyzeAntecedentActivity", x => x.Id);
+                    table.PrimaryKey("PK_AnalyzeAntecedentActivities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnalyzeAntecedentEnvironmental",
+                name: "AnalyzeAntecedentEnvironmentals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -32,11 +32,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnalyzeAntecedentEnvironmental", x => x.Id);
+                    table.PrimaryKey("PK_AnalyzeAntecedentEnvironmentals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnalyzeAntecedentPerceive",
+                name: "AnalyzeAntecedentPerceives",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -46,11 +46,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnalyzeAntecedentPerceive", x => x.Id);
+                    table.PrimaryKey("PK_AnalyzeAntecedentPerceives", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileExtreme",
+                name: "ProfileExtremes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -60,11 +60,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileExtreme", x => x.Id);
+                    table.PrimaryKey("PK_ProfileExtremes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileMild",
+                name: "ProfileMilds",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -74,11 +74,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileMild", x => x.Id);
+                    table.PrimaryKey("PK_ProfileMilds", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileModerate",
+                name: "ProfileModerates",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -88,11 +88,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileModerate", x => x.Id);
+                    table.PrimaryKey("PK_ProfileModerates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileRecovery",
+                name: "ProfileRecoveries",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -102,7 +102,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileRecovery", x => x.Id);
+                    table.PrimaryKey("PK_ProfileRecoveries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +120,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TermCondition",
+                name: "TermConditions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -130,7 +130,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TermCondition", x => x.Id);
+                    table.PrimaryKey("PK_TermConditions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -190,7 +190,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Individual",
+                name: "Individuals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -202,9 +202,9 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Individual", x => x.Id);
+                    table.PrimaryKey("PK_Individuals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Individual_Users_UserId",
+                        name: "FK_Individuals_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -212,7 +212,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notification",
+                name: "Notifications",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -226,9 +226,9 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notification", x => x.Id);
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notification_Users_UserId",
+                        name: "FK_Notifications_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -321,7 +321,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assesetment",
+                name: "Assesetments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -352,35 +352,35 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assesetment", x => x.Id);
+                    table.PrimaryKey("PK_Assesetments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assesetment_AnalyzeAntecedentActivity_AnalyzeAntecedentActivityId",
+                        name: "FK_Assesetments_AnalyzeAntecedentActivities_AnalyzeAntecedentActivityId",
                         column: x => x.AnalyzeAntecedentActivityId,
-                        principalTable: "AnalyzeAntecedentActivity",
+                        principalTable: "AnalyzeAntecedentActivities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetment_AnalyzeAntecedentEnvironmental_AnalyzeAntecedentEnvironmentalId",
+                        name: "FK_Assesetments_AnalyzeAntecedentEnvironmentals_AnalyzeAntecedentEnvironmentalId",
                         column: x => x.AnalyzeAntecedentEnvironmentalId,
-                        principalTable: "AnalyzeAntecedentEnvironmental",
+                        principalTable: "AnalyzeAntecedentEnvironmentals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetment_AnalyzeAntecedentPerceive_AnalyzeAntecedentPerceivedId",
+                        name: "FK_Assesetments_AnalyzeAntecedentPerceives_AnalyzeAntecedentPerceivedId",
                         column: x => x.AnalyzeAntecedentPerceivedId,
-                        principalTable: "AnalyzeAntecedentPerceive",
+                        principalTable: "AnalyzeAntecedentPerceives",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetment_Individual_IndividualId",
+                        name: "FK_Assesetments_Individuals_IndividualId",
                         column: x => x.IndividualId,
-                        principalTable: "Individual",
+                        principalTable: "Individuals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Intervention",
+                name: "Interventions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -411,92 +411,92 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Intervention", x => x.Id);
+                    table.PrimaryKey("PK_Interventions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Intervention_Assesetment_AssesetmentId",
+                        name: "FK_Interventions_Assesetments_AssesetmentId",
                         column: x => x.AssesetmentId,
-                        principalTable: "Assesetment",
+                        principalTable: "Assesetments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Intervention_ProfileExtreme_ProfileExtremeId",
+                        name: "FK_Interventions_ProfileExtremes_ProfileExtremeId",
                         column: x => x.ProfileExtremeId,
-                        principalTable: "ProfileExtreme",
+                        principalTable: "ProfileExtremes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Intervention_ProfileMild_ProfileMildId",
+                        name: "FK_Interventions_ProfileMilds_ProfileMildId",
                         column: x => x.ProfileMildId,
-                        principalTable: "ProfileMild",
+                        principalTable: "ProfileMilds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Intervention_ProfileModerate_ProfileModerateId",
+                        name: "FK_Interventions_ProfileModerates_ProfileModerateId",
                         column: x => x.ProfileModerateId,
-                        principalTable: "ProfileModerate",
+                        principalTable: "ProfileModerates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Intervention_ProfileRecovery_ProfileRecoveryId",
+                        name: "FK_Interventions_ProfileRecoveries_ProfileRecoveryId",
                         column: x => x.ProfileRecoveryId,
-                        principalTable: "ProfileRecovery",
+                        principalTable: "ProfileRecoveries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetment_AnalyzeAntecedentActivityId",
-                table: "Assesetment",
+                name: "IX_Assesetments_AnalyzeAntecedentActivityId",
+                table: "Assesetments",
                 column: "AnalyzeAntecedentActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetment_AnalyzeAntecedentEnvironmentalId",
-                table: "Assesetment",
+                name: "IX_Assesetments_AnalyzeAntecedentEnvironmentalId",
+                table: "Assesetments",
                 column: "AnalyzeAntecedentEnvironmentalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetment_AnalyzeAntecedentPerceivedId",
-                table: "Assesetment",
+                name: "IX_Assesetments_AnalyzeAntecedentPerceivedId",
+                table: "Assesetments",
                 column: "AnalyzeAntecedentPerceivedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetment_IndividualId",
-                table: "Assesetment",
+                name: "IX_Assesetments_IndividualId",
+                table: "Assesetments",
                 column: "IndividualId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Individual_UserId",
-                table: "Individual",
+                name: "IX_Individuals_UserId",
+                table: "Individuals",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Intervention_AssesetmentId",
-                table: "Intervention",
+                name: "IX_Interventions_AssesetmentId",
+                table: "Interventions",
                 column: "AssesetmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Intervention_ProfileExtremeId",
-                table: "Intervention",
+                name: "IX_Interventions_ProfileExtremeId",
+                table: "Interventions",
                 column: "ProfileExtremeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Intervention_ProfileMildId",
-                table: "Intervention",
+                name: "IX_Interventions_ProfileMildId",
+                table: "Interventions",
                 column: "ProfileMildId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Intervention_ProfileModerateId",
-                table: "Intervention",
+                name: "IX_Interventions_ProfileModerateId",
+                table: "Interventions",
                 column: "ProfileModerateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Intervention_ProfileRecoveryId",
-                table: "Intervention",
+                name: "IX_Interventions_ProfileRecoveryId",
+                table: "Interventions",
                 column: "ProfileRecoveryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notification_UserId",
-                table: "Notification",
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -542,16 +542,16 @@ namespace BehaviourManagementSystem_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Intervention");
+                name: "Interventions");
 
             migrationBuilder.DropTable(
-                name: "Notification");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
-                name: "TermCondition");
+                name: "TermConditions");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -566,34 +566,34 @@ namespace BehaviourManagementSystem_API.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Assesetment");
+                name: "Assesetments");
 
             migrationBuilder.DropTable(
-                name: "ProfileExtreme");
+                name: "ProfileExtremes");
 
             migrationBuilder.DropTable(
-                name: "ProfileMild");
+                name: "ProfileMilds");
 
             migrationBuilder.DropTable(
-                name: "ProfileModerate");
+                name: "ProfileModerates");
 
             migrationBuilder.DropTable(
-                name: "ProfileRecovery");
+                name: "ProfileRecoveries");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "AnalyzeAntecedentActivity");
+                name: "AnalyzeAntecedentActivities");
 
             migrationBuilder.DropTable(
-                name: "AnalyzeAntecedentEnvironmental");
+                name: "AnalyzeAntecedentEnvironmentals");
 
             migrationBuilder.DropTable(
-                name: "AnalyzeAntecedentPerceive");
+                name: "AnalyzeAntecedentPerceives");
 
             migrationBuilder.DropTable(
-                name: "Individual");
+                name: "Individuals");
 
             migrationBuilder.DropTable(
                 name: "Users");
