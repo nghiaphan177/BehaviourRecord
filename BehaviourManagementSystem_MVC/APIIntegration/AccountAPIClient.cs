@@ -29,7 +29,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
 
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.PostAsync($"/api/account/login", httpContent);
+            var response = await client.PostAsync($"/api/account/login-admin", httpContent);
 
             if(response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());

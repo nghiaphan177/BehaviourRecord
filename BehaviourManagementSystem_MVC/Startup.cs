@@ -27,6 +27,7 @@ namespace BehaviourManagementSystem_MVC
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
+                    options.LoginPath = "/Admin/Account/Login";
                 });
 
             services.AddSession(options =>
@@ -43,7 +44,7 @@ namespace BehaviourManagementSystem_MVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -67,6 +68,10 @@ namespace BehaviourManagementSystem_MVC
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                         name: "Admin",
+                         areaName: "Admin",
+                         pattern: "Admin/{controller=Home}/{action=Index}");
                 endpoints.MapDefaultControllerRoute();
 
                 endpoints.MapControllerRoute(
@@ -77,6 +82,7 @@ namespace BehaviourManagementSystem_MVC
                   name: "areas",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
+                
             });
         }
     }
