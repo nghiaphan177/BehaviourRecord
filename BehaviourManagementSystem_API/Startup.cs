@@ -1,5 +1,6 @@
 using BehaviourManagementSystem_API.Data.EF;
 using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +57,8 @@ namespace BehaviourManagementSystem_API
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddTransient<IAccountService, AccountService>();
+
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
             string signingKey = Configuration.GetValue<string>("Tokens:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
@@ -82,6 +85,7 @@ namespace BehaviourManagementSystem_API
                 };
             });
 
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -93,7 +97,7 @@ namespace BehaviourManagementSystem_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
