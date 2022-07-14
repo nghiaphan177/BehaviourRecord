@@ -1,13 +1,13 @@
 ﻿namespace BehaviourManagementSystem_ViewModels.Responses.Common
 {
-    public class ResponceResultSuccess<Type> : ResponceResult<Type>
+    public class ResponseResultSuccess<Type> : ResponseResult<Type>
     {
-        public ResponceResultSuccess()
+        public ResponseResultSuccess()
         {
             Success = true;
         }
 
-        public ResponceResultSuccess(Type result)
+        public ResponseResultSuccess(Type result)
         {
             Success = true;
             Result = result;

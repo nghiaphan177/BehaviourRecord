@@ -19,7 +19,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             _configuration = configuration;
         }
 
-        public async Task<ResponceResult<string>> Login(LoginRequest request)
+        public async Task<ResponseResult<string>> Login(LoginAdminRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
 
@@ -29,11 +29,11 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
 
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.PostAsync("/api/account/login", httpContent);
+            var response = await client.PostAsync($"/api/account/login", httpContent);
 
             if(response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ResponceResultSuccess<string>>(await response.Content.ReadAsStringAsync());
-            return JsonConvert.DeserializeObject<ResponceResultError<string>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<string>>(await response.Content.ReadAsStringAsync());
         }
     }
 }

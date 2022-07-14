@@ -18,15 +18,28 @@ namespace BehaviourManagementSystem_API.Data.EF
 
         }
 
+        public virtual DbSet<AnalyzeAntecedentActivity> AnalyzeAntecedentActivities { get; set; }
+        public virtual DbSet<AnalyzeAntecedentEnvironmental> AnalyzeAntecedentEnvironmentals { get; set; }
+        public virtual DbSet<AnalyzeAntecedentPerceive> AnalyzeAntecedentPerceives { get; set; }
+        public virtual DbSet<Assesetment> Assesetments { get; set; }
+        public virtual DbSet<Individual> Individuals { get; set; }
+        public virtual DbSet<Intervention> Interventions { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<ProfileExtreme> ProfileExtremes { get; set; }
+        public virtual DbSet<ProfileMild> ProfileMilds { get; set; }
+        public virtual DbSet<ProfileModerate> ProfileModerates { get; set; }
+        public virtual DbSet<ProfileRecovery> ProfileRecoveries { get; set; }
+        public virtual DbSet<TermCondition> TermConditions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             // Remove AspNet prefix of tables: default tables in IdentityDbContext
-            foreach(var entityType in builder.Model.GetEntityTypes())
+            foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 var tableName = entityType.GetTableName();
-                if(tableName.StartsWith("AspNet"))
+                if (tableName.StartsWith("AspNet"))
                 {
                     entityType.SetTableName(tableName.Substring(6));
                 }

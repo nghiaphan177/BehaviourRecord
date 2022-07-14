@@ -1,6 +1,6 @@
 ﻿namespace BehaviourManagementSystem_ViewModels.Responses.Common
 {
-    public class ResponceResult<Type>
+    public class ResponseResult<Type>
     {
         public bool Success { get; set; }
         public string Message { get; set; }

@@ -6,6 +6,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
 {
     public interface IAccountAPIClient
     {
-        Task<ResponceResult<string>> Login(LoginRequest request);
+        Task<ResponseResult<string>> Login(LoginAdminRequest request);
     }
 }
