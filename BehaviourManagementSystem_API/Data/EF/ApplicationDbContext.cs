@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Data.Configurations;
+using BehaviourManagementSystem_API.Extensions;
 using BehaviourManagementSystem_API.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,9 @@ namespace BehaviourManagementSystem_API.Data.EF
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new TermConditionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+
+            // Data seed
+            builder.Seed();
         }
     }
 }
