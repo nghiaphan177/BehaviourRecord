@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehaviourManagementSystem_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220713212158_init")]
+    [Migration("20220714082057_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnalyzeAntecedentActivity");
+                    b.ToTable("AnalyzeAntecedentActivities");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.AnalyzeAntecedentEnvironmental", b =>
@@ -58,7 +58,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnalyzeAntecedentEnvironmental");
+                    b.ToTable("AnalyzeAntecedentEnvironmentals");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.AnalyzeAntecedentPerceive", b =>
@@ -78,7 +78,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnalyzeAntecedentPerceive");
+                    b.ToTable("AnalyzeAntecedentPerceives");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.Assesetment", b =>
@@ -169,7 +169,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasIndex("IndividualId");
 
-                    b.ToTable("Assesetment");
+                    b.ToTable("Assesetments");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.Individual", b =>
@@ -197,7 +197,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Individual");
+                    b.ToTable("Individuals");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.Intervention", b =>
@@ -290,7 +290,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasIndex("ProfileRecoveryId");
 
-                    b.ToTable("Intervention");
+                    b.ToTable("Interventions");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.Notification", b =>
@@ -324,7 +324,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.ProfileExtreme", b =>
@@ -344,7 +344,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileExtreme");
+                    b.ToTable("ProfileExtremes");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.ProfileMild", b =>
@@ -364,7 +364,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileMild");
+                    b.ToTable("ProfileMilds");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.ProfileModerate", b =>
@@ -384,7 +384,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileModerate");
+                    b.ToTable("ProfileModerates");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.ProfileRecovery", b =>
@@ -404,7 +404,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileRecovery");
+                    b.ToTable("ProfileRecoveries");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.Role", b =>
@@ -452,7 +452,7 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TermCondition");
+                    b.ToTable("TermConditions");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.User", b =>
