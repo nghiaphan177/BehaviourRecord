@@ -21,7 +21,7 @@ namespace BehaviourManagementSystem_API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("loginadmin")]
+        [HttpPost("login-admin")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAdmin([FromBody] LoginAdminRequest request)
         {
@@ -34,9 +34,8 @@ namespace BehaviourManagementSystem_API.Controllers
             var response = await _accountService.LoginAdmin(request);
 
             if (string.IsNullOrEmpty(response.Result))
-            {
                 return BadRequest(response);
-            }
+
             return Ok(response);
         }
     }

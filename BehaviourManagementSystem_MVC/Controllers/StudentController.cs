@@ -13,5 +13,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult StudentAdd()
+        {
+            return View();
+        }
     }
 }
