@@ -1,4 +1,4 @@
-/*
+﻿/*
  Template Name: Lexa - Responsive Bootstrap 4 Admin Dashboard
  Author: Themesbrand
  File: Sweet Alert init js
@@ -44,17 +44,17 @@
         //Warning Message
         $('#sa-warning').click(function () {
             swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Bạn đã chắc chắn?',
+                text: "Xóa trường này!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger m-l-10',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Yes!'
             }).then(function () {
                 swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Đã Xóa Thành Công!',
+                    '',
                     'success'
                 )
             })
@@ -63,7 +63,7 @@
         //Parameter
         $('#sa-params').click(function () {
             swal({
-                title: 'Are you sure?',
+                title: 'Bạn đã chắc chắn?',
                 text: "You won't be able to revert this!",
                 type: 'warning',
                 showCancelButton: true,
