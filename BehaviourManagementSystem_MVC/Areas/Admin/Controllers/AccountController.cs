@@ -30,7 +30,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginAdminRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             var user = HttpContext.Session.GetString("USER");
             if (!string.IsNullOrEmpty(user))
