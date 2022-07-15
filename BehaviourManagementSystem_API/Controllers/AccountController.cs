@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace BehaviourManagementSystem_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -17,22 +18,44 @@ namespace BehaviourManagementSystem_API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("login-admin")]
+        [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginAdmin([FromBody] LoginAdminRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginAdminRequest request)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
+            if(request.UserNameOrEmail.CheckRequest() || request.Password.CheckRequest())
                 return BadRequest(request);
 
-            var response = await _accountService.LoginAdmin(request);
+            var response = await _accountService.Login(request);
 
-            if (string.IsNullOrEmpty(response.Result))
+            if(string.IsNullOrEmpty(response.Result))
                 return BadRequest(response);
 
             return Ok(response);
+        }
+
+        [HttpGet("get-all-user")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            var result = await _accountService.GetAll();
+
+            if(result.Result == null)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpGet("get-user")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            var result = await _accountService.GetUser(id);
+
+            if(result.Result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

@@ -1,4 +1,7 @@
+using BehaviourManagementSystem_API.Data.EF;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace BehaviourManagementSystem_API
@@ -7,7 +10,13 @@ namespace BehaviourManagementSystem_API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+            using(var db = services.CreateScope().ServiceProvider.GetService<ApplicationDbContext>())
+            {
+                db.Database.Migrate();
+            }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

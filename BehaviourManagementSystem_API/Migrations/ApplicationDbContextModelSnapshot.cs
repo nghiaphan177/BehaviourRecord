@@ -435,22 +435,22 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("87a4fe62-5b5d-4e7f-b749-350e4c10f8fa"),
-                            ConcurrencyStamp = "0EC5767F-ACCD-4A6A-BA90-0C05BA9FE8C5",
+                            Id = new Guid("39f0f61f-3270-4d2c-8651-c54fb29ce834"),
+                            ConcurrencyStamp = "1AA62F8D-3BD0-437A-BD76-9F509E76AB0D",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("46fa4e6f-93ed-4026-8f32-6f83a2d79bb4"),
-                            ConcurrencyStamp = "E2E38D49-DC4B-4F6B-87C5-C1FA33E34F98",
+                            Id = new Guid("42af1030-a4d4-40a2-9988-9cde7318381f"),
+                            ConcurrencyStamp = "B3A31819-1860-4A6F-9597-4C107E7C1980",
                             Name = "teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = new Guid("ed5be09a-50bb-4ee2-aa38-0dd040da50cb"),
-                            ConcurrencyStamp = "07A83CD8-35D8-455F-96A1-C68A5DAD3B0E",
+                            Id = new Guid("af0ff046-a823-4f38-a723-624848392310"),
+                            ConcurrencyStamp = "9EAAE078-D5D0-48AA-A732-F3E8EEFA9F2F",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -574,11 +574,11 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f1796420-325f-43a8-878c-92b8190e817f"),
+                            Id = new Guid("d66b24bb-47b1-438b-9c11-0cc2795015c1"),
                             AccessFailedCount = 0,
                             Activity = true,
                             ActivityDate = new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "DFEADF2F-476D-4792-8970-8F8A256B2FCB",
+                            ConcurrencyStamp = "1C175D0B-F5CC-41F0-9376-AFDAB521C3FE",
                             CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DOB = new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lhduy3011@gmail.com",
@@ -590,9 +590,10 @@ namespace BehaviourManagementSystem_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LHDUY3011@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHPX0dXWD2cWW0KpZQk6Agp9qnNuEvfO54RkKwYUknBUMqKe37k/qjWo/ZV2c64I5A==",
                             PhoneNumber = "0334102197",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "dfeadf2f-476d-4792-8970-8f8a256b2fcb",
+                            SecurityStamp = "1c175d0b-f5cc-41f0-9376-afdab521c3fe",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "admin"
@@ -683,8 +684,8 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("f1796420-325f-43a8-878c-92b8190e817f"),
-                            RoleId = new Guid("87a4fe62-5b5d-4e7f-b749-350e4c10f8fa")
+                            UserId = new Guid("d66b24bb-47b1-438b-9c11-0cc2795015c1"),
+                            RoleId = new Guid("39f0f61f-3270-4d2c-8651-c54fb29ce834")
                         });
                 });
 

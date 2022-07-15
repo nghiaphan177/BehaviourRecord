@@ -1,21 +1,29 @@
 ﻿using BehaviourManagementSystem_API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_API.Extensions
+namespace BehaviourManagementSystem_API.Data.EF
 {
-    public static class ModelBuilderExtension
+    /// <summary>
+    /// Create Db Context Seed
+    /// Writer: DuyLH4
+    /// Desciption: use to generate default data in db
+    /// </summary>
+    public class ApplicationDbContextSeed
     {
-        public static void Seed(this ModelBuilder modelBuilder)
+        private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
+
+        public async Task SeedAsync(ApplicationDbContext context, ILogger<ApplicationDbContextSeed> logger)
         {
+            var stamp = Guid.NewGuid().ToString();
             var userId = Guid.NewGuid();
             var roleAdminId = Guid.NewGuid();
-            var stamp = Guid.NewGuid();
-            var passwordHasher = new PasswordHasher<User>();
-
-            modelBuilder.Entity<User>().HasData(
-                new User()
+            if(!await context.Users.AnyAsync())
+            {
+                var user = new User()
                 {
                     Id = userId,
                     FirstName = "Lê",
@@ -27,45 +35,55 @@ namespace BehaviourManagementSystem_API.Extensions
                     ActivityDate = new DateTime(9999, 12, 31),
                     UserName = "admin",
                     NormalizedUserName = "admin".ToUpper(),
-                    PasswordHash = passwordHasher.HashPassword(null, "Password2@"),
                     Email = "lhduy3011@gmail.com",
                     NormalizedEmail = "lhduy3011@gmail.com".ToUpper(),
                     EmailConfirmed = true,
                     PhoneNumber = "0334102197",
                     PhoneNumberConfirmed = true,
-                    SecurityStamp = stamp.ToString(),
-                    ConcurrencyStamp = stamp.ToString().ToUpper(),
-                });
+                    SecurityStamp = stamp,
+                    ConcurrencyStamp = stamp.ToUpper(),
+                };
+                user.PasswordHash = _passwordHasher.HashPassword(user, "Password2@");
+                await context.Users.AddAsync(user);
+            }
 
-            modelBuilder.Entity<Role>().HasData(
-                new Role()
+            if(!await context.Roles.AnyAsync())
+            {
+                await context.Roles.AddAsync(new Role()
                 {
                     Id = roleAdminId,
                     Name = "admin",
                     NormalizedName = "admin".ToUpper(),
                     ConcurrencyStamp = Guid.NewGuid().ToString().ToUpper(),
-                },
-                new Role()
+                });
+
+                await context.Roles.AddAsync(new Role()
                 {
                     Id = Guid.NewGuid(),
                     Name = "teacher",
                     NormalizedName = "teacher".ToUpper(),
                     ConcurrencyStamp = Guid.NewGuid().ToString().ToUpper(),
-                },
-                new Role()
+                });
+
+                await context.Roles.AddAsync(new Role()
                 {
                     Id = Guid.NewGuid(),
                     Name = "student",
                     NormalizedName = "student".ToUpper(),
                     ConcurrencyStamp = Guid.NewGuid().ToString().ToUpper(),
                 });
+            }
 
-            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
-                new IdentityUserRole<Guid>()
+            if(!await context.UserRoles.AnyAsync())
+            {
+                await context.UserRoles.AddAsync(new IdentityUserRole<Guid>()
                 {
                     UserId = userId,
                     RoleId = roleAdminId,
                 });
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

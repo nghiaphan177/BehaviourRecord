@@ -1,6 +1,7 @@
 using BehaviourManagementSystem_API.Data.EF;
 using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,8 +58,10 @@ namespace BehaviourManagementSystem_API
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IRoleService, RoleService>();
+            // Declare Services
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
             string signingKey = Configuration.GetValue<string>("Tokens:Key");
@@ -91,18 +94,18 @@ namespace BehaviourManagementSystem_API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BehaviourManagementSystem_API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BehaviourManagementSystem API", Version = "v1" });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem_API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
             }
 
             app.UseHttpsRedirection();
