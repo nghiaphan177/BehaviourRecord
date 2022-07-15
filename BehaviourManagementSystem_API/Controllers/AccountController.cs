@@ -20,7 +20,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginAdminRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);

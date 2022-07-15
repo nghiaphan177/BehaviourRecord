@@ -13,7 +13,7 @@ namespace BehaviourManagementSystem_API.Services
     /// </summary>
     public interface IAccountService
     {
-        Task<ResponseResult<string>> Login(LoginAdminRequest request);
+        Task<ResponseResult<string>> Login(LoginRequest request);
         Task<ResponseResult<List<UserResponse>>> GetAll();
         Task<ResponseResult<UserResponse>> GetUser(string id);
     }
