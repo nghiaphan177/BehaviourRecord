@@ -60,6 +60,15 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                         authProperties);
             return RedirectToAction("Index", "Home",new {area = "Admin" });
         }
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+
+            // Clear the existing external cookie
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Login");
+        }
         private ClaimsPrincipal ValidateToken(string token)
         {
             IdentityModelEventSource.ShowPII = true;
