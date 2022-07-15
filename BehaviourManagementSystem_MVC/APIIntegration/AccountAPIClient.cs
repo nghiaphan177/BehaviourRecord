@@ -27,11 +27,14 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+            // var id = "";
+
             var client = _httpClientFactory.CreateClient();
 
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var response = await client.PostAsync($"/api/account/login", httpContent);
+            //var response = await client.PostAsync($"/api/account/user-img/{id}", httpContent);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());

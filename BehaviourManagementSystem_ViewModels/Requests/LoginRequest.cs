@@ -13,5 +13,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         public string UserNameOrEmail { get; set; }
         [Required]
         public string Password { get; set; }
-    }
+        [Required]
+		public bool Remember { get; set; }
+	}
 }

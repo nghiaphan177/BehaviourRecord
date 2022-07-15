@@ -16,5 +16,5 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<string>> Login(LoginRequest request);
         Task<ResponseResult<List<UserResponse>>> GetAll();
         Task<ResponseResult<UserResponse>> GetUser(string id);
-    }
+	}
 }

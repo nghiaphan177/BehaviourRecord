@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
 {
+    /// <summary>
+    /// AccountController
+    /// Writer: DuyLH4
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
-    public class AccountController : ControllerBase
+	//[Authorize]
+	public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService)
@@ -50,6 +54,9 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("get-user")]
         public async Task<IActionResult> GetUser(string id)
         {
+            if(!ModelState.IsValid || id.CheckRequest())
+                return BadRequest(ModelState);
+
             var result = await _accountService.GetUser(id);
 
             if(result.Result == null)
