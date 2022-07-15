@@ -18,5 +18,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult TeacherProfile()
+        {
+            return View();
+        }
+
+        public IActionResult TeacherProfileEdit()
+        {
+            return View();
+        }
     }
 }
