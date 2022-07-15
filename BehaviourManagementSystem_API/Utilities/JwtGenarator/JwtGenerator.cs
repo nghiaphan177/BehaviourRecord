@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Utilities.JwtGenarator
 {
+    /// <summary>
+    /// JwtGenerator Implement IJwtGenerator.
+    /// Writer: DuyLH4
+    /// </summary>
     public class JwtGenerator : IJwtGenerator
     {
         private readonly IConfiguration _configuration;

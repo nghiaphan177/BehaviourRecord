@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Services
 {
+	/// <summary>
+	/// Class NotificationService Implement INotificationService. Design parttern repository.
+	/// WriterL DuyLH4
+	/// </summary>
 	public class NotificationService : INotificationService
 	{
 		private readonly ApplicationDbContext _context;

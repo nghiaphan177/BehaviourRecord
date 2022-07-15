@@ -2,6 +2,10 @@
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
+	/// <summary>
+	/// RegisterRequest view model
+	/// Writer: DuyLH4
+	/// </summary>
 	public class RegisterRequest
 	{
 		[Required]

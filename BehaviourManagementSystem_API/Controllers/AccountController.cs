@@ -44,7 +44,6 @@ namespace BehaviourManagementSystem_API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
 		{
-
             return Ok();
 		}
 
