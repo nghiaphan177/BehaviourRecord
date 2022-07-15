@@ -78,7 +78,7 @@ namespace BehaviourManagementSystem_API.Services
             });
         }
 
-        public async Task<ResponseResult<string>> Login(LoginAdminRequest request)
+        public async Task<ResponseResult<string>> Login(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserNameOrEmail);
             if(user == null)

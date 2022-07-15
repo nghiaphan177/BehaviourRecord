@@ -19,7 +19,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             _configuration = configuration;
         }
 
-        public async Task<ResponseResult<string>> Login(LoginAdminRequest request)
+        public async Task<ResponseResult<string>> Login(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
 

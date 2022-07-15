@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
-    public class LoginAdminRequest
+    public class LoginRequest
     {
         [Required]
         public string UserNameOrEmail { get; set; }

@@ -32,7 +32,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginAdminRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             var user = HttpContext.Session.GetString("USER");
             if(!string.IsNullOrEmpty(user))
