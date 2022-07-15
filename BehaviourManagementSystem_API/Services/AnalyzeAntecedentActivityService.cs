@@ -20,7 +20,7 @@ namespace BehaviourManagementSystem_API.Services
         }
         public async Task<ResponseResult<List<AnalyzeAntecedentActivity>>> Create(string content)
         {
-            if (await _context.AnalyzeAntecedentActivities.AnyAsync(prop => prop.Content == content))
+            if (await _context.AnalyzeAntecedentActivities.CountAsync(prop => prop.Content == content) > 0)
                 return new ResponseResultError<List<AnalyzeAntecedentActivity>>("Dữ liệu đã tồn tại");
 
             await _context.AnalyzeAntecedentActivities.AddAsync(new AnalyzeAntecedentActivity()
@@ -70,25 +70,11 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<AnalyzeAntecedentActivityResponse>>(result);
         }
 
-        public async Task<ResponseResult<AnalyzeAntecedentActivityResponse>> GetById(string id)
-        {
-            if (!await _context.AnalyzeAntecedentActivities.AnyAsync(prop => prop.Id.ToString() == id))
-                return new ResponseResultError<AnalyzeAntecedentActivityResponse>("Id không tồn tại");
-            var obj = await _context.AnalyzeAntecedentActivities.FindAsync(new Guid(id));
-            return new ResponseResultSuccess<AnalyzeAntecedentActivityResponse>(new AnalyzeAntecedentActivityResponse()
-            {
-                Id = obj.Id.ToString(),
-                Content= obj.Content,
-                CreateDate = obj.CreateDate.Value,
-                UpdateDate= obj.UpdateDate.GetValueOrDefault()
-            });
-        }
-
         public async Task<ResponseResult<List<AnalyzeAntecedentActivity>>> Update(string id, string content)
         {
             if (!await _context.AnalyzeAntecedentActivities.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<AnalyzeAntecedentActivity>>("Id không tồn tại");
-            if (await _context.AnalyzeAntecedentActivities.AnyAsync(prop => prop.Content == content))
+            if (await _context.AnalyzeAntecedentActivities.CountAsync(prop => prop.Content == content) > 0)
                 return new ResponseResultError<List<AnalyzeAntecedentActivity>>("Dữ liệu đã tồn tại");
             var obj = await _context.AnalyzeAntecedentActivities.FindAsync(new Guid(id));
             obj.Content = content;

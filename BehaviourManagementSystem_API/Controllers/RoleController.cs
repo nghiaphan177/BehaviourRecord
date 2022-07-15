@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
 {
+    /// <summary>
+    /// RoleController
+    /// Writer:DuyLH4
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase

@@ -1,6 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_API.Services;
-using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,19 +33,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(response);
         }
-        [HttpGet("get-by-id")]
-        //Lấy 1 tiền đề Activity
-        public async Task<IActionResult> GetById(string id)
-        {
-            if (!ModelState.IsValid || id.CheckRequest())
-                return BadRequest(ModelState);
-            var response = await _analyzeAntecedentActivityService.GetById(id);
-            if (response.Result == null)
-            {
-                return BadRequest(response);
-            }
-            return Ok(response);
-        }
+
         [HttpPost("create")]
         //Tạo mới tiền đề Activity
         public async Task<IActionResult> Create(string content)

@@ -25,15 +25,5 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        public ActionResult Register()
-        {
-            return View();
-        }
     }
 }

@@ -14,6 +14,5 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<List<AnalyzeAntecedentPerceive>>> Update(string id, string content);
         Task<ResponseResult<List<AnalyzeAntecedentPerceive>>> Delete(string id);
         Task<ResponseResult<List<AnalyzeAntecedentPerciveResponse>>> GetAll();
-        Task<ResponseResult<AnalyzeAntecedentPerciveResponse>> GetById(string id);
     }
 }

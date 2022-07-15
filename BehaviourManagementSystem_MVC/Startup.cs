@@ -1,7 +1,9 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,6 +39,7 @@ namespace BehaviourManagementSystem_MVC
             });
 
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
         }
