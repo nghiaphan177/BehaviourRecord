@@ -89,7 +89,9 @@ namespace BehaviourManagementSystem_API
                 };
             });
 
-
+            services.AddTransient<IAnalyzeAntecedentPerceiveService, AnalyzeAntecedentPerceiveService>();
+            services.AddTransient<IAnalyzeAntecedentEnvironmentalService, AnalyzeAntecedentEnvironmentalService>();
+            services.AddTransient<IAnalyzeAntecedentActivityService, AnalyzeAntecedentActivityService>();
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
