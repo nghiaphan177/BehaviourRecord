@@ -10,7 +10,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
     public class LoginAdminRequest
     {
         [Required]
-        public string UserName { get; set; }
+        public string UserNameOrEmail { get; set; }
         [Required]
         public string Password { get; set; }
     }

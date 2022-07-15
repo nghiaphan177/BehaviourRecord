@@ -1,9 +1,8 @@
 using BehaviourManagementSystem_API.Data.EF;
-using BehaviourManagementSystem_API.Extensions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace BehaviourManagementSystem_API
 {
@@ -12,11 +11,11 @@ namespace BehaviourManagementSystem_API
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            host.MigrateDbContext<ApplicationDbContext>((context, services) =>
+            var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+            using(var db = services.CreateScope().ServiceProvider.GetService<ApplicationDbContext>())
             {
-                var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
-                new ApplicationDbContextSeed().SeedAsync(context, logger).Wait();
-            });
+                db.Database.Migrate();
+            }
             host.Run();
         }
 
