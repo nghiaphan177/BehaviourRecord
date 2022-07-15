@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
-    public class LoginRequest
+    public class ProfileMildRequest
     {
         [Required]
-        public string UserNameOrEmail { get; set; }
+        public string Id { get; set; }
         [Required]
-        public string Password { get; set; }
-        [Required]
-		public bool Remember { get; set; }
-	}
+        public string Content { get; set; }
+    }
 }

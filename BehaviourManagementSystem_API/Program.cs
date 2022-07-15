@@ -11,7 +11,6 @@ namespace BehaviourManagementSystem_API
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            // migrate db when run host - Writer DuyLH4
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
             using(var db = services.CreateScope().ServiceProvider.GetService<ApplicationDbContext>())
             {

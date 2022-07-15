@@ -12,5 +12,6 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<List<AnalyzeAntecedentActivity>>> Update(string id, string content);
         Task<ResponseResult<List<AnalyzeAntecedentActivity>>> Delete(string id);
         Task<ResponseResult<List<AnalyzeAntecedentActivityResponse>>> GetAll();
+        Task<ResponseResult<AnalyzeAntecedentActivityResponse>> GetById(string id);
     }
 }
