@@ -20,7 +20,7 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<AnalyzeAntecedentPerceive>>> Create(string content)
         {
-            if (await _context.AnalyzeAntecedentPerceives.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentPerceives.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentPerceive>>("Dữ liệu đã tồn tại");
 
             await _context.AnalyzeAntecedentPerceives.AddAsync(new AnalyzeAntecedentPerceive()
@@ -70,11 +70,25 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<AnalyzeAntecedentPerciveResponse>>(result);
         }
 
+        public async Task<ResponseResult<AnalyzeAntecedentPerciveResponse>> GetById(string id)
+        {
+            if (!await _context.AnalyzeAntecedentPerceives.AnyAsync(prop => prop.Id.ToString() == id))
+                return new ResponseResultError<AnalyzeAntecedentPerciveResponse>("Id không tồn tại");
+            var obj = await _context.AnalyzeAntecedentPerceives.FindAsync(new Guid(id));
+            return new ResponseResultSuccess<AnalyzeAntecedentPerciveResponse>(new AnalyzeAntecedentPerciveResponse()
+            {
+                Id = obj.Id.ToString(),
+                Content = obj.Content,
+                CreateDate = obj.CreateDate.Value,
+                UpdateDate = obj.UpdateDate.GetValueOrDefault()
+            });
+        }
+
         public async Task<ResponseResult<List<AnalyzeAntecedentPerceive>>> Update(string id, string content)
         {
             if (!await _context.AnalyzeAntecedentPerceives.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<AnalyzeAntecedentPerceive>>("Id không tồn tại");
-            if (await _context.AnalyzeAntecedentPerceives.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentPerceives.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentPerceive>>("Dữ liệu đã tồn tại");
 
             var obj = await _context.AnalyzeAntecedentPerceives.FindAsync(new Guid(id));

@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_ViewModels.Responses.ResponseModels
 {
-    /// <summary>
-    /// user response view model.
-    /// Writer: DuyLH4
-    /// </summary>
     public class UserResponse
     {
         public string Id { get; set; }

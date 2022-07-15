@@ -12,7 +12,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
 
-
         // GET: HomeController/Details/5
         public ActionResult Details(int id)
         {

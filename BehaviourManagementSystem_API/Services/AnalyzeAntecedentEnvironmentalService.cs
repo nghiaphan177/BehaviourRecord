@@ -21,7 +21,7 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<AnalyzeAntecedentEnvironmental>>> Create(string content)
         {
-            if (await _context.AnalyzeAntecedentEnvironmentals.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Dữ liệu đã tồn tại");
 
             await _context.AnalyzeAntecedentEnvironmentals.AddAsync(new AnalyzeAntecedentEnvironmental()
@@ -71,11 +71,25 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<AnalyzeAntecedentEnvironmentalResponse>>(result);
         }
 
+        public async Task<ResponseResult<AnalyzeAntecedentEnvironmentalResponse>> GetById(string id)
+        {
+            if (!await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Id.ToString() == id))
+                return new ResponseResultError<AnalyzeAntecedentEnvironmentalResponse>("Id không tồn tại");
+            var obj = await _context.AnalyzeAntecedentEnvironmentals.FindAsync(new Guid(id));
+            return new ResponseResultSuccess<AnalyzeAntecedentEnvironmentalResponse>(new AnalyzeAntecedentEnvironmentalResponse()
+            {
+                Id = obj.Id.ToString(),
+                Content = obj.Content,
+                CreateDate = obj.CreateDate.Value,
+                UpdateDate = obj.UpdateDate.GetValueOrDefault()
+            });
+        }
+
         public async Task<ResponseResult<List<AnalyzeAntecedentEnvironmental>>> Update(string id, string content)
         {
             if (!await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Id không tồn tại");
-            if (await _context.AnalyzeAntecedentEnvironmentals.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Dữ liệu đã tồn tại");
 
             var obj = await _context.AnalyzeAntecedentEnvironmentals.FindAsync(new Guid(id));

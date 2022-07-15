@@ -40,13 +40,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-		{
-            return Ok();
-		}
-
         [HttpGet("get-all-user")]
         public async Task<IActionResult> GetAllUser()
         {
