@@ -94,7 +94,7 @@ namespace BehaviourManagementSystem_API.Services
 			if(user == null)
 				return new ResponseResultError<string>("Tài khoản không tồn tại");
 
-			var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remeber, false);
+			var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remember, false);
 
 			if(!result.Succeeded)
 				return new ResponseResultError<string>("Mật khẩu không đúng");
