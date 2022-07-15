@@ -17,5 +17,6 @@ namespace BehaviourManagementSystem_ViewModels.Responses.ResponseModels
         public string Email { get; set; }
         public string Address { get; set; }
         public byte[] Img { get; set; }
-    }
+		public string RoleName { get; set; }
+	}
 }
