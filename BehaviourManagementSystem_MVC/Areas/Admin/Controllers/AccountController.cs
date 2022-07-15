@@ -2,12 +2,14 @@
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,12 +27,14 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             _accountAPIClient = accountAPIClient;
             _config = configuration;
         }
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = "")
         {
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "")
         {
             var user = HttpContext.Session.GetString("USER");
             if (!string.IsNullOrEmpty(user))
@@ -46,8 +50,8 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Đăng nhập không thành công");
                 return View();
             }
+            
             var userPrincipal = ValidateToken(result.Result);
-
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
@@ -58,7 +62,8 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
                         authProperties);
-            return RedirectToAction("Index", "Home",new {area = "Admin" });
+            //return RedirectToAction("Index", "Home",new {area = "Admin" });
+            return LocalRedirect(ReturnUrl);
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
