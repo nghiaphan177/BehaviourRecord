@@ -30,7 +30,7 @@ namespace BehaviourManagementSystem_API
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddIdentity<User, Role>()
@@ -89,7 +89,9 @@ namespace BehaviourManagementSystem_API
                 };
             });
 
-
+            services.AddTransient<IAnalyzeAntecedentPerceiveService, AnalyzeAntecedentPerceiveService>();
+            services.AddTransient<IAnalyzeAntecedentEnvironmentalService, AnalyzeAntecedentEnvironmentalService>();
+            services.AddTransient<IAnalyzeAntecedentActivityService, AnalyzeAntecedentActivityService>();
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
