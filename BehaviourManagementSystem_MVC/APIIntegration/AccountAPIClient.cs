@@ -34,7 +34,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             var response = await client.PostAsync($"/api/account/login", httpContent);
             //var response = await client.PostAsync($"/api/account/user-img/{id}", httpContent);
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<string>>(await response.Content.ReadAsStringAsync());
         }
