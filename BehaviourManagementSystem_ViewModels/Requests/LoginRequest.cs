@@ -14,6 +14,6 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         [Required]
         public string Password { get; set; }
         [Required]
-		public bool Remeber { get; set; }
+		public bool Remember { get; set; }
 	}
 }
