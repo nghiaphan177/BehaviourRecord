@@ -1,4 +1,5 @@
-﻿
+﻿@using BehaviourManagementSystem_ViewModels.Requests;
+@model LoginRequest
 @{
     Layout = null;
 }
@@ -29,16 +30,23 @@
                 <div class="p-3">
                     <h4 class="text-muted font-18 m-b-5 text-center">Đăng nhập trang quản trị</h4>
 
-                    <form class="form-horizontal m-t-30" action="/dashboard">
-
+                    <form method="post" class="form-horizontal m-t-30" action="/Admin/Account/Login">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                        <div class="alert alert-danger" role="alert">
+                            <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
+                        </div>
+                        }
+                        
                         <div class="form-group">
                             <label for="username">Tên đăng nhập</label>
-                            <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
+                            <input asp-for="UserNameOrEmail" type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập" required data-parsley-required-message="Hãy nhập tên đăng nhập">
+
                         </div>
 
                         <div class="form-group">
                             <label for="userpassword">Mật khẩu</label>
-                            <input type="password" class="form-control" id="userpassword" placeholder="Nhập mật khẩu">
+                            <input asp-for="Password" type="password" class="form-control" id="userpassword" placeholder="Nhập mật khẩu" required data-parsley-required-message="Hãy nhập mật khẩu">
                         </div>
 
                         <div class="form-group row m-t-20">
@@ -72,5 +80,11 @@
     <script src="~/js/jquery.sparkline.min.js"></script>
     <script src="~/js/metisMenu.min.js"></script>
     <script src="~/js/waves.min.js"></script>
+        <script src="~/plugins/parsleyjs/parsley.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('form').parsley();
+            });
+        </script>
 </body>
 </html>
