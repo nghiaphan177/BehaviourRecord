@@ -29,7 +29,7 @@ namespace BehaviourManagementSystem_API.Utilities.JwtGenarator
             var claims = new[]
             {
                 new Claim("Id", user.Id.ToString()),
-                new Claim("role",roleNameNormal),
+                new Claim("Role",roleNameNormal),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));

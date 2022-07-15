@@ -75,6 +75,7 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
+
                 endpoints.MapDefaultControllerRoute();
 
                 endpoints.MapControllerRoute(

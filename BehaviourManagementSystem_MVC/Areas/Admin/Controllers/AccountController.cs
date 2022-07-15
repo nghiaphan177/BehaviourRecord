@@ -27,18 +27,18 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             _accountAPIClient = accountAPIClient;
             _config = configuration;
         }
-        public IActionResult Login(string ReturnUrl = "")
+        public IActionResult Login(string ReturnUrl = "/Admin/Home")
         {
             ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "")
+        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Admin/Home")
         {
             var user = HttpContext.Session.GetString("USER");
             if (!string.IsNullOrEmpty(user))
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
 
             if (!ModelState.IsValid)
                 return View(request);
@@ -52,10 +52,17 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             }
             
             var userPrincipal = ValidateToken(result.Result);
+            var stream = result.Result;
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(stream);
+            var tokenS = jsonToken as JwtSecurityToken;
+
+            //var role = tokenS.Payload["Role"];
+
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
+                ExpiresUtc = DateTime.Now.AddMinutes(10),
+                IsPersistent = request.Remember
             };
             HttpContext.Session.SetString("USER", result.Result);
             await HttpContext.SignInAsync(
@@ -67,7 +74,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
-
+            HttpContext.Session.SetString("USER", "");
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
