@@ -28,6 +28,7 @@ namespace BehaviourManagementSystem_MVC
                 {
                     options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
+                    options.LogoutPath = "/Admin/Account/Logout";
                 });
 
             services.AddSession(options =>
@@ -37,6 +38,7 @@ namespace BehaviourManagementSystem_MVC
             });
 
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
+            services.AddTransient<IUserAPIClient, UserAPIClient>();
 
             services.AddControllersWithViews();
         }

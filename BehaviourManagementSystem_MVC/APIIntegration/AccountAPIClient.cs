@@ -1,8 +1,10 @@
 ﻿using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
+using BehaviourManagementSystem_ViewModels.Responses.ResponseModels;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
         }
-
+      
         public async Task<ResponseResult<string>> Login(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);

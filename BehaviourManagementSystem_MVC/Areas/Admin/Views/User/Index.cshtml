@@ -1,4 +1,5 @@
-﻿
+﻿@using BehaviourManagementSystem_ViewModels.Responses.ResponseModels
+@model List<UserResponse>
 @{
     ViewData["Title"] = "Danh sách tài khoản";
 }
@@ -24,30 +25,34 @@
                             <thead>
                                 <tr>
                                     <th width="2%">Số Thứ Tự</th>
-                                    <th data-priority="1">Tên đăng nhập</th>
+                                    <th data-priority="1">Họ và tên</th>
                                     <th data-priority="3">Email</th>
-                                    <th data-priority="1">Vài trò</th>
-                                    <th data-priority="3">Tình trạng</th>
+                                    <th data-priority="1">Vai trò</th>
+                                    <th data-priority="3">Số điện thoại</th>
                                     <th data-priority="6" width="2%">Tùy Chọn</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>597.74</td>
-                                    <td>12:12PM</td>
-                                    <td><span style="font-size:14px; text-align:center;" class="badge badge-info">Admin</span></td>
-                                    <td>
-                                            <span style="font-size:14px; text-align:center;" class="badge badge-success">Đang hoạt động</span>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <th>@(i+1)</th>
+                                        <td>@(@Model[i].FirstName+" "+@Model[i].LastName)</td>
+                                        <td>@Model[i].Email</td>
+                                        <td><span style="font-size:14px; text-align:center;" class="badge badge-info">Admin</span></td>
+                                        <td>
+                                            @Model[i].PhoneNumber
                                         </td>
-                                    <td>
-                                        <div class="button-items">
-                                            <a href="/admin/User/Detail/" type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
-                                            <a href="/admin/User/Detail/" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        <td>
+                                            <div class="button-items">
+                                                <a href="/admin/User/Detail/" type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
+                                                <a href="/admin/User/Detail/" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
 
                             </tbody>
                         </table>
