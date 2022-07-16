@@ -22,7 +22,7 @@ namespace BehaviourManagementSystem_API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -37,6 +37,37 @@ namespace BehaviourManagementSystem_API.Controllers
             if(string.IsNullOrEmpty(response.Result))
                 return BadRequest(response);
 
+            return Ok(response);
+        }
+
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _accountService.Register(request);
+
+            if(!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+		[HttpPost("VerifyEmail"),AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail([FromBody] ConfirmEmailRequest request)
+		{
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _accountService.VerifyEmail(request);
+
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
             return Ok(response);
         }
 

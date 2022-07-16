@@ -1,22 +1,19 @@
 {
   "dependencies": {
-    "mssql2": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/os-mssqlserver/databases/db_BehaviourManagementSystem",
-      "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:AzureConnection",
-      "secretStore": "AzureAppSettings"
-    },
     "identityapp1": {
-      "type": "identityapp",
-      "connectionId": "",
-      "suggestion": "true",
-      "ignored": "true"
+      "ignored": "true",
+      "type": "identityapp"
     },
     "mssql1": {
+      "ignored": "true",
       "type": "mssql",
-      "connectionId": "ConnectionStrings:DefaultConnection",
-      "suggestion": "true",
-      "ignored": "true"
+      "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/os-mssqlserver/databases/db_BehaviourManagementSystem",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:AzureConnection"
     }
   }
 }
