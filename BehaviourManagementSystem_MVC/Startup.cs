@@ -26,16 +26,18 @@ namespace BehaviourManagementSystem_MVC
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
                 });
 
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = "BMS";
-                options.IdleTimeout = new TimeSpan(1, 0, 0);
-            });
+            //services.AddSession(options =>
+            //{
+            //    options.Cookie.Name = "BMS";
+            //    options.IdleTimeout = new TimeSpan(1, 0, 0);
+            //});
 
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
             services.AddTransient<IUserAPIClient, UserAPIClient>();
@@ -67,7 +69,7 @@ namespace BehaviourManagementSystem_MVC
 
             app.UseAuthorization();
 
-            app.UseSession();
+            //app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

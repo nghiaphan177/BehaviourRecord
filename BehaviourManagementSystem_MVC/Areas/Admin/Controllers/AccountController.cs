@@ -21,14 +21,18 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountAPIClient _accountAPIClient;
+        private readonly IUserAPIClient _userAPIClient;
         private readonly IConfiguration _config;
-        public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration)
+        public AccountController(IAccountAPIClient accountAPIClient, IUserAPIClient userAPIClient, IConfiguration configuration)
         {
             _accountAPIClient = accountAPIClient;
+            _userAPIClient = userAPIClient;
             _config = configuration;
         }
-        public IActionResult Login(string ReturnUrl = "/Admin/Home")
+        public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
         {
+            await HttpContext.SignOutAsync(
+               CookieAuthenticationDefaults.AuthenticationScheme);
             ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
@@ -36,9 +40,9 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Admin/Home")
         {
-            var user = HttpContext.Session.GetString("USER");
-            if (!string.IsNullOrEmpty(user))
-                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            //var user = HttpContext.Session.GetString("USER");
+            //if (!string.IsNullOrEmpty(user))
+            //    return RedirectToAction("Index", "Home", new { area = "Admin" });
 
             if (!ModelState.IsValid)
                 return View(request);
@@ -61,10 +65,13 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTime.Now.AddMinutes(10),
                 IsPersistent = request.Remember
             };
-            HttpContext.Session.SetString("USER", result.Result);
+            if (request.Remember)
+            {
+                authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
+            }
+            //HttpContext.Session.SetString("USER", result.Result);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
@@ -74,12 +81,17 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
-            HttpContext.Session.SetString("USER", "");
+            //HttpContext.Session.SetString("USER", "");
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login");
+        }
+        public async Task<ActionResult> Detail(string id)
+        {
+            var user = await _userAPIClient.GetUserById(id);
+            return View(user.Result);
         }
         private ClaimsPrincipal ValidateToken(string token)
         {
@@ -98,5 +110,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 
             return principal;
         }
+
     }
 }

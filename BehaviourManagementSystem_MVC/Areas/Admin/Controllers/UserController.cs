@@ -32,7 +32,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
 
         // GET: UserController/Detail/5
-        public ActionResult Detail(int id)
+        public ActionResult Detail(string id)
         {
             return View();
         }
