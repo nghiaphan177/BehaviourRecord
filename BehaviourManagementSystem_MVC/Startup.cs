@@ -32,7 +32,10 @@ namespace BehaviourManagementSystem_MVC
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
                 });
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
+            });
             //services.AddSession(options =>
             //{
             //    options.Cookie.Name = "BMS";

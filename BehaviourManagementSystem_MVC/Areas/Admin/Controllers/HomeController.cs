@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Policy ="AdminOnly")]
     public class HomeController : Controller
     {
         private readonly IUserAPIClient _IUserAPIClient;
