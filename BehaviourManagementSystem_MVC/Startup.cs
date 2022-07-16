@@ -41,6 +41,7 @@ namespace BehaviourManagementSystem_MVC
 
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
             services.AddTransient<IUserAPIClient, UserAPIClient>();
+            services.AddTransient<IAntecedentEvironmentalAPIClient, AntecedentEvironmentalAPIClient>();
 
             services.AddControllersWithViews();
         }
