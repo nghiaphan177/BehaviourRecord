@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
@@ -10,14 +9,27 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+        private readonly IUserAPIClient _userAPIClient;
+        private readonly IConfiguration _config;
+        public UserController(IUserAPIClient userAPIClient, IConfiguration configuration)
         {
-            return View();
+            _userAPIClient = userAPIClient;
+            _config = configuration;
+        }
+        // GET: UserController
+        public async Task<ActionResult> Index()
+        {
+            var response = await _userAPIClient.GetAllUser();
+            if(response.Success == true)
+            {
+
+                return View(response.Result);
+            }
+            return BadRequest();
         }
 
         // GET: UserController/Detail/5
-        public ActionResult Detail(int id)
+        public ActionResult Detail(string id)
         {
             return View();
         }

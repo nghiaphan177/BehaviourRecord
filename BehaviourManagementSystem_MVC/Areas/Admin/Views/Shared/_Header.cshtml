@@ -1,4 +1,9 @@
-﻿<div class="topbar">
+﻿@using System.Security.Claims
+@{
+    //var base64 = Convert.ToBase64String();
+    //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+<div class="topbar">
     <!-- LOGO -->
     <div class="topbar-left">
         <a href="#" class="logo">
@@ -20,7 +25,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                         <!-- item-->
-                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Hồ sơ</a>
+                        <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle m-r-5"></i> Hồ sơ</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-danger" href="/admin/account/logout"><i class="mdi mdi-power text-danger"></i> Đăng xuất</a>
                     </div>
@@ -127,7 +132,7 @@
                 <li>
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-emoticon"></i><span>Quản lý nâng cấp<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                     <ul class="submenu">
-                        <li><a href="/Admin/MildIntervention">Giai đoạn nhẹ</a></li>
+                        <li><a href="#">Giai đoạn nhẹ</a></li>
                         <li><a href="#">Giai đoạn trung bình</a></li>
                         <li><a href="#">Giai đoạn khắc nghiệt</a></li>
                         <li><a href="#">Giai đoạn phục hồi</a></li>

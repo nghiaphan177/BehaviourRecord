@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
-    public class AnalyzeAntecedentEnvironmentalRequest
-    {
-        [Required]
-        public string Id { get; set; }
-        [Required]
-        public string Content { get; set; }
-    }
+	/// <summary>
+	/// ConfirmEmailRequest view model
+	/// Writer: DuyLH4
+	/// </summary>
+	public class ConfirmEmailRequest
+	{
+		[Required]
+		public string Id { get; set; }
+		[Required]
+		public string Code { get; set; }
+	}
 }

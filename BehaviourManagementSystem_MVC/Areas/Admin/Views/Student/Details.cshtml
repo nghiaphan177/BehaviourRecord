@@ -1,10 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Thông tin chi tiết học sinh";
 }
-@section styles {
+@*@section styles {
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" media="screen">
-}
+    }*@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
@@ -13,160 +12,133 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12 col-6">
+    <div class="col-lg-12 col-12">
         <div class="card m-b-30">
             <div class="card-body">
-                <div class="about-info">
-                    <div class="media m-b-30">
-                        <img class="rounded mr-3" src="~/assets/img/user.jpg" alt="Generic placeholder image">
-                        <div class="media-body">
-                            <ul>
-                                <li>
-                                    <span class="title-span">Họ và tên : </span>
-                                    <span class="info-span">Daisy Parks</span>
-                                </li>
-                                <li>
-                                    <span class="title-span">Địa chỉ : </span>
-                                    <span class="info-span">Quận 9</span>
-                                </li>
-                                <li>
-                                    <span class="title-span">Số điện thoại : </span>
-                                    <span class="info-span">+91 89657 48512</span>
-                                </li>
-                                <li>
-                                    <span class="title-span">Email : </span>
-                                    <span class="info-span">
-                                        <a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection"
-                                           class="__cf_email__"
-                                           data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="title-span">Giới tính : </span>
-                                    <span class="info-span">Male</span>
-                                </li>
-                                <li>
-                                    <span class="title-span">Ngày sinh : </span>
-                                    <span class="info-span">22 Apr 1995</span>
-                                </li>
-                            </ul>
+                <div class="media m-b-30">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6 col-xl-6 text-center">
+                            <img class="rounded img-fluid" src="~/assets/img/user.jpg" alt="Generic placeholder image">
                         </div>
+                        <div class="col-sm-12 col-lg-6 col-xl-6">
+                            <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Họ và tên</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        sadfasdf
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Địa chỉ</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        Quận 9
+                                    </span>
+                                </div>
+                            </div>
+
+                           <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Số điện thoại</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        0946165151
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Email</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        0946165151
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Giới tính</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        0946165151
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-6 mt-2 font-16">Ngày sinh</label>
+                                <div class="col-sm-6 mt-2">
+                                    <span>
+                                        0946165151
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <ul role="tablist" class="nav nav-pills">
-                            <li class="nav-item">
-                                <a href="#tab-4" data-toggle="tab" class="nav-link active">Đánh Giá</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab-5" data-toggle="tab" class="nav-link">Can Thiệp</a>
-                            </li>
+            </div>
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <ul role="tablist" class="nav nav-pills">
+                        <li class="nav-item">
+                            <a href="#tabdanhgia" data-toggle="tab" class="nav-link active">Đánh Giá</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tabcanthiep" data-toggle="tab" class="nav-link">Can Thiệp</a>
+                        </li>
 
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
 
-                    <div class="card-body">
-                        <div class="tab-content pt-0">
-                            <div role="tabpanel" id="tab-4" class="tab-pane fade show active">
-                                <!-- Table Đánh Giá -->
-                                <table class="table table-hover table-center mb-0 datatable">                                  
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Ngày</th>
-                                            <th class="text-center">Thời Gian</th>
-                                            <th class="text-center">Tường Trình</th>
-                                            <th class="text-center">Phân Tích</th>
-                                            <!-- <th>Parent Name</th>
-                                <th>Mobile Number</th> -->
-                                            <th class="text-center">Chi Tiết</th>
-                                            <th class="text-center">Tóm Tắt</th>
-                                            <th class="text-center">Tùy Chọn</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">14/05/2022</td>
-                                            <td class="text-center">
-                                                14:20
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                            </td>
-                                            <!-- <td>Jeffrey Wong</td>
-                                <td>097 3584 5870</td> -->
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
-                                            </td>
-                                            <td class="text-center">911 Deer Ridge Drive,USA</td>
-                                            <td class="text-center">
-                                                <div class="actions">
-                                                    <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div role="tabpanel" id="tabdanhgia" class="tab-pane active">
+                            <!-- Table Đánh Giá -->
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Ngày</th>
+                                        <th class="text-center">Thời Gian</th>
+                                        <th class="text-center">Tường Trình</th>
+                                        <th class="text-center">Phân Tích</th>
+                                        <!-- <th>Parent Name</th>
+                                        <th>Mobile Number</th> -->
+                                        <th class="text-center">Chi Tiết</th>
+                                        <th class="text-center">Tóm Tắt</th>
+                                        <th class="text-center">Tùy Chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">14/05/2022</td>
+                                        <td class="text-center">
+                                            14:20
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
+                                        </td>
+                                        <!-- <td>Jeffrey Wong</td>
+                                        <td>097 3584 5870</td> -->
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
+                                        </td>
+                                        <td class="text-center">911 Deer Ridge Drive,USA</td>
+                                        <td class="text-center">
+                                            <div class="actions">
+                                                <a href="/Admin/Student/AssesetmentStudent" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                    </tbody>
-                                </table>
-                                <nav aria-label="...">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div role="tabpanel" id="tab-5" class="tab-pane fade text-center">
-                                <!-- Table Can Thiêp -->
-                                <table class="table table-hover table-center mb-0 datatable">
-                     
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Ngày</th>
-                                            <th class="text-center">Hồ Sơ</th>
-                                            <th class="text-center">Quản Lí</th>
-                                            <th class="text-center">Ngăn Chặn</th>
-                                            <th class="text-center">Tóm Tắt</th>
-                                            <th class="text-center">Tùy Chọn</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">14/05/2022</td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
-                                            </td>
-                                            <td class="text-center">911 Deer Ridge Drive,USA</td>
-                                            <td class="text-center">
-                                                <div class="actions">
-                                                    <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
+                            <nav aria-label="...">
                                 <ul class="pagination">
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -180,12 +152,65 @@
                                         <a class="page-link" href="#">Next</a>
                                     </li>
                                 </ul>
-                            </div>
-
+                            </nav>
                         </div>
+                        <div role="tabpanel" id="tabcanthiep" class="tab-pane text-center">
+                            <!-- Table Can Thiêp -->
+                            <table class="table table-hover table-center mb-0 datatable">
+
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Ngày</th>
+                                        <th class="text-center">Hồ Sơ</th>
+                                        <th class="text-center">Quản Lí</th>
+                                        <th class="text-center">Ngăn Chặn</th>
+                                        <th class="text-center">Tóm Tắt</th>
+                                        <th class="text-center">Tùy Chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">14/05/2022</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
+                                        </td>
+                                        <td class="text-center">911 Deer Ridge Drive,USA</td>
+                                        <td class="text-center">
+                                            <div class="actions">
+                                                <a href="/Admin/Student/InterventionStudent" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div><!--end row-->

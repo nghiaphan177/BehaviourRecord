@@ -1,17 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Policy ="AdminOnly")]
     public class HomeController : Controller
     {
+        private readonly IUserAPIClient _IUserAPIClient;
+        public HomeController(IUserAPIClient IUserAPIClient)
+        {
+            _IUserAPIClient = IUserAPIClient;
+        }
         // GET: HomeController
         public ActionResult Index()
         {
             return View();
         }
-
 
         // GET: HomeController/Details/5
         public ActionResult Details(int id)

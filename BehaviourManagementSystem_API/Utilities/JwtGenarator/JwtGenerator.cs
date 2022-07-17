@@ -33,12 +33,12 @@ namespace BehaviourManagementSystem_API.Utilities.JwtGenarator
             var claims = new[]
             {
                 new Claim("Id", user.Id.ToString()),
-                new Claim("role",roleNameNormal),
+                new Claim("Role",roleNameNormal),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiry = DateTime.Now.AddHours(1);
+            var expiry = DateTime.Now.AddHours(3);
 
             var token = new JwtSecurityToken(
                 _configuration["Tokens:Issuer"],

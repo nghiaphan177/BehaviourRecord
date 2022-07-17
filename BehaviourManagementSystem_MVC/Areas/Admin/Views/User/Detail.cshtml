@@ -1,7 +1,68 @@
-﻿
-@{
-    ViewData["Title"] = "Thông tin tài khoản";
+﻿@{
+    ViewData["Title"] = "Thông tin người dùng";
 }
+<style>
+    .form-check {
+        position: relative;
+        text-align: left;
+    }
+
+    .form-check-input[type=radio] {
+        border-radius: 50%;
+    }
+
+    .form-check .form-check-input {
+        float: left;
+        margin-left: -1.5em;
+    }
+
+    .form-check, .form-check-input, .form-check-label {
+        cursor: pointer;
+        margin-bottom: 0;
+    }
+
+    .form-check {
+        display: block;
+        min-height: 1.21875rem;
+        padding-left: 1.5em;
+        margin-bottom: 0;
+    }
+
+    .form-check-input:checked {
+        background-color: #7a6fbe;
+        border-color: #7a6fbe;
+    }
+
+    .form-check-input[type=radio] {
+        border-radius: 50%;
+    }
+
+    .form-check-input:checked[type=radio] {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+    }
+
+    .form-check-input {
+        width: 1em;
+        height: 1em;
+        margin-top: 0.25em;
+        vertical-align: top;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px solid #adb5bd;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        -webkit-transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    }
+</style>
+
 
 <div class="row">
     <div class="col-sm-12">
@@ -12,89 +73,92 @@
 </div>
 <div class="card m-b-20">
     <div class="card-body">
-        <form class="" action="#">
-            <div class="form-group">
-                <label>Required</label>
-                <input type="text" class="form-control" required placeholder="Type something" />
-            </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="media m-b-30">
+                    <img class="img-fluid" src="~/images/users/user-4.jpg" alt="Generic placeholder image">
 
-            <div class="form-group">
-                <label>Equal To</label>
-                <div>
-                    <input type="password" id="pass2" class="form-control" required
-                           placeholder="Password" />
                 </div>
-                <div class="m-t-10">
-                    <input type="password" class="form-control" required
-                           data-parsley-equalto="#pass2"
-                           placeholder="Re-Type Password" />
-                </div>
+                <h4 class="font-18 m-0">Humberto D. Champion</h4>
+                <p class="text-muted">support@domain.com</p>
             </div>
+            <div class="col-sm-9">
+                <form class="" action="#">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tên đăng nhập</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="date" id="example-date-input">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-6">
+                            <input data-parsley-type="number" type="text"
+                                   class="form-control" required />
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label>E-Mail</label>
-                <div>
-                    <input type="email" class="form-control" required
-                           parsley-type="email" placeholder="Enter a valid e-mail" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label>URL</label>
-                <div>
-                    <input parsley-type="url" type="url" class="form-control"
-                           required placeholder="URL" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Digits</label>
-                <div>
-                    <input data-parsley-type="digits" type="text"
-                           class="form-control" required
-                           placeholder="Enter only digits" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Number</label>
-                <div>
-                    <input data-parsley-type="number" type="text"
-                           class="form-control" required
-                           placeholder="Enter only numbers" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Alphanumeric</label>
-                <div>
-                    <input data-parsley-type="alphanum" type="text"
-                           class="form-control" required
-                           placeholder="Enter alphanumeric value" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Textarea</label>
-                <div>
-                    <textarea required class="form-control" rows="5"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Vai trò</label>
+                        <select class="form-control">
+                            <option>Select</option>
+                            <option>Large select</option>
+                            <option>Small select</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <div>
+                            <textarea required class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="formRadios" id="formRadios1" checked="">
+                                <label class="form-check-label" for="formRadios1">
+                                    Nam
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
+                                <label class="form-check-label" for="formRadios2">
+                                    Nữ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="form-group">
+                        <div>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Submit
-                    </button>
-                    <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                        </button>
+                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
                         Cancel
-                    </button>
-                </div>
+                        </button>
+                        </div>
+                        </div>*@
+                </form>
             </div>
-        </form>
+        </div>
+
 
     </div>
 </div>
 @section scripts{
-    <script src="~/plugins/parsleyjs/parsley.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form').parsley();
-        });
-    </script>
+<script src="~/plugins/parsleyjs/parsley.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').parsley();
+    });
+</script>
 }
 

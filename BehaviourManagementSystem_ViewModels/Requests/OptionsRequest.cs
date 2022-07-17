@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
-    public class AnalyzeAntecedentActivityRequest
+    public class OptionsRequest
     {
         [Required]
         public string Id { get; set; }
         [Required]
         public string Content { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public DateTime UpdateDate { get; set; }
     }
 }

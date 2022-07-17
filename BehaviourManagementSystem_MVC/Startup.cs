@@ -1,7 +1,11 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Account;
+using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +13,7 @@ using System;
 
 namespace BehaviourManagementSystem_MVC
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -26,17 +30,27 @@ namespace BehaviourManagementSystem_MVC
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
+                    options.LogoutPath = "/Admin/Account/Logout";
                 });
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
+            });
             services.AddSession(options =>
             {
                 options.Cookie.Name = "BMS";
                 options.IdleTimeout = new TimeSpan(1, 0, 0);
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
+            services.AddTransient<IUserAPIClient, UserAPIClient>();
+            services.AddTransient<IAntecedentEvironmentalAPIClient, AntecedentEvironmentalAPIClient>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
         }
@@ -58,9 +72,10 @@ namespace BehaviourManagementSystem_MVC
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -72,6 +87,7 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
+
                 endpoints.MapDefaultControllerRoute();
 
                 endpoints.MapControllerRoute(
