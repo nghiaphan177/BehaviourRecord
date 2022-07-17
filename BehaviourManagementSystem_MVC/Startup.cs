@@ -1,3 +1,4 @@
+using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -39,11 +40,11 @@ namespace BehaviourManagementSystem_MVC
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
             });
-            //services.AddSession(options =>
-            //{
-            //    options.Cookie.Name = "BMS";
-            //    options.IdleTimeout = new TimeSpan(1, 0, 0);
-            //});
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "BMS";
+                options.IdleTimeout = new TimeSpan(1, 0, 0);
+            });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
@@ -78,7 +79,7 @@ namespace BehaviourManagementSystem_MVC
 
             app.UseAuthorization();
 
-            //app.UseSession();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

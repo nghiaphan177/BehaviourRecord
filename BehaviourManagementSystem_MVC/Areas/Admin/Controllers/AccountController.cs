@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Account;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -56,12 +57,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             }
             
             var userPrincipal = ValidateToken(result.Result);
-            var stream = result.Result;
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(stream);
-            var tokenS = jsonToken as JwtSecurityToken;
-
-            //var role = tokenS.Payload["Role"];
 
             var authProperties = new AuthenticationProperties
             {
@@ -71,7 +66,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             {
                 authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
             }
-            //HttpContext.Session.SetString("USER", result.Result);
+            HttpContext.Session.SetString("Token", result.Result);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
