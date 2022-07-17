@@ -70,7 +70,7 @@ namespace BehaviourManagementSystem_API.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet("ResenConfirmEmail{email}"), AllowAnonymous]
+		[HttpGet("ResenConfirmEmail"), AllowAnonymous]
 		public async Task<IActionResult> ResenConfirmEmail(string email)
 		{
 			if(email.CheckRequest())
@@ -83,7 +83,7 @@ namespace BehaviourManagementSystem_API.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet("ForgotPassword{userNameOfEmail}"), AllowAnonymous]
+		[HttpGet("ForgotPassword"), AllowAnonymous]
 		public async Task<IActionResult> ForgotPassword(string userNameOfEmail)
 		{
 			if(userNameOfEmail.CheckRequest())
@@ -111,7 +111,7 @@ namespace BehaviourManagementSystem_API.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet("CheckEmailConfirmed{email}"),AllowAnonymous]
+		[HttpGet("CheckEmailConfirmed"),AllowAnonymous]
 		public async Task<IActionResult> CheckEmailConfirmed(string email)
 		{
 			if(email.CheckRequest())
@@ -146,7 +146,7 @@ namespace BehaviourManagementSystem_API.Controllers
 			return Ok(result);
 		}
 
-		[HttpGet("User{id}")]
+		[HttpGet("User")]
 		public async Task<IActionResult> GetUser(string id)
 		{
 			if(!ModelState.IsValid || id.CheckRequest())
@@ -183,7 +183,7 @@ namespace BehaviourManagementSystem_API.Controllers
 			return Ok(response);
 		}
 		
-		[HttpDelete("DeleteUserProfile{id}")]
+		[HttpDelete("DeleteUserProfile")]
 		public async Task<IActionResult> DeleteUserProfile(string id)
 		{
 			if(id.CheckRequest())
