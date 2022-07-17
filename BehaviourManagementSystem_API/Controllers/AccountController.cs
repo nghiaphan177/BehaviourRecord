@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
 {
+    /// <summary>
+    /// AccountController
+    /// Writer: DuyLH4
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
-    public class AccountController : ControllerBase
+	//[Authorize]
+	public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService)
@@ -18,7 +22,7 @@ namespace BehaviourManagementSystem_API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -36,6 +40,37 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _accountService.Register(request);
+
+            if(!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+		[HttpPost("VerifyEmail"),AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail([FromBody] ConfirmEmailRequest request)
+		{
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _accountService.VerifyEmail(request);
+
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
         [HttpGet("get-all-user")]
         public async Task<IActionResult> GetAllUser()
         {
@@ -50,6 +85,9 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("get-user")]
         public async Task<IActionResult> GetUser(string id)
         {
+            if(!ModelState.IsValid || id.CheckRequest())
+                return BadRequest(ModelState);
+
             var result = await _accountService.GetUser(id);
 
             if(result.Result == null)
