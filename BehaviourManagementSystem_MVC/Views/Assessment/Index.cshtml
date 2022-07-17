@@ -124,51 +124,69 @@
                                 <div class="tab-pane" id="pt-tiende">
                                     <form action="#">
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2"></label>
-                                            <div class="col-md-10">
-                                                <select class="form-control">
-                                                    <option>--Chọn Cảm Xúc--</option>
-                                                    <option>Vui</option>
-                                                    <option>Buồn</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="" />
+                                                <input type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                                <ul class="dropdown-menu" id="multiselect-drop-camxuc">
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Cảm Xúc 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 1</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Cảm Xúc 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 2</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2"></label>
+                                            <label class="col-form-label col-md-2">Môi Trường</label>
                                             <div class="col-md-10">
-                                                <select class="form-control">
-                                                    <option>--Chọn Bối cảnh môi trường--</option>
-                                                    <option>Vui</option>
-                                                    <option>Buồn</option>
-                                                </select>
+                                                <input type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                                <ul class="dropdown-menu" id="multiselect-drop-moitruong">
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Môi Trường 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 1</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Môi Trường 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 2</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Môi trường</label>
+                                            <label class="col-form-label col-md-2">Hành Động</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2"></label>
-                                            <div class="col-md-10">
-                                                <select class="form-control">
-                                                    <option>--Chọn bối cảnh hành động--</option>
-                                                    <option>Vui</option>
-                                                    <option>Buồn</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Hành động</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="" />
+                                                <input type="text" id="hanhdong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                                <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Hành Động 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 1</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input value="Hành Động 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 2</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="btn-margin">
