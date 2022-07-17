@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_API.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -14,11 +15,11 @@ namespace BehaviourManagementSystem_API.Controllers
 			_notificationService = notificationService;
 		}
 
-		[HttpGet("noall/{id}")]
+		[HttpGet("Notification/{id}")]
 		public async Task<IActionResult> GetAll(string id)
 		{
-			if(!ModelState.IsValid)
-				return BadRequest(ModelState);
+			if(id.CheckRequest())
+				return BadRequest(id);
 
 			var response = await _notificationService.GetAllByUserId(id);
 

@@ -5,6 +5,7 @@ using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -100,6 +101,7 @@ namespace BehaviourManagementSystem_API
 			});
 
 			services.AddControllers();
+			services.AddControllersWithViews();
 
 			services.AddSwaggerGen(c =>
 			{
@@ -160,6 +162,10 @@ namespace BehaviourManagementSystem_API
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}

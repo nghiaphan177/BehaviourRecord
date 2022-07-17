@@ -1,4 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
     public class AccountController : Controller
     {
         private readonly IAccountAPIClient _accountAPIClient;
