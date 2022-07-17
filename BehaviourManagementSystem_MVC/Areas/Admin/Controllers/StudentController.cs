@@ -84,5 +84,13 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 return View();
             }
         }
+        public IActionResult AssesetmentStudent(string id)
+        {
+            return View();
+        }
+        public IActionResult InterventionStudent(string id)
+        {
+            return View();
+        }
     }
 }
