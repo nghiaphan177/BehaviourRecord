@@ -9,11 +9,13 @@
     <div class="col-sm-12">
         <div class="page-title-box">
             <h4 class="page-title">@ViewData["Title"]</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);"></a>Phân tích sự cố</li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
         </div>
-        <div class="col-auto text-right float-right ml-auto">
-            <a href="~/Admin/AnalyzeAntecedentPerceived/Download/" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
-            <a href="~/Admin/AnalyzeAntecedentPerceived/Create/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-        </div>
+        
     </div>
 </div>
 <div class="row">
@@ -59,6 +61,9 @@
         </div>
     </div> <!-- end col -->
 </div> <!-- end row -->
+<div class="col-auto text-right float-right ml-auto">
+    <a href="~/Admin/AnalyzeAntecedentEnviromental/Create/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+</div>
 
 
 @section scripts {
