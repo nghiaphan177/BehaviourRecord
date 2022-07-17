@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace BehaviourManagementSystem_API.Controllers
     /// <summary>
     /// AnalyzeAntecedentEnvironmental
     /// writter: HoangDDN
-    /// Description: List,Add,Edit,Delete
+    /// Description: List,Add,Edit,Delete,GetbyId
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -24,6 +25,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpGet("get-all")]
+        //[Authorize(Roles="admin,teacher")]
         //Lấy danh sách tiền đề Environmental
         public async Task<IActionResult> GetAll()
         {
@@ -34,8 +36,23 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(response);
         }
+        [HttpGet("get-by-id{id}")]
+        //[Authorize]
+        //Lấy 1 tiền đề Environmental
+        public async Task<IActionResult> GetById(string id)
+        {
+            if (!ModelState.IsValid || id.CheckRequest())
+                return BadRequest(ModelState);
+            var response = await _analyzeAntecedentEnvironmentalService.GetById(id);
+            if (response.Result == null)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
         [HttpPost("create")]
+        //[Authorize(Roles="admin")]
         //Tạo mới tiền đề Environmental
         public async Task<IActionResult> Create(string content)
         {
@@ -50,9 +67,10 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update{id}")]
+        //[Authorize(Roles="admin")]
         //Chỉnh sửa tiền đề Environmental
-        public async Task<IActionResult> Update([FromBody] AnalyzeAntecedentEnvironmentalRequest request)
+        public async Task<IActionResult> Update([FromBody] OptionsRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -65,7 +83,8 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete{id}")]
+        //[Authorize(Roles="admin")]
         //Xóa tiền đề Environmental
         public async Task<IActionResult> Delete(string id)
         {

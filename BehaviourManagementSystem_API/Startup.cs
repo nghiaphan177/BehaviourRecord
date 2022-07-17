@@ -73,6 +73,10 @@ namespace BehaviourManagementSystem_API
 			services.AddScoped<IAnalyzeAntecedentPerceiveService, AnalyzeAntecedentPerceiveService>();
 			services.AddScoped<IAnalyzeAntecedentEnvironmentalService, AnalyzeAntecedentEnvironmentalService>();
 			services.AddScoped<IAnalyzeAntecedentActivityService, AnalyzeAntecedentActivityService>();
+			services.AddScoped<IProfileMildService, ProfileMildService>();
+			services.AddScoped<IProfileModerateService, ProfileModerateService>();
+			services.AddScoped<IProfileExtremeService, ProfileExtremeService>();
+			services.AddScoped<IProfileRecoveryService, ProfileRecoveryService>();
 
 			string issuer = Configuration.GetValue<string>("Tokens:Issuer");
 			string signingKey = Configuration.GetValue<string>("Tokens:Key");
