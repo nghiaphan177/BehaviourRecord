@@ -2,7 +2,6 @@
 using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
-using BehaviourManagementSystem_ViewModels.Responses.ResponsesModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<AnalyzeAntecedentEnvironmental>>> Create(string content)
         {
-            if (await _context.AnalyzeAntecedentEnvironmentals.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Dữ liệu đã tồn tại");
 
             await _context.AnalyzeAntecedentEnvironmentals.AddAsync(new AnalyzeAntecedentEnvironmental()
@@ -52,15 +51,15 @@ namespace BehaviourManagementSystem_API.Services
               await _context.AnalyzeAntecedentEnvironmentals.ToListAsync());
         }
 
-        public async Task<ResponseResult<List<AnalyzeAntecedentEnvironmentalResponse>>> GetAll()
+        public async Task<ResponseResult<List<OptionsRequest>>> GetAll()
         {
             if (!await _context.AnalyzeAntecedentEnvironmentals.AnyAsync())
-                return new ResponseResultError<List<AnalyzeAntecedentEnvironmentalResponse>>("Hiện tại không có dữ liệu");
+                return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var enviroment = await _context.AnalyzeAntecedentEnvironmentals.ToListAsync();
-            var result = new List<AnalyzeAntecedentEnvironmentalResponse>();
+            var result = new List<OptionsRequest>();
             foreach (var item in enviroment)
             {
-                result.Add(new AnalyzeAntecedentEnvironmentalResponse()
+                result.Add(new OptionsRequest()
                 {
                     Id = item.Id.ToString(),
                     Content = item.Content,
@@ -68,14 +67,28 @@ namespace BehaviourManagementSystem_API.Services
                     UpdateDate = item.UpdateDate.GetValueOrDefault()
                 });
             }
-            return new ResponseResultSuccess<List<AnalyzeAntecedentEnvironmentalResponse>>(result);
+            return new ResponseResultSuccess<List<OptionsRequest>>(result);
+        }
+
+        public async Task<ResponseResult<OptionsRequest>> GetById(string id)
+        {
+            if (!await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Id.ToString() == id))
+                return new ResponseResultError<OptionsRequest>("Id không tồn tại");
+            var obj = await _context.AnalyzeAntecedentEnvironmentals.FindAsync(new Guid(id));
+            return new ResponseResultSuccess<OptionsRequest>(new OptionsRequest()
+            {
+                Id = obj.Id.ToString(),
+                Content = obj.Content,
+                CreateDate = obj.CreateDate.Value,
+                UpdateDate = obj.UpdateDate.GetValueOrDefault()
+            });
         }
 
         public async Task<ResponseResult<List<AnalyzeAntecedentEnvironmental>>> Update(string id, string content)
         {
             if (!await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Id không tồn tại");
-            if (await _context.AnalyzeAntecedentEnvironmentals.CountAsync(prop => prop.Content == content) > 0)
+            if (await _context.AnalyzeAntecedentEnvironmentals.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<AnalyzeAntecedentEnvironmental>>("Dữ liệu đã tồn tại");
 
             var obj = await _context.AnalyzeAntecedentEnvironmentals.FindAsync(new Guid(id));

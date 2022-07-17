@@ -32,6 +32,7 @@
 			if(str.Length < 6 || str.Length > 18)
 				return false;
 			var count = 0;
+
 			foreach(var item in str)
 			{
 				if(char.IsDigit(item))
@@ -39,24 +40,36 @@
 					count++;
 					break;
 				}
+			}
+
+			foreach(var item in str)
+			{
 				if(char.IsUpper(item))
 				{
 					count++;
 					break;
 				}
+			}
+
+			foreach(var item in str)
+			{
 				if(char.IsLower(item))
 				{
 					count++;
 					break;
 				}
+			}
+
+			foreach(var item in str)
+			{
 				if(char.IsLetterOrDigit(item))
 				{
 					count++;
 					break;
 				}
-				if(count >= 4)
-					return true;
 			}
+			if(count >= 4)
+				return true;
 			return false;
 		}
 	}

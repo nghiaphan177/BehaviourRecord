@@ -18,7 +18,7 @@ namespace BehaviourManagementSystem_API.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet("get-role-name-by-user-id")]
+        [HttpGet("RoleOfUser{id}")]
         public async Task<IActionResult> GetRoleNameByUserId(string id)
         {
             if (!ModelState.IsValid)

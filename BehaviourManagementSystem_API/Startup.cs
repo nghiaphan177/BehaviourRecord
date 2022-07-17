@@ -5,6 +5,7 @@ using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -72,6 +73,10 @@ namespace BehaviourManagementSystem_API
 			services.AddScoped<IAnalyzeAntecedentPerceiveService, AnalyzeAntecedentPerceiveService>();
 			services.AddScoped<IAnalyzeAntecedentEnvironmentalService, AnalyzeAntecedentEnvironmentalService>();
 			services.AddScoped<IAnalyzeAntecedentActivityService, AnalyzeAntecedentActivityService>();
+			services.AddScoped<IProfileMildService, ProfileMildService>();
+			services.AddScoped<IProfileModerateService, ProfileModerateService>();
+			services.AddScoped<IProfileExtremeService, ProfileExtremeService>();
+			services.AddScoped<IProfileRecoveryService, ProfileRecoveryService>();
 
 			string issuer = Configuration.GetValue<string>("Tokens:Issuer");
 			string signingKey = Configuration.GetValue<string>("Tokens:Key");
@@ -100,6 +105,7 @@ namespace BehaviourManagementSystem_API
 			});
 
 			services.AddControllers();
+			services.AddControllersWithViews();
 
 			services.AddSwaggerGen(c =>
 			{
@@ -160,6 +166,10 @@ namespace BehaviourManagementSystem_API
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}

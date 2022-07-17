@@ -6,30 +6,31 @@ using Microsoft.Extensions.Hosting;
 
 namespace BehaviourManagementSystem_API
 {
-    /// <summary>
-    /// Writer: DuyLH4
-    /// </summary>
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-            // use migrate db
-            //var host = CreateHostBuilder(args).Build();
-            //// migrate db when run host - Writer DuyLH4
-            //var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
-            //using(var db = services.CreateScope().ServiceProvider.GetService<ApplicationDbContext>())
-            //{
-            //    db.Database.Migrate();
-            //}
-            //host.Run();
-        }
+	/// <summary>
+	/// Writer: DuyLH4
+	/// </summary>
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			CreateHostBuilder(args).Build().Run();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+			//var host = CreateHostBuilder(args).Build();
+
+			// migrate db when run host - Writer DuyLH4
+			//var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+			//using(var db = services.CreateScope().ServiceProvider.GetService<ApplicationDbContext>())
+			//{
+			//	db.Database.Migrate();
+			//}
+			//host.Run();
+		}
+
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseStartup<Startup>();
+				});
+	}
 }
