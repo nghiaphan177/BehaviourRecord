@@ -10,6 +10,10 @@
         <div class="page-title-box">
             <h4 class="page-title">@ViewData["Title"]</h4>
         </div>
+        <div class="col-auto text-right float-right ml-auto">
+            <a href="~/Admin/AnalyzeAntecedentPerceived/Download/" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+            <a href="~/Admin/AnalyzeAntecedentPerceived/Create/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -22,22 +26,22 @@
                         <table id="tech-companies-1" class="table  table-striped">
                             <thead>
                                 <tr>
-                                    <th >Số Thứ Tự</th>
-                                    <th data-priority="1">Nội dung</th>
-                                    <th data-priority="1">Tùy Chọn</th>
+                                    <th width="2%">Số Thứ Tự</th>
+                                    <th data-priority="1" style="text-align:center;">Nội dung</th>
+                                    <th data-priority="6" width="2%">Tùy Chọn</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>Tức giận</td>
+                                    <td class="text-center">Ngoài trời</td>
                                     <td class="text-right">
                                         <div class="actions">
-                                            <a href="~/Admin/AnalyzeAntecedentEnviromental/Edit/{id}" class="btn btn-sm bg-success-light mr-2">
+                                            <a href="~/Admin/AnalyzeAntecedentEnviromental/Edit/" class="btn btn-sm bg-success-light mr-2">
                                             <i class="fas fa-pen"></i>
                                             </a>
-                                            <a href="~/Admin/AnalyzeAntecedentEnviromental/Delete/{id}" class="btn btn-sm bg-danger-light">
+                                            <a href="~/Admin/Analyze/AntecedentEnviromental/Delete/" class="btn btn-sm bg-danger-light">
                                             <i class="fas fa-trash"></i>
                                             </a>
                                         </div>

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Danh sách trạng thái cảm xúc cá nhân";
 }
 
@@ -8,8 +7,13 @@
 }
 <div class="row">
     <div class="col-sm-12">
+
         <div class="page-title-box">
             <h4 class="page-title">@ViewData["Title"]</h4>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            <a href="~/Admin/AnalyzeAntecedentPerceived/Download/" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+            <a href="~/Admin/AnalyzeAntecedentPerceived/Create/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -17,7 +21,7 @@
     <div class="col-12">
         <div class="card m-b-20">
             <div class="card-body">
-
+                
                 <div class="table-rep-plugin">
                     <div class="table-responsive b-0" data-pattern="priority-columns">
                         <table id="tech-companies-1" class="table  table-striped">
@@ -32,17 +36,18 @@
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td><span style="font-size:14px; text-align:center;" class="badge badge-info">Tức giận quá</span></td>
+                                    <td class="text-center">Tức giận</td>
                                     <td class="text-right">
                                         <div class="actions">
-                                            <a href="/admin/AnalyzeAntecedentPerceived/Edit/" class="btn btn-sm bg-success-light mr-2">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                            <a href="/admin/AnalyzeAntecedentPerceived/Delete/" class="btn btn-sm bg-danger-light">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <a href="~/Admin/AnalyzeAntecedentPerceived/Edit/" class="btn btn-sm bg-success-light mr-2">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="~/Admin/AnalyzeAntecedentPerceived/Delete/" class="btn btn-sm bg-danger-light">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
                                         </div>
                                     </td>
+
                                 </tr>
 
                             </tbody>
@@ -60,5 +65,4 @@
 @section scripts {
     <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
 }
-
 
