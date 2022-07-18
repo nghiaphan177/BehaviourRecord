@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles="admin")]
     public class MildInterventionController : Controller
     {
         private readonly IOptionAPIClient _IOptionAPIClient;
