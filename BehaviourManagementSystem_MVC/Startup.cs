@@ -36,6 +36,10 @@ namespace BehaviourManagementSystem_MVC
                     options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
+                    options.LoginPath = "/Student/Account/Login";
+                    options.LogoutPath = "/Student/Account/Logout";
+
+
                 });
             services.AddAuthorization(options =>
             {
@@ -89,6 +93,10 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
+                endpoints.MapAreaControllerRoute(
+                         name: "StudentApp",
+                         areaName: "StudentApp",
+                         pattern: "StudentApp/{controller=Home}/{action=Index}");
 
                 endpoints.MapDefaultControllerRoute();
 
@@ -102,6 +110,7 @@ namespace BehaviourManagementSystem_MVC
                 );
                 
             });
+            
         }
     }
 }

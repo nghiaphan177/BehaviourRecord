@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Danh sách bối cảnh môi trường";
+}
+
+@section styles {
+    <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">@ViewData["Title"]</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);"></a>Phân tích sự cố</li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+            </ol>
+        </div>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+
+                <div class="table-rep-plugin">
+                    <div class="table-responsive b-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table  table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="2%">Số Thứ Tự</th>
+                                    <th data-priority="1" style="text-align:center;">Nội dung</th>
+                                    <th data-priority="6" width="2%">Tùy Chọn</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td class="text-center">Ngoài trời</td>
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            <a href="~/Admin/AnalyzeAntecedentEnviromental/Edit/" class="btn btn-sm bg-success-light mr-2">
+                                            <i class="fas fa-pen"></i>
+                                            </a>
+                                            <a href="~/Admin/Analyze/AntecedentEnviromental/Delete/" class="btn btn-sm bg-danger-light">
+                                            <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+<div class="col-auto text-right float-right ml-auto">
+    <a href="~/Admin/AnalyzeAntecedentEnviromental/Create/" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+</div>
+
+
+@section scripts {
+    <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
+}
+
