@@ -1,6 +1,6 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
-using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_MVC.APIIntegration.Profile;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -36,8 +36,8 @@ namespace BehaviourManagementSystem_MVC
                     options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
-                    options.LoginPath = "/Student/Account/Login";
-                    options.LogoutPath = "/Student/Account/Logout";
+                    options.LoginPath = "/student-login";
+                    options.LogoutPath = "/student-logout";
 
 
                 });
@@ -54,10 +54,14 @@ namespace BehaviourManagementSystem_MVC
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAccountAPIClient, AccountAPIClient>();
             services.AddTransient<IUserAPIClient, UserAPIClient>();
-            services.AddTransient<IAntecedentEvironmentalAPIClient, AntecedentEvironmentalAPIClient>();
+            services.AddTransient<IAntecedentEnvironmentalAPIClient, AntecedentEnvironmentalAPIClient>();
+            services.AddTransient<IAntecedentActivityAPIClient, AntecedentActivityAPIClient>();
+            services.AddTransient<IAntecedentPerceivedAPIClient, AntecedentPerceivedAPIClient>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IOptionAPIClient, ProfileMildAPIClient>();
-
+            services.AddTransient<IMildOptionAPIClient, ProfileMildAPIClient>();
+            services.AddTransient<IModerateOptionAPIClient, ProfileModerateAPIClient>();
+            services.AddTransient<IExtremeOptionAPIClient, ProfileExtremeAPIClient>();
+            services.AddTransient<IRecoveryOptionAPIClient, ProfileRecoveryAPIClient>();
             services.AddControllersWithViews();
         }
 
@@ -93,11 +97,6 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
-                //endpoints.MapAreaControllerRoute(
-                //         name: "StudentApp",
-                //         areaName: "StudentApp",
-                //         pattern: "StudentApp/{controller=Home}/{action=Index}");
-
                 endpoints.MapDefaultControllerRoute();
 
                 endpoints.MapControllerRoute(

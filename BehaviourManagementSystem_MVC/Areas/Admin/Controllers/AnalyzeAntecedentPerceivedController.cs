@@ -1,85 +1,88 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AnalyzeAntecedentPerceivedController : Controller
     {
-        // GET: AnalyzeAntecedentPerceivedController
-        public ActionResult Index()
+        private readonly IAntecedentPerceivedAPIClient _IAntecedentPerceivedAPIClient;
+        public AnalyzeAntecedentPerceivedController(IAntecedentPerceivedAPIClient IAntecedentOptionAPIClient)
         {
-            return View();
+            _IAntecedentPerceivedAPIClient = IAntecedentOptionAPIClient;
         }
-
-        // GET: AnalyzeAntecedentPerceivedController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AnalyzeAntecedentPerceivedController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AnalyzeAntecedentPerceivedController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Index()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _IAntecedentPerceivedAPIClient.GetAll();
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                throw;
             }
-        }
-
-        // GET: AnalyzeAntecedentPerceivedController/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
 
-        // POST: AnalyzeAntecedentPerceivedController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AnalyzeAntecedentPerceivedController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Create()
         {
             return View();
         }
-
-        // POST: AnalyzeAntecedentPerceivedController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> CreateAsync(string content)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _IAntecedentPerceivedAPIClient.Create(content);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index", response.Result);
+                }
             }
-            catch
+            catch (Exception)
             {
-                return View();
+
+                throw;
             }
+            return RedirectToAction("Index");
+
+
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(string id)
+        {
+            try
+            {
+                var response = await _IAntecedentPerceivedAPIClient.Delete(id);
+                if (response.Success == true)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
         }
     }
 }

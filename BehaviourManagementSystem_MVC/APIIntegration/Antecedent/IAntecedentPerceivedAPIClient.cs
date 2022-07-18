@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.APIIntegration
 {
-    public interface IAntecedentEvironmentalAPIClient
+    public interface IAntecedentPerceivedAPIClient
     {
         Task<ResponseResult<List<OptionsRequest>>> GetAll();
         Task<ResponseResult<List<OptionsRequest>>> Create(string content);

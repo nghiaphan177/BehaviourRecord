@@ -1,4 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Profile;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class MildInterventionController : Controller
+    public class AnalyzeAntecedentActivityController : Controller
     {
-        private readonly IMildOptionAPIClient _IMildOptionAPIClient;
-        public MildInterventionController(IMildOptionAPIClient IMildOptionAPIClient)
+        private readonly IAntecedentActivityAPIClient _IAntecedentActivityAPIClient;
+        public AnalyzeAntecedentActivityController(IAntecedentActivityAPIClient IAntecedentActivityAPIClient)
         {
-            _IMildOptionAPIClient = IMildOptionAPIClient;
+            _IAntecedentActivityAPIClient = IAntecedentActivityAPIClient;
         }
         public async Task<IActionResult> Index()
         {
             try
             {
-                var response = await _IMildOptionAPIClient.GetAll();
+                var response = await _IAntecedentActivityAPIClient.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -44,10 +44,10 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IMildOptionAPIClient.Create(content);
+                var response = await _IAntecedentActivityAPIClient.Create(content);
                 if (response.Success == true)
                 {
-                    return RedirectToAction("Index",response.Result);
+                    return RedirectToAction("Index", response.Result);
                 }
             }
             catch (Exception)
@@ -69,7 +69,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IMildOptionAPIClient.Delete(id);
+                var response = await _IAntecedentActivityAPIClient.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new

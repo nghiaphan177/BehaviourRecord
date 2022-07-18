@@ -3,9 +3,9 @@ using BehaviourManagementSystem_ViewModels.Responses.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileMild
+namespace BehaviourManagementSystem_MVC.APIIntegration.Profile
 {
-    public interface IOptionAPIClient
+    public interface IExtremeOptionAPIClient
     {
         Task<ResponseResult<List<OptionsRequest>>> GetAll();
         Task<ResponseResult<OptionsRequest>> Get(string id);

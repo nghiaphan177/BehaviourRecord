@@ -15,7 +15,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             _IUserAPIClient = IUserAPIClient;
         }
         // GET: HomeController
-        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View();

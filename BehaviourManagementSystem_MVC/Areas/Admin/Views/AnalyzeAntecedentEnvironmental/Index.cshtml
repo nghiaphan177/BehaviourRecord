@@ -12,11 +12,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
-            <h4 class="page-title">Giai Đoạn Vừa Phải</h4>
+            <h4 class="page-title">Bối Cảnh Môi Trường</h4>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0);">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0);">Giai đoạn nâng cấp</a></li>
-                <li class="breadcrumb-item active">Giai đoạn nâng cấp vừa phải</li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lí phân tích sự cố</a></li>
+                <li class="breadcrumb-item active">Bối Cảnh Môi Trường</li>
             </ol>
         </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="col-12">
         <div class="card m-b-20">
             <div class="card-body">
-                <button type="button" data-toggle="modal" data-target=".modal-CreateModerate" class="btn btn-primary waves-effect waves-light">Thêm</button>
+                <button type="button" data-toggle="modal" data-target=".modal-CreateEnvironmental" class="btn btn-primary waves-effect waves-light">Thêm</button>
                 @if (Model != null)
                 {
                     <div class="table-rep-plugin">
@@ -34,27 +34,21 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th>Số Thứ Tự</th>
-                                        <th data-priority="1">Tên Giai Đoạn</th>
+                                        <th data-priority="1">Nội Dung</th>
                                         <th data-priority="6">Tùy Chọn</th>
-
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     @for (var i = 0; i < Model.Count; i++)
                                     {
-                                        <tr id="Moderate-@Model[i].Id">
+                                        <tr id="mild-@Model[i].Id">
 
                                             <td>@(i+1)</td>
                                             <td>@Model[i].Content</td>
                                             <td>
-                                                <a href="/Admin/ModerateIntervention/Edit/@Model[i].Id">
-                                                    <button type="button" class="btn btn-warning waves-effect waves-light">Sửa</button>
-                                                </a>
-                                                <button onclick=" deleteModerate('@Model[i].Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                                                <button onclick="#" type="button" class="btn btn-warning waves-effect waves-light">Sửa</button>
+                                                <button onclick=" deleteEnvironmental('@Model[i].Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa</button>
                                             </td>
-
-
-
                                         </tr>
                                     }
 
@@ -68,18 +62,18 @@
                 {
                     <p class="text-center">Không có dữ liệu</p>
                 }
-                <div class="modal modal-CreateModerate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal modal-CreateEnvironmental" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title mt-0">Thêm Giai Đoạn Vừa Phải</h5>
+                                <h5 class="modal-title mt-0">Thêm Bối Cảnh Môi Trường</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="ModerateIntervention" asp-area="Admin">
+                                <form method="post" asp-action="Create" asp-controller="AnalyzeAntecedentEnvironmental" asp-area="Admin">
                                     <div class="form-group">
-                                        <label>Tên Giai Đoạn</label>
-                                        <input name="content" type="text" class="form-control" required placeholder="Điền Tên Giai Đoạn..." />
+                                        <label>Bối Cảnh Môi Trường</label>
+                                        <input name="content" type="text" class="form-control" required placeholder="Điền Nội Dung..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -106,7 +100,7 @@
 @*<script src="~/js/sweet-alert.init.js"></script>*@
 <script>
     //Warning Message
-    function deleteModerate(id) {
+    function deleteEnvironmental(id) {
         swal({
             title: 'Bạn đã chắc chắn?',
             text: "Xóa trường này!",
@@ -117,7 +111,7 @@
             confirmButtonText: 'Yes!'
         }).then(function () {
             $.ajax({
-                url: "ModerateIntervention/delete",
+                url: "AnalyzeAntecedentEnvironmental/delete",
                 data: { "id": id },
                 type: "DELETE",
                 success: function (result) {
@@ -127,7 +121,7 @@
                             '',
                             'success'
                         ),
-                            $("#Moderate-" + id).remove();
+                            $("#mild-" + id).remove();
                     }
                 }
             })
