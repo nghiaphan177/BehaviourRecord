@@ -23,7 +23,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IOptionAPIClient.GetAll();
                 if (response.Success == true)
                 {
-                    return View(response.Result.OrderByDescending(r=>r.CreateDate));
+                    return View(response.Result);
                 }
             }
             catch (Exception)

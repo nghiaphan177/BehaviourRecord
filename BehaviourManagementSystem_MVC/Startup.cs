@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using System;
 
 namespace BehaviourManagementSystem_MVC
@@ -31,17 +32,28 @@ namespace BehaviourManagementSystem_MVC
             services.AddHttpClient();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+                .AddCookie("Cookies",options =>
                 {
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/Account/Login";
-                    options.LoginPath = "/admin/admin-login";
+                    options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
-                    options.LoginPath = "/Student/Account/Login";
-                    options.LogoutPath = "/Student/Account/Logout";
+                    //options.LoginPath = "/Student/Account/Login";
+                    //options.LogoutPath = "/Student/Account/Logout";
+                }).AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
+                {
+                    // runs on each request
+                    options.ForwardDefaultSelector = context =>
+                    {
+                        // filter by auth type
+                        string authorization = context.Request.Headers[HeaderNames.Authorization];
+                        if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
+                            return "Bearer";
 
-
+                        // otherwise always check for cookie auth
+                        return "Cookies";
+                    };
                 });
             services.AddAuthorization(options =>
             {

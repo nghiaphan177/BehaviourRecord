@@ -30,7 +30,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             _userAPIClient = userAPIClient;
             _config = configuration;
         }
-        [Route("/admin-login")]
         public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
         {
             await HttpContext.SignOutAsync(
