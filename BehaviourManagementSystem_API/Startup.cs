@@ -77,6 +77,8 @@ namespace BehaviourManagementSystem_API
 			services.AddScoped<IProfileModerateService, ProfileModerateService>();
 			services.AddScoped<IProfileExtremeService, ProfileExtremeService>();
 			services.AddScoped<IProfileRecoveryService, ProfileRecoveryService>();
+			services.AddScoped<IAssessmentService, AssessmentService>();
+			services.AddScoped<IInterventionService, InterventionService>();
 
 			string issuer = Configuration.GetValue<string>("Tokens:Issuer");
 			string signingKey = Configuration.GetValue<string>("Tokens:Key");
@@ -105,7 +107,6 @@ namespace BehaviourManagementSystem_API
 			});
 
 			services.AddControllers();
-			services.AddControllersWithViews();
 
 			services.AddSwaggerGen(c =>
 			{
@@ -149,9 +150,10 @@ namespace BehaviourManagementSystem_API
 			if(env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
 			}
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
 
 			app.UseHttpsRedirection();
 

@@ -36,7 +36,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(response);
         }
-        [HttpGet("get-by-id{id}")]
+        [HttpGet("get-by-id")]
         //[Authorize]
         //Lấy 1 tiền đề Environmental
         public async Task<IActionResult> GetById(string id)
@@ -67,7 +67,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpPut("update{id}")]
+        [HttpPut("update")]
         //[Authorize(Roles="admin")]
         //Chỉnh sửa tiền đề Environmental
         public async Task<IActionResult> Update([FromBody] OptionsRequest request)
@@ -83,7 +83,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete{id}")]
+        [HttpDelete("delete")]
         //[Authorize(Roles="admin")]
         //Xóa tiền đề Environmental
         public async Task<IActionResult> Delete(string id)
