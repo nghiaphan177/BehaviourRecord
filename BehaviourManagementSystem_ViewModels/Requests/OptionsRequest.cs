@@ -14,8 +14,8 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         [Required]
         public string Content { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 }
