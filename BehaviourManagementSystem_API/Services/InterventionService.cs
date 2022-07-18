@@ -66,7 +66,7 @@ namespace BehaviourManagementSystem_API.Services
 
                 });
             }
-            return new ResponseResultSuccess<List<InterventionRequest>>();
+            return new ResponseResultSuccess<List<InterventionRequest>>(result);
         }
     }
 }

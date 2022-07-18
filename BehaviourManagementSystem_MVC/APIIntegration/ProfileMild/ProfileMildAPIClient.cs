@@ -10,9 +10,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_MVC.APIIntegration.Profile
+namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileMild
 {
-    public class ProfileMildAPIClient : IMildOptionAPIClient
+    public class ProfileMildAPIClient : IOptionAPIClientMild
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;

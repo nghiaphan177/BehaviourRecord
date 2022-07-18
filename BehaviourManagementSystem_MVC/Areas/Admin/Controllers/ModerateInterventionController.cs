@@ -1,6 +1,5 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Profile;
-using BehaviourManagementSystem_ViewModels.Requests;
-using Microsoft.AspNetCore.Authorization;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,16 +11,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class ModerateInterventionController : Controller
     {
-        private readonly IModerateOptionAPIClient _IModerateOptionAPIClient;
-        public ModerateInterventionController(IModerateOptionAPIClient IModerateOptionAPIClient)
+        private readonly IOptionAPIClientModerate _IOptionAPIClientModerate;
+        public ModerateInterventionController(IOptionAPIClientModerate IOptionAPIClientModerate)
         {
-            _IModerateOptionAPIClient = IModerateOptionAPIClient;
+            _IOptionAPIClientModerate = IOptionAPIClientModerate;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult>  Index()
         {
             try
             {
-                var response = await _IModerateOptionAPIClient.GetAll();
+                var response = await _IOptionAPIClientModerate.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -35,16 +34,14 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        
+
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(string content)
+        public async Task<IActionResult> Create(string content)
         {
             try
             {
-                var response = await _IModerateOptionAPIClient.Create(content);
+                var response = await _IOptionAPIClientModerate.Create(content);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index", response.Result);
@@ -59,17 +56,17 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 
 
         }
-
         public IActionResult Edit()
         {
             return View();
         }
+
         [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             try
             {
-                var response = await _IModerateOptionAPIClient.Delete(id);
+                var response = await _IOptionAPIClientModerate.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new

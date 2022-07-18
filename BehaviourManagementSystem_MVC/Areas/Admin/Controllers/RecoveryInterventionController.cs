@@ -1,4 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Profile;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,16 +12,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class RecoveryInterventionController : Controller
     {
-        private readonly IRecoveryOptionAPIClient _IRecoveryOptionAPIClient;
-        public RecoveryInterventionController(IRecoveryOptionAPIClient IRecoveryOptionAPIClient)
+        private readonly IOptionAPIClientRecovery _IOptionAPIClientRecovery;
+        public RecoveryInterventionController(IOptionAPIClientRecovery IOptionAPIClientRecovery)
         {
-            _IRecoveryOptionAPIClient = IRecoveryOptionAPIClient;
+            _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
         }
         public async Task<IActionResult> Index()
         {
             try
             {
-                var response = await _IRecoveryOptionAPIClient.GetAll();
+                var response = await _IOptionAPIClientRecovery.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -44,7 +44,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IRecoveryOptionAPIClient.Create(content);
+                var response = await _IOptionAPIClientRecovery.Create(content);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index", response.Result);
@@ -69,7 +69,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IRecoveryOptionAPIClient.Delete(id);
+                var response = await _IOptionAPIClientRecovery.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new

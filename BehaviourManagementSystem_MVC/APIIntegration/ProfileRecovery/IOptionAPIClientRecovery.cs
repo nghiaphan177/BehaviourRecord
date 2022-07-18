@@ -1,11 +1,13 @@
 ﻿using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_MVC.APIIntegration.Profile
+namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery
 {
-    public interface IRecoveryOptionAPIClient
+    public interface IOptionAPIClientRecovery
     {
         Task<ResponseResult<List<OptionsRequest>>> GetAll();
         Task<ResponseResult<OptionsRequest>> Get(string id);

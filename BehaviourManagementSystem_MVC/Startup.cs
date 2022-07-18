@@ -1,6 +1,9 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
-using BehaviourManagementSystem_MVC.APIIntegration.Profile;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +17,7 @@ using System;
 
 namespace BehaviourManagementSystem_MVC
 {
-	public class Startup
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -58,10 +61,11 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IAntecedentActivityAPIClient, AntecedentActivityAPIClient>();
             services.AddTransient<IAntecedentPerceivedAPIClient, AntecedentPerceivedAPIClient>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IMildOptionAPIClient, ProfileMildAPIClient>();
-            services.AddTransient<IModerateOptionAPIClient, ProfileModerateAPIClient>();
-            services.AddTransient<IExtremeOptionAPIClient, ProfileExtremeAPIClient>();
-            services.AddTransient<IRecoveryOptionAPIClient, ProfileRecoveryAPIClient>();
+            services.AddTransient<IOptionAPIClientMild, ProfileMildAPIClient>();
+            services.AddTransient<IOptionAPIClientModerate, ProfileModerateAPIClient>();
+            services.AddTransient<IOptionAPIClientExtreme, ProfileExtremeAPIClient>();
+            services.AddTransient<IOptionAPIClientRecovery, ProfileRecoveryAPIClient>();
+
             services.AddControllersWithViews();
         }
 

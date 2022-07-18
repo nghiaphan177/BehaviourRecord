@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
+@{
+    int stt = 0;
+}
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
@@ -40,22 +43,20 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    @for (var i = 0; i < Model.Count; i++)
+                                    @foreach (var item in Model)
                                     {
-                                        <tr id="Moderate-@Model[i].Id">
 
-                                            <td>@(i+1)</td>
-                                            <td>@Model[i].Content</td>
+                                        <tr id="moderate-@item.Id">
+                                            <td>@(stt += 1)</td>
+                                            <td>@item.Content</td>
                                             <td>
-                                                <a href="/Admin/ModerateIntervention/Edit/@Model[i].Id">
-                                                    <button type="button" class="btn btn-warning waves-effect waves-light">Sửa</button>
-                                                </a>
-                                                <button onclick=" deleteModerate('@Model[i].Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa</button>
+
+                                                <button type="button" data-toggle="modal" data-target=".modal-EditModerate" class="btn btn-warning waves-effect waves-light">Sửa</button>
+                                                <button type="button" onclick=" deleteModerate('@item.Id')" class="btn btn-danger waves-effect waves-light">Xóa</button>
                                             </td>
 
-
-
                                         </tr>
+
                                     }
 
                                 </tbody>
@@ -64,11 +65,12 @@
 
                     </div>
                 }
-                @if (Model == null)
+                else
                 {
                     <p class="text-center">Không có dữ liệu</p>
                 }
-                <div class="modal modal-CreateModerate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                @*Modal-Create Start*@
+                <div class="modal fade modal-CreateModerate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -76,10 +78,10 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="ModerateIntervention" asp-area="Admin">
+                                <form class="" action="/Admin/ModerateIntervention/Create" method="post">
                                     <div class="form-group">
                                         <label>Tên Giai Đoạn</label>
-                                        <input name="content" type="text" class="form-control" required placeholder="Điền Tên Giai Đoạn..." />
+                                        <input type="text" autocomplete="off" class="form-control" name="content" required placeholder="Điền Tên Giai Đoạn..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -96,6 +98,37 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
+                @*Modal-Create End*@
+                @*Modal-Edit Start*@
+                <div class="modal fade modal-EditModerate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mt-0">Chỉnh Sửa Giai Đoạn Vừa Phải</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="" action="/Admin/ModerateIntervention/Edit" method="post">
+                                    <div class="form-group">
+                                        <label>Tên Giai Đoạn</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="content" required placeholder="Điền Tên Giai Đoạn..." />
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Sửa
+                                            </button>
+                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary waves-effect m-l-5">
+                                                Hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                @*Modal-Edit End*@
             </div>
         </div>
     </div> <!-- end col -->
@@ -136,4 +169,34 @@
 </script>
 
 }
+<script>
+    //Warning Message
+    function deleteModerate(id) {
+        swal({
+            title: 'Bạn đã chắc chắn?',
+            text: "Xóa trường này!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger m-l-10',
+            confirmButtonText: 'Yes!'
+        }).then(function () {
+            $.ajax({
+                url: "ModerateIntervention/delete",
+                data: { "id": id },
+                type: "DELETE",
+                success: function (result) {
+                    if (result.status == true) {
+                        swal(
+                            'Đã Xóa Thành Công!',
+                            '',
+                            'success'
+                        ),
+                        $("#moderate-" + id).remove();
+                    }
+                }
+            })
+        })
+    }
+</script>
 

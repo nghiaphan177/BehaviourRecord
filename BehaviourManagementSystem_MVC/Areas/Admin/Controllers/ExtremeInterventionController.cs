@@ -1,6 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Profile;
-using BehaviourManagementSystem_ViewModels.Requests;
-using Microsoft.AspNetCore.Authorization;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,16 +10,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class ExtremeInterventionController : Controller
     {
-        private readonly IExtremeOptionAPIClient _IExtremeOptionAPIClient;
-        public ExtremeInterventionController(IExtremeOptionAPIClient IExtremeOptionAPIClient)
+        private readonly IOptionAPIClientRecovery _IOptionAPIClientExtreme;
+        public ExtremeInterventionController(IOptionAPIClientRecovery IOptionAPIClientExtreme)
         {
-            _IExtremeOptionAPIClient = IExtremeOptionAPIClient;
+            _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
         }
         public async Task<IActionResult> Index()
         {
             try
             {
-                var response = await _IExtremeOptionAPIClient.GetAll();
+                var response = await _IOptionAPIClientExtreme.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -35,41 +33,11 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(string content)
-        {
-            try
-            {
-                var response = await _IExtremeOptionAPIClient.Create(content);
-                if (response.Success == true)
-                {
-                    return RedirectToAction("Index", response.Result);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return RedirectToAction("Index");
-
-
-        }
-
-        public IActionResult Edit()
-        {
-            return View();
-        }
-        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(string id)
         {
             try
             {
-                var response = await _IExtremeOptionAPIClient.Delete(id);
+                var response = await _IOptionAPIClientExtreme.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new
@@ -84,6 +52,27 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 throw;
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string content)
+        {
+            try
+            {
+                var response = await _IOptionAPIClientExtreme.Create(content);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+
+
         }
     }
 }
