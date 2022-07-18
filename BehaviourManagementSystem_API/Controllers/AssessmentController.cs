@@ -8,7 +8,7 @@ namespace BehaviourManagementSystem_API.Controllers
     /// <summary>
     /// Assessment
     /// writter: HoangDDN
-    /// Description: List,Detail
+    /// Description: List,Detail,
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

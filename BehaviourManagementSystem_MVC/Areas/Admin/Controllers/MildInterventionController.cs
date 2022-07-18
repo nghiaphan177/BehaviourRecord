@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,26 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class MildInterventionController : Controller
     {
-        public IActionResult Index()
+        private readonly IOptionAPIClient _IOptionAPIClient;
+        public MildInterventionController(IOptionAPIClient IOptionAPIClient)
         {
+            _IOptionAPIClient = IOptionAPIClient;
+        }
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var response = await _IOptionAPIClient.GetAll();
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
@@ -18,10 +38,51 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(string content)
+        {
+            try
+            {
+                var response = await _IOptionAPIClient.Create(content);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index",response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+
+
+        }
 
         public IActionResult Edit()
         {
             return View();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(string id)
+        {
+            try
+            {
+                var response = await _IOptionAPIClient.Delete(id);
+                if (response.Success == true)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
         }
     }
 }
