@@ -1,6 +1,8 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -57,6 +59,8 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IAntecedentEvironmentalAPIClient, AntecedentEvironmentalAPIClient>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IOptionAPIClient, ProfileMildAPIClient>();
+            services.AddTransient<IOptionAPIClientModerate, ProfileModerateAPIClient>();
+            services.AddTransient<IOptionAPIClientExtreme, ProfileExtremeAPIClient>();
 
             services.AddControllersWithViews();
         }
