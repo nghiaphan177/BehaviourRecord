@@ -68,7 +68,9 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             {
                 authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
             }
+
             HttpContext.Session.SetString("Token", result.Result);
+
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
