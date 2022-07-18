@@ -1,5 +1,6 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -42,7 +43,7 @@ namespace BehaviourManagementSystem_MVC
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "admin"));
             });
             services.AddSession(options =>
             {
@@ -55,6 +56,7 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IUserAPIClient, UserAPIClient>();
             services.AddTransient<IAntecedentEvironmentalAPIClient, AntecedentEvironmentalAPIClient>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IOptionAPIClient, ProfileMildAPIClient>();
 
             services.AddControllersWithViews();
         }

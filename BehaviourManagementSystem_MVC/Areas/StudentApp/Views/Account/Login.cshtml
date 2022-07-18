@@ -29,7 +29,7 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	<h3 class="mb-4 text-center">Chào các học sinh</h3>
-		      	<form method="post"  asp-area="StudentApp" asp-controller="Account" asp-action="Login" class="signin-form">
+		      	<form method="post"  action="/StudentApp/Account/Login" class="signin-form">
 					@if (!ViewData.ModelState.IsValid)
                     {
                     <div class="alert alert-danger" role="alert">
