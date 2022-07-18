@@ -77,6 +77,8 @@ namespace BehaviourManagementSystem_API
 			services.AddScoped<IProfileModerateService, ProfileModerateService>();
 			services.AddScoped<IProfileExtremeService, ProfileExtremeService>();
 			services.AddScoped<IProfileRecoveryService, ProfileRecoveryService>();
+			services.AddScoped<IAssessmentService, AssessmentService>();
+			services.AddScoped<IInterventionService, InterventionService>();
 
 			string issuer = Configuration.GetValue<string>("Tokens:Issuer");
 			string signingKey = Configuration.GetValue<string>("Tokens:Key");
