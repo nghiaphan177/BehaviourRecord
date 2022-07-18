@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly IUserAPIClient _userAPIClient;

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles="admin")]
     public class MildInterventionController : Controller
     {
         private readonly IOptionAPIClient _IOptionAPIClient;

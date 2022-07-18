@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "admin")]
     public class StudentController : Controller
     {
         // GET: StudentController
