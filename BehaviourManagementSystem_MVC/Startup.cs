@@ -91,10 +91,10 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
-                endpoints.MapAreaControllerRoute(
-                         name: "StudentApp",
-                         areaName: "StudentApp",
-                         pattern: "StudentApp/{controller=Home}/{action=Index}");
+                //endpoints.MapAreaControllerRoute(
+                //         name: "StudentApp",
+                //         areaName: "StudentApp",
+                //         pattern: "StudentApp/{controller=Home}/{action=Index}");
 
                 endpoints.MapDefaultControllerRoute();
 
