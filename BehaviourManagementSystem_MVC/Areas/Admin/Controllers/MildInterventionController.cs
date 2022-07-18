@@ -23,7 +23,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IOptionAPIClient.GetAll();
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return View(response.Result.OrderByDescending(r=>r.CreateDate));
                 }
             }
             catch (Exception)
@@ -77,11 +77,11 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(string id,OptionsRequest request)
+        public async Task<IActionResult> Edit(OptionsRequest request)
         {
             try
             {
-                var response = await _IOptionAPIClient.Update(id,request);
+                var response = await _IOptionAPIClient.Update(request);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index", response.Result);

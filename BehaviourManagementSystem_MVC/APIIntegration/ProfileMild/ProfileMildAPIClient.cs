@@ -55,7 +55,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileMild
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
-            var response = await client.GetAsync($"/api/ProfileMild/get-by-id"+id);
+            var response = await client.GetAsync($"/api/ProfileMild/get-by-id?id="+id);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<OptionsRequest>>(await response.Content.ReadAsStringAsync());
@@ -74,7 +74,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileMild
             return JsonConvert.DeserializeObject<ResponseResultError<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseResult<List<OptionsRequest>>> Update(string id,OptionsRequest request)
+        public async Task<ResponseResult<List<OptionsRequest>>> Update(OptionsRequest request)
         {
             var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(request);
@@ -83,7 +83,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileMild
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
            
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
-            var response = await client.PostAsync($"/api/ProfileMild/update" + id, httpContent);
+            var response = await client.PutAsync($"/api/ProfileMild/update", httpContent);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());

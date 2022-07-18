@@ -34,7 +34,7 @@ namespace BehaviourManagementSystem_MVC
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/Account/Login";
-                    options.LoginPath = "/Admin/Account/Login";
+                    options.LoginPath = "/admin/admin-login";
                     options.LogoutPath = "/Admin/Account/Logout";
                     options.LoginPath = "/Student/Account/Login";
                     options.LogoutPath = "/Student/Account/Logout";
@@ -43,7 +43,7 @@ namespace BehaviourManagementSystem_MVC
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "admin"));
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("ROLE", "ADMIN"));
             });
             services.AddSession(options =>
             {
@@ -93,10 +93,6 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
-                endpoints.MapAreaControllerRoute(
-                         name: "StudentApp",
-                         areaName: "StudentApp",
-                         pattern: "StudentApp/{controller=Home}/{action=Index}");
 
                 endpoints.MapDefaultControllerRoute();
 

@@ -30,6 +30,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             _userAPIClient = userAPIClient;
             _config = configuration;
         }
+        [Route("/admin-login")]
         public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
         {
             await HttpContext.SignOutAsync(
@@ -41,10 +42,11 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Admin/Home")
         {
-            //var user = HttpContext.Session.GetString("USER");
-            //if (!string.IsNullOrEmpty(user))
-            //    return RedirectToAction("Index", "Home", new { area = "Admin" });
 
+            if(ReturnUrl == null)
+            {
+                ReturnUrl = "/Admin/Home";
+            }
             if (!ModelState.IsValid)
                 return View(request);
 
