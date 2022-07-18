@@ -80,6 +80,7 @@ namespace BehaviourManagementSystem_API
 			services.AddScoped<IAssessmentService, AssessmentService>();
 			services.AddScoped<IInterventionService, InterventionService>();
 			services.AddScoped<IIndividualService, IndividualService>();
+			services.AddScoped<ITermConditionService, TermConditionService>();
 
 			string issuer = Configuration.GetValue<string>("Tokens:Issuer");
 			string signingKey = Configuration.GetValue<string>("Tokens:Key");
