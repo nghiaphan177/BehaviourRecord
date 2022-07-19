@@ -35,7 +35,7 @@ namespace BehaviourManagementSystem_API
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
-				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+				options.UseSqlServer(Configuration.GetConnectionString("AzureConnection"));
 			});
 
 			services.AddIdentity<User, Role>((options) =>
@@ -169,10 +169,6 @@ namespace BehaviourManagementSystem_API
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}
