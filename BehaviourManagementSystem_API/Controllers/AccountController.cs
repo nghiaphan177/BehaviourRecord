@@ -138,7 +138,10 @@ namespace BehaviourManagementSystem_API.Controllers
 
             var response = await _accountService.ChangePassword(repuest);
 
+            if(!response.Success)
+                return BadRequest(response);
 
+            return Ok(response);
         }
 
         [HttpGet("AllUser/{roleName}")]
