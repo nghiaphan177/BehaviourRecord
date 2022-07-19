@@ -46,23 +46,24 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<IndividualRequest>>> GetAll()
         {
-            var a = await _context.Users.Include("Individuals").FirstAsync(p => p.Individuals.Any(i => i.UserId == p.Id));
-            
-            var fullname = a.FirstName + " " + a.LastName;
-            var email = a.Email;
             if (!await _context.Individuals.AnyAsync())
                 return new ResponseResultError<List<IndividualRequest>>("Hiện tại không có dữ liệu");
-            var individual = await _context.Individuals.ToListAsync();
             var result = new List<IndividualRequest>();
-            foreach (var item in individual)
+            foreach (var ind in await _context.Individuals.ToListAsync())
             {
-                result.Add(new IndividualRequest()
+                foreach (var user in await _context.Users.ToListAsync())
                 {
-                    Id = item.Id.ToString(),
-                    FullName = fullname,
-                    Email = email,
-                    Organization = item.Organization,
-                });
+                    if (ind.UserId== user.Id)
+                    {
+                        result.Add(new IndividualRequest()
+                        {
+                            Id = ind.Id.ToString(),
+                            FullName = user.FirstName + " " + user.LastName,
+                            Email = user.Email,
+                            Organization = ind.Organization,
+                        });
+                    }
+                }
             }
             return new ResponseResultSuccess<List<IndividualRequest>>(result);
         }
