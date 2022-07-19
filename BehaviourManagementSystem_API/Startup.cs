@@ -5,7 +5,6 @@ using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,11 +17,11 @@ using System.Collections.Generic;
 
 namespace BehaviourManagementSystem_API
 {
-	/// <summary>
-	/// Setting all configurations environment.
-	/// Writer: DuyLH4
-	/// </summary>
-	public class Startup
+    /// <summary>
+    /// Setting all configurations environment.
+    /// Writer: DuyLH4
+    /// </summary>
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{

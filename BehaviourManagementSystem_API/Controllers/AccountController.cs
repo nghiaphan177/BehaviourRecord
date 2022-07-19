@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
 {
-	/// <summary>
-	/// AccountController
-	/// Writer: DuyLH4
-	/// </summary>
-	[Route("api/[controller]")]
+    /// <summary>
+    /// AccountController
+    /// Writer: DuyLH4
+    /// </summary>
+    [Route("api/[controller]")]
 	[ApiController]
 	[Authorize]
 	public class AccountController : ControllerBase
