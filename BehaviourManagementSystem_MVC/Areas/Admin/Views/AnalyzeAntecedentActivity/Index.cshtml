@@ -1,9 +1,7 @@
-﻿@model List<BehaviourManagementSystem_ViewModels.Requests.OptionsRequest>
+﻿@model List<OptionsRequest>
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 @section styles {
 <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,11 +10,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
-            <h4 class="page-title">Bối Cảnh Hoạt Động</h4>
+            <h4 class="page-title">Bối cảnh hoạt động</h4>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0);">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lí phân tích sự cố</a></li>
-                <li class="breadcrumb-item active">Bối Cảnh Hoạt Động</li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lí sự cố</a></li>
+                <li class="breadcrumb-item active">Bối cảnh hoạt động</li>
             </ol>
         </div>
     </div>
@@ -34,20 +32,21 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th>Số Thứ Tự</th>
-                                        <th data-priority="1">Nội Dung</th>
+                                        <th data-priority="1">Nội Dung Hoạt Động</th>
                                         <th data-priority="6">Tùy Chọn</th>
+
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     @for (var i = 0; i < Model.Count; i++)
                                     {
-                                        <tr id="Activity-@Model[i].Id">
+                                        <tr id="activity-@Model[i].Id">
 
                                             <td>@(i+1)</td>
                                             <td>@Model[i].Content</td>
                                             <td>
-                                                 <button type="button" data-toggle="modal" data-target=".modal-EditActivity" class="btn btn-warning waves-effect waves-light">Sửa</button>
-                                                <button onclick=" deleteActivity('@Model[i].Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                                                <button type="button" data-url="@Url.Action($"Edit/{@Model[i].Id}")" data-toggle="modalEdit" data-target=".modal-EditActivity" class="btn btn-warning waves-effect waves-light">Sửa</button>
+                                                <button type="button" onclick=" deleteActivity('@Model[i].Id')" class="btn btn-danger waves-effect waves-light">Xóa</button>
                                             </td>
                                         </tr>
                                     }
@@ -57,12 +56,13 @@
                         </div>
 
                     </div>
+
                 }
-                @if (Model == null)
+                else
                 {
                     <p class="text-center">Không có dữ liệu</p>
                 }
-                <div class="modal modal-CreateActivity" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal fade modal-CreateActivity" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -70,10 +70,10 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="AnalyzeAntecedentActivity" asp-area="Admin">
+                                <form class="" action="/Admin/AnalyzeAntecedentActivity/Create" method="post">
                                     <div class="form-group">
-                                        <label>Bối Cảnh Hoạt Động</label>
-                                        <input name="content" type="text" class="form-control" required placeholder="Điền Nội Dung..." />
+                                        <label>Tên Bối Cảnh Hoạt Động</label>
+                                        <input type="text" autocomplete="off" name="content" class="form-control" required placeholder="Điền Bối Cảnh Hoạt Động..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -90,34 +90,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div class="modal modal-EditActivity" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title mt-0">Chỉnh Sửa Bối Cảnh Hoạt Động</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="AnalyzeAntecedenActivity" asp-area="Admin">
-                                    <div class="form-group">
-                                        <label>Nội Dung</label>
-                                        <input name="content" autocomplete="off" type="text" class="form-control" required placeholder="Điền Nội Dung..." />
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <div>
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Sửa
-                                            </button>
-                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary waves-effect m-l-5">
-                                                Hủy
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div>
+                <div id="PlaceHolder"></div>
             </div>
         </div>
     </div> <!-- end col -->
@@ -125,6 +98,7 @@
 @section scripts {
 <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
 <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script src="~/plugins/parsleyjs/parsley.min.js"></script>
 @*<script src="~/js/sweet-alert.init.js"></script>*@
 <script>
     //Warning Message
@@ -149,12 +123,25 @@
                             '',
                             'success'
                         ),
-                            $("#Activity-" + id).remove();
+                            $("#activity-" + id).remove();
                     }
                 }
             })
         })
     }
+    
+    $(function(){
+        var PlaceHolder = $('#PlaceHolder');
+         $('button[data-toggle="modalEdit"]').click(function(event){
+        var url = $(this).data('url');
+        var decodedUrl = decodeURIComponent(url);
+        $.get(decodedUrl).done(function (data){
+            PlaceHolder.html(data);
+            PlaceHolder.find('.modal-EditActivity').modal('show');
+        })
+    })
+    })
+
 </script>
 
 }
