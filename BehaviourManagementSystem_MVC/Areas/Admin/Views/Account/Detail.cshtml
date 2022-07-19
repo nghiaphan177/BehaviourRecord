@@ -1,7 +1,9 @@
-﻿@model BehaviourManagementSystem_ViewModels.Requests.UserProfileRequest
-
+﻿
+@model BehaviourManagementSystem_ViewModels.Requests.UserProfileRequest
 @{
     ViewData["Title"] = "Thông tin tài khoản";
+    var base64 = Convert.ToBase64String(Model.Img);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
 <style>
     .form-check {
@@ -78,7 +80,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="media m-b-30">
-                    <img class="img-fluid" src="~/images/users/user-4.jpg" alt="Generic placeholder image">
+                    <img class="img-fluid" src="@imgSrc" alt="Generic placeholder image">
 
                 </div>
                 <h4 class="font-18 m-0">@(Model.FirstName+" "+Model.LastName)</h4>

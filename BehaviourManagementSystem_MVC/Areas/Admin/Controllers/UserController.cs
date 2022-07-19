@@ -20,12 +20,14 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         public async Task<ActionResult> Index()
         {
             var response = await _userAPIClient.GetAllUser();
-            if(response.Success == true)
+            if (response.Success == true)
             {
 
                 return View(response.Result);
             }
-            return BadRequest();
+
+
+            return View();
         }
 
         // GET: UserController/Detail/5

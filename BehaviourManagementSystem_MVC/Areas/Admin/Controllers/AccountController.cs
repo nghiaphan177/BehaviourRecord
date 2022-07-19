@@ -88,8 +88,17 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
         public async Task<ActionResult> Detail(string id)
         {
-            var user = await _userAPIClient.GetUserById(id);
-            return View(user.Result);
+            try
+            {
+                var user = await _userAPIClient.GetUserById(id);
+                return View(user.Result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
         }
         private ClaimsPrincipal ValidateToken(string token)
         {
