@@ -8,6 +8,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
     public interface IAntecedentEnvironmentalAPIClient
     {
         Task<ResponseResult<List<OptionsRequest>>> GetAll();
+        Task<ResponseResult<OptionsRequest>> Get(string id);
         Task<ResponseResult<List<OptionsRequest>>> Create(string content);
         Task<ResponseResult<List<OptionsRequest>>> Update(OptionsRequest request);
         Task<ResponseResult<List<OptionsRequest>>> Delete(string id);

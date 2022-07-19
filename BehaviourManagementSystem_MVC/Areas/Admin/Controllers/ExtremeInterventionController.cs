@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
+using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,42 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
 
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                var response = await _IOptionAPIClientExtreme.Get(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(OptionsRequest request)
+        {
+            try
+            {
+                var response = await _IOptionAPIClientExtreme.Update(request);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
+using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -56,9 +57,40 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 
 
         }
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(string id)
         {
+            try
+            {
+                var response = await _IOptionAPIClientModerate.Get(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(OptionsRequest request)
+        {
+            try
+            {
+                var response = await _IOptionAPIClientModerate.Update(request);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpDelete]

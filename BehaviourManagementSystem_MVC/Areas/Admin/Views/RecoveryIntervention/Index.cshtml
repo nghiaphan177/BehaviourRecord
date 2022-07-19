@@ -49,7 +49,7 @@
                                             <td>@item.Content</td>
                                             <td>
 
-                                                <button type="button" data-toggle="modal" data-target=".modal-EditModerate" class="btn btn-warning waves-effect waves-light">Sửa</button>
+                                                <button type="button" data-toggle="modalEdit" data-url="@Url.Action($"Edit/{@item.Id}")" data-target=".modal-EditModerate" class="btn btn-warning waves-effect waves-light">Sửa</button>
                                                 <button type="button" onclick=" deleteRecovery('@item.Id')" class="btn btn-danger waves-effect waves-light">Xóa</button>
                                             </td>
 
@@ -77,7 +77,7 @@
                                 <form method="post" asp-action="Create" asp-controller="RecoveryIntervention" asp-area="Admin">
                                     <div class="form-group">
                                         <label>Tên Giai Đoạn</label>
-                                        <input type="text" autocomplete="off" class="form-control" required placeholder="Điền Tên Giai Đoạn..." />
+                                        <input type="text" autocomplete="off" name="content" class="form-control" required placeholder="Điền Tên Giai Đoạn..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -94,6 +94,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
+                <div id="PlaceHolder"></div>
             </div>
         </div>
     </div> <!-- end col -->
@@ -131,6 +132,17 @@
                 })
             })
         }
+        $(function () {
+            var PlaceHolder = $('#PlaceHolder');
+            $('button[data-toggle="modalEdit"]').click(function (event) {
+                var url = $(this).data('url');
+                var decodedUrl = decodeURIComponent(url);
+                $.get(decodedUrl).done(function (data) {
+                    PlaceHolder.html(data);
+                    PlaceHolder.find('.modal-EditRecovery').modal('show');
+                })
+            })
+        })
     </script>
 
 }
