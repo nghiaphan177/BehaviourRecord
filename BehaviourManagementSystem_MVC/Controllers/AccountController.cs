@@ -313,7 +313,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 			if(!ModelState.IsValid)
 				return View(ModelState);
 
-			if(request.Password != request.PasswordConfirm)
+			if(request.PasswordNew != request.PasswordConfirm)
 			{
 				ViewBag.Error = "Mật khẩu không giống nhau";
 				return View(ModelState);

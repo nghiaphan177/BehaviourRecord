@@ -244,7 +244,7 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<bool>("Tài khoản không tồn tại");
 
             var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(repuest.Code));
-            var result = await _userManager.ResetPasswordAsync(user, code, repuest.Password);
+            var result = await _userManager.ResetPasswordAsync(user, code, repuest.PasswordNew);
 
             if(result.Succeeded)
                 return new ResponseResultSuccess<bool>();
@@ -402,6 +402,38 @@ namespace BehaviourManagementSystem_API.Services
                     Message = ex.Message,
                     Result = upfs.Result
                 };
+            }
+        }
+
+        public async Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRepuest repuest)
+        {
+            var user = await _userManager.FindByIdAsync(repuest.Id);
+            if(user == null)
+                return new ResponseResultError<UserProfileRequest>("Tài khoản không tồn tại");
+
+            try
+            {
+                await _userManager.ChangePasswordAsync(user, repuest.PasswordOld, repuest.PasswordNew);
+
+                var role = await _roleService.GetRoleNameByUserId(user.Id.ToString());
+
+                return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest
+                {
+                    Id = user.Id.ToString(),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Gender = user.Gender,
+                    DOB = user.DOB,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email,
+                    Address = user.Address,
+                    Img = user.Img,
+                    RoleName = role.Result
+                });
+            }
+            catch(Exception)
+            {
+                return new ResponseResultError<UserProfileRequest>("Đổi mật khẩu không thành công");
             }
         }
     }

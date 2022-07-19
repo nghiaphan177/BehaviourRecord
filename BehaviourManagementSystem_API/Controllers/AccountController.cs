@@ -12,188 +12,205 @@ namespace BehaviourManagementSystem_API.Controllers
     /// Writer: DuyLH4
     /// </summary>
     [Route("api/[controller]")]
-	[ApiController]
-	[Authorize]
-	public class AccountController : ControllerBase
-	{
-		private readonly IAccountService _accountService;
+    [ApiController]
+    [Authorize]
+    public class AccountController : ControllerBase
+    {
+        private readonly IAccountService _accountService;
 
-		public AccountController(IAccountService accountService)
-		{
-			_accountService = accountService;
-		}
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
 
-		[HttpPost("Login"), AllowAnonymous]
-		public async Task<IActionResult> Login([FromBody] LoginRequest request)
-		{
-			if(!ModelState.IsValid)
-				return BadRequest(ModelState);
+        [HttpPost("Login"), AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			if(request.UserNameOrEmail.CheckRequest() || request.Password.CheckRequest())
-				return BadRequest(request);
+            if(request.UserNameOrEmail.CheckRequest() || request.Password.CheckRequest())
+                return BadRequest(request);
 
-			var response = await _accountService.Login(request);
+            var response = await _accountService.Login(request);
 
-			if(string.IsNullOrEmpty(response.Result))
-				return BadRequest(response);
+            if(string.IsNullOrEmpty(response.Result))
+                return BadRequest(response);
 
-			return Ok(response);
-		}
+            return Ok(response);
+        }
 
-		[HttpPost("Register"), AllowAnonymous]
-		public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-		{
-			if(!ModelState.IsValid)
-				return BadRequest(ModelState);
+        [HttpPost("Register"), AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			var result = await _accountService.Register(request);
+            var result = await _accountService.Register(request);
 
-			if(!result.Success)
-			{
-				return BadRequest(result);
-			}
-			return Ok(result);
-		}
+            if(!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-		[HttpPost("VerifyEmail"), AllowAnonymous]
-		public async Task<IActionResult> VerifyEmail([FromBody] ConfirmEmailRequest request)
-		{
-			if(!ModelState.IsValid)
-				return BadRequest(ModelState);
+        [HttpPost("VerifyEmail"), AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail([FromBody] ConfirmEmailRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			var response = await _accountService.VerifyEmail(request);
+            var response = await _accountService.VerifyEmail(request);
 
-			if(!response.Success)
-			{
-				return BadRequest(response);
-			}
-			return Ok(response);
-		}
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
-		[HttpGet("ResenConfirmEmail"), AllowAnonymous]
-		public async Task<IActionResult> ResenConfirmEmail(string email)
-		{
-			if(email.CheckRequest())
-				return BadRequest(email);
+        [HttpGet("ResenConfirmEmail"), AllowAnonymous]
+        public async Task<IActionResult> ResenConfirmEmail(string email)
+        {
+            if(email.CheckRequest())
+                return BadRequest(email);
 
-			var response = await _accountService.ResenConfirmEmail(email);
+            var response = await _accountService.ResenConfirmEmail(email);
 
-			if(!response.Success)
-				return BadRequest(response);
-			return Ok(response);
-		}
+            if(!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
 
-		[HttpGet("ForgotPassword"), AllowAnonymous]
-		public async Task<IActionResult> ForgotPassword(string userNameOfEmail)
-		{
-			if(userNameOfEmail.CheckRequest())
-				return BadRequest(userNameOfEmail);
+        [HttpGet("ForgotPassword"), AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(string userNameOfEmail)
+        {
+            if(userNameOfEmail.CheckRequest())
+                return BadRequest(userNameOfEmail);
 
-			var response = await _accountService.ForgotPassword(userNameOfEmail);
+            var response = await _accountService.ForgotPassword(userNameOfEmail);
 
-			if(!response.Success)
-				return BadRequest(response);
+            if(!response.Success)
+                return BadRequest(response);
 
-			return Ok(response);
-		}
+            return Ok(response);
+        }
 
-		[HttpPut("ResetPassword"), AllowAnonymous]
-		public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRepuest repuest)
-		{
-			if(!ModelState.IsValid || repuest.Id.CheckRequest() || repuest.Code.CheckRequest())
-				return BadRequest();
+        [HttpPut("ResetPassword"), AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRepuest repuest)
+        {
+            if(!ModelState.IsValid || repuest.Id.CheckRequest() || repuest.Code.CheckRequest())
+                return BadRequest();
 
-			var response = await _accountService.ResetPassword(repuest);
+            var response = await _accountService.ResetPassword(repuest);
 
-			if(!response.Success)
-				return BadRequest(response);
+            if(!response.Success)
+                return BadRequest(response);
 
-			return Ok(response);
-		}
+            return Ok(response);
+        }
 
-		[HttpGet("CheckEmailConfirmed"),AllowAnonymous]
-		public async Task<IActionResult> CheckEmailConfirmed(string email)
-		{
-			if(email.CheckRequest())
-				return BadRequest(email);
+        [HttpGet("CheckEmailConfirmed"), AllowAnonymous]
+        public async Task<IActionResult> CheckEmailConfirmed(string email)
+        {
+            if(email.CheckRequest())
+                return BadRequest(email);
 
-			var response = await _accountService.CheckEmailConfirmed(email);
+            var response = await _accountService.CheckEmailConfirmed(email);
 
-			if(!response.Success)
-				return BadRequest(response);
-			return Ok(response);
-		}
+            if(!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
 
-		[HttpGet("AllUser/{roleName}")]
-		public async Task<IActionResult> GetAllUser(string roleName = null)
-		{
-			var result = await _accountService.GetAll(roleName);
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangPassword([FromBody] ResetPasswordRepuest repuest)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(repuest);
 
-			if(result.Result == null)
-				return BadRequest(result);
+            if(repuest.Id.CheckRequest() ||
+                repuest.PasswordNew.CheckRequest() ||
+                repuest.PasswordNew.CheckPaswordRepuest() ||
+                repuest.PasswordNew != repuest.PasswordConfirm)
+                return BadRequest(repuest);
 
-			return Ok(result);
-		}
-		
-		[HttpGet("AllUser")]
-		public async Task<IActionResult> GetAllUser()
-		{
-			var result = await _accountService.GetAll(null);
+            var response = await _accountService.ChangePassword(repuest);
 
-			if(result.Result == null)
-				return BadRequest(result);
 
-			return Ok(result);
-		}
+        }
 
-		[HttpGet("User")]
-		public async Task<IActionResult> GetUser(string id)
-		{
-			if(!ModelState.IsValid || id.CheckRequest())
-				return BadRequest(ModelState);
+        [HttpGet("AllUser/{roleName}")]
+        public async Task<IActionResult> GetAllUser(string roleName = null)
+        {
+            var result = await _accountService.GetAll(roleName);
 
-			var result = await _accountService.GetUser(id);
+            if(result.Result == null)
+                return BadRequest(result);
 
-			if(result.Result == null)
-				return BadRequest(result);
+            return Ok(result);
+        }
 
-			return Ok(result);
-		}
+        [HttpGet("AllUser")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            var result = await _accountService.GetAll(null);
 
-		[HttpPost("CreateUserProfile")]
-		public async Task<IActionResult> CreateUserProfile([FromBody] UserProfileRequest request)
-		{
-			var response = await _accountService.CreateUserProfile(request);
+            if(result.Result == null)
+                return BadRequest(result);
 
-			if(!response.Success)
-				return BadRequest(response);
-			return Ok(response);
-		}
+            return Ok(result);
+        }
 
-		[HttpPut("UpdateUserProfile")]
-		public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileRequest request)
-		{
-			if(!ModelState.IsValid)
-				return BadRequest(request);
+        [HttpGet("User")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            if(!ModelState.IsValid || id.CheckRequest())
+                return BadRequest(ModelState);
 
-			var response = await _accountService.UpdateUserProfile(request);
+            var result = await _accountService.GetUser(id);
 
-			if(!response.Success)
-				return BadRequest(response);
-			return Ok(response);
-		}
-		
-		[HttpDelete("DeleteUserProfile")]
-		public async Task<IActionResult> DeleteUserProfile(string id)
-		{
-			if(id.CheckRequest())
-				return BadRequest(id);
+            if(result.Result == null)
+                return BadRequest(result);
 
-			var response = await _accountService.DeleteUserProfile(id);
+            return Ok(result);
+        }
 
-			if(!response.Success)
-				return BadRequest(response);
-			return Ok(response);
-		}
-	}
+        [HttpPost("CreateUserProfile")]
+        public async Task<IActionResult> CreateUserProfile([FromBody] UserProfileRequest request)
+        {
+            var response = await _accountService.CreateUserProfile(request);
+
+            if(!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpPut("UpdateUserProfile")]
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(request);
+
+            var response = await _accountService.UpdateUserProfile(request);
+
+            if(!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpDelete("DeleteUserProfile")]
+        public async Task<IActionResult> DeleteUserProfile(string id)
+        {
+            if(id.CheckRequest())
+                return BadRequest(id);
+
+            var response = await _accountService.DeleteUserProfile(id);
+
+            if(!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
+    }
 }

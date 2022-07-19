@@ -24,5 +24,6 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request);
         Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request);
         Task<ResponseResult<List<UserProfileRequest>>> DeleteUserProfile(string id);
+        Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRepuest repuest);
     }
 }
