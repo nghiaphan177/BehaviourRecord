@@ -22,3 +22,18 @@ $('#button-ct1').click(function (e) {
     e.preventDefault();
     $('.nav a[href="#ct-hauqua"]').tab('show');
 });
+
+$('#button-giaidoan').click(function (e) {
+    e.preventDefault();
+    $('.nav a[href="#hoso"]').tab('show');
+});
+
+$('#button-hoso').click(function (e) {
+    e.preventDefault();
+    $('.nav a[href="#quanlycanthiep"]').tab('show');
+});
+
+$('#button-quanlicanthiep').click(function (e) {
+    e.preventDefault();
+    $('.nav a[href="#nganchantaipham"]').tab('show');
+});

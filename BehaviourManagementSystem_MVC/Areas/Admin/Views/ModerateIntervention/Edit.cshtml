@@ -5,15 +5,15 @@
 }
 
 @*Modal-Edit Start*@
-<div class="modal fade modal-EditRecovery" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade modal-EditModerate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0">Chỉnh Sửa Giai Đoạn Phục Hồi</h5>
+                <h5 class="modal-title mt-0">Chỉnh Sửa Giai Đoạn Vừa Phải</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <form class="" asp-action="Edit" asp-controller="RecoveryIntervention" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                <form class="" asp-action="Edit" asp-controller="ModerateIntervention" asp-area="Admin" asp-route-id="@Model.Id" method="post">
                     <div class="form-group">
                         <label>Tên Giai Đoạn</label>
                         <input type="text" asp-for="@Model.Content" autocomplete="off" class="form-control" name="content" required placeholder="Điền Tên Giai Đoạn..." />

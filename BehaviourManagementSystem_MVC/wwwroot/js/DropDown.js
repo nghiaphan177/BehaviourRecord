@@ -18,3 +18,45 @@ $('#multiselect-drop-hanhdong input').change(function () {
     }).get().join(',');
     $('#hanhdong').val((s.length > 0 ? s : ""));
 });
+
+$('#multiselect-drop input').change(function () {
+    var s = $('#multiselect-drop input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#nhe').val((s.length > 0 ? s : ""));
+});
+
+$('#multiselect-drop-nphuchoi input').change(function () {
+    var s = $('#multiselect-drop-nphuchoi input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#nphuchoi').val((s.length > 0 ? s : ""));
+});
+
+$('#multiselect-drop-tb input').change(function () {
+    var s = $('#multiselect-drop-tb input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#trungbinh').val((s.length > 0 ? s : ""));
+});
+
+$('#multiselect-drop-tbphuchoi input').change(function () {
+    var s = $('#multiselect-drop-tbphuchoi input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#tbphuchoi').val((s.length > 0 ? s : ""));
+});
+
+$('#multiselect-drop-kn input').change(function () {
+    var s = $('#multiselect-drop-kn input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#khacnghiet').val((s.length > 0 ? s : ""));
+});
+
+$('#multiselect-knphuchoi input').change(function () {
+    var s = $('#multiselect-knphuchoi input:checked').map(function () {
+        return this.value;
+    }).get().join(',');
+    $('#knphuchoi').val((s.length > 0 ? s : ""));
+});

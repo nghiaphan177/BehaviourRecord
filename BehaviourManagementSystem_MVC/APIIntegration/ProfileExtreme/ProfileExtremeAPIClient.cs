@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme
@@ -50,9 +51,16 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme
             return JsonConvert.DeserializeObject<ResponseResultError<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<OptionsRequest>> Get(string id)
+        public async Task<ResponseResult<OptionsRequest>> Get(string id)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.GetAsync($"/api/ProfileExtreme/get-by-id?id=" + id);
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<OptionsRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<OptionsRequest>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ResponseResult<List<OptionsRequest>>> GetAll()
@@ -66,9 +74,20 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme
             return JsonConvert.DeserializeObject<ResponseResultError<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<List<OptionsRequest>>> Update(OptionsRequest request)
+        public async Task<ResponseResult<List<OptionsRequest>>> Update(OptionsRequest request)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.PutAsync($"/api/ProfileExtreme/update", httpContent);
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
         }
     }
 }
