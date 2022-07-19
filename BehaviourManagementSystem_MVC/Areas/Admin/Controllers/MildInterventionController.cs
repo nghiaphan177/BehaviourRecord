@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class MildInterventionController : Controller
     {
-        private readonly IOptionAPIClient _IOptionAPIClient;
-        public MildInterventionController(IOptionAPIClient IOptionAPIClient)
+        private readonly IOptionAPIClientMild _IOptionAPIClientMild;
+        public MildInterventionController(IOptionAPIClientMild IOptionAPIClientMild)
         {
-            _IOptionAPIClient = IOptionAPIClient;
+            _IOptionAPIClientMild = IOptionAPIClientMild;
         }
         public async Task<IActionResult> Index()
         {
             try
             {
-                var response = await _IOptionAPIClient.GetAll();
+                var response = await _IOptionAPIClientMild.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -43,7 +44,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClient.Create(content);
+                var response = await _IOptionAPIClientMild.Create(content);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index",response.Result);
@@ -99,7 +100,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClient.Delete(id);
+                var response = await _IOptionAPIClientMild.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new

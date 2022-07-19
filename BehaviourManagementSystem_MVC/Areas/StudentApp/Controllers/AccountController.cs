@@ -41,7 +41,7 @@ namespace BehaviourManagementSystem_MVC.Areas.StudentApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "student-dashboard")
+        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "~/student-dashboard")
         {
             //var user = HttpContext.Session.GetString("USER");
             //if (!string.IsNullOrEmpty(user))

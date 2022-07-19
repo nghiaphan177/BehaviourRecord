@@ -1,4 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class RecoveryInterventionController : Controller
+    public class AnalyzeAntecedentEnvironmentalController : Controller
     {
-        private readonly IOptionAPIClientRecovery _IOptionAPIClientRecovery;
-        public RecoveryInterventionController(IOptionAPIClientRecovery IOptionAPIClientRecovery)
+        private readonly IAntecedentEnvironmentalAPIClient _IAntecedentEnvironmentalAPIClient;
+        public AnalyzeAntecedentEnvironmentalController(IAntecedentEnvironmentalAPIClient IAntecedentEnvironmentalAPIClient)
         {
-            _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
+            _IAntecedentEnvironmentalAPIClient = IAntecedentEnvironmentalAPIClient;
         }
         public async Task<IActionResult> Index()
         {
             try
             {
-                var response = await _IOptionAPIClientRecovery.GetAll();
+                var response = await _IAntecedentEnvironmentalAPIClient.GetAll();
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -44,7 +44,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClientRecovery.Create(content);
+                var response = await _IAntecedentEnvironmentalAPIClient.Create(content);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index", response.Result);
@@ -69,7 +69,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClientRecovery.Delete(id);
+                var response = await _IAntecedentEnvironmentalAPIClient.Delete(id);
                 if (response.Success == true)
                 {
                     return Json(new
