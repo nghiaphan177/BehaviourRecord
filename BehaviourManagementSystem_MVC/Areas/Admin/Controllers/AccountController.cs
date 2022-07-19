@@ -42,10 +42,11 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Admin/Home")
         {
-            //var user = HttpContext.Session.GetString("USER");
-            //if (!string.IsNullOrEmpty(user))
-            //    return RedirectToAction("Index", "Home", new { area = "Admin" });
 
+            if(ReturnUrl == null)
+            {
+                ReturnUrl = "/Admin/Home";
+            }
             if (!ModelState.IsValid)
                 return View(request);
 
@@ -88,8 +89,17 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
         public async Task<ActionResult> Detail(string id)
         {
-            var user = await _userAPIClient.GetUserById(id);
-            return View(user.Result);
+            try
+            {
+                var user = await _userAPIClient.GetUserById(id);
+                return View(user.Result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
         }
         private ClaimsPrincipal ValidateToken(string token)
         {

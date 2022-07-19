@@ -21,6 +21,11 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 
         public string Email { get; set; }
 
+        public string Address { get; set; }
+        public string PhoneIndividual { get; set; }
+
+        public string Gender { get; set; }
+        public DateTime DateofBirth { get; set; }
         public string Teacher { get; set; }
 
 

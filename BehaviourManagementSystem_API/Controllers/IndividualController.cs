@@ -28,5 +28,18 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("detail")]
+        //[Authorize]
+        //Lấy 1 intervention của assessment
+        public async Task<IActionResult> Detail(string id)
+        {
+            var response = await _individualService.Detail(id);
+
+            if (response.Result == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
     }
 }
