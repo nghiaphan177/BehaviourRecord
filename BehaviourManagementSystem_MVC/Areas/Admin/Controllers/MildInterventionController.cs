@@ -64,7 +64,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClient.Get(id);
+                var response = await _IOptionAPIClientMild.Get(id);
                 if (response.Success == true)
                 {
                     return View(response.Result);
@@ -82,7 +82,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             try
             {
-                var response = await _IOptionAPIClient.Update(request);
+                var response = await _IOptionAPIClientMild.Update(request);
                 if (response.Success == true)
                 {
                     return RedirectToAction("Index", response.Result);

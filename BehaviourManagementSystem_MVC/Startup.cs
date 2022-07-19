@@ -42,11 +42,6 @@ namespace BehaviourManagementSystem_MVC
                     options.LogoutPath = "/Admin/Account/Logout";
                     options.LoginPath = "/student-login";
                     options.LogoutPath = "/student-logout";
-
-
-                        // otherwise always check for cookie auth
-                        return "Cookies";
-                    };
                 });
             services.AddAuthorization(options =>
             {
