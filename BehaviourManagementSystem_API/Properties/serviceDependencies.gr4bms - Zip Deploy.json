@@ -1,13 +1,8 @@
 {
   "dependencies": {
     "identityapp1": {
-      "type": "identityapp",
-      "ignored": "true"
-    },
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:DefaultConnection",
-      "ignored": "true"
+      "ignored": "true",
+      "type": "identityapp"
     }
   }
 }

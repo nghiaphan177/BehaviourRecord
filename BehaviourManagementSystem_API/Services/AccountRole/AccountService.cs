@@ -41,10 +41,10 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<bool>> CheckEmailConfirmed(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<bool>("Email không tồn tại");
 
-            if (user.EmailConfirmed)
+            if(user.EmailConfirmed)
                 return new ResponseResultSuccess<bool>(true);
             return new ResponseResultSuccess<bool>(false);
         }
@@ -52,9 +52,9 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<ResetPasswordRepuest>> ForgotPassword(string userNameOfEmail)
         {
             var user = await _userManager.FindByNameAsync(userNameOfEmail);
-            if (user == null)
+            if(user == null)
                 user = await _userManager.FindByEmailAsync(userNameOfEmail);
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<ResetPasswordRepuest>("Tài khoản không tồn tại");
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -72,15 +72,15 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<UserProfileRequest>>> GetAll(string roleName)
         {
-            if (!await _context.Users.AnyAsync())
+            if(!await _context.Users.AnyAsync())
                 return new ResponseResultError<List<UserProfileRequest>>("Dữ liệu hiện tại rỗng");
 
             var users = new List<UserProfileRequest>();
 
-            if (roleName == null)
+            if(roleName == null)
             {
                 var list = await _context.Users.ToListAsync();
-                foreach (var user in list)
+                foreach(var user in list)
                 {
                     var roleOfUser = await _roleService.GetRoleNameByUserId(user.Id.ToString());
                     users.Add(new UserProfileRequest()
@@ -102,15 +102,15 @@ namespace BehaviourManagementSystem_API.Services
 
             var role = await _roleManager.FindByNameAsync(roleName);
 
-            if (role != null)
+            if(role != null)
             {
                 var userRole = await _context.UserRoles
                     .Where(prop => prop.RoleId == role.Id)
                     .ToListAsync();
 
-                foreach (var item in userRole)
+                foreach(var item in userRole)
                 {
-                    if (!item.UserId.Equals(null))
+                    if(!item.UserId.Equals(null))
                     {
                         var user = await _context.Users.FindAsync(item.UserId);
                         users.Add(new UserProfileRequest()
@@ -138,7 +138,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<UserProfileRequest>> GetUser(string id)
         {
             var user = await _context.Users.FindAsync(new Guid(id));
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<UserProfileRequest>("Tài khoản không tồn tại");
 
             var role = await _roleService.GetRoleNameByUserId(id);
@@ -161,14 +161,14 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<string>> Login(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserNameOrEmail);
-            if (user == null)
+            if(user == null)
                 user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<string>("Tài khoản không tồn tại");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remember, false);
 
-            if (!result.Succeeded)
+            if(!result.Succeeded)
                 return new ResponseResultError<string>("Mật khẩu không đúng");
 
 
@@ -179,16 +179,16 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<ConfirmEmailRequest>> Register(RegisterRequest request)
         {
-            if (await _context.Users.CountAsync(prop => prop.UserName == request.UserName) > 0)
+            if(await _context.Users.CountAsync(prop => prop.UserName == request.UserName) > 0)
                 return new ResponseResultError<ConfirmEmailRequest>("Tên tài khoản của bạn đã tồn tại.");
 
-            if (await _context.Users.CountAsync(prop => prop.Email == request.Email) > 0)
+            if(await _context.Users.CountAsync(prop => prop.Email == request.Email) > 0)
                 return new ResponseResultError<ConfirmEmailRequest>("Email của bạn đã tồn tại.");
 
-            if (!request.UserName.CheckUserNameRepuest())
+            if(!request.UserName.CheckUserNameRepuest())
                 return new ResponseResultError<ConfirmEmailRequest>("Tên tài khoản không hợp lệ.");
 
-            if (!request.Password.CheckPaswordRepuest())
+            if(!request.Password.CheckPaswordRepuest())
                 return new ResponseResultError<ConfirmEmailRequest>("Mật khẩu không hợp lệ.");
 
             var user = new User
@@ -206,7 +206,7 @@ namespace BehaviourManagementSystem_API.Services
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
+            if(result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -224,7 +224,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<ConfirmEmailRequest>> ResenConfirmEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<ConfirmEmailRequest>("Email chưa được đăng ký");
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -240,12 +240,13 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<bool>> ResetPassword(ResetPasswordRepuest repuest)
         {
             var user = await _userManager.FindByIdAsync(repuest.Id);
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<bool>("Tài khoản không tồn tại");
 
-            var result = await _userManager.ResetPasswordAsync(user, repuest.Code, repuest.Password);
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(repuest.Code));
+            var result = await _userManager.ResetPasswordAsync(user, code, repuest.Password);
 
-            if (result.Succeeded)
+            if(result.Succeeded)
                 return new ResponseResultSuccess<bool>();
             return new ResponseResultError<bool>();
         }
@@ -253,13 +254,13 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<UserProfileRequest>> VerifyEmail(ConfirmEmailRequest request)
         {
             var user = await _context.Users.FindAsync(new Guid(request.Id));
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<UserProfileRequest>("Tài khoản không tồn tại");
 
             request.Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Code));
             var result = await _userManager.ConfirmEmailAsync(user, request.Code);
 
-            if (result.Succeeded)
+            if(result.Succeeded)
                 return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest
                 {
                     Id = user.Id.ToString(),
@@ -297,7 +298,7 @@ namespace BehaviourManagementSystem_API.Services
                 var res = await GetAll(null);
                 return new ResponseResultSuccess<List<UserProfileRequest>>(res.Result);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 var res = await GetAll(null);
                 return new ResponseResult<List<UserProfileRequest>>()
@@ -312,24 +313,24 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request)
         {
             var user = await _context.Users.FindAsync(new Guid(request.Id));
-            if (user == null)
+            if(user == null)
                 return new ResponseResultError<UserProfileRequest>("Tài khoản không tồn tại.");
 
-            if (!request.FirstName.CheckRequest())
+            if(!request.FirstName.CheckRequest())
                 user.FirstName = request.FirstName;
-            if (!request.LastName.CheckRequest())
+            if(!request.LastName.CheckRequest())
                 user.LastName = request.LastName;
-            if (!request.Gender.CheckRequest())
+            if(!request.Gender.CheckRequest())
                 user.Gender = request.Gender;
-            if (string.IsNullOrEmpty(request.DOB.ToString()))
+            if(string.IsNullOrEmpty(request.DOB.ToString()))
                 user.DOB = request.DOB;
-            if (!request.PhoneNumber.CheckRequest())
+            if(!request.PhoneNumber.CheckRequest())
                 user.PhoneNumber = request.PhoneNumber;
-            if (!request.Email.CheckRequest())
+            if(!request.Email.CheckRequest())
                 user.Email = request.Email;
-            if (!request.Address.CheckRequest())
+            if(!request.Address.CheckRequest())
                 user.Address = request.Address;
-            if (!request.Img.CheckRequest())
+            if(!request.Img.CheckRequest())
                 user.Img = request.Img;
 
             try
@@ -375,7 +376,7 @@ namespace BehaviourManagementSystem_API.Services
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            if (user == null)
+            if(user == null)
             {
                 var upfs = await GetAll(null);
                 return new ResponseResult<List<UserProfileRequest>>()
@@ -392,7 +393,7 @@ namespace BehaviourManagementSystem_API.Services
                 var upfs = await GetAll(null);
                 return new ResponseResultSuccess<List<UserProfileRequest>>(upfs.Result);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 var upfs = await GetAll(null);
                 return new ResponseResult<List<UserProfileRequest>>()
