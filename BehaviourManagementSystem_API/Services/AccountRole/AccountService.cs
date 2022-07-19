@@ -160,21 +160,30 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<string>> Login(LoginRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.UserNameOrEmail);
-            if(user == null)
-                user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
-            if(user == null)
-                return new ResponseResultError<string>("Tài khoản không tồn tại");
+            try
+            {
+                var user = await _userManager.FindByNameAsync(request.UserNameOrEmail);
+                if(user == null)
+                    user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
+                if(user == null)
+                    return new ResponseResultError<string>("Tài khoản không tồn tại");
+                if(await _userManager.CheckPasswordAsync(user, request.Password))
+                    return new ResponseResultError<string>("Mật khẩu không chính xác");
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remember, false);
+                var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remember, false);
 
-            if(!result.Succeeded)
-                return new ResponseResultError<string>("Mật khẩu không đúng");
+                if(!result.Succeeded)
+                    return new ResponseResultError<string>("Mật khẩu không đúng");
 
 
-            var token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
+                var token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
 
-            return new ResponseResultSuccess<string>(token);
+                return new ResponseResultSuccess<string>(token);
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<string>(ex.Message);
+            }
         }
 
         public async Task<ResponseResult<ConfirmEmailRequest>> Register(RegisterRequest request)
@@ -413,23 +422,32 @@ namespace BehaviourManagementSystem_API.Services
 
             try
             {
-                await _userManager.ChangePasswordAsync(user, repuest.PasswordOld, repuest.PasswordNew);
+                var checkPassOld = await _userManager.CheckPasswordAsync(user, repuest.PasswordNew);
 
-                var role = await _roleService.GetRoleNameByUserId(user.Id.ToString());
+                if(!checkPassOld)
+                    return new ResponseResultError<UserProfileRequest>("Mật khẩu củ không chính xác.");
 
-                return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest
+                var result = await _userManager.ChangePasswordAsync(user, repuest.PasswordOld, repuest.PasswordNew);
+
+                if(result.Succeeded)
                 {
-                    Id = user.Id.ToString(),
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Gender = user.Gender,
-                    DOB = user.DOB,
-                    PhoneNumber = user.PhoneNumber,
-                    Email = user.Email,
-                    Address = user.Address,
-                    Img = user.Img,
-                    RoleName = role.Result
-                });
+                    var role = await _roleService.GetRoleNameByUserId(user.Id.ToString());
+
+                    return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest
+                    {
+                        Id = user.Id.ToString(),
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Gender = user.Gender,
+                        DOB = user.DOB,
+                        PhoneNumber = user.PhoneNumber,
+                        Email = user.Email,
+                        Address = user.Address,
+                        Img = user.Img,
+                        RoleName = role.Result
+                    });
+                }
+                return new ResponseResultError<UserProfileRequest>("Đổi mật khẩu không thành công");
             }
             catch(Exception)
             {

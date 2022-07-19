@@ -132,7 +132,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             if(repuest.Id.CheckRequest() ||
                 repuest.PasswordNew.CheckRequest() ||
-                repuest.PasswordNew.CheckPaswordRepuest() ||
+                !repuest.PasswordNew.CheckPaswordRepuest() ||
                 repuest.PasswordNew != repuest.PasswordConfirm)
                 return BadRequest(repuest);
 
