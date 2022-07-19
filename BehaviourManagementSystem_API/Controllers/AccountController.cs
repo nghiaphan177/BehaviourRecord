@@ -98,7 +98,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpPut("ResetPassword"), AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRepuest repuest)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest repuest)
         {
             if(!ModelState.IsValid || repuest.Id.CheckRequest() || repuest.Code.CheckRequest())
                 return BadRequest();
@@ -125,7 +125,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangPassword([FromBody] ResetPasswordRepuest repuest)
+        public async Task<IActionResult> ChangPassword([FromBody] ResetPasswordRequest repuest)
         {
             if(!ModelState.IsValid)
                 return BadRequest(repuest);

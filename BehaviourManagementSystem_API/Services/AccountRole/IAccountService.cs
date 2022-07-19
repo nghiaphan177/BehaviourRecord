@@ -18,12 +18,12 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<ConfirmEmailRequest>> Register(RegisterRequest request);
         Task<ResponseResult<UserProfileRequest>> VerifyEmail(ConfirmEmailRequest request);
         Task<ResponseResult<ConfirmEmailRequest>> ResenConfirmEmail(string email);
-        Task<ResponseResult<ResetPasswordRepuest>> ForgotPassword(string userNameOfEmail);
+        Task<ResponseResult<ResetPasswordRequest>> ForgotPassword(string userNameOfEmail);
         Task<ResponseResult<bool>> CheckEmailConfirmed(string email);
-        Task<ResponseResult<bool>> ResetPassword(ResetPasswordRepuest repuest);
+        Task<ResponseResult<bool>> ResetPassword(ResetPasswordRequest repuest);
         Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request);
         Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request);
         Task<ResponseResult<List<UserProfileRequest>>> DeleteUserProfile(string id);
-        Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRepuest repuest);
+        Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest repuest);
     }
 }

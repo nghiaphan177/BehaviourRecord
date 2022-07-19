@@ -308,7 +308,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<IActionResult> ResetPassword(ResetPasswordRepuest request)
+		public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
 		{
 			if(!ModelState.IsValid)
 				return View(ModelState);

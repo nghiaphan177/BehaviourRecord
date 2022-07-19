@@ -49,19 +49,19 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<bool>(false);
         }
 
-        public async Task<ResponseResult<ResetPasswordRepuest>> ForgotPassword(string userNameOfEmail)
+        public async Task<ResponseResult<ResetPasswordRequest>> ForgotPassword(string userNameOfEmail)
         {
             var user = await _userManager.FindByNameAsync(userNameOfEmail);
             if(user == null)
                 user = await _userManager.FindByEmailAsync(userNameOfEmail);
             if(user == null)
-                return new ResponseResultError<ResetPasswordRepuest>("Tài khoản không tồn tại");
+                return new ResponseResultError<ResetPasswordRequest>("Tài khoản không tồn tại");
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            return new ResponseResultSuccess<ResetPasswordRepuest>(
-                new ResetPasswordRepuest
+            return new ResponseResultSuccess<ResetPasswordRequest>(
+                new ResetPasswordRequest
                 {
                     Id = user.Id.ToString(),
                     UserOrEmail = user.Email,
@@ -237,7 +237,7 @@ namespace BehaviourManagementSystem_API.Services
             });
         }
 
-        public async Task<ResponseResult<bool>> ResetPassword(ResetPasswordRepuest repuest)
+        public async Task<ResponseResult<bool>> ResetPassword(ResetPasswordRequest repuest)
         {
             var user = await _userManager.FindByIdAsync(repuest.Id);
             if(user == null)
@@ -405,7 +405,7 @@ namespace BehaviourManagementSystem_API.Services
             }
         }
 
-        public async Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRepuest repuest)
+        public async Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest repuest)
         {
             var user = await _userManager.FindByIdAsync(repuest.Id);
             if(user == null)

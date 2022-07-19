@@ -109,7 +109,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 		/// </summary>
 		/// <param name="userNameOrEmail"></param>
 		/// <returns></returns>
-		public async Task<ResponseResult<ResetPasswordRepuest>> ForgotPassword(string userNameOrEmail)
+		public async Task<ResponseResult<ResetPasswordRequest>> ForgotPassword(string userNameOrEmail)
 		{
 			var client = _httpClientFactory.CreateClient();
 
@@ -118,8 +118,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 			var response = await client.GetAsync($"/api/Account/ForgotPassword?userNameOrEmail={userNameOrEmail}");
 
 			if(response.IsSuccessStatusCode)
-				return JsonConvert.DeserializeObject<ResponseResultSuccess<ResetPasswordRepuest>>(await response.Content.ReadAsStringAsync());
-			return JsonConvert.DeserializeObject<ResponseResultError<ResetPasswordRepuest>>(await response.Content.ReadAsStringAsync());
+				return JsonConvert.DeserializeObject<ResponseResultSuccess<ResetPasswordRequest>>(await response.Content.ReadAsStringAsync());
+			return JsonConvert.DeserializeObject<ResponseResultError<ResetPasswordRequest>>(await response.Content.ReadAsStringAsync());
 		}
 
 		/// <summary>
@@ -147,7 +147,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 		/// <param name="request"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public async Task<ResponseResult<string>> ResetPassword(ResetPasswordRepuest request)
+		public async Task<ResponseResult<string>> ResetPassword(ResetPasswordRequest request)
 		{
 			var json = JsonConvert.SerializeObject(request);
 

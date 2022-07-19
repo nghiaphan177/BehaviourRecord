@@ -14,9 +14,9 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 
 		Task<ResponseResult<ConfirmEmailRequest>> ResendConfirmEmail(string email);
 
-		Task<ResponseResult<ResetPasswordRepuest>> ForgotPassword(string userNameOrEmail);
+		Task<ResponseResult<ResetPasswordRequest>> ForgotPassword(string userNameOrEmail);
 
-		Task<ResponseResult<string>> ResetPassword(ResetPasswordRepuest repuest);
+		Task<ResponseResult<string>> ResetPassword(ResetPasswordRequest repuest);
 
 		Task<ResponseResult<bool>> GetEmailConfirmed(string email);
 	}

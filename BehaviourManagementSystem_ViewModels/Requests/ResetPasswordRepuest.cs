@@ -11,7 +11,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 	/// ConfirmEmailRequest view model
 	/// Writer: DuyLH4
 	/// </summary>
-	public class ResetPasswordRepuest
+	public class ResetPasswordRequest
 	{
 		public string Id { get; set; }
 		public string UserOrEmail { get; set; }
