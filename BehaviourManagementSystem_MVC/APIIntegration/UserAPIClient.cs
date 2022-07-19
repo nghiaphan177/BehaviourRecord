@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.APIIntegration
@@ -38,11 +39,28 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
         public async Task<ResponseResult<UserProfileRequest>> GetUserById(string id)
         {
             var client = _httpClientFactory.CreateClient();
-
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             //truyen id user vao url api
             var response = await client.GetAsync($"/api/Account/User?id="+id);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ResponseResult<UserProfileRequest>> UpdateUser(string id, UserProfileRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+           
+
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            //truyen id user vao url api
+            var response = await client.PutAsync($"/api/Account/UpdateUserProfile",httpContent);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<UserProfileRequest>>(await response.Content.ReadAsStringAsync());

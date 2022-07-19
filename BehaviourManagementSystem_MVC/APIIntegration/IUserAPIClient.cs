@@ -9,5 +9,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
     {
         Task<ResponseResult<List<UserProfileRequest>>> GetAllUser();
         Task<ResponseResult<UserProfileRequest>> GetUserById(string id);
+        Task<ResponseResult<UserProfileRequest>> UpdateUser(string id, UserProfileRequest user);
     }
 }

@@ -256,7 +256,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
 			if(response.Success)
 			{
-				// https://localhost:port/Account/ConfirmEmail?id=****&code=****/
+				// https://localhost:port/Account/ResetPassword?id=****&code=****/
 				var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ResetPassword");
 				var query = HttpUtility.ParseQueryString(uri.Query);
 				query["id"] = response.Result.Id;

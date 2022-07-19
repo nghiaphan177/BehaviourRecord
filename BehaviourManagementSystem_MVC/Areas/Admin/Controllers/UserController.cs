@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +33,9 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
 
         // GET: UserController/Detail/5
-        public ActionResult Detail(string id)
+        public async Task<ActionResult> Detail(string id)
         {
+
             return View();
         }
 
@@ -59,24 +61,43 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         }
 
         // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            try
+            {
+                var response = await _userAPIClient.GetUserById(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, UserProfileRequest user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = await _userAPIClient.UpdateUser(id, user);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
             }
             catch
             {
-                return View();
+                throw;
             }
+            return View();
         }
 
         // GET: UserController/Delete/5
