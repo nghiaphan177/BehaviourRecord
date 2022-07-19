@@ -47,6 +47,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<List<IndividualRequest>>> GetAll()
         {
             var a = await _context.Users.Include("Individuals").FirstAsync(p => p.Individuals.Any(i => i.UserId == p.Id));
+            
             var fullname = a.FirstName + " " + a.LastName;
             var email = a.Email;
             if (!await _context.Individuals.AnyAsync())

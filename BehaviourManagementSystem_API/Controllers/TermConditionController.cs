@@ -24,7 +24,6 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpGet("get-all")]
-        //[Authorize(Roles="admin,teacher")]
         //Lấy danh sách điều khoản dịch vụ TermCondition
         public async Task<IActionResult> GetAll()
         {
@@ -36,7 +35,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
         [HttpGet("get-by-id")]
-        //[Authorize]
         //Lấy 1 điều khoản dịch vụ TermCondition
         public async Task<IActionResult> GetById(string id)
         {
@@ -50,7 +48,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
         [HttpPost("create")]
-        //[Authorize(Roles="admin")]
         //Tạo mới điều khoản dịch vụ TermCondition
         public async Task<IActionResult> Create(string content)
         {
@@ -66,7 +63,6 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpPut("update")]
-        //[Authorize(Roles="admin")]
         //Chỉnh sửa điều khoản dịch vụ TermCondition
         public async Task<IActionResult> Update([FromBody] OptionsRequest request)
         {
@@ -82,7 +78,6 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpDelete("delete")]
-        //[Authorize(Roles="admin")]
         //Xóa điều khoản dịch vụ TermCondition
         public async Task<IActionResult> Delete(string id)
         {
