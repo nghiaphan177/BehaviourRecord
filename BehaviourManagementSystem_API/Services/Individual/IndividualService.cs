@@ -1,5 +1,4 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
-using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
@@ -21,27 +20,26 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<IndividualRequest>> Detail(string id)
         {
-            var a = await _context.Users.Include("Individuals").FirstAsync(p => p.Individuals.Any(i => i.UserId == p.Id));
-            var fullname = a.FirstName + " " + a.LastName;
-            var email = a.Email;
-            var address = a.Address;
-            var phone = a.PhoneNumber;
-            var gender = a.Gender;
-            DateTime dayofbirth = a.DOB;
             if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<IndividualRequest>("Id không tồn tại");
+
             var obj = await _context.Individuals.FindAsync(new Guid(id));
-            return new ResponseResultSuccess<IndividualRequest>(new IndividualRequest()
-            {
-                Id = obj.Id.ToString(),
-                FullName = fullname,
-                Email = email,
-                Organization = obj.Organization,
-                Address = address,
-                PhoneIndividual = phone,
-                Gender = gender,
-                DateofBirth = dayofbirth
-            });
+
+            foreach (var user in await _context.Users.ToListAsync())
+                if (obj.UserId == user.Id)
+                    return new ResponseResultSuccess<IndividualRequest>(new IndividualRequest()
+                    {
+                        Id = obj.Id.ToString(),
+                        FullName = user.FirstName + " " + user.LastName,
+                        Email = user.Email,
+                        Organization = obj.Organization,
+                        Address = user.Address,
+                        PhoneIndividual = user.PhoneNumber,
+                        Gender = user.Gender,
+                        DateofBirth = user.DOB,
+                        UserId = obj.UserId.ToString()
+                    });
+            return new ResponseResultError<IndividualRequest>("Lỗi hệ thống.");
         }
 
         public async Task<ResponseResult<List<IndividualRequest>>> GetAll()
@@ -53,7 +51,7 @@ namespace BehaviourManagementSystem_API.Services
             {
                 foreach (var user in await _context.Users.ToListAsync())
                 {
-                    if (ind.UserId== user.Id)
+                    if (ind.UserId == user.Id)
                     {
                         result.Add(new IndividualRequest()
                         {
