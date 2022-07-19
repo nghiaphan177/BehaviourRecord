@@ -20,6 +20,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 		}
 
 		public async Task<ResponseResult<string>> Login(LoginRequest request)
+		
 		{
 			var json = JsonConvert.SerializeObject(request);
 

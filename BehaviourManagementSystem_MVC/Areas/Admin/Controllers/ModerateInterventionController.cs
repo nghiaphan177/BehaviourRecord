@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
     public class ModerateInterventionController : Controller
     {
         private readonly IOptionAPIClientModerate _IOptionAPIClientModerate;

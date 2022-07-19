@@ -1,4 +1,4 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
     [Area("Admin")]
     public class ExtremeInterventionController : Controller
     {
-        private readonly IOptionAPIClientExtreme _IOptionAPIClientExtreme;
-        public ExtremeInterventionController(IOptionAPIClientExtreme IOptionAPIClientExtreme)
+        private readonly IOptionAPIClientRecovery _IOptionAPIClientExtreme;
+        public ExtremeInterventionController(IOptionAPIClientRecovery IOptionAPIClientExtreme)
         {
             _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
         }

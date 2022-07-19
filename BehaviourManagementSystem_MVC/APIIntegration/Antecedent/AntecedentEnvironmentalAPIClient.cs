@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.APIIntegration
 {
-    public class AntecedentEvironmentalAPIClient : IAntecedentEvironmentalAPIClient
+    public class AntecedentEnvironmentalAPIClient : IAntecedentEnvironmentalAPIClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        public AntecedentEvironmentalAPIClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public AntecedentEnvironmentalAPIClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
@@ -37,7 +37,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var httpRequestMessage = new HttpRequestMessage(
-            HttpMethod.Post,
+            HttpMethod.Delete,
             "/api/AnalyzeAntecedentEnvironmental/delete?id=" + id);
             var response = await client.SendAsync(httpRequestMessage);
             if (response.IsSuccessStatusCode)
@@ -63,7 +63,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             var json = JsonConvert.SerializeObject(request);
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"/api/AnalyzeAntecedentEnvironmental/update",httpContent);
+            var response = await client.PutAsync($"/api/AnalyzeAntecedentEnvironmental/update",httpContent);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<List<OptionsRequest>>>(await response.Content.ReadAsStringAsync());
