@@ -59,9 +59,40 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 
         }
 
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(string id)
         {
+            try
+            {
+                var response = await _IAntecedentPerceivedAPIClient.Get(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(OptionsRequest request)
+        {
+            try
+            {
+                var response = await _IAntecedentPerceivedAPIClient.Update(request);
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(string id)
