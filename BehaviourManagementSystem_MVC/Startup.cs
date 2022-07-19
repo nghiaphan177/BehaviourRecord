@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using System;
 
 namespace BehaviourManagementSystem_MVC
@@ -32,7 +33,7 @@ namespace BehaviourManagementSystem_MVC
             services.AddHttpClient();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+                .AddCookie("Cookies",options =>
                 {
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
@@ -41,12 +42,10 @@ namespace BehaviourManagementSystem_MVC
                     options.LogoutPath = "/Admin/Account/Logout";
                     options.LoginPath = "/student-login";
                     options.LogoutPath = "/student-logout";
-
-
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "admin"));
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("ROLE", "ADMIN"));
             });
             services.AddSession(options =>
             {
