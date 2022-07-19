@@ -9,14 +9,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
+@{
+    int stt = 0;
+}
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
-            <h4 class="page-title">Trạng Thái Cảm Xúc</h4>
+            <h4 class="page-title">Giai Đoạn Nhẹ</h4>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0);">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lí phân tích sự cố</a></li>
-                <li class="breadcrumb-item active">Trạng Thái Cảm Xúc</li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Giai đoạn nâng cấp</a></li>
+                <li class="breadcrumb-item active">Giai đoạn nâng cấp nhẹ</li>
             </ol>
         </div>
     </div>
@@ -25,7 +28,7 @@
     <div class="col-12">
         <div class="card m-b-20">
             <div class="card-body">
-                <button type="button" data-toggle="modal" data-target=".modal-CreatePerceived" class="btn btn-primary waves-effect waves-light">Thêm</button>
+                <button type="button" data-toggle="modal" data-target=".modal-CreateMild" class="btn btn-primary waves-effect waves-light">Thêm</button>
                 @if (Model != null)
                 {
                     <div class="table-rep-plugin">
@@ -34,22 +37,26 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th>Số Thứ Tự</th>
-                                        <th data-priority="1">Nội Dung</th>
+                                        <th data-priority="1">Tên Giai Đoạn</th>
                                         <th data-priority="6">Tùy Chọn</th>
+
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    @for (var i = 0; i < Model.Count; i++)
+                                    @foreach (var item in Model)
                                     {
-                                        <tr id="Perceived-@Model[i].Id">
 
-                                            <td>@(i+1)</td>
-                                            <td>@Model[i].Content</td>
+                                        <tr id="mild-@item.Id">
+                                            <td>@(stt += 1)</td>
+                                            <td>@item.Content</td>
                                             <td>
-                                                <button type="button" data-toggle="modal" data-target=".modal-EditPerceived" class="btn btn-warning waves-effect waves-light">Sửa</button>
-                                                <button onclick=" deletePerceived('@Model[i].Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa</button>
+
+                                                <button type="button" data-toggle="modal" data-target=".modal-EditMild" class="btn btn-warning waves-effect waves-light">Sửa</button>
+                                                <button type="button" onclick=" deleteMild('@item.Id')" class="btn btn-danger waves-effect waves-light">Xóa</button>
                                             </td>
+
                                         </tr>
+
                                     }
 
                                 </tbody>
@@ -58,22 +65,23 @@
 
                     </div>
                 }
-                @if (Model == null)
+                else
                 {
                     <p class="text-center">Không có dữ liệu</p>
                 }
-                <div class="modal modal-CreatePerceived" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                @*Modal-Create Start*@
+                <div class="modal fade modal-CreateMild" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title mt-0">Thêm Trạng Thái Cảm Xúc</h5>
+                                <h5 class="modal-title mt-0">Thêm Giai Đoạn Nhẹ</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="AnalyzeAntecedentPerceived" asp-area="Admin">
+                                <form class="" action="/Admin/MildIntervention/Create" method="post">
                                     <div class="form-group">
-                                        <label>Trạng Thái Cảm Xúc</label>
-                                        <input name="content" type="text" class="form-control" required placeholder="Điền Nội Dung..." />
+                                        <label>Tên Giai Đoạn</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="content" required placeholder="Điền Tên Giai Đoạn..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -90,18 +98,20 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
-                <div class="modal modal-EditPerceived" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                @*Modal-Create End*@
+                @*Modal-Edit Start*@
+                <div class="modal fade modal-EditMild" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title mt-0">Chỉnh Sửa Trạng Thái Cảm Xúc</h5>
+                                <h5 class="modal-title mt-0">Chỉnh Sửa Giai Đoạn Vừa Phải</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" asp-action="Create" asp-controller="AnalyzeAntecedentPerceived" asp-area="Admin">
+                                <form class="" action="/Admin/MildIntervention/Edit" method="post">
                                     <div class="form-group">
-                                        <label>Nội Dung</label>
-                                        <input name="content" autocomplete="off" type="text" class="form-control" required placeholder="Điền Nội Dung..." />
+                                        <label>Tên trạng thái cảm xúc</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="content" required placeholder="Điền Nội Dung..." />
                                     </div>
                                     <div class="form-group text-center">
                                         <div>
@@ -118,6 +128,7 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div>
+                @*Modal-Edit End*@
             </div>
         </div>
     </div> <!-- end col -->
@@ -139,7 +150,7 @@
             confirmButtonText: 'Yes!'
         }).then(function () {
             $.ajax({
-                url: "AnalyzeAntecedentPerceived/delete",
+                url: "AnalyzeAntecedentEnvironmental/delete",
                 data: { "id": id },
                 type: "DELETE",
                 success: function (result) {
@@ -149,7 +160,7 @@
                             '',
                             'success'
                         ),
-                            $("#Perceived-" + id).remove();
+                            $("perceived-" + id).remove();
                     }
                 }
             })
