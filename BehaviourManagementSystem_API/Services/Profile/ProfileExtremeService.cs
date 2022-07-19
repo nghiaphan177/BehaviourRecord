@@ -1,6 +1,4 @@
-﻿
-
-using BehaviourManagementSystem_API.Data.EF;
+﻿using BehaviourManagementSystem_API.Data.EF;
 using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;

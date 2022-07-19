@@ -49,7 +49,8 @@ namespace BehaviourManagementSystem_API.Services
             var result = new List<OptionsRequest>();
             foreach (var item in mild)
             {
-                result.Add(new OptionsRequest(){
+                result.Add(new OptionsRequest()
+                {
                     Id = item.Id.ToString(),
                     Content = item.Content,
                     CreateDate = item.CreateDate.Value,

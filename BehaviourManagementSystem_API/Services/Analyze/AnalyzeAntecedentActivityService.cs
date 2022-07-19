@@ -77,9 +77,9 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<OptionsRequest>(new OptionsRequest()
             {
                 Id = obj.Id.ToString(),
-                Content= obj.Content,
+                Content = obj.Content,
                 CreateDate = obj.CreateDate.Value,
-                UpdateDate= obj.UpdateDate.GetValueOrDefault()
+                UpdateDate = obj.UpdateDate.GetValueOrDefault()
             });
         }
 

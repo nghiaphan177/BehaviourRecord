@@ -43,7 +43,7 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<AssessmentRequest>>> GetAll(string individualId)
         {
-            var find = _context.Assesetments.Where(p => p.IndividualId.ToString() == individualId);        
+            var find = _context.Assesetments.Where(p => p.IndividualId.ToString() == individualId);
             var assessment = _context.Assesetments.Take(find.Count());
             if (await assessment.AnyAsync() == false)
             {
@@ -51,7 +51,7 @@ namespace BehaviourManagementSystem_API.Services
             }
             var result = new List<AssessmentRequest>();
             foreach (var item in assessment)
-            {             
+            {
                 result.Add(new AssessmentRequest()
                 {
                     Id = item.Id.ToString(),

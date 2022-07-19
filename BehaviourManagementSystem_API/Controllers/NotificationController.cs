@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class NotificationController : ControllerBase
 	{
