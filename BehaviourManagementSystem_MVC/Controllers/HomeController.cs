@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Teacher")]
+    //[Authorize(AuthenticationSchemes = "Teacher")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
