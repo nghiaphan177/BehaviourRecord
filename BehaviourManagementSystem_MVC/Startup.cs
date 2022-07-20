@@ -45,7 +45,7 @@ namespace BehaviourManagementSystem_MVC
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("ROLE", "ADMIN"));
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
             });
             services.AddSession(options =>
             {

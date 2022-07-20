@@ -35,8 +35,21 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         // GET: UserController/Detail/5
         public async Task<ActionResult> Detail(string id)
         {
+            try
+            {
+                var response = await _userAPIClient.GetUserById(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
 
-            return View();
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         // GET: UserController/Create
@@ -90,7 +103,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _userAPIClient.UpdateUser(id, user);
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch
