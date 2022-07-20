@@ -30,7 +30,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
         [HttpGet("detail")]
         //[Authorize]
-        //Lấy 1 intervention của assessment
+        //Lấy 1 Individual
         public async Task<IActionResult> Detail(string id)
         {
             var response = await _individualService.Detail(id);
@@ -40,5 +40,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(response);
         }
+
+
     }
 }

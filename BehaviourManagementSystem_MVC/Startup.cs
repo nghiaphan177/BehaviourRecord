@@ -1,5 +1,6 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
+using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
@@ -64,6 +65,7 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IOptionAPIClientModerate, ProfileModerateAPIClient>();
             services.AddTransient<IOptionAPIClientExtreme, ProfileExtremeAPIClient>();
             services.AddTransient<IOptionAPIClientRecovery, ProfileRecoveryAPIClient>();
+            services.AddTransient<IIndividualAPIClient, IndividualAPIClient>();
 
             services.AddControllersWithViews();
         }

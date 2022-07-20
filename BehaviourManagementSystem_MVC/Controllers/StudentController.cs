@@ -1,11 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.Individual;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
     public class StudentController : Controller
     {
-        public IActionResult Index()
+        private readonly IIndividualAPIClient _IIndividualAPIClient;
+        public StudentController(IIndividualAPIClient IIndividualAPIClient)
         {
+            _IIndividualAPIClient = IIndividualAPIClient;
+        }
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var response = await _IIndividualAPIClient.GetAll();
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 

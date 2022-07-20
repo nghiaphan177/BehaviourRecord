@@ -35,7 +35,7 @@ namespace BehaviourManagementSystem_API.Services
             if (role == null)
                 return new ResponseResultError<string>("Không có quyền truy cập hợp lệ");
 
-            return new ResponseResultSuccess<string>(role.NormalizedName);
+            return new ResponseResultSuccess<string>(result: role.NormalizedName);
         }
     }
 }
