@@ -1,5 +1,6 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
 using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Services.Strategies.Account;
 using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using BehaviourManagementSystem_ViewModels.Requests;
@@ -452,6 +453,55 @@ namespace BehaviourManagementSystem_API.Services
             catch(Exception)
             {
                 return new ResponseResultError<UserProfileRequest>("Đổi mật khẩu không thành công");
+            }
+        }
+
+        public async Task<ResponseResult<List<UserProfileRequest>>> GetAccount(UserProfileRequest request)
+        {
+            try
+            {
+                var acc = new AccountStratery();
+                if(request == null)
+                {
+                    acc.SetAccountStratery(new GetAllAccount(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+
+                if(request.Id != null)
+                {
+                    acc.SetAccountStratery(new GetAccount(_userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+
+                if(request.RoleName != null)
+                {
+                    acc.SetAccountStratery(new GetAllAccountTeacher(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+                
+                if(request.Active == true)
+                {
+                    acc.SetAccountStratery(new GetAllAccountActivity(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+                
+                if(request.Active == false)
+                {
+                    acc.SetAccountStratery(new GetAllAcountNotActivity(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+
+                if(request.TeacherId != null)
+                {
+                    acc.SetAccountStratery(new GetAllAccountStudentOfTeacher(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
+
+                return new ResponseResultError<List<UserProfileRequest>>("Lỗi hệ thống");
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<List<UserProfileRequest>>(ex.Message);
             }
         }
     }
