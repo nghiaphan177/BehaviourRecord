@@ -48,12 +48,38 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("create-record/{individualId}")]
+        [HttpPost("create-record")]
         //[Authorize(Roles="teacher")]
-        //Tạo record cho assessment của individual
+        //Tạo record assessment của individual
         public async Task<IActionResult> CreateRecord(string ind_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
         {
             var response = await _assessmentService.CreateRecord(ind_id,r_date,r_start,r_end,r_where,r_who);
+
+            if (response.Result == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [HttpPut("update-record")]
+        //[Authorize(Roles="teacher")]
+        //Chỉnh sửa record assessment của individual
+        public async Task<IActionResult> UpdateRecord(string id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
+        {
+            var response = await _assessmentService.UpdateRecord(id, r_date, r_start, r_end, r_where, r_who);
+
+            if (response.Result == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-record")]
+        //[Authorize(Roles="teacher")]
+        //Xóa record assessment của individual
+        public async Task<IActionResult> DeleteRecord(string id)
+        {
+            var response = await _assessmentService.DeleteRecord(id);
 
             if (response.Result == null)
                 return BadRequest(response);
