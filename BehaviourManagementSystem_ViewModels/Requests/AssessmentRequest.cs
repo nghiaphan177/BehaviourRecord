@@ -21,6 +21,9 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         public string AnalyzeAntecedentPerceivedDescription { get; set; } = null!;
         public string AnalyzeAntecedentEnvironmentalDescription { get; set; } = null!;
         public string AnalyzeAntecedentActivityDescription { get; set; } = null!;
+        public string AnalyzeConsequencesPerceive { get; set; } = null!;
+        public string AnalyzeConsequenceEnvironmental { get; set; } = null!;
+        public string AnalyzeConsequencesActivity { get; set; } = null!;
         public string FunctionAntecedent { get; set; } = null!;
         public string FunctionConsequece { get; set; } = null!;
         public bool? RecordIsCompeleted { get; set; }

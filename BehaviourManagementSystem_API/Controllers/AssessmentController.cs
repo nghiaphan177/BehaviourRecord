@@ -1,5 +1,7 @@
-﻿using BehaviourManagementSystem_API.Services;
+﻿using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
@@ -39,6 +41,19 @@ namespace BehaviourManagementSystem_API.Controllers
         public async Task<IActionResult> Detail(string id)
         {
             var response = await _assessmentService.Detail(id);
+
+            if (response.Result == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [HttpPost("create-record/{individualId}")]
+        //[Authorize(Roles="teacher")]
+        //Tạo record cho assessment của individual
+        public async Task<IActionResult> CreateRecord(string ind_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
+        {
+            var response = await _assessmentService.CreateRecord(ind_id,r_date,r_start,r_end,r_where,r_who);
 
             if (response.Result == null)
                 return BadRequest(response);

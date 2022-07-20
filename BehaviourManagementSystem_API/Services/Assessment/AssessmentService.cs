@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,28 @@ namespace BehaviourManagementSystem_API.Services
         public AssessmentService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<ResponseResult<List<Assesetment>>> CreateRecord(string ind_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
+        {
+            if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == ind_id))
+                return new ResponseResultError<List<Assesetment>>("Id individual không tồn tại");
+            var obj = await _context.Individuals.FindAsync(new Guid(ind_id));
+            await _context.Assesetments.AddAsync(new Assesetment()
+            {
+                Id = Guid.NewGuid(),              
+                RecordDate = r_date,
+                RecordStart = TimeSpan.Parse(r_start),
+                RecordEnd = TimeSpan.Parse(r_end),
+                RecordWhere = r_where,
+                RecordWho = r_who,
+                IndividualId = obj.Id,
+                CreateDate = DateTime.Now,
+
+                RecordIsCompeleted = true
+            });
+            await _context.SaveChangesAsync();
+            return new ResponseResultSuccess<List<Assesetment>>(await _context.Assesetments.ToListAsync());
         }
 
         public async Task<ResponseResult<AssessmentRequest>> Detail(string id)
