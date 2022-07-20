@@ -11,7 +11,7 @@ namespace BehaviourManagementSystem_API.Models
     public class Individual
     {
         public Guid Id { get; set; }
-        public Guid UserTeacherId { get; set; }
+        public Guid? UserTeacherId { get; set; }
         public string Organization { get; set; } = null!;
 
         public DateTime? CreateDate { get; set; }

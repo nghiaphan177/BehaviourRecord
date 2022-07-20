@@ -167,7 +167,7 @@ namespace BehaviourManagementSystem_API.Services
                     user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
                 if(user == null)
                     return new ResponseResultError<string>("Tài khoản không tồn tại");
-                if(await _userManager.CheckPasswordAsync(user, request.Password))
+                if(!await _userManager.CheckPasswordAsync(user, request.Password))
                     return new ResponseResultError<string>("Mật khẩu không chính xác");
 
                 var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.Remember, false);

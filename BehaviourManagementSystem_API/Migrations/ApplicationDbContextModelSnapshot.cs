@@ -188,7 +188,7 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserTeacherId")
+                    b.Property<Guid?>("UserTeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -435,22 +435,22 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a538dbd4-bd13-4f7d-807e-d8d6bcd0b7c4"),
-                            ConcurrencyStamp = "86F38B39-E13E-4E0A-90B4-2145F5F55ACB",
+                            Id = new Guid("34f126af-c72c-4ca1-a6ea-ac4607ad4858"),
+                            ConcurrencyStamp = "76564779-DD8D-4001-9F49-06668BF83221",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("6aca3b50-7b6d-4500-b04a-7bb5f58e6261"),
-                            ConcurrencyStamp = "B031C87F-FCCC-490C-A2E0-09645F42B286",
+                            Id = new Guid("c8610892-ec3f-4188-bad6-eb2d6ea39426"),
+                            ConcurrencyStamp = "6D9655E7-58ED-4BB5-BF82-063FC3125822",
                             Name = "teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = new Guid("05a4751c-052e-4f99-855a-dee04ac1bcc1"),
-                            ConcurrencyStamp = "53EDD609-4841-4D53-BA8D-7D2C33E5EF43",
+                            Id = new Guid("a994ca35-f73a-4b21-baf2-db5403030710"),
+                            ConcurrencyStamp = "08B2BB02-07BA-400E-8EB9-806402FE35E9",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -574,11 +574,11 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6adb92eb-8b7f-4d8b-9748-1427070678d1"),
+                            Id = new Guid("77f28fba-27ed-4c07-b8aa-90f29acd61af"),
                             AccessFailedCount = 0,
                             Activity = true,
                             ActivityDate = new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "2C1C19C6-FF30-4B48-82C8-6EAEB6E6CB27",
+                            ConcurrencyStamp = "87284CF0-F36F-40F3-962F-E06BA31B58E3",
                             CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DOB = new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lhduy3011@gmail.com",
@@ -590,10 +590,10 @@ namespace BehaviourManagementSystem_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LHDUY3011@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAXBufTqbBJVavVbgO82b8GfQjLKOn2nw+PiSRg6ujM8wjoBL7EnvmgkyuZMJSGe1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE78H5O9mY2mnpCTRvYGDwY8dlIZDenaaZXLgPUZCI7XYD28wGcpvzkWv4OnJ37R1g==",
                             PhoneNumber = "0334102197",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "2c1c19c6-ff30-4b48-82c8-6eaeb6e6cb27",
+                            SecurityStamp = "87284cf0-f36f-40f3-962f-e06ba31b58e3",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "admin"
@@ -684,8 +684,8 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("6adb92eb-8b7f-4d8b-9748-1427070678d1"),
-                            RoleId = new Guid("a538dbd4-bd13-4f7d-807e-d8d6bcd0b7c4")
+                            UserId = new Guid("77f28fba-27ed-4c07-b8aa-90f29acd61af"),
+                            RoleId = new Guid("34f126af-c72c-4ca1-a6ea-ac4607ad4858")
                         });
                 });
 
