@@ -113,25 +113,23 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(string id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                /*var response = await _userAPIClient.DeleteUser(id);
+                if (response.Success == true)
+                {
+                    return RedirectToAction(nameof(Index));
+                }*/
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

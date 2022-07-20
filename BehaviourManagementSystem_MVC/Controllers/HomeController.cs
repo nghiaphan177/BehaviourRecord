@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
