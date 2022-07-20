@@ -46,6 +46,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IAntecedentPerceivedAPIClient.Create(content);
                 if (response.Success == true)
                 {
+                    TempData["MessageCreate"] = "Thêm thành công!";
                     return RedirectToAction("Index", response.Result);
                 }
             }
@@ -84,6 +85,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IAntecedentPerceivedAPIClient.Update(request);
                 if (response.Success == true)
                 {
+                    TempData["MessageCreate"] = "Sửa thành công!";
                     return RedirectToAction("Index", response.Result);
                 }
             }
