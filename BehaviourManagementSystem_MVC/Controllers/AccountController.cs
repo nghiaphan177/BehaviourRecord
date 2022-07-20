@@ -30,41 +30,63 @@ namespace BehaviourManagementSystem_MVC.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Login()
+		public async Task<IActionResult> Login()
 		{
+			await HttpContext.SignOutAsync(
+			   "Teacher");
 			return View();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Login(LoginRequest request)
+		public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Home")
 		{
-			var user = HttpContext.Session.GetString("USER");
-			if(!string.IsNullOrEmpty(user))
-				return RedirectToAction("Index", "Home");
-
-			if(!ModelState.IsValid)
+			if (ReturnUrl == null)
+			{
+				ReturnUrl = "/Home";
+			}
+			if (!ModelState.IsValid)
 				return View(request);
 
 			var result = await _accountAPIClient.Login(request);
 
-			if(result.Result == null)
+			if (result == null)
 			{
 				ModelState.AddModelError("", "Đăng nhập không thành công");
 				return View();
 			}
-			var userPrincipal = this.ValidateToken(result.Result);
+			if(result.Success == false)
+            {
+				ModelState.AddModelError("", result.Message);
+				return View();
+			}
+
+			var userPrincipal = ValidateToken(result.Result);
 
 			var authProperties = new AuthenticationProperties
 			{
-				ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-				IsPersistent = false
+				IsPersistent = request.Remember
 			};
-			HttpContext.Session.SetString("USER", result.Result);
+			if (request.Remember)
+			{
+				authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
+			}
+
+			HttpContext.Session.SetString("Token", result.Result);
+
 			await HttpContext.SignInAsync(
-						CookieAuthenticationDefaults.AuthenticationScheme,
+						"Teacher",
 						userPrincipal,
 						authProperties);
-			return RedirectToAction("Index", "Home");
+			//return RedirectToAction("Index", "Home",new {area = "Admin" });
+			return LocalRedirect(ReturnUrl);
+		}
+		public async Task<IActionResult> Logout(string returnUrl = null)
+		{
+			// Clear the existing external cookie
+			await HttpContext.SignOutAsync(
+				"Teacher");
+
+			return RedirectToAction("Login");
 		}
 
 		/// <summary>

@@ -34,7 +34,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
         {
             await HttpContext.SignOutAsync(
-               CookieAuthenticationDefaults.AuthenticationScheme);
+               "Admin");
             ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
@@ -72,7 +72,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             HttpContext.Session.SetString("Token", result.Result);
 
             await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        "Admin",
                         userPrincipal,
                         authProperties);
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
@@ -83,7 +83,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
             //HttpContext.Session.SetString("USER", "");
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme);
+                "Admin");
 
             return RedirectToAction("Login");
         }
