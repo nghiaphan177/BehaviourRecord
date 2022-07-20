@@ -107,24 +107,6 @@ namespace BehaviourManagementSystem_API
                 };
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ADMIN", policy =>
-                {
-                    policy.RequireRole("admin");
-                });
-                
-                options.AddPolicy("TEACHER", policy =>
-                {
-                    policy.RequireRole("teacher");
-                });
-                
-                options.AddPolicy("STUDENT", policy =>
-                {
-                    policy.RequireRole("student");
-                });
-            });
-
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

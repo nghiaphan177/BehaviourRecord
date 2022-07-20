@@ -144,7 +144,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetUser")]
+        [HttpGet("GetUser"), Authorize]
         public async Task<IActionResult> GetUser([FromBody] UserProfileRequest request)
         {
             var response = await _accountService.GetAccount(request);
@@ -165,7 +165,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(result);
         }
-            
+
         [HttpGet("AllUser")]
         public async Task<IActionResult> GetAllUser()
         {
