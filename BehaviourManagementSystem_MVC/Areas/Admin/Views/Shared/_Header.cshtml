@@ -3,54 +3,56 @@
     var base64 = Convert.ToBase64String();
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }*@
-<div class="topbar">
-    <!-- LOGO -->
-    <div class="topbar-left">
-        <a href="#" class="logo">
-            <span>
-                <img style="position: relative;" src="~/assets/img/favicon.png" alt="" height="25">
-                <h5 style="position:absolute;top:40px;left:57px; " class="text-white">PreSchool</h5>
-            </span>
-            <i>
-                <img src="~/images/logo-sm.png" alt="" height="22">
-            </i>
-        </a>
-    </div>
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="#" class="logo logo-light">
 
-    <nav class="navbar-custom">
-        <ul class="navbar-right d-flex list-inline float-right mb-0">
-            <li class="dropdown notification-list">
-                <div class="dropdown notification-list nav-pro-img">
-                    <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="~/images/users/user-4.jpg" alt="user" class="rounded-circle">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                        <!-- item-->
-                        <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle m-r-5"></i> Hồ sơ</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="/admin/account/logout"><i class="mdi mdi-power text-danger"></i> Đăng xuất</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
+                    <span class="logo-sm">
+                        <img src="~/assets/img/favicon.png" alt="" height="22">
 
-        <ul class="list-inline menu-left mb-0">
-            <li class="float-left">
-                <button class="button-menu-mobile open-left waves-effect">
-                    <i class="mdi mdi-menu"></i>
+                    </span>
+                    <span class="logo-lg">
+                        <img src="~/assets/img/favicon.png" alt="" height="22">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                <i class="mdi mdi-menu"></i>
+            </button>
+
+        </div>
+
+        <div class="d-flex">
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src=""
+                         alt="Header Avatar">
                 </button>
-            </li>
-        </ul>
-    </nav>
-</div>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <!-- item-->
+                    <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle font-size-17 text-muted align-middle mr-1"></i> Hồ sơ</a>               
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power font-size-17 text-muted align-middle mr-1 text-danger"></i> Đăng xuất</a>
+                </div>
+            </div>
 
-<div class="left sidebar">
-    <div class="slimscroll-menu" id="remove-scroll">
+
+        </div>
+    </div>
+</header>
+<div class="vertical-menu mm-active">
+    <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
-        <div id="sidebar-menu" class="sidebar-inne" style="position: relative; overflow: hidden; width: 100%; height: 796px;">
+        <div id="sidebar-menu">
             <!-- Left Menu Start -->
-            <ul class="metismenu" id="side-menu">
+            <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Chức năng chính</li>
                 <li>
                     <a href="/admin" class="waves-effect">
@@ -62,56 +64,13 @@
                         <i class="mdi mdi-account-location"></i><span> Tài khoản </span>
                     </a>
                 </li>
+                          
                 <li>
-                    <a href="/Admin/Student" class="waves-effect">
-                        <i class="mdi mdi-account-card-details"></i><span> Học sinh </span>
+                    <a href="javascript:void(0);" class="has-arrow waves-effect">
+                    <i class="mdi mdi-clipboard-outline"></i>
+                    <span>Quản lý phân tích sự cố</span>
                     </a>
-                </li>
-                @*<li>
-                    <a href="@Url.Action("Calendar","Dashboard")" class="waves-effect"><i class="mdi mdi-calendar-check"></i><span> Calendar </span></a>
-                    </li>
-
-                    <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-email-outline"></i><span> Email <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
-                    <ul class="submenu">
-                    <li><a href="/email/inbox">Inbox</a></li>
-                    <li><a href="/email/read">Email Read</a></li>
-                    <li><a href="/email/compose">Email Compose</a></li>
-                    </ul>
-                    </li>*@
-
-                @*<li class="menu-title">Components</li>
-
-                    <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-buffer"></i> <span> UI Elements <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
-                    <ul class="submenu">
-                    <li><a href="/ui/alerts">Alerts</a></li>
-                    <li><a href="/ui/buttons">Buttons</a></li>
-                    <li><a href="/ui/badges">Badge</a></li>
-                    <li><a href="/ui/cards">Cards</a></li>
-                    <li><a href="/ui/Carousels">Carousel</a></li>
-                    <li><a href="/ui/dropdowns">Dropdowns</a></li>
-                    <li><a href="/ui/grid">Grid</a></li>
-                    <li><a href="/ui/images">Images</a></li>
-                    <li><a href="/ui/lightbox">Lightbox</a></li>
-                    <li><a href="/ui/Modals">Modals</a></li>
-                    <li><a href="/ui/pagination">Pagination</a></li>
-                    <li><a href="/ui/PopoverTooltips">Popover & Tooltips</a></li>
-                    <li><a href="/dashboard/RangeSlider">Range Slider</a></li>
-                    <li><a href="/dashboard/SessionTimeout">Session Timeout</a></li>
-                    <li><a href="/ui/Progressbars">Progress Bars</a></li>
-                    <li><a href="/ui/SweetAlerts">Sweet-Alert</a></li>
-                    <li><a href="/ui/TabAccordions">Tabs & Accordions</a></li>
-                    <li><a href="/ui/typography">Typography</a></li>
-                    <li><a href="/ui/video">Video</a></li>
-
-
-                    </ul>
-                    </li>*@
-
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-clipboard-outline"></i><span>Quản lý phân tích sự cố<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
-                    <ul class="submenu">
+                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/Admin/AnalyzeAntecedentPerceived">Trạng thái cảm xúc</a></li>
                         <li><a href="/Admin/AnalyzeAntecedentEnvironmental">Bối cảnh môi trường</a></li>
                         <li><a href="/Admin/AnalyzeAntecedentActivity">Bối cảnh hoạt động</a></li>
@@ -131,8 +90,11 @@
                     </li>*@
 
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-emoticon"></i><span>Quản lý nâng cấp<span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
-                    <ul class="submenu">
+                    <a href="javascript:void(0);" class="has-arrow waves-effect">
+                    <i class="mdi mdi-emoticon"></i>
+                    <span>Quản lý nâng cấp</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/Admin/MildIntervention">Giai đoạn nhẹ</a></li>
                         <li><a href="/Admin/ModerateIntervention">Giai đoạn vừa phải</a></li>
                         <li><a href="/Admin/ExtremeIntervention">Giai đoạn khắc nghiệt</a></li>

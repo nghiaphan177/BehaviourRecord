@@ -5,7 +5,11 @@
 }
 
 @section styles {
-    <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+<link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+<link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="~/lib/datatables.net-button/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="~/lib/datatables.net-reponsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
 <div class="row">
     <div class="col-sm-12">
@@ -16,21 +20,22 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <div class="card m-b-20">
+        <div class="card">
             <div class="card-body">
+
                 @if (Model != null)
                 {
                     <div class="table-rep-plugin">
-                        <div class="table-responsive b-0" data-pattern="priority-columns">
-                            <table id="tech-companies-1" class="table  table-striped">
+                        <div class="table-responsive mb-0">
+                            <table id="datatable-buttons" class="table table-striped" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th width="2%">Số Thứ Tự</th>
-                                        <th data-priority="1">Họ và tên</th>
-                                        <th data-priority="3">Email</th>
-                                        <th data-priority="1">Vai trò</th>
-                                        <th data-priority="3">Số điện thoại</th>
-                                        <th data-priority="6" width="2%">Tùy Chọn</th>
+                                        <th>Số Thứ Tự</th>
+                                        <th>Họ và tên</th>
+                                        <th>Email</th>
+                                        <th>Vai trò</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Tùy Chọn</th>
 
                                     </tr>
                                 </thead>
@@ -41,14 +46,14 @@
                                             <th>@(i + 1)</th>
                                             <td>@(@Model[i].FirstName + " " + @Model[i].LastName)</td>
                                             <td>@Model[i].Email</td>
-                                            <td><span style="font-size:14px; text-align:center;" class="badge badge-info">Admin</span></td>
+                                            <td><span style="font-size:14px; text-align:center;" class="badge @(Model[i].RoleName=="TEACHER"? "badge-success":"badge-info")">@Model[i].RoleName</span></td>
                                             <td>
                                                 @Model[i].PhoneNumber
                                             </td>
                                             <td>
                                                 <div class="button-items">
-                                                    <a href="/admin/User/Edit/@Model[i].Id" type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
-                                                    <a href="/admin/User/Detail/" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</a>
+                                                    <a href=@((Model[i].RoleName=="TEACHER"?"/admin/User/Detail/":"/admin/Student/Details/")+Model[i].Id) type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
+                                                    
                                                 </div>
                                             </td>
                                         </tr>
@@ -58,7 +63,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 }
                 @if (Model == null)
@@ -70,10 +74,19 @@
         </div>
     </div> <!-- end col -->
 </div> <!-- end row -->
-
-
 @section scripts {
-    <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
+    @*<script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>*@
+<script src="~/lib/datables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script src="~/lib/datatables.net-reponsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    @*<script src="~/lib/datatables.net-button/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/lib/datatables.net-button/js/buttons.html5.min.js"></script>
+    <script src="~/lib/datatables.net-button/js/dataTables.buttons.min.js"></script>*@
+<script>
+    $(document).ready(function(){$("#datatable").DataTable(),$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["colvis"]}).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)")});
+</script>
 }
 
 
