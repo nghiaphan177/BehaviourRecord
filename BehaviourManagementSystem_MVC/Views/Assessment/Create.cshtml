@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AssessmentRequest
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
@@ -40,29 +41,30 @@
                 <div class="tab-content">
                     <!-- Tab Tường Trình Start -->
                     <div class="tab-pane show active" id="tuongtrinh">
-                        <form action="#">
+                        <form id="assessform" asp-action="Create" asp-controller="Assessment" method="post" asp-route-IndiId="@Model.IndividualId">
+                            <input hidden asp-for="IndividualId" type="text" class="form-control" />
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
-                                    <input type="date" class="form-control" />
+                                    <input asp-for="RecordDate" type="date" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Bắt Đầu</label>
                                 <div class="col-md-10">
-                                       <input type="text" class="timepicker form-control" placeholder="Nhập giờ...">       
+                                    <input asp-for="RecordStart" asp type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Kết Thúc</label>
                                 <div class="col-md-10">
-                                       <input type="text" class="timepicker form-control" placeholder="Nhập giờ...">       
+                                    <input asp-for="RecordEnd" type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ở Đâu</label>
                                 <div class="col-md-10">
-                                    <input type="text"
+                                    <input asp-for="RecordWhere" type="text"
                                            class="form-control"
                                            placeholder="Nhập địa điểm..." />
                                 </div>
@@ -70,9 +72,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Học sinh vi phạm</label>
                                 <div class="col-md-10">
-                                    <input type="text"
-                                           class="form-control"
-                                           placeholder="Nhập tên học sinh..." />
+                                    <input asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
                             </div>
                             <div class="col">
@@ -109,7 +109,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập hành vi..." />
+                                                <input asp-for="AnalyzeBehaviour" type="text" class="form-control" placeholder="Nhập hành vi..." />
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
@@ -125,7 +125,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
-                                                <input type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                                <input asp-for="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
                                                 <ul class="dropdown-menu" id="multiselect-drop-camxuc">
                                                     <li class="dropdown-item">
                                                         <div class="checkbox">
@@ -147,7 +147,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Môi Trường</label>
                                             <div class="col-md-10">
-                                                <input type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                                <input asp-for="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
                                                 <ul class="dropdown-menu" id="multiselect-drop-moitruong">
                                                     <li class="dropdown-item">
                                                         <div class="checkbox">
@@ -169,7 +169,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành Động</label>
                                             <div class="col-md-10">
-                                                <input type="text" id="hanhdong" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                                <input asp-for="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                                 <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
                                                     <li class="dropdown-item">
                                                         <div class="checkbox">
@@ -209,7 +209,7 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Cảm xúc sau</label>
-                                                    <input type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="Stephen Marley">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
@@ -221,19 +221,19 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Môi trường sau</label>
-                                                    <input type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="Stephen Marley">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Hành vi trước</label>
-                                                    <input readonly="readonly" type="text" class="form-control" value="Nathan Humphries">
+                                                    <input  readonly="readonly" type="text" class="form-control" value="Nathan Humphries">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Hành vi sau</label>
-                                                    <input type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="Stephen Marley">
                                                 </div>
                                             </div>
                                         </div>
@@ -342,21 +342,38 @@
 </div>
 <!-- Đánh giá End -->
 @section scripts {
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-    <script>
-  $('.timepicker').timepicker({
-    timeFormat: 'HH:mm',
-    interval: 30,
-    minTime: '00:00',
-    maxTime: '23:30',
-    defaultTime: '',
-    startTime: '',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
-    </script>
+<script>
+          $('.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00:00',
+            maxTime: '23:30',
+            defaultTime: '',
+            startTime: '',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+    //    $("#assessform").submit(function(e) {
+
+    //    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    //    var form = $(this);
+    //    var actionUrl = form.attr('action');
+
+    //    $.ajax({
+    //        type: "POST",
+    //        url: actionUrl,
+    //        data: form.serialize(), // serializes the form's elements.
+    //        success: function(data)
+    //        {
+    //          alert(data); // show response from the php script.
+    //        }
+    //    });
+
+    //});
+</script>
 }

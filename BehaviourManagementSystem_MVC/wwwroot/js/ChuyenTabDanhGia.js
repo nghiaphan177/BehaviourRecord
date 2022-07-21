@@ -1,5 +1,5 @@
 ﻿$('#button-TuongTrinh').click(function (e) {
-    e.preventDefault();
+    //e.preventDefault();
     $('.nav a[href="#phantich"]').tab('show');
 });
 
