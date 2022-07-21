@@ -15,5 +15,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         public DateTime? CreateDate { get; set; }
 
         public DateTime? UpdateDate { get; set; }
+
+        public int STT { get; set; }
     }
 }
