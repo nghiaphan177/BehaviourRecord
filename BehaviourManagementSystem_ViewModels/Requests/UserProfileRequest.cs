@@ -13,6 +13,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 	public class UserProfileRequest
 	{
 		public string Id { get; set; }
+		public string UserName { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Gender { get; set; }
@@ -23,5 +24,8 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 		public byte[] Img { get; set; }
 		public string RoleId { get; set; }
 		public string RoleName { get; set; }
-	}
+
+        public bool Active { get; set; }
+        public string TeacherId { get; set; }
+    }
 }

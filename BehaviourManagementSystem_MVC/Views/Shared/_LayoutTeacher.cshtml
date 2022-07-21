@@ -54,7 +54,7 @@
                         </div>
                         <a class="dropdown-item" href="profile.html">My Profile</a>
                         <a class="dropdown-item" href="inbox.html">Inbox</a>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" href="/Account/Logout">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -89,7 +89,7 @@
                         <li class="submenu">
                             <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/Home/Login">Login</a></li>
+                                <li><a href="/Account/Login">Login</a></li>
                                 <li><a href="/Home/Register">Register</a></li>
                                 <li><a href="forgot-password.html">Forgot Password</a></li>
                                 <li><a href="error-404.html">Error Page</a></li>
@@ -120,7 +120,7 @@
     <script src="~/js/ChuyenTabDanhGia.js"></script>
     <script src="~/assets/js/circle-progress.min.js"></script>
     <script src="~/assets/js/script.js"></script>
-
+    @RenderSection("Scripts", false)
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -134,7 +134,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-            // Add active class to the current button (highlight it)
+                // Add active class to the current button (highlight it)
 
     </script>
 </body>

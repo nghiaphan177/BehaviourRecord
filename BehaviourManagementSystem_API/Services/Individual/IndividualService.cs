@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,11 @@ namespace BehaviourManagementSystem_API.Services
         public IndividualService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public Task<ResponseResult<List<Individual>>> Create(Individual individual)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ResponseResult<IndividualRequest>> Detail(string id)

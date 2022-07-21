@@ -1,5 +1,6 @@
 using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
+using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
@@ -33,19 +34,32 @@ namespace BehaviourManagementSystem_MVC
             services.AddHttpClient();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie("Cookies",options =>
+                .AddCookie("Teacher", options =>
+                 {
+                     options.Cookie.Name = "Teacher";
+                     options.SlidingExpiration = true;
+                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                     options.LoginPath = "/Account/Login";
+                     options.LogoutPath = "/Account/Logout";
+                 })
+                .AddCookie("Admin", options =>
                 {
+                    options.Cookie.Name = "Admin";
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                    options.LoginPath = "/Account/Login";
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
+                }).AddCookie("Student", options =>
+                {
+                    options.Cookie.Name = "Student";
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/student-login";
                     options.LogoutPath = "/student-logout";
                 });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("ROLE", "ADMIN"));
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
             });
             services.AddSession(options =>
             {
@@ -64,6 +78,7 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IOptionAPIClientModerate, ProfileModerateAPIClient>();
             services.AddTransient<IOptionAPIClientExtreme, ProfileExtremeAPIClient>();
             services.AddTransient<IOptionAPIClientRecovery, ProfileRecoveryAPIClient>();
+            services.AddTransient<IIndividualAPIClient, IndividualAPIClient>();
 
             services.AddControllersWithViews();
         }
@@ -110,9 +125,9 @@ namespace BehaviourManagementSystem_MVC
                   name: "areas",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
-                
+
             });
-            
+
         }
     }
 }

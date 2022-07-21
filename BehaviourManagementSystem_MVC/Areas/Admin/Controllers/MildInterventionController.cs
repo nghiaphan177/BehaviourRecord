@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
@@ -17,14 +18,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             _IOptionAPIClientMild = IOptionAPIClientMild;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
             try
             {
                 var response = await _IOptionAPIClientMild.GetAll();
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
             }
             catch (Exception)
@@ -47,6 +50,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IOptionAPIClientMild.Create(content);
                 if (response.Success == true)
                 {
+                    TempData["MessageCreate"] = "Thêm thành công!";
                     return RedirectToAction("Index",response.Result);
                 }
             }
@@ -85,6 +89,7 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 var response = await _IOptionAPIClientMild.Update(request);
                 if (response.Success == true)
                 {
+                    TempData["MessageEdit"] = "SỬa thành công!";
                     return RedirectToAction("Index", response.Result);
                 }
             }

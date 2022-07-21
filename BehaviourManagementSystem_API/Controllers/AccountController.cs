@@ -144,6 +144,17 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetUser"), Authorize]
+        public async Task<IActionResult> GetUser([FromBody] UserProfileRequest request)
+        {
+            var response = await _accountService.GetAccount(request);
+
+            if(!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
         [HttpGet("AllUser/{roleName}")]
         public async Task<IActionResult> GetAllUser(string roleName = null)
         {

@@ -47,10 +47,12 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var mild = await _context.ProfileMilds.ToListAsync();
             var result = new List<OptionsRequest>();
+            int stt = 0;
             foreach (var item in mild)
             {
                 result.Add(new OptionsRequest()
                 {
+                    STT = stt+=1,
                     Id = item.Id.ToString(),
                     Content = item.Content,
                     CreateDate = item.CreateDate.Value,
