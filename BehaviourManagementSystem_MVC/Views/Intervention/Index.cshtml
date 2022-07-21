@@ -48,26 +48,21 @@
                     <div class="tab-pane show active" id="giaidoan">
                         <form action="#">
                             <div class="form-group row text-center">
-                                <label class="col-form-label col-md-10">Chọn Loại Can Thiệp: </label>
+                                <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
                                 <div class="col-md-12 mx-auto">
-                                    <div class="radio">
+                                    <div class="checkbox">
                                         <label>
-                                            <input type="radio" name="radio" /> Can Thiệp Nhẹ
+                                            <input type="checkbox" id="check-nhe" name="checkbox" /> Can Thiệp Nhẹ
                                         </label>
                                     </div>
-                                    <div class="radio">
-                                        <label style="margin-left: 4px;">
-                                            <input type="radio" name="radio" /> Can Trung Bình
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="check-vua" name="checkbox" /> Can Thiệp Vừa
                                         </label>
                                     </div>
-                                    <div class="radio ">
-                                        <label style="margin-left: 77px;">
-                                            <input type="radio" name="radio" /> Can Thiệp Nghiêm Trọng
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label style="margin-left: -80px;">
-                                            <input type="radio" name="radio" /> Khác
+                                    <div class="checkbox">
+                                        <label style="margin-left: 62px;">
+                                            <input type="checkbox" id="check-kn" name="checkbox" /> Can Thiệp Khắc Nghiệt
                                         </label>
                                     </div>
                                 </div>
@@ -93,7 +88,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div id="input-nhe" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
                                 <div class="col-md-10">
                                     <input type="text" id="nhe" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
@@ -129,61 +124,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="nphuchoi" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop-nphuchoi">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-hoso" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- form nhẹ End -->
-                        <!-- form trung binh start -->
-                        <form action="#">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
-                                <div class="col-md-10">
-                                    <input type="date" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Trung Bình</label>
+                            <div id="input-vua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
                                 <div class="col-md-10">
                                     <input type="text" id="trungbinh" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
                                     <ul class="dropdown-menu" id="multiselect-drop-tb">
@@ -198,6 +140,28 @@
                                             <div class="checkbox">
                                                 <label>
                                                     <input value="Giai Đoạn TB 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn TB 2</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="input-kn" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                    <ul class="dropdown-menu" id="multiselect-drop-kn">
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn Khắc Nghiệt 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 1</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn Khắc Nghiệt 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 2</span>
                                                 </label>
                                             </div>
                                         </li>
@@ -226,155 +190,11 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="mx-auto text-center">
-                                <button type="submit" id="button-hoso" class="btn btn-success btn-sm">Lưu và Tiếp Tục</button>
-                                <button type="submit" class="btn btn-success btn-sm">Lưu và Thoát</button>
-                            </div>
-                        </form>
-                        <!-- form trung binh end -->
-                        <!-- form nghiem trọng start -->
-                        <form action="#">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
-                                <div class="col-md-10">
-                                    <input type="date" class="form-control" />
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="button-hoso" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop-kn">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Khắc Nghiệt 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Khắc Nghiệt 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="knphuchoi" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-knphuchoi">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="mx-auto text-center">
-                                <button type="submit" id="button-hoso" class="btn btn-success btn-sm">Lưu và Tiếp Tục</button>
-                                <button type="submit" class="btn btn-success btn-sm">Lưu và Thoát</button>
-                            </div>
-                        </form>
-                        <!-- form nghiêm trọng end -->
-                        <!-- form khac start -->
-                        <form action="#">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
-                                <div class="col-md-10">
-                                    <input type="date" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="nhe" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Nhẹ 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Nhẹ 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="phuchoi" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop2">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="mx-auto text-center">
-                                <button type="submit" id="button-hoso" class="btn btn-success btn-sm">Lưu và Tiếp Tục</button>
-                                <button type="submit" class="btn btn-success btn-sm">Lưu và Thoát</button>
                             </div>
                         </form>
                         <!-- form khác end -->
@@ -407,7 +227,7 @@
                     <!-- Tab ngăn chặn tái phạm Start -->
                     <div class="tab-pane" id="nganchantaipham">
                         <div class="card-body">
-                            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                            <ul class="nav nav-nganchan nav-tabs nav-tabs-bottom nav-justified">
                                 <li class="nav-item">
                                     <a class="nav-link active"
                                        href="#adhd" data-toggle="tab">ADHD</a>
@@ -425,7 +245,7 @@
                                        data-toggle="tab">Hung Hăng</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#lolang"
+                                    <a class="nav-link disabled" href="#lolang"
                                        data-toggle="tab">Lo Lắng</a>
                                 </li>
                             </ul>
@@ -436,19 +256,19 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                                <input type="text" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
                                             </div>
                                         </div>
                                         <div class="col">
@@ -527,3 +347,7 @@
     </div>
 </div>
 <!-- Can Thiệp End -->
+@section scripts {
+
+    <script src="~/js/CheckBoxMoInput.js"></script>
+}
