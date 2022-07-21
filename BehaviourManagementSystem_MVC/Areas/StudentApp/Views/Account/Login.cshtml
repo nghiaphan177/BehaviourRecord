@@ -3,80 +3,88 @@
 @{
     Layout = null;
 }
-<!doctype html>
-<html lang="en">
-  <head>
-  	<title>Đăng nhập học sinh </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+<!DOCTYPE html>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="/css/style-1.css">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Đăng nhập học sinh</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/icons.css" />
+    <link rel="stylesheet" href="~/css/metismenu.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <!-- Begin page -->
+    <div class="wrapper-page">
 
-	</head>
-	<body class="img js-fullheight" style="background-image: url(/images/bg.jpg);">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Đăng nhập</h2>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Chào các học sinh</h3>
-		      	<form method="post"  action="/StudentApp/Account/Login" class="signin-form">
-					@if (!ViewData.ModelState.IsValid)
-                    {
-                    <div class="alert alert-danger" role="alert">
-                        <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
-                    </div>
-                    }
-		      		<div class="form-group">
-		      			<input asp-for="UserNameOrEmail" id="username" type="text" class="form-control" placeholder="Tên đăng nhập" required>
-		      		</div>
-					<div class="form-group">
-					  <input asp-for="Password" id="password-field" type="password" class="form-control" placeholder="Mật khẩu" required>
-					  <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-					</div>
-					<div class="form-group">
-	            		<button type="submit" class="form-control btn btn-primary submit px-3">Đăng nhập</button>
-					</div>
-					<div class="form-group d-md-flex">
-	            		<div class="w-50">
-		            		<label class="checkbox-wrap checkbox-primary">Nhớ mật khẩu
-								<input asp-for="Remember" type="checkbox" checked>
-								<span class="checkmark"></span>
-							</label>
-						</div>
-						<div class="w-50 text-md-right">
-							<a href="#" style="color: #fff">Quên mật khẩu</a>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	          @*<p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-	          	<a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
-	          </div>*@
-		    <div>
-				</div>
-			</div>
-		</div>
-	</section>
+        <div class="card">
+            <div class="card-body">
 
-	<script src="/js/jquery.min.js"></script>
-  <script src="/js/popper.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/main.js"></script>
+                <h3 class="text-center m-0">
+                    <img style="position: relative;" src="~/assets/img/favicon.png" height="30" alt="logo">
+                    <h5 style="position:absolute;top:40px;left:57px; " class="text-white">PreSchool</h5>
+                </h3>
 
-	</body>
+                <div class="p-3">
+                    <h4 class="text-muted font-18 m-b-5 text-center">Đăng nhập trang học sinh</h4>
+
+                    <form method="post" class="form-horizontal m-t-30" action="/StudentApp/Account/Login">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                        <div class="alert alert-danger" role="alert">
+                            <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
+                        </div>
+                        }
+                        <input name="ReturnUrl" value="@ViewBag.ReturnUrl" hidden>
+                        <div class="form-group">
+                            <label for="username">Tên đăng nhập</label>
+                            <input asp-for="UserNameOrEmail" type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập" required data-parsley-required-message="Hãy nhập tên đăng nhập">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userpassword">Mật khẩu</label>
+                            <input asp-for="Password" type="password" class="form-control" id="userpassword" placeholder="Nhập mật khẩu" required data-parsley-required-message="Hãy nhập mật khẩu">
+                        </div>
+
+                        <div class="form-group row m-t-20">
+                            <div class="col-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input asp-for="Remember" type="checkbox" class="custom-control-input" id="customControlInline">
+                                    <label class="custom-control-label" for="customControlInline">Nhớ tài khoản</label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Đăng nhập</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-t-10 mb-0 row">
+                            <div class="col-12 m-t-20">
+                                <a href="@Url.Action("RecoverPassword", "pages")" class="text-muted"><i class="mdi mdi-lock"></i> Quên mật khẩu?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <script src="~/js/jquery.sparkline.min.js"></script>
+    <script src="~/js/metisMenu.min.js"></script>
+    <script src="~/js/waves.min.js"></script>
+        <script src="~/plugins/parsleyjs/parsley.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('form').parsley();
+            });
+        </script>
+</body>
 </html>
-
-
