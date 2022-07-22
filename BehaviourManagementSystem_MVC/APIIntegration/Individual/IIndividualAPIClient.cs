@@ -9,7 +9,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
 {
     public interface IIndividualAPIClient
     {
-        Task<ResponseResult<List<IndividualRequest>>> GetAll();
+        Task<ResponseResult<List<IndAssessRequest>>> GetAll(string id);
+        Task<ResponseResult<List<IndividualRequest>>> GetAllList();
         Task<ResponseResult<IndividualRequest>> Detail(string id);
     }
 }

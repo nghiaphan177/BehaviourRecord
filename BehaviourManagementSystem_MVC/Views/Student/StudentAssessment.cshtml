@@ -1,0 +1,85 @@
+﻿@model List<BehaviourManagementSystem_ViewModels.Requests.IndAssessRequest>
+@{
+    ViewData["Title"] = "StudentAssessment";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Học sinh</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Danh sách học sinh</li>
+            </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+            <a href="add-student.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body">
+                @if (Model != null)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-center mb-0 datatable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Class</th>
+                                    <th>DOB</th>
+                                    <!-- <th>Parent Name</th>
+                                    <th>Mobile Number</th> -->
+                                    <th>Address</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>PRE2209</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="/Student/StudentDetail" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/assets/img/profiles/avatar-01.jpg" alt="User Image"></a>
+                                                @{
+                                                    var fName = item.FirstName + item.LastName;
+                                                }
+                                                <a href="student-details.html">@fName</a>
+                                            </h2>
+                                        </td>
+                                        <td>@item.Classes</td>
+                                        <td>@item.DOB</td>
+                                        <td>@item.Address</td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-sm bg-danger-light">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                }
+                else
+                {
+                    <p class="text-center text-warning">Không có dữ liệu</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
