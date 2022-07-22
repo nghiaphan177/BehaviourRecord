@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Danh sách học sinh";
+}
+
+@section styles {
+    <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">@ViewData["Title"]</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+
+                <div class="table-rep-plugin">
+                    <div class="table-responsive b-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table  table-striped">
+                            <thead>
+                                <tr>
+                                    <th >Số Thứ Tự</th>
+                                    <th data-priority="1">Tên Học sinh</th>
+                                    <th data-priority="3">Tên Lớp</th>
+                                    <th data-priority="1">Email</th>
+                                    <th data-priority="3">Giáo viên chủ nhiệm</th>
+                                    <th data-priority="6">Tùy Chọn</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>GOOG <span class="co-name">Google Inc.</span></th>
+                                    <td>597.74</td>
+                                    <td>12:12PM</td>
+                                    <td>14.81 (2.54%)</td>
+                                    <td>582.93</td>
+                                    @*<td>
+                                            <span style="font-size:14px; text-align:center;" class="badge badge-success">Đã Đăng Kí</span>
+                                        </td>*@
+                                    <td>
+                                        <a href="/admin/Student/Details/" type="button" class="btn btn-primary waves-effect waves-light">Xem thông tin</a>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+
+@section scripts {
+    <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
+}
+

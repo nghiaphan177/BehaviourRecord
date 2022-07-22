@@ -1,0 +1,149 @@
+﻿@using System.Security.Claims
+@*@{
+    var base64 = Convert.ToBase64String();
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}*@
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="#" class="logo logo-light">
+
+                    <span class="logo-sm">
+                        <img src="~/assets/img/favicon.png" alt="" height="22">
+
+                    </span>
+                    <span class="logo-lg">
+                        <img src="~/assets/img/favicon.png" alt="" height="22">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                <i class="mdi mdi-menu"></i>
+            </button>
+
+        </div>
+
+        <div class="d-flex">
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src=""
+                         alt="Header Avatar">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <!-- item-->
+                    <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle font-size-17 text-muted align-middle mr-1"></i> Hồ sơ</a>               
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" asp-action="Logout" asp-controller="Account" asp-area="Admin" asp-route-returnUrl="@ViewBag.ReturnUrl"><i class="mdi mdi-power font-size-17 text-muted align-middle mr-1 text-danger"></i> Đăng xuất</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</header>
+<div class="vertical-menu mm-active">
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title">Chức năng chính</li>
+                <li>
+                    <a href="/admin" class="waves-effect">
+                        <i class="mdi mdi-view-dashboard"></i><span> Trang chủ </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/user" class="waves-effect">
+                        <i class="mdi mdi-account-location"></i><span> Tài khoản </span>
+                    </a>
+                </li>
+                          
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow waves-effect">
+                    <i class="mdi mdi-clipboard-outline"></i>
+                    <span>Quản lý phân tích sự cố</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/Admin/AnalyzeAntecedentPerceived">Trạng thái cảm xúc</a></li>
+                        <li><a href="/Admin/AnalyzeAntecedentEnvironmental">Bối cảnh môi trường</a></li>
+                        <li><a href="/Admin/AnalyzeAntecedentActivity">Bối cảnh hoạt động</a></li>
+                    </ul>
+                </li>
+
+                @*<li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-chart-line"></i><span> Charts <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                    <ul class="submenu">
+                    <li><a href="/chart/morris">Morris Chart</a></li>
+                    <li><a href="/chart/chartist">Chartist Chart</a></li>
+                    <li><a href="/chart/chartjs">Chartjs Chart</a></li>
+                    <li><a href="/chart/flot">Flot Chart</a></li>
+                    <li><a href="/chart/c3">C3 Chart</a></li>
+                    <li><a href="/chart/other">Jquery Knob Chart</a></li>
+                    </ul>
+                    </li>*@
+
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow waves-effect">
+                    <i class="mdi mdi-emoticon"></i>
+                    <span>Quản lý nâng cấp</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/Admin/MildIntervention">Giai đoạn nhẹ</a></li>
+                        <li><a href="/Admin/ModerateIntervention">Giai đoạn vừa phải</a></li>
+                        <li><a href="/Admin/ExtremeIntervention">Giai đoạn khắc nghiệt</a></li>
+                        <li><a href="/Admin/RecoveryIntervention">Giai đoạn phục hồi</a></li>
+                    </ul>
+                </li>
+
+                @*<li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-album"></i> <span> Icons  <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span></span> </a>
+                    <ul class="submenu">
+                    <li><a href="/icon/material">Material Design</a></li>
+                    <li><a href="/icon/ion">Ion Icons</a></li>
+                    <li><a href="/icon/fontawesome">Font Awesome</a></li>
+                    <li><a href="/icon/themify">Themify Icons</a></li>
+                    <li><a href="/icon/dripicons">Dripicons</a></li>
+                    <li><a href="/icon/typicons">Typicons Icons</a></li>
+                    </ul>
+                    </li>
+
+                    <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-maps"></i><span> Maps <span class="badge badge-pill badge-danger float-right">2</span> </span></a>
+                    <ul class="submenu">
+                    <li><a href="/maps/google"> Google Map</a></li>
+                    <li><a href="/maps/vector"> Vector Map</a></li>
+                    </ul>
+                    </li>*@
+
+
+
+                @*<li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-pages"></i><span> Extra Pages <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                    <ul class="submenu">
+                    <li><a href="/pages/timeline">Timeline</a></li>
+                    <li><a href="/pages/invoice">Invoice</a></li>
+                    <li><a href="/pages/directory">Directory</a></li>
+                    <li><a href="/pages/blank">Blank Page</a></li>
+                    <li><a href="/pages/BadRequest">Error 404</a></li>
+                    <li><a href="/pages/InternalServerError">Error 500</a></li>
+                    </ul>
+                    </li>*@
+
+            </ul>
+
+        </div>
+        <!-- Sidebar -->
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
+

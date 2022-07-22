@@ -1,0 +1,353 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Students</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Học Sinh</li>
+                <li class="breadcrumb-item active">Can Thiệp</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!-- Can Thiệp Start -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title text-center text-info text-uppercase">Can Thiệp Hành Vi</h5>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="#giaidoan" data-toggle="tab">Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Tab Giai Đoạn Start -->
+                    <div class="tab-pane show active" id="giaidoan">
+                        <form action="#">
+                            <div class="form-group row text-center">
+                                <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
+                                <div class="col-md-12 mx-auto">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="check-nhe" name="checkbox" /> Can Thiệp Nhẹ
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="check-vua" name="checkbox" /> Can Thiệp Vừa
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label style="margin-left: 62px;">
+                                            <input type="checkbox" id="check-kn" name="checkbox" /> Can Thiệp Khắc Nghiệt
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Tab Giai Đoạn End -->
+                    <!-- Tab Nâng Câp Hồ Sơ Start-->
+                    <div class="tab-pane" id="hoso">
+                        <!-- form nhẹ start -->
+                        <form action="#">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Ngày</label>
+                                <div class="col-md-10">
+                                    <input type="date" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div id="input-nhe" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="nhe" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                    <ul class="dropdown-menu" id="multiselect-drop">
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn Nhẹ 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Nhẹ 1</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="input-vua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="trungbinh" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                    <ul class="dropdown-menu" id="multiselect-drop-tb">
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn TB 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn TB 1</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn TB 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn TB 2</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="input-kn" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                    <ul class="dropdown-menu" id="multiselect-drop-kn">
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn Khắc Nghiệt 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 1</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Giai Đoạn Khắc Nghiệt 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 2</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="tbphuchoi" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                    <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Phục Hồi 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 1</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="Phục Hồi 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 2</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="button-hoso" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- form khác end -->
+                    </div>
+                    <!-- Tab Nâng Câp Hồ Sơ End-->
+                    <!-- Tab Quản Lí Can Thiệp Start -->
+                    <div class="tab-pane" id="quanlycanthiep">
+                        <form action="#">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="button-quanlicanthiep" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Tab Quản Lí Can Thiệp End -->
+                    <!-- Tab ngăn chặn tái phạm Start -->
+                    <div class="tab-pane" id="nganchantaipham">
+                        <div class="card-body">
+                            <ul class="nav nav-nganchan nav-tabs nav-tabs-bottom nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                       href="#adhd" data-toggle="tab">ADHD</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#doilap"
+                                       data-toggle="tab">Đối Lập</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tuki"
+                                       data-toggle="tab">Tự Kỉ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#hunghang"
+                                       data-toggle="tab">Hung Hăng</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="#lolang"
+                                       data-toggle="tab">Lo Lắng</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- Tab Ngăn Chặn Tái Phạm - ADHD Start-->
+                                <div class="tab-pane show active" id="adhd">
+                                    <form action="#">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="col-sm-3 mx-auto text-center">
+                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Tab Ngăn Chặn Tái Phạm - ADHD End-->
+                                <!-- Tab Ngăn Chặn Tái Phạm - Đối Lập Start-->
+                                <div class="tab-pane show" id="doilap">
+                                    <form action="#">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động </label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="col-sm-3 mx-auto text-center">
+                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Tab Ngăn Chặn Tái Phạm - Đối Lập End-->
+                                <!-- Tab Ngăn Chặn Tái Phạm - Tự Kỉ Start-->
+                                <div class="tab-pane show" id="tuki">
+                                    <form action="#">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động </label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" placeholder="Nhập..." />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="col-sm-3 mx-auto text-center">
+                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Tab Ngăn Chặn Tái Phạm - Tự Kỉ End-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab ngăn chặn tái phạm End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Can Thiệp End -->
+@section scripts {
+
+    <script src="~/js/CheckBoxMoInput.js"></script>
+}
