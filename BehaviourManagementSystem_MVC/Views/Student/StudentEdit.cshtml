@@ -1,5 +1,5 @@
-﻿
-@*@{
+﻿@model BehaviourManagementSystem_ViewModels.Requests.IndAssessRequest
+@{
     ViewData["Title"] = "StudentEdit";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
@@ -19,11 +19,11 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" asp-action="StudentAdd" asp-controller="Student">
-                    <input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
+                <form method="post" asp-action="StudentEdit" asp-controller="Student">
+                    @*<input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
                     <script>
                         console.log(@User.FindFirst("Id").Value)
-                    </script>
+                    </script>*@
                     <div class="row">
                         <div class="col-12">
                             <h5 class="form-title"><span>Thông tin học sinh</span></h5>
@@ -32,19 +32,19 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Họ</label>
-                                <input asp-for="FirstName" type="text" class="form-control">
+                                <input asp-for="@Model.FirstName" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Tên</label>
-                                <input asp-for="LastName" type="text" class="form-control">
+                                <input asp-for="@Model.LastName" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Lớp</label>
-                                <input asp-for="Classes" type="text" class="form-control">
+                                <input asp-for="@Model.Classes" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -52,9 +52,16 @@
                                 <label>Giới Tính </label>
                                 <select asp-for="Gender" class="form-control">
                                     <option>-- Chọn Giới Tính --</option>
-                                    <option>Nữ</option>
-                                    <option>Nam</option>
-                                    <option>Khác</option>
+                                    @if (Model.Gender == "Nữ")
+                                    {
+                                        <option selected>Nữ</option>
+                                        <option>Nam</option>
+                                    }
+                                    else
+                                    {
+                                        <option>Nữ</option>
+                                        <option selected>Nam</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -62,30 +69,30 @@
                             <div class="form-group">
                                 <label>Ngày Sinh</label>
                                 <div>
-                                    <input asp-for="DOB" type="date" class="form-control">
+                                    <input asp-for="@Model.DOB" type="date" class="form-control">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        @*<div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label>Hình Học Sinh</label>
-                                <input asp-for="AvtName" type="file" class="form-control">
+                                <label>Số Điện Thoại</label>
+                                <input asp-for=""  type="tel" class="form-control">
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Địa Chỉ</label>
-                                <input asp-for="Address" type="text" class="form-control">
+                                <input asp-for="@Model.Address" type="text" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input asp-for="Email" type="text" class="form-control">
+                                <input asp-for="@Model.Email" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 text-xl-center">
-                            <button type="submit" class="btn btn-primary ">Thêm</button>
+                            <button type="submit" class="btn btn-primary ">Sửa</button>
                         </div>
 
                     </div>
@@ -93,5 +100,5 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
