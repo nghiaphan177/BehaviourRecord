@@ -22,7 +22,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<Intervention>> CreateProfile(string ass_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco)
         {
             var a = new Intervention();
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Intervention>("Id assessment không tồn tại");
             if (p_date.ToString() == null || p_reco == null)
             {
