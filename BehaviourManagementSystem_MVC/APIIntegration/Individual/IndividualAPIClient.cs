@@ -99,5 +99,16 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<List<IndividualRequest>>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<List<IndividualRequest>>>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseResult<IndAssessRequest>> GetThongTinSUa(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Individual/GetIndById?id={id}");
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }

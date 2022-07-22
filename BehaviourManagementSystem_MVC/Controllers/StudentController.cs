@@ -103,9 +103,23 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         }
 
-        public IActionResult StudentEdit()
+        public async Task<IActionResult> StudentEdit(string id)
         {
-            return View();
+            try
+            {
+                var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         public IActionResult TeacherProfile()
