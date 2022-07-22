@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
 {
@@ -17,14 +18,16 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
         {
             _IAntecedentEnvironmentalAPIClient = IAntecedentEnvironmentalAPIClient;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
             try
             {
                 var response = await _IAntecedentEnvironmentalAPIClient.GetAll();
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
             }
             catch (Exception)

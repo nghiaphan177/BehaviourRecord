@@ -1,4 +1,6 @@
-﻿@model List<BehaviourManagementSystem_ViewModels.Requests.OptionsRequest>
+﻿@model X.PagedList.IPagedList<BehaviourManagementSystem_ViewModels.Requests.OptionsRequest>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -47,7 +49,7 @@
                                     {
 
                                         <tr id="mild-@item.Id">
-                                            <td>@(stt += 1)</td>
+                                            <td>@item.STT</td>
                                             <td>@item.Content</td>
                                             <td>
 
@@ -61,6 +63,17 @@
 
                                 </tbody>
                             </table>
+                            <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                            @Html.PagedListPager(Model,
+                                    page => Url.Action("Index", new { page }),
+                                    new PagedListRenderOptions
+                                {
+                                    DisplayLinkToIndividualPages = true,
+                                    DisplayPageCountAndCurrentLocation = false,
+                                    MaximumPageNumbersToDisplay = 3,
+                                    LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" },
+                                })
                         </div>
 
                     </div>
