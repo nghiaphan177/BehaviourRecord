@@ -176,6 +176,8 @@ namespace BehaviourManagementSystem_API.Services
                             FullName = user.FirstName + " " + user.LastName,
                             Email = user.Email,
                             Organization = ind.Organization,
+                            DOB = user.DOB,
+                            Address = user.Address
                         });
                     }
                 }
