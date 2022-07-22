@@ -1,4 +1,4 @@
-﻿
+﻿@model List<OptionsRequest>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -91,103 +91,29 @@
                             <div id="input-nhe" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="nhe" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Nhẹ 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Nhẹ 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Two</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <input type="text" id="nhe" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
                                 </div>
                             </div>
                             <div id="input-vua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="trungbinh" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop-tb">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn TB 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn TB 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn TB 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn TB 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <input type="text" id="trungbinh" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
                                 </div>
                             </div>
                             <div id="input-kn" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop-kn">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Khắc Nghiệt 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Giai Đoạn Khắc Nghiệt 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Giai Đoạn Khắc Nghiệt 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="tbphuchoi" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                    <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 1</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input value="Phục Hồi 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Phục Hồi 2</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <input type="text" id="tbphuchoi" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name= "recovery" } )
                                 </div>
                             </div>
                             <div class="col">

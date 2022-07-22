@@ -26,7 +26,8 @@ namespace BehaviourManagementSystem_API.Services
             {
                 Id = Guid.NewGuid(),
                 Content = content,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now
             });
 
             await _context.SaveChangesAsync();

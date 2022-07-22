@@ -27,6 +27,7 @@ namespace BehaviourManagementSystem_API.Services
                 Id = Guid.NewGuid(),
                 Content = content,
                 CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now
             });
             await _context.SaveChangesAsync();
             return new ResponseResultSuccess<List<ProfileModerate>>(await _context.ProfileModerates.ToListAsync());

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<BehaviourManagementSystem_ViewModels.Requests.OptionsRequest>
+<ul class="dropdown-menu" id="multiselect-drop-kn">
+    @foreach (var item in Model)
+    {
+        <li class="dropdown-item">
+            <div class="checkbox">
+                <label>
+                    <input value="@item.Content" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">@item.Content</span>
+                </label>
+            </div>
+        </li>
+
+    }
+</ul>

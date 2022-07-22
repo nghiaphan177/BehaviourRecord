@@ -828,7 +828,7 @@ button.bg-danger:hover {
 	border-radius: 3px;
 	transform-origin: left top 0;
 	box-shadow: inherit;
-	background-color: #fff;
+	background-color: #dacfcf !important;
 }
 .dropdown-item.active, .dropdown-item:active {
     background-color: #FFBC53;
@@ -839,7 +839,7 @@ button.bg-danger:hover {
 	background-color: #fff;
 }
 .dropdown-menu {
-	font-size: 14px;
+	font-size: 16px!important;
 }
 .card {
     border: 1px solid #ececf5;

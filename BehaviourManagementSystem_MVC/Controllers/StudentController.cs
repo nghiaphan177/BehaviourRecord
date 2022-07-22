@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Teacher")]
+    //[Authorize(AuthenticationSchemes = "Teacher")]
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
