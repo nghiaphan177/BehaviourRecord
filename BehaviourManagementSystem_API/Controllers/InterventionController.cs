@@ -37,9 +37,9 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("detail")]
         //[Authorize(Roles="admin,teacher")]
         //Lấy 1 intervention của assessment
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(string int_id)
         {
-            var response = await _interventionService.Detail(id);
+            var response = await _interventionService.Detail(int_id);
 
             if (response.Result == null)
                 return BadRequest(response);

@@ -9,7 +9,7 @@ namespace BehaviourManagementSystem_API.Controllers
     /// <summary>
     /// Assessment
     /// writter: HoangDDN
-    /// Description: List,Detail,
+    /// Description: List,Detail,CRUD Record, Analyze, Funtion
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -48,6 +48,20 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
+
+        [HttpDelete("delete")]
+        //[Authorize(Roles="teacher")]
+        //Xóa assessment của individual
+        public async Task<IActionResult> Delete(string ass_id)
+        {
+            var response = await _assessmentService.Delete(ass_id);
+
+            if (response.Result == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
         [HttpPost("create-record")]
         //[Authorize(Roles="teacher")]
         //Tạo record assessment của individual
@@ -74,18 +88,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete-record")]
-        //[Authorize(Roles="teacher")]
-        //Xóa record assessment của individual
-        public async Task<IActionResult> DeleteRecord(string ass_id)
-        {
-            var response = await _assessmentService.DeleteRecord(ass_id);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
 
         [HttpPut("update-behaviour")]
         //[Authorize(Roles="teacher")]
@@ -93,19 +95,6 @@ namespace BehaviourManagementSystem_API.Controllers
         public async Task<IActionResult> UpdateAnalyzeBehaviour(string ass_id, string ana_behaviour)
         {
             var response = await _assessmentService.UpdateAnalyzeBehaviour(ass_id, ana_behaviour);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
-
-        [HttpDelete("delete-behaviour")]
-        //[Authorize(Roles="teacher")]
-        //Xóa analyze behaviour assessment của individual
-        public async Task<IActionResult> DeleteAnalyzeBehaviour(string ass_id)
-        {
-            var response = await _assessmentService.DeleteAnalyzeBehaviour(ass_id);
 
             if (response.Result == null)
                 return BadRequest(response);
@@ -126,38 +115,12 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete-antecedent")]
-        //[Authorize(Roles="teacher")]
-        //Xóa analyze antecedent assessment của individual
-        public async Task<IActionResult> DeleteAnalyzeAntecedent(string ass_id)
-        {
-            var response = await _assessmentService.DeleteAnalyzeAntecedent(ass_id);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
-
         [HttpPut("update-consequence")]
         //[Authorize(Roles="teacher")]
         //Chỉnh sửa analyze consequences assessment của individual
         public async Task<IActionResult> UpdateAnalyzeConsequence(string ass_id, string ana_con_per, string ana_con_envi, string ana_con_act)
         {
             var response = await _assessmentService.UpdateAnalyzeConsequence(ass_id, ana_con_per, ana_con_envi, ana_con_act);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
-
-        [HttpDelete("delete-consequence")]
-        //[Authorize(Roles="teacher")]
-        //Xóa analyze consequences assessment của individual
-        public async Task<IActionResult> DeleteAnalyzeConsequence(string ass_id)
-        {
-            var response = await _assessmentService.DeleteAnalyzeConsequence(ass_id);
 
             if (response.Result == null)
                 return BadRequest(response);
@@ -178,19 +141,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete-funtion-antecedent")]
-        //[Authorize(Roles="teacher")]
-        //Xóa funtion antecedent assessment của individual
-        public async Task<IActionResult> DeleteFuntionAntecedent(string ass_id)
-        {
-            var response = await _assessmentService.DeleteFuntionAntecedent(ass_id);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
-
         [HttpPut("update-funtion-consequece")]
         //[Authorize(Roles="teacher")]
         //Chỉnh sửa funtion consequece assessment của individual
@@ -204,18 +154,6 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete-funtion-consequece")]
-        //[Authorize(Roles="teacher")]
-        //Xóa funtion consequece assessment của individual
-        public async Task<IActionResult> DeleteFuntionConsequece(string ass_id)
-        {
-            var response = await _assessmentService.DeleteFuntionConsequece(ass_id);
-
-            if (response.Result == null)
-                return BadRequest(response);
-
-            return Ok(response);
-        }
 
     }
 }

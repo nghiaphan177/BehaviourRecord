@@ -19,32 +19,21 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<ProfileMild>>> Create(string content)
         {
-            if(await _context.ProfileMilds.AnyAsync(prop => prop.Content == content))
+            if (await _context.ProfileMilds.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<ProfileMild>>("Dữ liệu đã tồn tại");
             await _context.ProfileMilds.AddAsync(new ProfileMild()
             {
                 Id = Guid.NewGuid(),
                 Content = content,
                 CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
             });
-            var save = await _context.SaveChangesAsync();
-            var result = await _context.ProfileMilds.ToListAsync();
-            if(save > 0)
-            {
-                return new ResponseResultSuccess<List<ProfileMild>>(result);
-            }
-            return new ResponseResult<List<ProfileMild>>
-            {
-                Success = false,
-                Message = "Thêm không thành công",
-                Result = result
-            };
+            await _context.SaveChangesAsync();
+            return new ResponseResultSuccess<List<ProfileMild>>(await _context.ProfileMilds.ToListAsync());
         }
 
         public async Task<ResponseResult<List<ProfileMild>>> Delete(string id)
         {
-            if(!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
+            if (!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<ProfileMild>>("Id không tồn tại");
             var obj = await _context.ProfileMilds.FindAsync(new Guid(id));
             _context.ProfileMilds.Remove(obj);
@@ -54,16 +43,16 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<OptionsRequest>>> GetAll()
         {
-            if(!await _context.ProfileMilds.AnyAsync())
+            if (!await _context.ProfileMilds.AnyAsync())
                 return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var mild = await _context.ProfileMilds.ToListAsync();
             var result = new List<OptionsRequest>();
             int stt = 0;
-            foreach(var item in mild)
+            foreach (var item in mild)
             {
                 result.Add(new OptionsRequest()
                 {
-                    STT = stt += 1,
+                    STT = stt+=1,
                     Id = item.Id.ToString(),
                     Content = item.Content,
                     CreateDate = item.CreateDate.Value,
@@ -76,7 +65,7 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<OptionsRequest>> GetById(string id)
         {
-            if(!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
+            if (!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<OptionsRequest>("Id không tồn tại");
             var obj = await _context.ProfileMilds.FindAsync(new Guid(id));
             return new ResponseResultSuccess<OptionsRequest>(new OptionsRequest()
@@ -90,9 +79,9 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<ProfileMild>>> Update(string id, string content)
         {
-            if(!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
+            if (!await _context.ProfileMilds.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<List<ProfileMild>>("Id không tồn tại");
-            if(await _context.ProfileMilds.AnyAsync(prop => prop.Content == content))
+            if (await _context.ProfileMilds.AnyAsync(prop => prop.Content == content))
                 return new ResponseResultError<List<ProfileMild>>("Dữ liệu đã tồn tại");
             var obj = await _context.ProfileMilds.FindAsync(new Guid(id));
             obj.Content = content;

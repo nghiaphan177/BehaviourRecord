@@ -27,7 +27,6 @@ namespace BehaviourManagementSystem_API.Services
                 Id = Guid.NewGuid(),
                 Content = content,
                 CreateDate = DateTime.Now,
-                UpdateDate= DateTime.Now
             });
             await _context.SaveChangesAsync();
             return new ResponseResultSuccess<List<ProfileModerate>>(await _context.ProfileModerates.ToListAsync());
@@ -49,10 +48,12 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var moderate = await _context.ProfileModerates.ToListAsync();
             var result = new List<OptionsRequest>();
+            int stt = 0;
             foreach (var item in moderate)
             {
                 result.Add(new OptionsRequest()
                 {
+                    STT = stt += 1,
                     Id = item.Id.ToString(),
                     Content = item.Content,
                     CreateDate = item.CreateDate.Value,

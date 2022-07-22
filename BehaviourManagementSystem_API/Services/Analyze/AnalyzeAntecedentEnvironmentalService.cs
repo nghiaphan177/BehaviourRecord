@@ -27,8 +27,7 @@ namespace BehaviourManagementSystem_API.Services
             {
                 Id = Guid.NewGuid(),
                 Content = content,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now
+                CreateDate = DateTime.Now
             });
 
             await _context.SaveChangesAsync();
@@ -58,10 +57,12 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var enviroment = await _context.AnalyzeAntecedentEnvironmentals.ToListAsync();
             var result = new List<OptionsRequest>();
+            int stt = 0;
             foreach (var item in enviroment)
             {
                 result.Add(new OptionsRequest()
                 {
+                    STT = stt += 1,
                     Id = item.Id.ToString(),
                     Content = item.Content,
                     CreateDate = item.CreateDate.Value,

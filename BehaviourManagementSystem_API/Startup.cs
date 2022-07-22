@@ -84,7 +84,7 @@ namespace BehaviourManagementSystem_API
             services.AddScoped<IProfileModerateService, ProfileModerateService>();
             services.AddScoped<IProfileExtremeService, ProfileExtremeService>();
             services.AddScoped<IProfileRecoveryService, ProfileRecoveryService>();
-            services.AddScoped<IAssessmentService, AssessmentService>();
+            services.AddScoped<IAssessmentService, Assessmentservice>();
             services.AddScoped<IInterventionService, InterventionService>();
             services.AddScoped<IIndividualService, IndividualService>();
             services.AddScoped<ITermConditionService, TermConditionService>();

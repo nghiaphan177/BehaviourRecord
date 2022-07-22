@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Services
 {
-    public class AssessmentService : IAssessmentService
+    public class Assessmentservice : IAssessmentService
     {
         private readonly ApplicationDbContext _context;
 
-        public AssessmentService(ApplicationDbContext context)
+        public Assessmentservice(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -50,87 +50,14 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<Assessment>(a);
         }
 
-        public async Task<ResponseResult<Assessment>> DeleteAnalyzeAntecedent(string ass_id)
+        public async Task<ResponseResult<List<Assessment>>> Delete(string ass_id)
         {
             if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+                return new ResponseResultError<List<Assessment>>("Id không tồn tại");
             var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.AnalyzeAntecedentPerceivedDescription = null;
-            obj.AnalyzeAntecedentEnvironmentalDescription = null;
-            obj.AnalyzeAntecedentActivityDescription = null;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
+            _context.Assesetments.Remove(obj);
             await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
-        }
-
-        public async Task<ResponseResult<Assessment>> DeleteAnalyzeBehaviour(string ass_id)
-        {
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
-            var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.AnalyzeBehaviour = null;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
-        }
-
-        public async Task<ResponseResult<Assessment>> DeleteAnalyzeConsequence(string ass_id)
-        {
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
-            var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.AnalyzeConsequencesPerceive = null;
-            obj.AnalyzeConsequenceEnvironmental = null;
-            obj.AnalyzeConsequencesActivity = null;
-            obj.AnalyzeIsCompeleted = false;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
-        }
-
-        public async Task<ResponseResult<Assessment>> DeleteFuntionAntecedent(string ass_id)
-        {
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
-            var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.FunctionAntecedent = null;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
-        }
-
-        public async Task<ResponseResult<Assessment>> DeleteFuntionConsequece(string ass_id)
-        {
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
-            var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.FunctionConsequece = null;
-            obj.FunctionIsCompeleted = false;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
-        }
-
-        public async Task<ResponseResult<Assessment>> DeleteRecord(string ass_id)
-        {
-            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
-                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
-            var obj = await _context.Assesetments.FindAsync(new Guid(ass_id));
-            obj.RecordDate = null;
-            obj.RecordStart = null;
-            obj.RecordEnd = null;
-            obj.RecordWhere = null;
-            obj.RecordWho = null;
-            obj.RecordIsCompeleted = false;
-            obj.UpdateDate = DateTime.Now;
-            _context.Entry(obj).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new ResponseResultSuccess<Assessment>(obj);
+            return new ResponseResultSuccess<List<Assessment>>(await _context.Assesetments.ToListAsync());
         }
 
         public async Task<ResponseResult<AssessmentRequest>> Detail(string ass_id)

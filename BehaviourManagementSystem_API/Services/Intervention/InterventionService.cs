@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,11 @@ namespace BehaviourManagementSystem_API.Services
             _context = context;
         }
 
-        public async Task<ResponseResult<InterventionRequest>> Detail(string id)
+        public async Task<ResponseResult<InterventionRequest>> Detail(string int_id)
         {
-            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == id))
+            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
                 return new ResponseResultError<InterventionRequest>("Id không tồn tại");
-            var obj = await _context.Interventions.FindAsync(new Guid(id));
+            var obj = await _context.Interventions.FindAsync(new Guid(int_id));
             return new ResponseResultSuccess<InterventionRequest>(new InterventionRequest()
             {
                 Id = obj.Id.ToString(),
@@ -63,10 +64,10 @@ namespace BehaviourManagementSystem_API.Services
                     PreventIsCompleted = item.PreventIsCompleted,
                     Summary = item.Summary,
                     AssesetmentId = item.AssesetmentId.ToString(),
-
                 });
             }
             return new ResponseResultSuccess<List<InterventionRequest>>(result);
         }
+
     }
 }
