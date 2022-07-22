@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
@@ -22,6 +24,25 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
+
+        public async Task<ResponseResult<List<IndAssessRequest>>> Create(IndAssessRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            //truyen id user vao url api
+            var response = await client.PostAsync($"/api/Individual/Create", httpContent);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+        }
+
         public Task<ResponseResult<IndividualRequest>> Detail(string id)
         {
             throw new NotImplementedException();

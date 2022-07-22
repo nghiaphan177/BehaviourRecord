@@ -11,5 +11,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
     {
         Task<ResponseResult<List<IndividualRequest>>> GetAll();
         Task<ResponseResult<IndividualRequest>> Detail(string id);
+        Task<ResponseResult<List<IndAssessRequest>>> Create(IndAssessRequest request);
     }
 }
