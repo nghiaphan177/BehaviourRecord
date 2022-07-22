@@ -3,6 +3,7 @@ using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
@@ -15,7 +16,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             _IIndividualAPIClient = IIndividualAPIClient;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> StudentAssessment()
+        {
+            var id = User.FindFirst("Id").Value;
+            try
+            {
+                var response = await _IIndividualAPIClient.GetAll(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> StudentList()
         {
             try
             {

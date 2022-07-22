@@ -11,8 +11,8 @@ namespace BehaviourManagementSystem_API.Services
     {
         Task<ResponseResult<List<InterventionRequest>>> GetAll(string ass_id);
         Task<ResponseResult<InterventionRequest>> Detail(string int_id);
-        //Task<ResponseResult<Intervention>> CreateProfile(string ass_id, DateTime p_date, string pro_mild, string pro_moder, string pro_extre, string pro_reco);
-        //Task<ResponseResult<Intervention>> UpdateProfile(string int_id, DateTime p_date, string pro_mild, string pro_moder, string pro_extre, string pro_reco);
-        //Task<ResponseResult<Intervention>> DeleteProfile(string int_id);
+        Task<ResponseResult<List<Intervention>>> Delete(string int_id);
+        Task<ResponseResult<Intervention>> CreateProfile(string ass_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco);
+        Task<ResponseResult<Intervention>> UpdateProfile(string int_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco);
     }
 }
