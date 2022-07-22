@@ -122,6 +122,25 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return NotFound();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> StudentEdit(IndAssessRequest request)
+        {
+            try
+            {
+                var response = await _IIndividualAPIClient.Update(request);
+                if (response.Success == true)
+                {
+                    TempData["MessageCreate"] = "Sửa thành công!";
+                    return RedirectToAction("StudentList", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
         public IActionResult TeacherProfile()
         {
             return View();

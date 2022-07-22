@@ -110,5 +110,21 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseResult<List<IndAssessRequest>>> Update(IndAssessRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.PutAsync($"/api/Individual/Update", httpContent);
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }
