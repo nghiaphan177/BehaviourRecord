@@ -261,7 +261,11 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<IndAssessRequest>> GetIndById(string id)
         {
-            var ind = await _context.Individuals.FindAsync(new Guid(id));
+            Guid ind_id;
+            if(!Guid.TryParse(id, out ind_id))
+                return new ResponseResultError<IndAssessRequest>("Thông tin truy xuất không hợp lệ");
+
+            var ind = await _context.Individuals.FindAsync(ind_id);
             if(ind is null)
                 return new ResponseResultError<IndAssessRequest>("Thông tin cái nhân truy xuất không tồn tại");
 
