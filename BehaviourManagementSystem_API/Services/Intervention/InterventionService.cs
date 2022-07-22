@@ -19,10 +19,50 @@ namespace BehaviourManagementSystem_API.Services
             _context = context;
         }
 
+        public async Task<ResponseResult<Intervention>> CreateProfile(string ass_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco)
+        {
+            var a = new Intervention();
+            if (!await _context.Assesetments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Intervention>("Id assessment không tồn tại");
+            if (p_date.ToString() == null || p_reco == null)
+            {
+                return new ResponseResultError<Intervention>("Chưa có dữ liệu");
+            }
+            else
+            {
+                await _context.Interventions.AddAsync(a = new Intervention()
+                {
+                    Id = Guid.NewGuid(),
+                    ProfileDate = p_date,
+                    ProfileMildDesciption = p_mild,
+                    ProfileModerateDesciption = p_moder,
+                    ProfileExtremeDesciption = p_extre,
+                    ProfileRecoveryDesciption = p_reco,
+                    AssesetmentId = new Guid(ass_id),
+                    CreateDate = DateTime.Now,
+
+                    ProfileIsCompeleted = true
+                });
+                await _context.SaveChangesAsync();
+            }
+
+            return new ResponseResultSuccess<Intervention>(a);
+        }
+
+        public async Task<ResponseResult<List<Intervention>>> Delete(string int_id)
+        {
+            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
+                return new ResponseResultError<List<Intervention>>("Id không tồn tại");
+            var obj = await _context.Interventions.FindAsync(new Guid(int_id));
+            _context.Interventions.Remove(obj);
+            await _context.SaveChangesAsync();
+            return new ResponseResultSuccess<List<Intervention>>(await _context.Interventions.ToListAsync());
+        }
+
         public async Task<ResponseResult<InterventionRequest>> Detail(string int_id)
         {
             if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
-                return new ResponseResultError<InterventionRequest>("Id không tồn tại");
+                return new ResponseResultError<InterventionRequest>("Id intervention không tồn tại");
             var obj = await _context.Interventions.FindAsync(new Guid(int_id));
             return new ResponseResultSuccess<InterventionRequest>(new InterventionRequest()
             {
@@ -69,5 +109,28 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<InterventionRequest>>(result);
         }
 
+        public async Task<ResponseResult<Intervention>> UpdateProfile(string int_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco)
+        {
+            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
+                return new ResponseResultError<Intervention>("Id assessment không tồn tại");
+            var obj = await _context.Interventions.FindAsync(new Guid(int_id));
+            if (p_date.ToString() == null || p_reco == null)
+            {
+                return new ResponseResultError<Intervention>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.ProfileDate = p_date;
+                obj.ProfileMildDesciption = p_mild;
+                obj.ProfileModerateDesciption = p_moder;
+                obj.ProfileExtremeDesciption = p_extre;
+                obj.ProfileRecoveryDesciption = p_reco;
+
+                obj.UpdateDate = DateTime.Now;
+                _context.Entry(obj).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            return new ResponseResultSuccess<Intervention>(obj);
+        }
     }
 }
