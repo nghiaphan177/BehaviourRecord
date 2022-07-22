@@ -71,7 +71,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
         //}
 
 
-        public async Task<ResponseResult<List<IndividualRequest>>> GetAllList()
         public async Task<ResponseResult<List<IndAssessRequest>>> GetAllStudentByTeacherId(string id)
         {
             var client = _httpClientFactory.CreateClient();
