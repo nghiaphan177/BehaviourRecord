@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
@@ -104,11 +105,23 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(res);
         }
 
+        [HttpPut("Update")]
+        public async Task<IActionResult> Udpate([FromBody] IndAssessRequest request)
+        {
+            Guid ind_id;
+            Guid user_tc_id;
+            if(request.Ind_Id.CheckRequest() ||
+                !Guid.TryParse(request.Ind_Id, out ind_id) ||
+                request.TeacherId.CheckRequest() ||
+                !Guid.TryParse(request.TeacherId, out user_tc_id))
+                return BadRequest("Thông tin truy xuất không hợp lệ");
 
-        //[HttpPut("Update")]
-        //public async Task<IActionResult> Udpate([FromBody] IndAssessRequest request)
-        //{
-        //    if(reque)
-        //}
+            var res = await _individualService.Update(request);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
     }
 }

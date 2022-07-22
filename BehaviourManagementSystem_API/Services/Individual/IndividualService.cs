@@ -227,6 +227,10 @@ namespace BehaviourManagementSystem_API.Services
         {
             try
             {
+                Guid tc_id;
+                if(!Guid.TryParse(id, out tc_id))
+                    return new ResponseResultError<List<IndAssessRequest>>("Thông tin truy xuất không hợp lệ");
+
                 if(!await _context.Individuals.AnyAsync(prop => prop.TeacherId == new Guid(id)))
                     return new ResponseResultError<List<IndAssessRequest>>("Thông tin truy xuất không tồn tại");
 
@@ -261,33 +265,87 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<IndAssessRequest>> GetIndById(string id)
         {
-            Guid ind_id;
-            if(!Guid.TryParse(id, out ind_id))
-                return new ResponseResultError<IndAssessRequest>("Thông tin truy xuất không hợp lệ");
+            try
+            {
+                Guid ind_id;
+                if(!Guid.TryParse(id, out ind_id))
+                    return new ResponseResultError<IndAssessRequest>("Thông tin truy xuất không hợp lệ");
 
-            var ind = await _context.Individuals.FindAsync(ind_id);
-            if(ind is null)
-                return new ResponseResultError<IndAssessRequest>("Thông tin cái nhân truy xuất không tồn tại");
+                var ind = await _context.Individuals.FindAsync(ind_id);
+                if(ind is null)
+                    return new ResponseResultError<IndAssessRequest>("Thông tin cái nhân truy xuất không tồn tại");
 
-            var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
-            if(user is null)
-                return new ResponseResultSuccess<IndAssessRequest>(new IndAssessRequest
+                var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
+                if(user is null)
+                    return new ResponseResultSuccess<IndAssessRequest>(new IndAssessRequest
+                    {
+                        Ind_Id = ind.Id.ToString(),
+                        Classes = ind.Organization
+                    });
+                else
+                    return new ResponseResultSuccess<IndAssessRequest>(new IndAssessRequest
+                    {
+                        Ind_Id = ind.Id.ToString(),
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Gender = user.Gender,
+                        DOB = user.DOB,
+                        Address = user.Address,
+                        Classes = ind.Organization,
+                        Email = user.Email
+                    });
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<IndAssessRequest>(ex.Message);
+            }
+        }
+
+        public async Task<ResponseResult<List<IndAssessRequest>>> Update(IndAssessRequest request)
+        {
+            try
+            {
+                var result = new ResponseResult<List<IndAssessRequest>>();
+                var ind = await _context.Individuals.FindAsync(new Guid(request.Ind_Id));
+                if(ind is null)
                 {
-                    Ind_Id = ind.Id.ToString(),
-                    Classes = ind.Organization
-                });
-            else
-                return new ResponseResultSuccess<IndAssessRequest>(new IndAssessRequest
+                    result = await GetAllIndWithTeacher(request.TeacherId);
+                    return new ResponseResult<List<IndAssessRequest>>
+                    {
+                        Success = false,
+                        Message = "Thông tin cái nhân không tồn tại",
+                        Result = result.Result
+                    };
+                }
+
+                var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
+
+                user.FirstName = user.FirstName;
+                user.LastName = user.LastName;
+                user.Gender = user.Gender;
+                user.DOB = user.DOB;
+                user.Address = user.Address;
+                ind.Organization = ind.Organization;
+                user.Email = user.Email;
+
+                _context.Entry(user).State = EntityState.Modified;
+                _context.Entry(ind).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+
+                result = await GetAllIndWithTeacher(request.TeacherId);
+                return new ResponseResultSuccess<List<IndAssessRequest>>(result.Result);
+            }
+            catch(Exception ex)
+            {
+                var result = await GetAllIndWithTeacher(request.TeacherId);
+                return new ResponseResult<List<IndAssessRequest>>
                 {
-                    Ind_Id = ind.Id.ToString(),
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Gender = user.Gender,
-                    DOB = user.DOB,
-                    Address = user.Address,
-                    Classes = ind.Organization,
-                    Email = user.Email
-                });
+                    Success = false,
+                    Message = ex.Message,
+                    Result = result.Result
+                };
+            }
         }
     }
 }
