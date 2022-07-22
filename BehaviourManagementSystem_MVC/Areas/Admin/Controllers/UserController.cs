@@ -27,7 +27,6 @@ namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
                 return View(response.Result);
             }
 
-
             return View();
         }
 

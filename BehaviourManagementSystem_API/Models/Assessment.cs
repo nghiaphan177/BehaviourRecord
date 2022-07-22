@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BehaviourManagementSystem_API.Models
 {
     public class Assessment
     {
         public Guid Id { get; set; }
+        [Column(TypeName = "date")]
         public DateTime? RecordDate { get; set; }
         public TimeSpan? RecordStart { get; set; }
         public TimeSpan? RecordEnd { get; set; }

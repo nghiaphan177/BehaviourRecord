@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BehaviourManagementSystem_API.Models
 {
     public class Intervention
     {
         public Guid Id { get; set; }
+        [Column(TypeName = "date")]
         public DateTime? ProfileDate { get; set; }
         public string Summary { get; set; } = null!;
         public string ProfileMildDesciption { get; set; } = null!;

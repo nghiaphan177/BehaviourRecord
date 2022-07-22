@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BehaviourManagementSystem_API.Models
 {
@@ -9,6 +10,7 @@ namespace BehaviourManagementSystem_API.Models
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Gender { get; set; } = null!;
+        [Column(TypeName = "date")]
         public DateTime? DOB { get; set; }
         public string Address { get; set; } = null!;
         public string AvtName { get; set; } = null!;
