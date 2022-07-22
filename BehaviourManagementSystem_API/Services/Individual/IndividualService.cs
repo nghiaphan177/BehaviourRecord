@@ -31,7 +31,7 @@ namespace BehaviourManagementSystem_API.Services
                 var stamp = Guid.NewGuid();
                 var user = await _userManager.FindByIdAsync(id.ToString());
                 var ind = await _context.Individuals.FindAsync(id);
-                if(user != null || ind != null)
+                if (user != null || ind != null)
                     goto start;
 
                 user = new User()
@@ -52,7 +52,7 @@ namespace BehaviourManagementSystem_API.Services
                     CreateDate = DateTime.Now.Date
                 };
                 var result_save_user = await _userManager.CreateAsync(user, request.Password);
-                if(result_save_user.Succeeded)
+                if (result_save_user.Succeeded)
                 {
                     ind = new Individual()
                     {
@@ -65,9 +65,9 @@ namespace BehaviourManagementSystem_API.Services
 
                     await _context.Individuals.AddAsync(ind);
                     var result_save_ind = await _context.SaveChangesAsync();
-                    if(result_save_ind > 0)
+                    if (result_save_ind > 0)
                     {
-                        var role = await _context.Roles.FirstAsync(prop=>prop.NormalizedName == "ADMIN");
+                        var role = await _context.Roles.FirstAsync(prop => prop.NormalizedName == "STUDENT");
                         await _context.UserRoles.AddAsync(new IdentityUserRole<Guid>
                         {
                             RoleId = role.Id,
@@ -102,7 +102,7 @@ namespace BehaviourManagementSystem_API.Services
                     };
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ResponseResultError<List<IndAssessRequest>>(ex.Message);
             }
@@ -116,7 +116,7 @@ namespace BehaviourManagementSystem_API.Services
                 .Where(prop => prop.TeacherId == new Guid(request.TeacherId))
                 .ToListAsync();
 
-            foreach(var r_ind in inds)
+            foreach (var r_ind in inds)
             {
                 var r_user = await _userManager.FindByIdAsync(r_ind.StudentId.ToString());
                 result.Add(new IndAssessRequest
@@ -137,13 +137,13 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<IndividualRequest>> Detail(string id)
         {
-            if(!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == id))
+            if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == id))
                 return new ResponseResultError<IndividualRequest>("Id không tồn tại");
 
             var obj = await _context.Individuals.FindAsync(new Guid(id));
 
-            foreach(var user in await _context.Users.ToListAsync())
-                if(obj.StudentId == user.Id)
+            foreach (var user in await _context.Users.ToListAsync())
+                if (obj.StudentId == user.Id)
                     return new ResponseResultSuccess<IndividualRequest>(new IndividualRequest()
                     {
                         Id = obj.Id.ToString(),
@@ -161,14 +161,14 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<List<IndividualRequest>>> GetAll()
         {
-            if(!await _context.Individuals.AnyAsync())
+            if (!await _context.Individuals.AnyAsync())
                 return new ResponseResultError<List<IndividualRequest>>("Hiện tại không có dữ liệu");
             var result = new List<IndividualRequest>();
-            foreach(var ind in await _context.Individuals.ToListAsync())
+            foreach (var ind in await _context.Individuals.ToListAsync())
             {
-                foreach(var user in await _context.Users.ToListAsync())
+                foreach (var user in await _context.Users.ToListAsync())
                 {
-                    if(ind.StudentId == user.Id)
+                    if (ind.StudentId == user.Id)
                     {
                         result.Add(new IndividualRequest()
                         {
@@ -187,7 +187,7 @@ namespace BehaviourManagementSystem_API.Services
         {
             try
             {
-                if(!await _context.Individuals.AnyAsync(prop => prop.TeacherId == new Guid(id)))
+                if (!await _context.Individuals.AnyAsync(prop => prop.TeacherId == new Guid(id)))
                     return new ResponseResultError<List<IndAssessRequest>>("Thông tin truy xuất không tồn tại");
 
                 var result = new List<IndAssessRequest>();
@@ -196,8 +196,8 @@ namespace BehaviourManagementSystem_API.Services
                     .Where(prop => prop.TeacherId == new Guid(id))
                     .ToListAsync();
 
-                foreach(var ind in inds)
-                    if(await _context.Assesetments
+                foreach (var ind in inds)
+                    if (await _context.Assesetments
                         .CountAsync(prop => prop.IndividualId == ind.Id) > 0)
                     {
                         var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
@@ -215,7 +215,42 @@ namespace BehaviourManagementSystem_API.Services
                     }
                 return new ResponseResultSuccess<List<IndAssessRequest>>(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return new ResponseResultError<List<IndAssessRequest>>(ex.Message);
+            }
+        }
+        public async Task<ResponseResult<List<IndAssessRequest>>> GetAllIndWithTeacher(string id)
+        {
+            try
+            {
+                if (!await _context.Individuals.AnyAsync(prop => prop.TeacherId == new Guid(id)))
+                    return new ResponseResultError<List<IndAssessRequest>>("Thông tin truy xuất không tồn tại");
+
+                var result = new List<IndAssessRequest>();
+
+                var inds = await _context.Individuals
+                    .Where(prop => prop.TeacherId == new Guid(id))
+                    .ToListAsync();
+
+                foreach (var ind in inds)
+                {
+                    var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
+                    result.Add(new IndAssessRequest
+                    {
+                        Ind_Id = ind.Id.ToString(),
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Gender = user.Gender,
+                        DOB = user.DOB,
+                        Address = user.Address,
+                        Classes = ind.Organization,
+                        Email = user.Email
+                    });
+                }
+                return new ResponseResultSuccess<List<IndAssessRequest>>(result);
+            }
+            catch (Exception ex)
             {
                 return new ResponseResultError<List<IndAssessRequest>>(ex.Message);
             }
