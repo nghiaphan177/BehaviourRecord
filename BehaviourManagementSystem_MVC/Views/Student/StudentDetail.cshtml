@@ -1,4 +1,5 @@
-﻿@{
+﻿@model BehaviourManagementSystem_ViewModels.Requests.IndividualRequest
+@{
     ViewData["Title"] = "StudentDetail";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
@@ -23,32 +24,30 @@
                 <div class="media-body">
                     <ul>
                         <li>
-                            <span class="title-span">Full Name : </span>
-                            <span class="info-span">Daisy Parks</span>
+                            <span class="title-span">Họ và Tên : </span>
+                            <span class="info-span">@Model.FullName</span>
                         </li>
                         <li>
-                            <span class="title-span">Address : </span>
-                            <span class="info-span">Quận 9</span>
+                            <span class="title-span">Địa chỉ : </span>
+                            <span class="info-span">@Model.Address</span>
                         </li>
                         <li>
-                            <span class="title-span">Mobile : </span>
-                            <span class="info-span">+91 89657 48512</span>
+                            <span class="title-span">Số điện thoại : </span>
+                            <span class="info-span">@Model.PhoneIndividual</span>
                         </li>
                         <li>
                             <span class="title-span">Email : </span>
                             <span class="info-span">
-                                <a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection"
-                                   class="__cf_email__"
-                                   data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a>
+                                @Model.Email
                             </span>
                         </li>
                         <li>
-                            <span class="title-span">Gender : </span>
-                            <span class="info-span">Male</span>
+                            <span class="title-span">Giới tính : </span>
+                            <span class="info-span">@Model.Gender</span>
                         </li>
                         <li>
-                            <span class="title-span">DOB : </span>
-                            <span class="info-span">22 Apr 1995</span>
+                            <span class="title-span">Ngày sinh : </span>
+                            <span class="info-span">@Model.DOB</span>
                         </li>
                     </ul>
                 </div>

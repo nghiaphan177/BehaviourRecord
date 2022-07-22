@@ -830,8 +830,8 @@ button.bg-danger:hover {
 	box-shadow: inherit;
 	background-color: #dacfcf !important;
 }
-.dropdown-item.active, .dropdown-item:active {
-    background-color: #FFBC53;
+.dropdown-item.active {
+    background-color: #fff;
 }
 .navbar-nav .open .dropdown-menu {
 	border: 0;
@@ -840,6 +840,9 @@ button.bg-danger:hover {
 }
 .dropdown-menu {
 	font-size: 16px!important;
+}
+input[type="checkbox"] :active {
+	background-color:none !important;
 }
 .card {
     border: 1px solid #ececf5;

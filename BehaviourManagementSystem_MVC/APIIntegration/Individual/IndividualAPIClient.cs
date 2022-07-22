@@ -43,9 +43,16 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
             return JsonConvert.DeserializeObject<ResponseResultError<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<IndividualRequest>> Detail(string id)
+        public async Task<ResponseResult<IndividualRequest>> Detail(string id)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            //truyen id user vao url api
+            var response = await client.GetAsync($"/api/Individual/detail?id=" + id);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<IndividualRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<IndividualRequest>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ResponseResult<List<IndAssessRequest>>> GetAll(string id)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Teacher")]
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
@@ -55,9 +55,24 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public IActionResult StudentDetail()
+        public async Task<IActionResult> StudentDetail(string id)
         {
-            return View();
+
+            try
+            {
+                var response = await _IIndividualAPIClient.Detail(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         public IActionResult StudentAdd()
@@ -78,7 +93,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 return View();
             }
 
-            if (response.Success == true) return RedirectToAction(nameof(Index));
+            if (response.Success == true) 
+                return RedirectToAction(nameof(StudentList));
             else
             {
                 ViewBag.MSError = response.Message;
