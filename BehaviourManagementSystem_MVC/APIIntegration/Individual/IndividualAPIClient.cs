@@ -71,7 +71,18 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
         //}
 
 
-        public async Task<ResponseResult<List<IndividualRequest>>> GetAllList()
+        public async Task<ResponseResult<List<IndAssessRequest>>> GetAllStudentByTeacherId(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Individual/GetAllIndWithTeacher?id={id}");
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResult<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResult<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ResponseResult<List<IndividualRequest>>> GetAll()
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);

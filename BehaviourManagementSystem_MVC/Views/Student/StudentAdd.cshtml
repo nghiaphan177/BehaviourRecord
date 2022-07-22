@@ -1,4 +1,4 @@
-﻿@model IndividualRequest
+﻿@model IndAssessRequest
 @{
     ViewData["Title"] = "StudentAdd";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -19,33 +19,38 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form>
+                <form method="post" asp-action="StudentAdd" asp-controller="Student">
+                    <input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
+                    <script>
+                        console.log(@User.FindFirst("Id").Value)
+                    </script>
                     <div class="row">
                         <div class="col-12">
                             <h5 class="form-title"><span>Student Information</span></h5>
                         </div>
+
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Họ</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="FirstName" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Tên</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="LastName" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Lớp</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="Classes" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Giới Tính </label>
-                                <select class="form-control">
+                                <select asp-for="Gender" class="form-control">
                                     <option>-- Chọn Giới Tính --</option>
                                     <option>Nữ</option>
                                     <option>Nam</option>
@@ -57,38 +62,38 @@
                             <div class="form-group">
                                 <label>Ngày Sinh</label>
                                 <div>
-                                    <input type="date" class="form-control">
+                                    <input asp-for="DOB" type="date" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Hình Học Sinh</label>
-                                <input type="file" class="form-control">
+                                <input asp-for="AvtName" type="file" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Địa Chỉ</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="Address" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="Email" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Tài Khoản Học Sinh</label>
-                                <input type="text" class="form-control">
+                                <input asp-for="UserName" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Mật Khẩu Học Sinh</label>
-                                <input type="password" class="form-control">
+                                <input asp-for="Password" type="password" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 text-xl-center">

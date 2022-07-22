@@ -24,7 +24,7 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             var response = await _individualService.GetAll();
 
-            if(response.Result == null)
+            if (response.Result == null)
                 return BadRequest(response);
 
             return Ok(response);
@@ -37,7 +37,7 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             var response = await _individualService.Detail(id);
 
-            if(response.Result == null)
+            if (response.Result == null)
                 return BadRequest(response);
 
             return Ok(response);
@@ -46,12 +46,26 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("GetAllIndWithAssessment")]
         public async Task<IActionResult> GetAllIndWithAssessment(string id)
         {
-            if(id.CheckRequest())
+            if (id.CheckRequest())
                 return BadRequest("Lỗi truy xuất thông tin với tài khoản của bạn.");
 
             var res = await _individualService.GetAllIndWithAssessment(id);
 
-            if(!res.Success)
+            if (!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
+        [HttpGet("GetAllIndWithTeacher")]
+        public async Task<IActionResult> GetAllIndWithTeacher(string id)
+        {
+            if (id.CheckRequest())
+                return BadRequest("Lỗi truy xuất thông tin với tài khoản của bạn.");
+
+            var res = await _individualService.GetAllIndWithTeacher(id);
+
+            if (!res.Success)
                 return BadRequest(res);
 
             return Ok(res);
@@ -60,12 +74,12 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] IndAssessRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var res = await _individualService.Create(request);
 
-            if(!res.Success)
+            if (!res.Success)
                 return BadRequest(res);
 
             return Ok(res);
