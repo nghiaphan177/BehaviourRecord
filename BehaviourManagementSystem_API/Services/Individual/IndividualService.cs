@@ -199,7 +199,7 @@ namespace BehaviourManagementSystem_API.Services
                     .ToListAsync();
 
                 foreach(var ind in inds)
-                    if(await _context.Assesetments
+                    if(await _context.Assessments
                         .CountAsync(prop => prop.IndividualId == ind.Id) > 0)
                     {
                         var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
