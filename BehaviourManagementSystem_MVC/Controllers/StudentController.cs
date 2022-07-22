@@ -1,10 +1,13 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.Individual;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
@@ -12,11 +15,30 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             _IIndividualAPIClient = IIndividualAPIClient;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> StudentAssessment()
+        {
+            var id = User.FindFirst("Id").Value;
+            try
+            {
+                var response = await _IIndividualAPIClient.GetAll(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> StudentList()
         {
             try
             {
-                var response = await _IIndividualAPIClient.GetAll();
+                var response = await _IIndividualAPIClient.GetAllList();
                 if (response.Success == true)
                 {
                     return View(response.Result);
