@@ -1,20 +1,25 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Teacher")]
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
-        public StudentController(IIndividualAPIClient IIndividualAPIClient)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IWebHostEnvironment webHostEnvironment)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> StudentAssessment()
         {
@@ -55,7 +60,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public IActionResult StudentDetail()
+        public IActionResult StudentDetail(string id)
         {
             return View();
         }
@@ -65,26 +70,36 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> StudentAdd(IndAssessRequest request)
+        public async Task<IActionResult> StudentAdd(IFormFile imageModel, IndAssessRequest request)
         {
             if (!ModelState.IsValid)
                 return NotFound();
-
-            var s = request;
-
-            var response = await _IIndividualAPIClient.Create(request);
-            if (response == null)
+            string webrootpath = webHostEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            string fileName = String.Empty;
+            if (files.Count != 0)
             {
-                return View();
-            }
+                fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                request.AvtName = fileName;
+                var response = await _IIndividualAPIClient.Create(request);
+                if (response == null)
+                {
+                    ViewBag.MSError = response.Message;
+                    return View();
+                }
+                if (response.Success == true)
+                {
+                    var uploads = Path.Combine(webrootpath, @"images");
+                    var extension = Path.GetExtension(files[0].FileName);
 
-            if (response.Success == true) return RedirectToAction(nameof(Index));
-            else
-            {
-                ViewBag.MSError = response.Message;
-                return View();
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                    return RedirectToAction(nameof(StudentList));
+                }
             }
-
+            return View();
         }
 
         public IActionResult StudentEdit()

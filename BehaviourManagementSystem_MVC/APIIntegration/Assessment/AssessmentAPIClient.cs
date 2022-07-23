@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_ViewModels.Requests;
+﻿using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<ResponseResult<AssessmentRequest>> Create(string IndiId, AssessmentRequest request)
+
+        public async Task<ResponseResult<Assessment>> CreateRecord(string IndiId,AssessmentRequest request)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -32,26 +34,21 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             var response = await client.SendAsync(httpRequestMessage);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
-            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<Assessment>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<Assessment>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<AssessmentRequest>> CreateRecord(string IndiId, AssessmentRequest content)
+        public Task<ResponseResult<Assessment>> CreateRecordAntecedent(string AssId, AssessmentRequest content)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseResult<AssessmentRequest>> CreateRecordAntecedent(string AssId, AssessmentRequest content)
+        public Task<ResponseResult<Assessment>> CreateRecordBehaviour(string AssId, AssessmentRequest content)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseResult<AssessmentRequest>> CreateRecordBehaviour(string AssId, AssessmentRequest content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseResult<AssessmentRequest>> CreateRecordConsequence(string AssId, AssessmentRequest content)
+        public Task<ResponseResult<Assessment>> CreateRecordConsequence(string AssId, AssessmentRequest content)
         {
             throw new NotImplementedException();
         }
