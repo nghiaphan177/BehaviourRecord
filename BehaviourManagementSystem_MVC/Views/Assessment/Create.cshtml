@@ -30,11 +30,11 @@
                            href="#tuongtrinh" data-toggle="tab">Tường trình</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled"
+                        <a class="nav-link"
                            href="#phantich" data-toggle="tab">Phân tích</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled"
+                        <a class="nav-link"
                            href="#chitiet" data-toggle="tab">Chi Tiết</a>
                     </li>
                 </ul>
@@ -122,11 +122,11 @@
                                 <!-- Tab Phân Tích - Tiền Đề Start-->
                                 <div class="tab-pane" id="pt-tiende">
                                     <form action="#">
-                                        <div class="form-group row">
+                                        @*<div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
                                                 <input asp-for="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                                <ul class="dropdown-menu" id="multiselect-drop-camxuc">
+                                                @*<ul class="dropdown-menu" id="multiselect-drop-camxuc">
                                                     <li class="dropdown-item">
                                                         <div class="checkbox">
                                                             <label>
@@ -142,6 +142,7 @@
                                                         </div>
                                                     </li>
                                                 </ul>
+                                                @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -187,8 +188,8 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
-
+                                        </div>*@
+                                        @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
                                         <div class="col-sm-3 mx-auto text-center">
                                             <button type="submit" id="button-pt2" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>

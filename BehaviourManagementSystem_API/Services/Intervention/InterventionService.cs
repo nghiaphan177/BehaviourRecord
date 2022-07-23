@@ -52,7 +52,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<List<Intervention>>> Delete(string int_id)
         {
             if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
-                return new ResponseResultError<List<Intervention>>("Id không tồn tại");
+                return new ResponseResultError<List<Intervention>>("Id intervention không tồn tại");
             var obj = await _context.Interventions.FindAsync(new Guid(int_id));
             _context.Interventions.Remove(obj);
             await _context.SaveChangesAsync();
@@ -109,10 +109,58 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<InterventionRequest>>(result);
         }
 
+        public async Task<ResponseResult<Intervention>> UpdateManage(string int_id, string m_mild, string m_moder, string m_extre, string m_reco)
+        {
+            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
+                return new ResponseResultError<Intervention>("Id intrvention không tồn tại");
+            var obj = await _context.Interventions.FindAsync(new Guid(int_id));
+            if (m_reco == null)
+            {
+                return new ResponseResultError<Intervention>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.ManageMild = m_mild;
+                obj.ManageModerate = m_moder;
+                obj.ManageExtreme = m_extre;
+                obj.ManageRecovery = m_reco;
+                obj.ManageIsCompleted = true;
+
+                obj.UpdateDate = DateTime.Now;
+                _context.Entry(obj).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            return new ResponseResultSuccess<Intervention>(obj);
+        }
+
+        public async Task<ResponseResult<Intervention>> UpdatePrevent(string int_id, string pre_status, string pre_act, string pre_envi, string pre_inter)
+        {
+            if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
+                return new ResponseResultError<Intervention>("Id intrvention không tồn tại");
+            var obj = await _context.Interventions.FindAsync(new Guid(int_id));
+            if (pre_status == null || pre_act == null || pre_envi == null || pre_inter == null)
+            {
+                return new ResponseResultError<Intervention>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.PreventStatus = pre_status;
+                obj.PreventActivity = pre_act;
+                obj.PreventInvironmental = pre_envi;
+                obj.PreventInteraction = pre_inter;
+
+                obj.PreventIsCompleted = true;
+                obj.UpdateDate = DateTime.Now;
+                _context.Entry(obj).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            return new ResponseResultSuccess<Intervention>(obj);
+        }
+
         public async Task<ResponseResult<Intervention>> UpdateProfile(string int_id, DateTime p_date, string p_mild, string p_moder, string p_extre, string p_reco)
         {
             if (!await _context.Interventions.AnyAsync(prop => prop.Id.ToString() == int_id))
-                return new ResponseResultError<Intervention>("Id assessment không tồn tại");
+                return new ResponseResultError<Intervention>("Id intrvention không tồn tại");
             var obj = await _context.Interventions.FindAsync(new Guid(int_id));
             if (p_date.ToString() == null || p_reco == null)
             {
