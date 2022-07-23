@@ -1,4 +1,4 @@
-﻿@model List<OptionsRequest>
+﻿@model InterventionRequest
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -80,49 +80,7 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <form action="#">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
-                                <div class="col-md-10">
-                                    <input type="date" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div id="input-nhe" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="nhe" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
-                                </div>
-                            </div>
-                            <div id="input-vua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="trungbinh" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
-                                </div>
-                            </div>
-                            <div id="input-kn" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="khacnghiet" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
-                                <div class="col-md-10">
-                                    <input type="text" id="tbphuchoi" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name= "recovery" } )
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-hoso" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                </div>
-                            </div>
-                        </form>
+                        <partial name="CreateProfile" />
                         <!-- form khác end -->
                     </div>
                     <!-- Tab Nâng Câp Hồ Sơ End-->
