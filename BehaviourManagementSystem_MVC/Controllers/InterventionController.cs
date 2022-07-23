@@ -28,20 +28,43 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
 
-        //public async Task<PartialViewResult> DropdownExtreme()
-        //{
-        //    var response = await _IOptionAPIClientExtreme.GetAll();
-        //    if (response.Success == true)
-        //    {
-        //        return PartialView(response.Result);
-        //    }
-        //    return PartialView();
-        //}
-
-        public IActionResult CreateProfile()
+        public async Task<IActionResult> Edit(string id)
         {
-            return PartialView();
+            try
+            {
+                var response = await _IInterventionAPIClient.Get(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Edit(InterventionRequest request)
+        {
+            try
+            {
+                var response = await _IInterventionAPIClient.Update(request);
+                if (response.Success == true)
+                {
+                    TempData["MessageCreate"] = "Sửa thành công!";
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProfile(InterventionRequest request)
         {
@@ -54,7 +77,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 if (response.Success)
                 {
-                    return Json(new { success = true });
+                    TempData["MessageCreate"] = "Thêm thành công!";
+                    return RedirectToAction("Index");
                 }
 
             }
@@ -64,6 +88,21 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 throw;
             }
             return Json(new { success = false });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+
+            var response = await _IInterventionAPIClient.Delete(id);
+            if (response.Success == true)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            return NoContent();
         }
     }
 }

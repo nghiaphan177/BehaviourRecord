@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/assets/plugins/datatables/datatables.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/assets/plugins/simple-calendar/simple-calendar.css">
+    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="main-wrapper">
@@ -109,6 +110,18 @@
             </footer>
         </div>
     </div>
+    @if (TempData["MessageCreate"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal(
+                    '@TempData["MessageCreate"]',
+                     '',
+                    'success'
+                );
+            };
+        </script>
+    }
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>
     <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -119,6 +132,7 @@
     <script src="~/js/DropDown.js"></script>
     <script src="~/js/ChuyenTabDanhGia.js"></script>
     <script src="~/assets/js/circle-progress.min.js"></script>
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/script.js"></script>
     @RenderSection("Scripts", false)
     <script type="text/javascript">
@@ -134,7 +148,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                // Add active class to the current button (highlight it)
+                            // Add active class to the current button (highlight it)
 
     </script>
 </body>
