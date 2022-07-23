@@ -73,6 +73,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
         public async Task<ResponseResult<List<AssessmentRequest>>> GetAll(string indiID)
         {
             var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             var response = await client.GetAsync($"/api/Assessment/get-all/{indiID}");

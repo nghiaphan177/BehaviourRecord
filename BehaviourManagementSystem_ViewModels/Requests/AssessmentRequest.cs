@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using TimeSpanConverter = BehaviourManagementSystem_MVC.Utilities.TimeSpanConverter;
 
 namespace BehaviourManagementSystem_ViewModels.Requests
 {
@@ -12,7 +10,9 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         [Required]
         public string Id { get; set; }
         public DateTime? RecordDate { get; set; }
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? RecordStart { get; set; }
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? RecordEnd { get; set; }
         public string RecordDuring { get; set; } = null!;
         public string RecordWhere { get; set; } = null!;

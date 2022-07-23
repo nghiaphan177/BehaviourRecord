@@ -1,10 +1,12 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Individual;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
+using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Dynamic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,10 +17,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
+        private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IWebHostEnvironment webHostEnvironment)
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
+            _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> StudentAssessment()
@@ -65,12 +69,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             try
             {
-                var response = await _IIndividualAPIClient.Detail(id);
-                if (response.Success == true)
+                dynamic mymodel = new ExpandoObject();
+                var responseIndi = await _IIndividualAPIClient.Detail(id);
+                var responseAssess = await _assessmentAPIClient.GetAll("dba7641b-80de-490f-8257-0c1897b50543");             
+                if (responseIndi.Success == true && responseAssess.Success == true)
                 {
-                    return View(response.Result);
+                    mymodel.Individual = responseIndi.Result;
+                    mymodel.Assessment = responseAssess.Result;
+                    return View(mymodel);
                 }
-
             }
             catch (System.Exception)
             {
@@ -117,7 +124,6 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        }
 
         public async Task<IActionResult> StudentEdit(string id)
         {
