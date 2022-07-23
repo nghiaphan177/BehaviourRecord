@@ -17,13 +17,9 @@ namespace BehaviourManagementSystem_ViewModels.Requests
         public DateTime? DOB { get; set; }
         public string Address { get; set; }
         public string Classes { get; set; }
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string UserName { get; set; }
-        [Required]
         public string Password { get; set; }
-        [Required]
         public string TeacherId { get; set; }
     }
 }

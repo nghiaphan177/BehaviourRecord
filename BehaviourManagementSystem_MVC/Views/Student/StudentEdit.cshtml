@@ -20,8 +20,9 @@
         <div class="card">
             <div class="card-body">
                 <form method="post" asp-action="StudentEdit" asp-controller="Student">
-                    @*<input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
-                    <script>
+                    <input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
+                    <input hidden asp-for="Ind_Id" value="@Model.Ind_Id">
+                    @*<script>
                         console.log(@User.FindFirst("Id").Value)
                     </script>*@
                     <div class="row">
@@ -74,11 +75,11 @@
                             </div>
                         </div>
                         @*<div class="col-12 col-sm-6">
-                            <div class="form-group">
-                                <label>Số Điện Thoại</label>
-                                <input asp-for=""  type="tel" class="form-control">
-                            </div>
-                        </div>*@
+                <div class="form-group">
+                    <label>Số Điện Thoại</label>
+                    <input asp-for=""  type="tel" class="form-control">
+                </div>
+            </div>*@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Địa Chỉ</label>

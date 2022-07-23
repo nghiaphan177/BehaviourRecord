@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -105,6 +104,23 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.GetAsync($"/api/Individual/GetIndById?id={id}");
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ResponseResult<IndAssessRequest>> Update(IndAssessRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            
+            var response = await client.PutAsync($"/api/Individual/Update", httpContent);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<IndAssessRequest>>(await response.Content.ReadAsStringAsync());
