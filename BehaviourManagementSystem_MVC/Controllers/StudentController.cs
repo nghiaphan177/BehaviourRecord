@@ -71,8 +71,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
             {
                 dynamic mymodel = new ExpandoObject();
                 var responseIndi = await _IIndividualAPIClient.Detail(id);
-                var responseAssess = await _assessmentAPIClient.GetAll("dba7641b-80de-490f-8257-0c1897b50543");             
-                if (responseIndi.Success == true && responseAssess.Success == true)
+                var responseAssess = await _assessmentAPIClient.GetAll(id);             
+                if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
                 {
                     mymodel.Individual = responseIndi.Result;
                     mymodel.Assessment = responseAssess.Result;
