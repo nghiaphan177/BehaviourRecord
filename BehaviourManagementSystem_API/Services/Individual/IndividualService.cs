@@ -49,7 +49,8 @@ namespace BehaviourManagementSystem_API.Services
                     EmailConfirmed = true,
                     SecurityStamp = stamp.ToString(),
                     ConcurrencyStamp = stamp.ToString().ToUpper(),
-                    CreateDate = DateTime.Now.Date
+                    CreateDate = DateTime.Now.Date,
+                    UpdateDate= DateTime.Now.Date
                 };
                 var result_save_user = await _userManager.CreateAsync(user, request.Password);
                 if(result_save_user.Succeeded)
@@ -60,7 +61,8 @@ namespace BehaviourManagementSystem_API.Services
                         StudentId = id,
                         TeacherId = new Guid(request.TeacherId),
                         CreateDate = DateTime.Now.Date,
-                        Organization = "Lớp"// thay đổi sao
+                        UpdateDate = DateTime.Now.Date,
+                        Organization = request.Classes // thay đổi sao
                     };
 
                     await _context.Individuals.AddAsync(ind);
@@ -326,6 +328,7 @@ namespace BehaviourManagementSystem_API.Services
                 user.DOB = user.DOB;
                 user.Address = user.Address;
                 ind.Organization = ind.Organization;
+                ind.UpdateDate = DateTime.Now;
                 user.Email = user.Email;
 
                 _context.Entry(user).State = EntityState.Modified;
