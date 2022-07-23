@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
@@ -24,7 +25,7 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             var response = await _individualService.GetAll();
 
-            if (response.Result == null)
+            if(response.Result == null)
                 return BadRequest(response);
 
             return Ok(response);
@@ -37,7 +38,7 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             var response = await _individualService.Detail(id);
 
-            if (response.Result == null)
+            if(response.Result == null)
                 return BadRequest(response);
 
             return Ok(response);
@@ -46,12 +47,12 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("GetAllIndWithAssessment")]
         public async Task<IActionResult> GetAllIndWithAssessment(string id)
         {
-            if (id.CheckRequest())
+            if(id.CheckRequest())
                 return BadRequest("Lỗi truy xuất thông tin với tài khoản của bạn.");
 
             var res = await _individualService.GetAllIndWithAssessment(id);
 
-            if (!res.Success)
+            if(!res.Success)
                 return BadRequest(res);
 
             return Ok(res);
@@ -60,12 +61,12 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpGet("GetAllIndWithTeacher")]
         public async Task<IActionResult> GetAllIndWithTeacher(string id)
         {
-            if (id.CheckRequest())
+            if(id.CheckRequest())
                 return BadRequest("Lỗi truy xuất thông tin với tài khoản của bạn.");
 
             var res = await _individualService.GetAllIndWithTeacher(id);
 
-            if (!res.Success)
+            if(!res.Success)
                 return BadRequest(res);
 
             return Ok(res);
@@ -74,12 +75,50 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] IndAssessRequest request)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _individualService.Create(request);
+            if(request.Gender.ToLower() == "nam" || request.Gender.ToLower() == "nữ")
+            {
+                var res = await _individualService.Create(request);
 
-            if (!res.Success)
+                if(!res.Success)
+                    return BadRequest(res);
+
+                return Ok(res);
+            }
+
+            return BadRequest("Thông tin giới tính không hợp lệ");
+        }
+
+        [HttpGet("GetIndById")]
+        public async Task<IActionResult> GetIndById(string id)
+        {
+            if(id.CheckRequest())
+                return BadRequest("Không tìm thấy thông tin cập nhật");
+
+            var res = await _individualService.GetIndById(id);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Udpate([FromBody] IndAssessRequest request)
+        {
+            Guid ind_id;
+            Guid user_tc_id;
+            if(request.Ind_Id.CheckRequest() ||
+                !Guid.TryParse(request.Ind_Id, out ind_id) ||
+                request.TeacherId.CheckRequest() ||
+                !Guid.TryParse(request.TeacherId, out user_tc_id))
+                return BadRequest("Thông tin truy xuất không hợp lệ");
+
+            var res = await _individualService.Update(request);
+
+            if(!res.Success)
                 return BadRequest(res);
 
             return Ok(res);

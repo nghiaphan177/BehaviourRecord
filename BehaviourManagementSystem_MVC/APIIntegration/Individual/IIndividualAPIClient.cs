@@ -13,5 +13,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
         Task<ResponseResult<IndividualRequest>> Detail(string id);
         Task<ResponseResult<List<IndAssessRequest>>> Create(IndAssessRequest request);
         Task<ResponseResult<List<IndAssessRequest>>> GetAllStudentByTeacherId(string id);
+        Task<ResponseResult<IndAssessRequest>> GetThongTinSUa(string id);
     }
 }

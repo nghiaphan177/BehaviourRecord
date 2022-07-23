@@ -141,7 +141,7 @@ namespace BehaviourManagementSystem_API.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DOB = table.Column<DateTime>(type: "date", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AvtName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Activity = table.Column<bool>(type: "bit", nullable: false),
@@ -321,11 +321,11 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assesetments",
+                name: "Assessments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecordDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RecordDate = table.Column<DateTime>(type: "date", nullable: true),
                     RecordStart = table.Column<TimeSpan>(type: "time", nullable: true),
                     RecordEnd = table.Column<TimeSpan>(type: "time", nullable: true),
                     RecordDuring = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -352,27 +352,27 @@ namespace BehaviourManagementSystem_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assesetments", x => x.Id);
+                    table.PrimaryKey("PK_Assessments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assesetments_AnalyzeAntecedentActivities_AnalyzeAntecedentActivityId",
+                        name: "FK_Assessments_AnalyzeAntecedentActivities_AnalyzeAntecedentActivityId",
                         column: x => x.AnalyzeAntecedentActivityId,
                         principalTable: "AnalyzeAntecedentActivities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetments_AnalyzeAntecedentEnvironmentals_AnalyzeAntecedentEnvironmentalId",
+                        name: "FK_Assessments_AnalyzeAntecedentEnvironmentals_AnalyzeAntecedentEnvironmentalId",
                         column: x => x.AnalyzeAntecedentEnvironmentalId,
                         principalTable: "AnalyzeAntecedentEnvironmentals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetments_AnalyzeAntecedentPerceives_AnalyzeAntecedentPerceivedId",
+                        name: "FK_Assessments_AnalyzeAntecedentPerceives_AnalyzeAntecedentPerceivedId",
                         column: x => x.AnalyzeAntecedentPerceivedId,
                         principalTable: "AnalyzeAntecedentPerceives",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Assesetments_Individuals_IndividualId",
+                        name: "FK_Assessments_Individuals_IndividualId",
                         column: x => x.IndividualId,
                         principalTable: "Individuals",
                         principalColumn: "Id",
@@ -384,7 +384,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProfileDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ProfileDate = table.Column<DateTime>(type: "date", nullable: true),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileMildDesciption = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileModerateDesciption = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -413,9 +413,9 @@ namespace BehaviourManagementSystem_API.Migrations
                 {
                     table.PrimaryKey("PK_Interventions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Interventions_Assesetments_AssesetmentId",
+                        name: "FK_Interventions_Assessments_AssesetmentId",
                         column: x => x.AssesetmentId,
-                        principalTable: "Assesetments",
+                        principalTable: "Assessments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -449,39 +449,39 @@ namespace BehaviourManagementSystem_API.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("187d6366-a085-4a5b-b7c8-f424b8ae19f9"), "16E408A2-A542-4C84-BAFA-3BA76DCF78D4", "admin", "ADMIN" },
-                    { new Guid("96a7a299-64cb-447a-9a9d-08ea89cfba59"), "99E71CEF-D926-4664-9AC5-0297478966F6", "teacher", "TEACHER" },
-                    { new Guid("10674b9b-5f0f-4116-b467-e3351c08668b"), "1EFB7F2D-7DB7-4C05-95E2-CEB1A6142877", "student", "STUDENT" }
+                    { new Guid("08374821-1469-496f-a61f-84473f46f17c"), "A25F041D-C057-414B-BF78-7DC51A6BC980", "admin", "ADMIN" },
+                    { new Guid("944b469a-0886-4437-9204-7ff881481ac9"), "E1F4D1C5-BC89-4751-A3A5-689114880990", "teacher", "TEACHER" },
+                    { new Guid("db25f2ee-7f68-49d7-934d-d7e00c23a7b8"), "20FE991B-9C3C-4048-B6E1-3BB5AA4240AF", "student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "Activity", "ActivityDate", "Address", "AvtName", "ConcurrencyStamp", "CreateDate", "DOB", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdateDate", "UserName" },
-                values: new object[] { new Guid("7192f1f8-e0ab-47f1-b038-70ce75843ef0"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "4B2AB74D-419D-4143-B9AF-7AD6F8C0DCB2", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "lhduy3011@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY3011@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEEG9CRYq6JJ175jqa+3Hy2eHzBOHcjbMdM8grk4TqcRpiPiPZ4W/oynEyXuNk0a/+w==", "0334102197", true, "4b2ab74d-419d-4143-b9af-7ad6f8c0dcb2", false, null, "admin" });
+                values: new object[] { new Guid("190a0735-a5df-41b5-bdc1-694f158d2316"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "8E1D9137-17CD-4EF5-9D9C-A72B7BC03DA0", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "lhduy3011@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY3011@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJva7mrM7v7T+SSJjOIhn8wHSpy1MPVwXit0iVqTV+B4NhexfqhrhTj6i/3q0lIfAw==", "0334102197", true, "8e1d9137-17cd-4ef5-9d9c-a72b7bc03da0", false, null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("187d6366-a085-4a5b-b7c8-f424b8ae19f9"), new Guid("7192f1f8-e0ab-47f1-b038-70ce75843ef0") });
+                values: new object[] { new Guid("08374821-1469-496f-a61f-84473f46f17c"), new Guid("190a0735-a5df-41b5-bdc1-694f158d2316") });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetments_AnalyzeAntecedentActivityId",
-                table: "Assesetments",
+                name: "IX_Assessments_AnalyzeAntecedentActivityId",
+                table: "Assessments",
                 column: "AnalyzeAntecedentActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetments_AnalyzeAntecedentEnvironmentalId",
-                table: "Assesetments",
+                name: "IX_Assessments_AnalyzeAntecedentEnvironmentalId",
+                table: "Assessments",
                 column: "AnalyzeAntecedentEnvironmentalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetments_AnalyzeAntecedentPerceivedId",
-                table: "Assesetments",
+                name: "IX_Assessments_AnalyzeAntecedentPerceivedId",
+                table: "Assessments",
                 column: "AnalyzeAntecedentPerceivedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assesetments_IndividualId",
-                table: "Assesetments",
+                name: "IX_Assessments_IndividualId",
+                table: "Assessments",
                 column: "IndividualId");
 
             migrationBuilder.CreateIndex(
@@ -586,7 +586,7 @@ namespace BehaviourManagementSystem_API.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Assesetments");
+                name: "Assessments");
 
             migrationBuilder.DropTable(
                 name: "ProfileExtremes");

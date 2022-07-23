@@ -60,9 +60,24 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public IActionResult StudentDetail(string id)
+        public async Task<IActionResult> StudentDetail(string id)
         {
-            return View();
+
+            try
+            {
+                var response = await _IIndividualAPIClient.Detail(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         public IActionResult StudentAdd()
@@ -102,9 +117,25 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public IActionResult StudentEdit()
+        }
+
+        public async Task<IActionResult> StudentEdit(string id)
         {
-            return View();
+            try
+            {
+                var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         public IActionResult TeacherProfile()

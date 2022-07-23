@@ -13,7 +13,7 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<List<IndAssessRequest>>> Create(IndAssessRequest request);
         Task<ResponseResult<List<IndAssessRequest>>> GetAllIndWithAssessment(string id);
         Task<ResponseResult<List<IndAssessRequest>>> GetAllIndWithTeacher(string id);
-        //Task<ResponseResult<List<Individual>>> Update();
-        //Task<ResponseResult<List<Individual>>> Delete();
+        Task<ResponseResult<IndAssessRequest>> GetIndById(string id);
+        Task<ResponseResult<List<IndAssessRequest>>> Update(IndAssessRequest request);
     }
 }

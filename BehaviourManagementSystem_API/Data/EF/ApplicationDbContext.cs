@@ -16,7 +16,7 @@ namespace BehaviourManagementSystem_API.Data.EF
         public virtual DbSet<AnalyzeAntecedentActivity> AnalyzeAntecedentActivities { get; set; }
         public virtual DbSet<AnalyzeAntecedentEnvironmental> AnalyzeAntecedentEnvironmentals { get; set; }
         public virtual DbSet<AnalyzeAntecedentPerceive> AnalyzeAntecedentPerceives { get; set; }
-        public virtual DbSet<Assessment> Assesetments { get; set; }
+        public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<Individual> Individuals { get; set; }
         public virtual DbSet<Intervention> Interventions { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
