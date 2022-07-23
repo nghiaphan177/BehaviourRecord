@@ -50,7 +50,7 @@ namespace BehaviourManagementSystem_API.Services
                     SecurityStamp = stamp.ToString(),
                     ConcurrencyStamp = stamp.ToString().ToUpper(),
                     CreateDate = DateTime.Now.Date,
-                    UpdateDate= DateTime.Now.Date
+                    UpdateDate = DateTime.Now.Date
                 };
                 var result_save_user = await _userManager.CreateAsync(user, request.Password);
                 if(result_save_user.Succeeded)
@@ -254,7 +254,8 @@ namespace BehaviourManagementSystem_API.Services
                         DOB = user.DOB,
                         Address = user.Address,
                         Classes = ind.Organization,
-                        Email = user.Email
+                        Email = user.Email,
+                        TeacherId = ind.TeacherId.ToString()
                     });
                 }
                 return new ResponseResultSuccess<List<IndAssessRequest>>(result);
@@ -294,7 +295,8 @@ namespace BehaviourManagementSystem_API.Services
                         DOB = user.DOB,
                         Address = user.Address,
                         Classes = ind.Organization,
-                        Email = user.Email
+                        Email = user.Email,
+                        TeacherId = ind.TeacherId.ToString(),
                     });
             }
             catch(Exception ex)
@@ -322,16 +324,18 @@ namespace BehaviourManagementSystem_API.Services
 
                 var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
 
-                user.FirstName = user.FirstName;
-                user.LastName = user.LastName;
-                user.Gender = user.Gender;
-                user.DOB = user.DOB;
-                user.Address = user.Address;
-                ind.Organization = ind.Organization;
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.Gender = request.Gender;
+                user.DOB = request.DOB;
+                user.Address = request.Address;
+                ind.Organization = request.Classes;
                 ind.UpdateDate = DateTime.Now;
-                user.Email = user.Email;
+                user.Email = request.Email;
 
+                _context.Attach(user);
                 _context.Entry(user).State = EntityState.Modified;
+                _context.Attach(ind);
                 _context.Entry(ind).State = EntityState.Modified;
 
                 await _context.SaveChangesAsync();

@@ -103,6 +103,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> StudentEdit(string id)
         {
             try
