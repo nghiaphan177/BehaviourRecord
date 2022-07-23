@@ -28,15 +28,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             try
             {
-                var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
-                if (response == null)
-                {
-                    return Json(new { success = false });
-                }
-                if (response.Success)
-                {
-                    return Json(new { success = true });
-                }
+                //var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
+                //if (response == null)
+                //{
+                //    return Json(new { success = false });
+                //}
+                //if (response.Success)
+                //{
+                //    return Json(new { success = true });
+                //}
 
             }
             catch (Exception)

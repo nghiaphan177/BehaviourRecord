@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BehaviourManagementSystem_API\BehaviourManagementSystem_API.csproj" />
     <ProjectReference Include="..\BehaviourManagementSystem_ViewModels\BehaviourManagementSystem_ViewModels.csproj" />
   </ItemGroup>
 
