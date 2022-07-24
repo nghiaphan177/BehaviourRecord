@@ -181,8 +181,7 @@
                                                             <td>Xin Chào</td>
                                                             <td class="text-right">
                                                                 <div class="actions">
-                                                                    <a href="edit-room.html"
-                                                               class="btn btn-sm bg-success-light mr-2">
+                                                                    <a href="#" class="btn btn-sm bg-success-light mr-2">
                                                                         <i class="fas fa-pen"></i>
                                                                     </a>
                                                                     <button onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
@@ -226,7 +225,6 @@
 <!-- Đánh giá End -->
 
 <footer>
-    <p>Copyright © 2020 Dreamguys.</p>
 </footer>
 @section scripts {
 <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
@@ -243,8 +241,7 @@
                     confirmButtonText: 'Yes!'
                 }).then(function () {
                     $.ajax({
-                        url: "/Assessment/Delete",
-                        data: { "AssessId": id },
+                        url: "/Assessment/Delete?AssessId="+id,
                         type: "POST",
                         success: function (result) {
                             if (result.success == true) {
