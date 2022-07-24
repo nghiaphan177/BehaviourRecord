@@ -32,12 +32,11 @@ namespace BehaviourManagementSystem_API
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("gr4bmsAPI", policy =>
+                options.AddPolicy("AllowAllOrigins", policy =>
                 {
-                    policy.WithOrigins()
-                    //policy.WithOrigins(builder.Configuration["ClientDomain"])
-                    .WithMethods()
-                    .WithHeaders();
+                    policy.AllowAnyOrigin();
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
                 });
             });
 
@@ -90,10 +89,10 @@ namespace BehaviourManagementSystem_API
             services.AddScoped<ITermConditionService, TermConditionService>();
             #endregion
 
-            services.AddAuthentication(opt =>
+            services.AddAuthentication(options =>
             {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer("Bearer", options =>
             {
@@ -166,9 +165,14 @@ namespace BehaviourManagementSystem_API
                         Encoding.UTF8.GetBytes(
                             Configuration["Tokens:Student:Key"]))
                 };
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Google:ClientId"];
+                options.ClientSecret = Configuration["Google:ClientSecret"];
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddSwaggerGen(option =>
             {
@@ -310,7 +314,7 @@ namespace BehaviourManagementSystem_API
 
             app.UseAuthorization();
 
-            app.UseCors("gr4bmsAPI");
+            app.UseCors("AllowAllOrigins");
 
             app.UseEndpoints(endpoints =>
             {

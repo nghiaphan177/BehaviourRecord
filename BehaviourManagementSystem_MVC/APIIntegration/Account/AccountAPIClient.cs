@@ -125,5 +125,27 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 				return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());
 			return JsonConvert.DeserializeObject<ResponseResultError<string>>(await response.Content.ReadAsStringAsync());
 		}
+
+        public async Task<ResponseResult<string>> GetImg(string userId)
+        {
+			var client = _httpClientFactory.CreateClient();
+			client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+			var res = await client.GetAsync($"/api/Account/GetImg?id={userId}");
+
+			if(res.IsSuccessStatusCode)
+				return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await res.Content.ReadAsStringAsync());
+			return JsonConvert.DeserializeObject<ResponseResultError<string>>(await res.Content.ReadAsStringAsync());
+		}
+
+        public async Task<ResponseResult<string>> CheckImgUrl(string result)
+        {
+			var client = _httpClientFactory.CreateClient();
+			var res = await client.GetAsync(result);
+
+			if(res.IsSuccessStatusCode)
+				return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await res.Content.ReadAsStringAsync());
+			return JsonConvert.DeserializeObject<ResponseResultError<string>>(await res.Content.ReadAsStringAsync());
+		}
 	}
 }

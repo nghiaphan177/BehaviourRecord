@@ -21,7 +21,7 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 		public string RoleId { get; set; }
 		public string RoleName { get; set; }
 
-        public bool Active { get; set; }
+        public bool? Active { get; set; }
         public string TeacherId { get; set; }
     }
 }
