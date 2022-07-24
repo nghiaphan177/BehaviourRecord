@@ -26,5 +26,7 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request);
         Task<ResponseResult<List<UserProfileRequest>>> DeleteUserProfile(string id);
         Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest repuest);
+        Task<ResponseResult<string>> GoogleSigin(string token);
+        Task<ResponseResult<string>> GetImg(string id);
     }
 }

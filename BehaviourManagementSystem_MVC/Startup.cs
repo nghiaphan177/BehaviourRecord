@@ -84,10 +84,10 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IIndividualAPIClient, IndividualAPIClient>();
             services.AddTransient<IAssessmentAPIClient, AssessmentAPIClient>();
             services.AddTransient<IInterventionAPIClient, InterventionAPIClient>();
-            services.AddControllersWithViews();
             services.AddOptions();// Kích hoạt Options
             var mailsettings = Configuration.GetSection("EmailSettings");  // đọc config
             services.Configure<EmailSettings>(mailsettings);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

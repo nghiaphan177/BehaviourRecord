@@ -5,21 +5,19 @@ using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Services
 {
-    /// <summary>
-    /// Class AccountService Implement IAccountService. Design parttern repository.
-    /// WriterL DuyLH4
-    /// </summary>
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
@@ -29,7 +27,12 @@ namespace BehaviourManagementSystem_API.Services
         private readonly IJwtGenerator _jwtGenerator;
         private readonly IRoleService _roleService;
 
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context, IJwtGenerator jwtGenerator, IRoleService roleService, RoleManager<Role> roleManager)
+        public AccountService(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ApplicationDbContext context,
+            IJwtGenerator jwtGenerator,
+            IRoleService roleService,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -465,11 +468,6 @@ namespace BehaviourManagementSystem_API.Services
             try
             {
                 var acc = new AccountStratery();
-                if(request == null)
-                {
-                    acc.SetAccountStratery(new GetAllAccount(_context, _userManager, _roleService));
-                    return await acc.GetAccountStratery(request);
-                }
 
                 if(request.Id != null)
                 {
@@ -477,37 +475,126 @@ namespace BehaviourManagementSystem_API.Services
                     return await acc.GetAccountStratery(request);
                 }
 
-                if(request.RoleName != null)
+                else if(request.RoleName != null)
                 {
                     acc.SetAccountStratery(new GetAllAccountTeacher(_context, _userManager, _roleService));
                     return await acc.GetAccountStratery(request);
                 }
 
-                if(request.Active == true)
+                else if(request.Active == true)
                 {
                     acc.SetAccountStratery(new GetAllAccountActivity(_context, _userManager, _roleService));
                     return await acc.GetAccountStratery(request);
                 }
 
-                if(request.Active == false)
+                else if(request.Active == false)
                 {
                     acc.SetAccountStratery(new GetAllAcountNotActivity(_context, _userManager, _roleService));
                     return await acc.GetAccountStratery(request);
                 }
 
-                if(request.TeacherId != null)
+                else if(request.TeacherId != null)
                 {
                     acc.SetAccountStratery(new GetAllAccountStudentOfTeacher(_context, _userManager, _roleService));
                     return await acc.GetAccountStratery(request);
                 }
 
-                return new ResponseResultError<List<UserProfileRequest>>("Lỗi hệ thống");
+                else
+                {
+                    acc.SetAccountStratery(new GetAllAccount(_context, _userManager, _roleService));
+                    return await acc.GetAccountStratery(request);
+                }
             }
             catch(Exception ex)
             {
                 return new ResponseResultError<List<UserProfileRequest>>(ex.Message);
             }
         }
+
+        public async Task<ResponseResult<string>> GoogleSigin(string token)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(token);
+
+                var user = await _userManager.FindByEmailAsync(payload.Email);
+
+                var stamp = Guid.NewGuid();
+
+                if(user is null)
+                {
+                    var user_id = Guid.NewGuid();
+                    user = new User
+                    {
+                        Id = user_id,
+                        FirstName = payload.GivenName,
+                        LastName = payload.FamilyName,
+                        UserName = new MailAddress(payload.Email).User,
+                        NormalizedUserName = new MailAddress(payload.Email).User.ToUpper(),
+                        DisplayName = payload.Name,
+                        Email = payload.Email,
+                        EmailConfirmed = true,
+                        AvtName = payload.Picture,
+                        SecurityStamp = stamp.ToString(),
+                        ConcurrencyStamp = stamp.ToString().ToUpper(),
+                        Activity = false,
+                    };
+                    //var pass = GenegatorPass();
+                    var irs = await _userManager.CreateAsync(user);
+                    if(irs.Succeeded)
+                    {
+                        var role = await _roleManager.FindByNameAsync("teacher");
+                        var user_role = new IdentityUserRole<Guid>
+                        {
+                            UserId = user_id,
+                            RoleId = role.Id
+                        };
+                        await _context.UserRoles.AddAsync(user_role);
+                        if(await _context.SaveChangesAsync() > 0)
+                        {
+                            token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
+                            return new ResponseResultSuccess<string>(token);
+                        }
+                    }
+                    return new ResponseResultError<string>("Lỗi thông tin đăng nhập.");
+                }
+                else
+                {
+                    token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
+                    return new ResponseResultSuccess<string>(token);
+                }
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<string>(ex.Message);
+            }
+        }
+
+        private string GenegatorPass()
+        {
+        Start:
+            var str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
+            var random = new Random();
+            var count = 9;
+            var pass = "";
+            while(count > 0)
+            {
+                pass = pass + str[random.Next(str.Length)];
+                count--;
+            }
+            if(pass.CheckPaswordRepuest())
+                return pass;
+            goto Start;
+        }
+
+        public async Task<ResponseResult<string>> GetImg(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if(user == null)
+                return new ResponseResultError<string>("Thông tin truy cập không tồn tại");
+
+            return new ResponseResultSuccess<string>(user.AvtName);
+        }
     }
 }
-
