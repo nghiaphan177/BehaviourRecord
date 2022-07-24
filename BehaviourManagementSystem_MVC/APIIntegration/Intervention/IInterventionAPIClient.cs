@@ -12,5 +12,9 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Intervention
         Task<ResponseResult<List<InterventionRequest>>> GetAll(string ass_id);
         Task<ResponseResult<InterventionRequest>> Get(string id);
         Task<ResponseResult<InterventionRequest>> CreateProfile(InterventionRequest request);
+        Task<ResponseResult<List<InterventionRequest>>> Delete(string id);
+        Task<ResponseResult<InterventionRequest>> Update(InterventionRequest request);
+        Task<ResponseResult<InterventionRequest>> UpdateManage(InterventionRequest request);
+        Task<ResponseResult<InterventionRequest>> UpdatePrevent(InterventionRequest request);
     }
 }

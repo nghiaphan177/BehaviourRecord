@@ -80,15 +80,71 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <partial name="CreateProfile" />
+
+                        <form asp-action="CreateProfile" asp-controller="Intervention" method="post">
+                            <input hidden name="AssesetmentId" value="190a0735-a5df-41b5-bdc1-694f158d2322">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Ngày</label>
+                                <div class="col-md-10">
+                                    <input type="date" name="ProfileDate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div id="input-nhe" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="nhe" name="ProfileMildDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
+                                </div>
+                            </div>
+                            <div id="input-vua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="trungbinh" name="ProfileModerateDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
+                                </div>
+                            </div>
+                            <div id="input-kn" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="khacnghiet" name="ProfileExtremeDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" required id="tbphuchoi" name="ProfileRecoveryDesciption" placeholder="Nhấp vào để chọn" value="" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "recovery" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+                        </form>
                         <!-- form khác end -->
                     </div>
                     <!-- Tab Nâng Câp Hồ Sơ End-->
                     <!-- Tab Quản Lí Can Thiệp Start -->
                     <div class="tab-pane" id="quanlycanthiep">
                         <form action="#">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
+                            <div id="input-quanly-nhe" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-quanly-vua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-quanly-kn" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" placeholder="Nhập ..." />
                                 </div>
@@ -232,6 +288,6 @@
 </div>
 <!-- Can Thiệp End -->
 @section scripts {
-
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/js/CheckBoxMoInput.js"></script>
 }
