@@ -47,11 +47,12 @@
 @section scripts{
     <script>
         window.onload = function() {
-            var googleclientid = @ViewBag.GoogleClientId
-                google.accounts.id.initialize({
-                    client_id: `${googleclientid}`,
-                    callback: handlerCreadetial
-                });
+            var googleclientid = "@ViewBag.GoogleClientId";
+            console.log(googleclientid)
+            google.accounts.id.initialize({
+                client_id: `${googleclientid}`,
+                callback: handlerCreadetial
+            });
             google.accounts.id.renderButton(
                 document.getElementById("GoogleLogin"),
                 {}
