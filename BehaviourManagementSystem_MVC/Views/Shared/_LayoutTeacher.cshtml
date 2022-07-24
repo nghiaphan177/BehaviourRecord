@@ -70,32 +70,28 @@
                         </li>
 
                         <li class="submenu" id="menu-student">
-                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Học Sinh</span> <span class="menu-arrow"></span></a>
                             <ul class="stMenu">
-                                <li><a asp-controller="Student" asp-action="StudentList" class="submenu-stList">Student List</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAssessment" class="submenu-stList">Student Assement</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentDetail" class="submenu-stView">Student View</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAdd" class="submenu-stAdd">Student Add</a></li>
-                                <li><a href="edit-student.html">Student Edit</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentList" class="submenu-stList">Danh sách học sinh</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentAssessment" class="submenu-stList">Danh sách học sinh mắc lỗi</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentAdd" class="submenu-stAdd">Thêm Học Sinh</a></li>
                             </ul>
                         </li>
                         <li class="submenu" id="menu-teacher">
-                            <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Giáo Viên</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/Student/TeacherProfile">Teacher Profile</a></li>
-                                <li><a href="teacher-details.html">Teacher View</a></li>
-                                <li><a href="add-teacher.html">Teacher Add</a></li>
-                                <li><a href="/Student/TeacherProfileEdit">Teacher Edit</a></li>
+                                <li><a href="/Student/TeacherProfile">Hồ sơ</a></li>
+                                @*<li><a href="/Student/TeacherProfileEdit">Teacher Edit</a></li>*@
                             </ul>
                         </li>
 
                         <li class="submenu">
-                            <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-shield-alt"></i> <span> Đăng Kí/ Đăng nhập </span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/Account/Login">Login</a></li>
-                                <li><a href="/Home/Register">Register</a></li>
-                                <li><a href="forgot-password.html">Forgot Password</a></li>
-                                <li><a href="error-404.html">Error Page</a></li>
+                                <li><a href="/Account/Login">Đăng nhập</a></li>
+                                <li><a href="/Home/Register">Đăng kí</a></li>
+                                @*<li><a href="forgot-password.html">Forgot Password</a></li>
+                                <li><a href="error-404.html">Error Page</a></li>*@
                             </ul>
                         </li>
 

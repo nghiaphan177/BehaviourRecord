@@ -5,6 +5,7 @@ using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,21 +49,39 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(InterventionRequest request)
         {
+
+            //var response = await _IInterventionAPIClient.Update(request);
+            //if (response == null)
+            //{
+            //    return Content("alert('No data was found to create a CSV file!');", "application/javascript");
+            //}
+
+            //if (response.Success)
+            //{
+            //    return Content("alert('No data was found to create a CSV file!');", "application/javascript");
+            //}
+            //return Json(new { success = false });
             try
             {
                 var response = await _IInterventionAPIClient.Update(request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
-                    return RedirectToAction("Index", response.Result);
+                    TempData["MessageEdit"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { id = request.Id });
                 }
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
-            return RedirectToAction("Index");
+            return Json(new { success = false });
+
         }
 
         [HttpPost]
@@ -73,8 +92,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.UpdateManage(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
-                    return RedirectToAction("Index", response.Result);
+                    TempData["MessageEditManage"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { id = request.Id });
                 }
             }
             catch (Exception)
@@ -93,8 +112,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.UpdatePrevent(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
-                    return RedirectToAction("Index", response.Result);
+                    TempData["MessageEditPrevent"] = "Sửa thành công!";
+                    return RedirectToAction("StudentList", "Student");
                 }
             }
             catch (Exception)

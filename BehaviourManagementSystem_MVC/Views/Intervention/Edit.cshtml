@@ -105,7 +105,7 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <form action="/Intervention/Edit" method="post">
+                        <form id="EditProfileForm" action="/Intervention/Edit" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
@@ -117,31 +117,31 @@
                                     <input type="date" autocomplete="off" value="@s" name="ProfileDate" class="form-control" />
                                 </div>
                             </div>
-                                <div id="input-nhe-sua" class="form-group row">
-                                    <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
-                                    <div class="col-md-10">
-                                        <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                        @await Component.InvokeAsync("DropDown", new { name = "mild" })
-                                    </div>
+                            <div id="input-nhe-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
                                 </div>
-                            
-                                <div id="input-vua-sua" class="form-group row">
-                                    <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
-                                    <div class="col-md-10">
-                                        <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                        @await Component.InvokeAsync("DropDown", new { name = "moderate" })
-                                    </div>
+                            </div>
+
+                            <div id="input-vua-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
                                 </div>
-                            
-                            
-                                <div id="input-kn-sua" class="form-group row">
-                                    <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
-                                    <div class="col-md-10">
-                                        <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                        @await Component.InvokeAsync("DropDown", new { name = "extreme" })
-                                    </div>
+                            </div>
+
+
+                            <div id="input-kn-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
                                 </div>
-                            
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
                                 <div class="col-md-10">
@@ -151,7 +151,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                     <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
@@ -238,9 +238,48 @@
         </div>
     </div>
 </div>
+@if (TempData["MessageEdit"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            swal(
+                {
+                    title: 'Đã sữa thành công!',
+                    type: 'success',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    timer: 3000
+                }
+            ),
+                $('.nav a[href="#quanlycanthiep"]').tab('show');
+        };
+    </script>
+}
+
+@if (TempData["MessageEditManage"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            swal(
+                {
+                    title: 'Đã sữa thành công!',
+                    type: 'success',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    timer: 3000
+                }
+            ),
+                $('.nav a[href="#nganchantaipham"]').tab('show');
+        };
+    </script>
+}
 <!-- Can Thiệp End -->
 @section scripts {
-
     <script src="~/js/CheckBoxMoInput.js"></script>
+
 }
 
