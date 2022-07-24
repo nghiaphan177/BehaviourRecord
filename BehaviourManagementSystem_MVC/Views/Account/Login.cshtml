@@ -30,10 +30,6 @@
         </div>
         <div class="social-login">
             <span>Đăng nhập bằng</span>
-            @*<a href="#" class="facebook">
-            <i class="fab fa-facebook-f"></i>
-            </a>
-            *@
             <button id="GoogleLogin" type="button" style="border:0px solid; background-color:transparent;">
             </button>
         </div>
@@ -51,10 +47,11 @@
 @section scripts{
     <script>
         window.onload = function() {
-            google.accounts.id.initialize({
-                client_id: "329267521698-5an9ssrg87eh27kaahjmobekc7hc39qk.apps.googleusercontent.com",
-                callback: handlerCreadetial
-            });
+            var googleclientid = @ViewBag.GoogleClientId
+                google.accounts.id.initialize({
+                    client_id: `${googleclientid}`,
+                    callback: handlerCreadetial
+                });
             google.accounts.id.renderButton(
                 document.getElementById("GoogleLogin"),
                 {}

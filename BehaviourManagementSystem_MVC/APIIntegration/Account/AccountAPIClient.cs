@@ -139,13 +139,26 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 		}
 
         public async Task<ResponseResult<string>> CheckImgUrl(string result)
+		{
+			throw new NotImplementedException();
+			//var client = _httpClientFactory.CreateClient();
+			//var res = await client.GetAsync(result);
+
+			//if(res.IsSuccessStatusCode)
+			//	return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await res.Content.ReadAsStringAsync());
+			//return JsonConvert.DeserializeObject<ResponseResultError<string>>(await res.Content.ReadAsStringAsync());
+		}
+
+		public async Task<ResponseResult<string>> GetGoogleClientId()
         {
 			var client = _httpClientFactory.CreateClient();
-			var res = await client.GetAsync(result);
+			client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+			var res = await client.GetAsync($"/api/Account/GetGoogleClientId");
 
 			if(res.IsSuccessStatusCode)
 				return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await res.Content.ReadAsStringAsync());
 			return JsonConvert.DeserializeObject<ResponseResultError<string>>(await res.Content.ReadAsStringAsync());
 		}
-	}
+    }
 }
