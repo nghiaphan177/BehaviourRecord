@@ -4,6 +4,7 @@ using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
@@ -15,10 +16,21 @@ namespace BehaviourManagementSystem_API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IConfiguration configuration)
         {
             _accountService = accountService;
+            _configuration = configuration;
+        }
+
+        [HttpGet("GetGoogleClientId"), AllowAnonymous]
+        public IActionResult GetGoogleClientId()
+        {
+            var res = _configuration["Google:ClientId"];
+            if(string.IsNullOrEmpty(res))
+                return BadRequest(new ResponseResultError<string>("Kết quá không tìm thấy"));
+            return Ok(new ResponseResultSuccess<string>(res));
         }
 
         [HttpPost("Login"), AllowAnonymous]

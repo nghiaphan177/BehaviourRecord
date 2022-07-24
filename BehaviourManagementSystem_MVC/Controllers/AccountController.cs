@@ -35,6 +35,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
         public async Task<IActionResult> Login()
         {
             ViewBag.api = _configuration["BaseAddress"];
+
+            var res = await _accountAPIClient.GetGoogleClientId();
+
+            ViewBag.GoogleClientId = res.Result;
+
             await HttpContext.SignOutAsync(
                "Teacher");
             return View();
