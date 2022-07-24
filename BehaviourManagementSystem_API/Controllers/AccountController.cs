@@ -1,8 +1,11 @@
 ﻿using BehaviourManagementSystem_API.Services;
 using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
+using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
@@ -13,10 +16,21 @@ namespace BehaviourManagementSystem_API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IConfiguration configuration)
         {
             _accountService = accountService;
+            _configuration = configuration;
+        }
+
+        [HttpGet("GetGoogleClientId"), AllowAnonymous]
+        public IActionResult GetGoogleClientId()
+        {
+            var res = _configuration["Google:ClientId"];
+            if(string.IsNullOrEmpty(res))
+                return BadRequest(new ResponseResultError<string>("Kết quá không tìm thấy"));
+            return Ok(new ResponseResultSuccess<string>(res));
         }
 
         [HttpPost("Login"), AllowAnonymous]
@@ -66,8 +80,8 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("ResenConfirmEmail"), AllowAnonymous]
-        public async Task<IActionResult> ResenConfirmEmail(string email)
+        [HttpGet("ResendConfirmEmail"), AllowAnonymous]
+        public async Task<IActionResult> ResendConfirmEmail(string email)
         {
             if(email.CheckRequest())
                 return BadRequest(email);
@@ -141,7 +155,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpGet("GetUser")]
-        public async Task<IActionResult> GetUser([FromBody] UserProfileRequest request)
+        public async Task<IActionResult> GetUser([FromQuery] UserProfileRequest request)
         {
             var response = await _accountService.GetAccount(request);
 
@@ -221,6 +235,36 @@ namespace BehaviourManagementSystem_API.Controllers
             if(!response.Success)
                 return BadRequest(response);
             return Ok(response);
+        }
+
+        [HttpPost("GoogleSigin")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleSigin(string token)
+        {
+            if(token.CheckRequest())
+                return BadRequest("Mã đăng nhập rỗng");
+
+            var result = await _accountService.GoogleSigin(token);
+
+            if(!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetImg")]
+        public async Task<IActionResult> GetImg([FromQuery] string id)
+        {
+            Guid guid;
+            if(!Guid.TryParse(id, out guid))
+                return BadRequest("Không thể truy xuất thông tin");
+
+            var res = await _accountService.GetImg(id);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
         }
     }
 }

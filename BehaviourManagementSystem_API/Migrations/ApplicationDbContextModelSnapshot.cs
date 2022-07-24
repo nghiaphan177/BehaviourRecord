@@ -435,22 +435,22 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("08374821-1469-496f-a61f-84473f46f17c"),
-                            ConcurrencyStamp = "A25F041D-C057-414B-BF78-7DC51A6BC980",
+                            Id = new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe"),
+                            ConcurrencyStamp = "C2423512-6D89-4418-9239-881E1B89BD34",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("944b469a-0886-4437-9204-7ff881481ac9"),
-                            ConcurrencyStamp = "E1F4D1C5-BC89-4751-A3A5-689114880990",
+                            Id = new Guid("85de9e5d-71fe-4e7b-8103-d7b28de785ce"),
+                            ConcurrencyStamp = "B197C32A-427D-4921-B153-5C713F97C27A",
                             Name = "teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = new Guid("db25f2ee-7f68-49d7-934d-d7e00c23a7b8"),
-                            ConcurrencyStamp = "20FE991B-9C3C-4048-B6E1-3BB5AA4240AF",
+                            Id = new Guid("292b910c-6f5a-4dea-8280-28ec1f043b58"),
+                            ConcurrencyStamp = "9D096D0A-3436-41B9-867F-051B22A9A9CC",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -506,6 +506,9 @@ namespace BehaviourManagementSystem_API.Migrations
 
                     b.Property<DateTime?>("DOB")
                         .HasColumnType("date");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -574,12 +577,12 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("190a0735-a5df-41b5-bdc1-694f158d2316"),
+                            Id = new Guid("30183400-0241-42e9-ae76-f0602e927713"),
                             AccessFailedCount = 0,
                             Activity = true,
                             ActivityDate = new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AvtName = "default_avt.png",
-                            ConcurrencyStamp = "8E1D9137-17CD-4EF5-9D9C-A72B7BC03DA0",
+                            ConcurrencyStamp = "6C2D3C95-3F85-4A1C-8A79-47EBF1FE8045",
                             DOB = new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lhduy3011@gmail.com",
                             EmailConfirmed = true,
@@ -589,10 +592,10 @@ namespace BehaviourManagementSystem_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LHDUY3011@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJva7mrM7v7T+SSJjOIhn8wHSpy1MPVwXit0iVqTV+B4NhexfqhrhTj6i/3q0lIfAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDDV/M/vT+BuEN4tiJ+AvnZpquSUJypDF+ePkyFqTiSpsXqp0XSijqYyTxXv33qQvw==",
                             PhoneNumber = "0334102197",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "8e1d9137-17cd-4ef5-9d9c-a72b7bc03da0",
+                            SecurityStamp = "6c2d3c95-3f85-4a1c-8a79-47ebf1fe8045",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -682,8 +685,8 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("190a0735-a5df-41b5-bdc1-694f158d2316"),
-                            RoleId = new Guid("08374821-1469-496f-a61f-84473f46f17c")
+                            UserId = new Guid("30183400-0241-42e9-ae76-f0602e927713"),
+                            RoleId = new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe")
                         });
                 });
 

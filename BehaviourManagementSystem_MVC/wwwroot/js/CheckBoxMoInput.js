@@ -1,35 +1,64 @@
 ﻿$(function () {
     $('#input-nhe').hide();
-
+    $('#input-ql-nhe').hide();
     //show it when the checkbox is clicked
     $('input[id="check-nhe"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-nhe').fadeIn();
+            $('#input-ql-nhe').fadeIn();
         } else {
             $('#input-nhe').hide();
+            $('#input-ql-nhe').hide();
         }
     });
 
+    if ($('#check-nhe').prop('checked')) {
+        $('#input-nhe').fadeIn();
+        $('#nhe-sua').prop('required', true);
+        $('#input-ql-nhe').fadeIn();
+    } else {
+        $('#input-nhe').hide();
+        $('#nhe').val('');
+        $('#nhe').prop('required', null);
+        $('#ql-nhe').val('');
+        $('#input-ql-nhe').hide();
+    }
 
     $('#input-vua').hide();
-
+    $('#input-ql-vua').hide();
     //show it when the checkbox is clicked
     $('input[id="check-vua"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-vua').fadeIn();
+            $('#input-ql-vua').fadeIn();
         } else {
             $('#input-vua').hide();
+            $('#input-ql-vua').hide();
         }
     });
 
-    $('#input-kn').hide();
+    if ($('#check-vua').prop('checked')) {
+        $('#input-vua').fadeIn();
+        $('#vua').prop('required', true);
+        $('#input-ql-vua').fadeIn();
+    } else {
+        $('#input-vua').hide();
+        $('#vua').val('');
+        $('#vua').prop('required', null);
+        $('#ql-vua').val('');
+        $('#input-ql-vua').hide();
+    }
 
+    $('#input-kn').hide();
+    $('#input-ql-kn').hide();
     //show it when the checkbox is clicked
     $('input[id="check-kn"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-kn').fadeIn();
+            $('#input-ql-kn').fadeIn();
         } else {
             $('#input-kn').hide();
+            $('#input-ql-kn').hide();
         }
     });
 

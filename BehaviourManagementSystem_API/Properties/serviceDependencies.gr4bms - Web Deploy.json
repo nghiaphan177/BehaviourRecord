@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "ignored": "true",
+      "type": "identityapp"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/os-azure-server/databases/db_BehaviourManagementSystem",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:AzureConnection",
+      "dynamicId": null
+    },
+    "mssql2": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:MSSQLConnection"
+    }
+  }
+}

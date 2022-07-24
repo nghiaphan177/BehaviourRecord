@@ -19,5 +19,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 		Task<ResponseResult<string>> ResetPassword(ResetPasswordRequest repuest);
 
 		Task<ResponseResult<bool>> GetEmailConfirmed(string email);
-	}
+        Task<ResponseResult<string>> GetImg(string userId);
+        Task<ResponseResult<string>> CheckImgUrl(string result);
+        Task<ResponseResult<string>> GetGoogleClientId();
+    }
 }
