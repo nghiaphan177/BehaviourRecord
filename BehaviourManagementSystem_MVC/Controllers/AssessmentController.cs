@@ -39,15 +39,39 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             try
             {
-                //var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
-                //if (response == null)
-                //{
-                //    return Json(new { success = false });
-                //}
-                //if (response.Success)
-                //{
-                //    return Json(new { success = true });
-                //}
+                var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    ViewBag.AssId = response.Result.Id;
+                    return Json(new { success = true, assid = response.Result.Id });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateRecordBehaviour(string assId, AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.CreateRecordBehaviour(ViewBag.AssId, request.AnalyzeBehaviour);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    return Json(new { success = true });
+                }
 
             }
             catch (Exception)
@@ -57,21 +81,20 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return Json(new { success = false });
         }
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(string AssessId)
         {
             try
             {
-                //var response = await _assessmentAPIClient.Delete(AssessId);
-                //if (response == null)
-                //{
-                //    return Json(new { success = false });
-                //}
-                //if (response.Success)
-                //{
-                //    return Json(new { success = true });
-                //}
-
+                var response = await _assessmentAPIClient.Delete(AssessId);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success)
+                {
+                    return Json(new { success = true });
+                }
             }
             catch (Exception)
             {

@@ -1,4 +1,4 @@
-using BehaviourManagementSystem_MVC.APIIntegration;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.Individual;
@@ -84,6 +84,9 @@ namespace BehaviourManagementSystem_MVC
             services.AddTransient<IIndividualAPIClient, IndividualAPIClient>();
             services.AddTransient<IAssessmentAPIClient, AssessmentAPIClient>();
             services.AddTransient<IInterventionAPIClient, InterventionAPIClient>();
+            services.AddOptions();// Kích hoạt Options
+            var mailsettings = Configuration.GetSection("EmailSettings");  // đọc config
+            services.Configure<EmailSettings>(mailsettings);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 

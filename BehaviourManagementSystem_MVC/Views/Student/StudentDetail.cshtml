@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
 @section styles {
-    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
 <div class="page-header">
     <div class="row">
@@ -138,7 +138,7 @@
                                                 {
                                                     @foreach (AssessmentRequest assessment in Model.Assessment)
                                                     {
-                                                        <tr class="text-center">
+                                                        <tr id="assess-@assessment.Id" class="text-center">
                                                             <td>@assessment.RecordDate?.ToShortDateString()</td>
                                                             <td>@assessment.RecordStart</td>
                                                             <td>
@@ -181,11 +181,10 @@
                                                             <td>Xin Chào</td>
                                                             <td class="text-right">
                                                                 <div class="actions">
-                                                                    <a href="edit-room.html"
-                                                                       class="btn btn-sm bg-success-light mr-2">
+                                                                    <a href="#" class="btn btn-sm bg-success-light mr-2">
                                                                         <i class="fas fa-pen"></i>
                                                                     </a>
-                                                                    <button onclick="deleteAssessment(id)" class="btn btn-sm bg-danger-light">
+                                                                    <button onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
                                                                         <i class="fas fa-trash"></i>
                                                                     </button>
                                                                 </div>
@@ -196,7 +195,7 @@
                                                 @if (Model.Assessment == null)
                                                 { }
 
-                                                </tbody>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -212,7 +211,7 @@
                         <div class="col-sm-12">
                             <div class="card card-table">
                                 <div class="card-body">
-                                    @await Component.InvokeAsync("InterventionAll")
+                                    @*@await Component.InvokeAsync("InterventionAll")*@
                                 </div>
                             </div>
                         </div>
@@ -226,40 +225,44 @@
 <!-- Đánh giá End -->
 
 <footer>
-    <p>Copyright © 2020 Dreamguys.</p>
 </footer>
 @section scripts {
-    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
-    <script>
-        //Warning Message
-        function deleteAssessment(id) {
-            swal({
-                title: 'Bạn đã chắc chắn?',
-                text: "Xóa hồ sơ đánh giá này này!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger m-l-10',
-                confirmButtonText: 'Yes!'
-            }).then(function () {
-                $.ajax({
-                    url: "Assessment/delete",
-                    data: { "id": id },
-                    type: "DELETE",
-                    success: function (result) {
-                        if (result.status == true) {
-                            swal(
-                                'Đã Xóa Thành Công!',
-                                '',
-                                'success'
-                            ),
-                                $("#mild-" + id).remove();
+<script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script>
+            //Warning Message
+            function deleteAssessment(id) {
+                swal({
+                    title: 'Bạn đã chắc chắn?',
+                    text: "Xóa hồ sơ đánh giá này này!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    confirmButtonText: 'Yes!'
+                }).then(function () {
+                    $.ajax({
+                        url: "/Assessment/Delete?AssessId="+id,
+                        type: "POST",
+                        success: function (result) {
+                            if (result.success == true) {
+                                swal(
+                                    'Đã Xóa Thành Công!',
+                                    '',
+                                    'success'
+                                ),
+                                    $("#assess-" + id).remove();
+                            }
+                            else{
+                                Swal.fire({
+      icon: 'error',
+      text: 'Xóa không thành công',
+    })
+                            }
                         }
-                    }
+                    })
                 })
-            })
-        }
-    </script>
+            }
+</script>
 
 }
 

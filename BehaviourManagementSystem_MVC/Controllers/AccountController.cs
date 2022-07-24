@@ -319,10 +319,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var response = await _accountAPIClient.ResetPassword(request);
 
-            if(!response.Success)
-                return View(); // reset pass không thành không
-            return View(); // reset thành công
-        }
+			if(!response.Success)
+				return View(); // reset pass không thành không
+			return RedirectToAction("ChangePassSuccess"); // reset thành công
+		}
+		[HttpGet]
+		public IActionResult ChangePassSuccess()
+		{
+			return View();
+		}
 
         private ClaimsPrincipal ValidateToken(string token)
         {

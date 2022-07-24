@@ -1,0 +1,285 @@
+﻿@model InterventionRequest
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Students</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Học Sinh</li>
+                <li class="breadcrumb-item active">Can Thiệp</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!-- Can Thiệp Start -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title text-center text-info text-uppercase">Chỉnh Sửa Can Thiệp Hành Vi</h5>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="#giaidoan" data-toggle="tab">Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Tab Giai Đoạn Start -->
+                    <div class="tab-pane show active" id="giaidoan">
+                        <form action="#">
+                            <div class="form-group row text-center">
+                                <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
+                                <div class="col-md-12 mx-auto">
+                                    <div class="checkbox">
+                                        @if (Model.ProfileMildDesciption != null)
+                                        {
+                                            <label>
+                                                <input type="checkbox" checked id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label>
+                                                <input type="checkbox" id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
+                                            </label>
+                                        }
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            @if (Model.ProfileModerateDesciption != null)
+                                            {
+                                                <input type="checkbox" checked id="check-vua-sua" name="checkbox" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="check-vua-sua" name="checkbox" />
+                                            }
+                                            Can Thiệp Vừa
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label style="margin-left: 62px;">
+                                            @if (Model.ProfileExtremeDesciption != null)
+                                            {
+                                                <input type="checkbox" checked id="check-kn-sua" name="checkbox" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="check-kn-sua" name="checkbox" />
+                                            }
+                                            Can Thiệp Khắc Nghiệt
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Tab Giai Đoạn End -->
+                    <!-- Tab Nâng Câp Hồ Sơ Start-->
+                    <div class="tab-pane" id="hoso">
+                        <!-- form nhẹ start -->
+                        <form id="EditProfileForm" action="/Intervention/Edit" method="post">
+                            <input hidden name="Id" value="@Model.Id">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Ngày</label>
+                                <div class="col-md-10">
+                                    @{
+                                        DateTime d = Convert.ToDateTime(Model.ProfileDate);
+                                        string s = d.ToString("yyyy-MM-dd");
+                                    }
+                                    <input type="date" autocomplete="off" value="@s" name="ProfileDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div id="input-nhe-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
+                                </div>
+                            </div>
+
+                            <div id="input-vua-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
+                                </div>
+                            </div>
+
+
+                            <div id="input-kn-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
+                                <div class="col-md-10">
+                                    <input type="text" required id="tbphuchoi" name="ProfileRecoveryDesciption" value="@Model.ProfileRecoveryDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    @await Component.InvokeAsync("DropDown", new { name = "recovery" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- form khác end -->
+                    </div>
+                    <!-- Tab Nâng Câp Hồ Sơ End-->
+                    <!-- Tab Quản Lí Can Thiệp Start -->
+                    <div class="tab-pane" id="quanlycanthiep">
+                        <form action="/Intervention/EditManage" method="post">
+                            <input hidden name="Id" value="@Model.Id">
+                            <div id="input-ql-nhe-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" value="@Model.ManageMild" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-ql-vua-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" value="@Model.ManageModerate" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-ql-kn-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Tab Quản Lí Can Thiệp End -->
+                    <!-- Tab ngăn chặn tái phạm Start -->
+                    <div class="tab-pane" id="nganchantaipham">
+                        <form action="/Intervention/EditPrevent" method="post">
+                            <input hidden name="Id" value="@Model.Id">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Tính Cách</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" autocomplete="off" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Tab ngăn chặn tái phạm End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["MessageEdit"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            swal(
+                {
+                    title: 'Đã sữa thành công!',
+                    type: 'success',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    timer: 3000
+                }
+            ),
+                $('.nav a[href="#quanlycanthiep"]').tab('show');
+        };
+    </script>
+}
+
+@if (TempData["MessageEditManage"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            swal(
+                {
+                    title: 'Đã sữa thành công!',
+                    type: 'success',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger m-l-10',
+                    timer: 3000
+                }
+            ),
+                $('.nav a[href="#nganchantaipham"]').tab('show');
+        };
+    </script>
+}
+<!-- Can Thiệp End -->
+@section scripts {
+    <script src="~/js/CheckBoxMoInput.js"></script>
+
+}
+

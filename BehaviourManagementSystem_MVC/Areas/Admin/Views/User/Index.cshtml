@@ -21,8 +21,14 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <div class=" m-b-0">
+                    <a type="button" href="/Admin/User/Create" class="btn btn-primary waves-effect waves-light">
+                        Thêm tài khoản
+                    </a>
+                </div>
+            </div>
             <div class="card-body">
-
                 @if (Model != null)
                 {
                     <div class="table-rep-plugin">
@@ -53,7 +59,7 @@
                                             <td>
                                                 <div class="button-items">
                                                     <a href=@((Model[i].RoleName=="TEACHER"?"/admin/User/Detail/":"/admin/Student/Details/")+Model[i].Id) type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
-                                                    
+
                                                 </div>
                                             </td>
                                         </tr>

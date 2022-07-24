@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/assets/plugins/datatables/datatables.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/assets/plugins/simple-calendar/simple-calendar.css">
+    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     @RenderSection("styles", required: false)
 </head>
 <body>
@@ -80,32 +81,28 @@
                         </li>
 
                         <li class="submenu" id="menu-student">
-                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Học Sinh</span> <span class="menu-arrow"></span></a>
                             <ul class="stMenu">
-                                <li><a asp-controller="Student" asp-action="StudentList" class="submenu-stList">Student List</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAssessment" class="submenu-stList">Student Assement</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentDetail" class="submenu-stView">Student View</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAdd" class="submenu-stAdd">Student Add</a></li>
-                                <li><a href="edit-student.html">Student Edit</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentList" class="submenu-stList">Danh sách học sinh</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentAssessment" class="submenu-stList">Danh sách học sinh mắc lỗi</a></li>
+                                <li><a asp-controller="Student" asp-action="StudentAdd" class="submenu-stAdd">Thêm Học Sinh</a></li>
                             </ul>
                         </li>
                         <li class="submenu" id="menu-teacher">
-                            <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Giáo Viên</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/Student/TeacherProfile">Teacher Profile</a></li>
-                                <li><a href="teacher-details.html">Teacher View</a></li>
-                                <li><a href="add-teacher.html">Teacher Add</a></li>
-                                <li><a href="/Student/TeacherProfileEdit">Teacher Edit</a></li>
+                                <li><a href="/Student/TeacherProfile">Hồ sơ</a></li>
+                                @*<li><a href="/Student/TeacherProfileEdit">Teacher Edit</a></li>*@
                             </ul>
                         </li>
 
                         <li class="submenu">
-                            <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-shield-alt"></i> <span> Đăng Kí/ Đăng nhập </span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/Account/Login">Login</a></li>
-                                <li><a href="/Home/Register">Register</a></li>
-                                <li><a href="forgot-password.html">Forgot Password</a></li>
-                                <li><a href="error-404.html">Error Page</a></li>
+                                <li><a href="/Account/Login">Đăng nhập</a></li>
+                                <li><a href="/Home/Register">Đăng kí</a></li>
+                                @*<li><a href="forgot-password.html">Forgot Password</a></li>
+                                <li><a href="error-404.html">Error Page</a></li>*@
                             </ul>
                         </li>
 
@@ -121,6 +118,18 @@
             </footer>
         </div>
     </div>
+    @if (TempData["MessageCreate"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal(
+                    '@TempData["MessageCreate"]',
+                     '',
+                    'success'
+                );
+            };
+        </script>
+    }
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>
     <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -131,6 +140,7 @@
     <script src="~/js/DropDown.js"></script>
     <script src="~/js/ChuyenTabDanhGia.js"></script>
     <script src="~/assets/js/circle-progress.min.js"></script>
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/script.js"></script>
     @RenderSection("Scripts", false)
     <script type="text/javascript">
@@ -146,7 +156,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                                    // Add active class to the current button (highlight it)
+                // Add active class to the current button (highlight it)
 
     </script>
 </body>

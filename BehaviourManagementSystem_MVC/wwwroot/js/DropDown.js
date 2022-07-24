@@ -24,6 +24,7 @@ $('#multiselect-drop input').change(function () {
         return this.value;
     }).get().join(',');
     $('#nhe').val((s.length > 0 ? s : ""));
+    $('#nhe-sua').val((s.length > 0 ? s : ""));
 });
 
 $('#multiselect-drop-nphuchoi input').change(function () {
@@ -38,6 +39,8 @@ $('#multiselect-drop-tb input').change(function () {
         return this.value;
     }).get().join(',');
     $('#trungbinh').val((s.length > 0 ? s : ""));
+    $('#trungbinh-sua').val((s.length > 0 ? s : ""));
+
 });
 
 $('#multiselect-drop-tbphuchoi input').change(function () {
@@ -52,6 +55,8 @@ $('#multiselect-drop-kn input').change(function () {
         return this.value;
     }).get().join(',');
     $('#khacnghiet').val((s.length > 0 ? s : ""));
+    $('#khacnghiet-sua').val((s.length > 0 ? s : ""));
+
 });
 
 $('#multiselect-knphuchoi input').change(function () {
@@ -60,3 +65,6 @@ $('#multiselect-knphuchoi input').change(function () {
     }).get().join(',');
     $('#knphuchoi').val((s.length > 0 ? s : ""));
 });
+
+/// Edit
+

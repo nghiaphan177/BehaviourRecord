@@ -1,0 +1,227 @@
+﻿@model UserProfileRequest
+@{
+    ViewData["Title"] = "Thêm tài khoản";
+    //var base64 = Convert.ToBase64String(Model.AvtName);
+    //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+@section styles {
+
+<link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+}
+<style>
+    .form-check {
+        position: relative;
+        text-align: left;
+    }
+
+    .form-check-input[type=radio] {
+        border-radius: 50%;
+    }
+
+    .form-check .form-check-input {
+        float: left;
+        margin-left: -1.5em;
+    }
+
+    .form-check, .form-check-input, .form-check-label {
+        cursor: pointer;
+        margin-bottom: 0;
+    }
+
+    .form-check {
+        display: block;
+        min-height: 1.21875rem;
+        padding-left: 1.5em;
+        margin-bottom: 0;
+    }
+
+    .form-check-input:checked {
+        background-color: #7a6fbe;
+        border-color: #7a6fbe;
+    }
+
+    .form-check-input[type=radio] {
+        border-radius: 50%;
+    }
+
+    .form-check-input:checked[type=radio] {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+    }
+
+    .form-check-input {
+        width: 1em;
+        height: 1em;
+        margin-top: 0.25em;
+        vertical-align: top;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px solid #adb5bd;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-print-color-adjust: exact;
+        -webkit-transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">@ViewData["Title"]</h4>
+        </div>
+    </div>
+</div>
+<div class="card m-b-20">
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="User" asp-area="Admin" method="post">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <div class="media m-b-30">
+                            <img class="img-fluid" src="/images/users/user-4.jpg" alt="Generic placeholder image" style="max-width:70%;">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="m-b-30 m-t-50">
+                            <input type="file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <label class="col-sm-3 mt-2">Tên Email</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.Email" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 mt-2">Tên đăng nhập</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.Email" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3  col-form-label">Họ</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.FirstName" type="text" class="form-control" required />
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3  col-form-label">Tên</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.LastName" type="text" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div>
+
+                            <div class="form-check mb-3">
+                                <input value="Nam" class="form-check-input" type="radio" checked name="Gender" id="formRadios1">
+                                <label class="form-check-label" for="formRadios1">
+                                    Nam
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="Nữ" class="form-check-input" type="radio" name="Gender" id="formRadios2">
+                                <label class="form-check-label" for="formRadios2">
+                                    Nữ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.DOB" class="form-control" type="date" id="example-date-input">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.PhoneNumber" data-parsley-type="number" data-parsley-minlength="10" type="text"
+                                   class="form-control" required />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 mt-2">Vai trò</label>
+                        <div class="col-sm-6 mt-2">
+                            <select asp-for="@Model.RoleName"  class="form-control">
+                                <option value="TEACHER">Giáo viên</option>
+                                <option value="STUDENT">Học sinh</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <div>
+                            <textarea asp-for="@Model.Address" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-0 pull-right">
+                        <div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                Thêm tài khoản
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts{
+<script src="~/plugins/parsleyjs/parsley.min.js"></script>
+<script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
+<script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script>
+    ////Warning Message
+    //function updateUser() {
+    //    swal({
+    //        title: 'Bạn đã chắc chắn?',
+    //        text: "Cập nhật người dùng này!",
+    //        type: 'warning',
+    //        showCancelButton: true,
+    //        confirmButtonClass: 'btn btn-success',
+    //        cancelButtonClass: 'btn btn-danger m-l-10',
+    //        confirmButtonText: 'Xác nhận !'
+    //    }).then(function () {
+    //        $.ajax({
+    //            url: "ExtremeIntervention/delete",
+    //            data: { "id": id },
+    //            type: "DELETE",
+    //            success: function (result) {
+    //                if (result.status == true) {
+    //                    swal(
+    //                        'Đã Xóa Thành Công!',
+    //                        '',
+    //                        'success'
+    //                    ),
+    //                        $("#extreme-" + id).remove();
+    //                }
+    //            }
+    //        })
+    //    })
+    //}
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').parsley();
+    });
+</script>
+}
+
