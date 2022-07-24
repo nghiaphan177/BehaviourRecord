@@ -30,6 +30,23 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Detail(string assid)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.Get(assid);
+                if(response == null)
+                {
+                    return NotFound();
+                }
+                return View(response.Result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public IActionResult Create(string id)
         {
             return View(new AssessmentRequest() { IndividualId = id });
@@ -102,21 +119,6 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 throw;
             }
             return Json(new { success = false });
-        }
-        public async Task<PartialViewResult> DropdownAntecedent()
-        {
-            dynamic mymodel = new ExpandoObject();
-            var responsePer = await _iAntecedentPerceivedAPIClient.GetAll();
-            var responseEn = await _iAntecedentEnvironmentalAPIClient.GetAll();
-            var responseAc = await _iAntecedentActivityAPIClient.GetAll();
-            if (responsePer.Success == true && responseEn.Success == true && responseAc.Success == true)
-            {
-                mymodel.Perceived = responsePer.Result;
-                mymodel.Environmental = responseEn.Result;
-                mymodel.Activity = responseAc.Result;
-                return PartialView("Antecedent", mymodel);
-            }
-            return PartialView();
         }
     }
 }
