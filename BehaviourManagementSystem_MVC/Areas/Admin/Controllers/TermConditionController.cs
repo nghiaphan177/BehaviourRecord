@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     public class TermConditionController : Controller
     {

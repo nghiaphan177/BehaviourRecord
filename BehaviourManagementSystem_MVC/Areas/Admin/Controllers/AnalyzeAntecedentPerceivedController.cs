@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     public class AnalyzeAntecedentPerceivedController : Controller

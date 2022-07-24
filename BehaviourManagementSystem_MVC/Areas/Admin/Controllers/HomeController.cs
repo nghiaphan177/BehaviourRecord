@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "Admin",Policy ="AdminOnly")]

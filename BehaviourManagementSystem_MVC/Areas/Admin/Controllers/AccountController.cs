@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     public class AccountController : Controller

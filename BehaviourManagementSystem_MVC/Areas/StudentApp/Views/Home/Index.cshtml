@@ -1,4 +1,5 @@
-﻿@{
+﻿@Model UserProfileRequest
+@{
     ViewData["Title"] = "StudentDetail";
 }
 
@@ -16,38 +17,34 @@
 <div class="row">
     <div class="col-md-12">
         <div class="about-info">
-            <h4>About Me</h4>
+            <h4>Hồ sơ học sinh</h4>
             <div class="media mt-3">
                 <img src="~/assets/img/user.jpg" class="mr-3" alt="...">
                 <div class="media-body">
                     <ul>
                         <li>
                             <span class="title-span">Tên đầy đủ : </span>
-                            <span class="info-span">Daisy Parks</span>
+                            <span class="info-span">@(Model.FirstName) @(Model.LastName)</span>
                         </li>
                         <li>
                             <span class="title-span">Địa chỉ : </span>
-                            <span class="info-span">Quận 9</span>
+                            <span class="info-span">@(Model.Address)</span>
                         </li>
                         <li>
                             <span class="title-span">Số điện thoại : </span>
-                            <span class="info-span">+84 89657 48512</span>
+                            <span class="info-span">@(Model.PhoneNumber)</span>
                         </li>
                         <li>
                             <span class="title-span">Email : </span>
-                            <span class="info-span">
-                                <a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection"
-                                   class="__cf_email__"
-                                   data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a>
-                            </span>
+                            <span class="info-span">@(Model.Email)</span>
                         </li>
                         <li>
                             <span class="title-span">Giới tính : </span>
-                            <span class="info-span">Male</span>
+                            <span class="info-span">@(Model.Gender)</span>
                         </li>
                         <li>
                             <span class="title-span">Ngày sinh : </span>
-                            <span class="info-span">22 Apr 1995</span>
+                            <span class="info-span">@(Model.DOB)</span>
                         </li>
                     </ul>
                 </div>
@@ -146,16 +143,16 @@
                                                     </td>
                                                     <td>Xin Chào</td>
                                                     @*<td class="text-right">
-                                                        <div class="actions">
-                                                            <a href="edit-room.html"
-                                                               class="btn btn-sm bg-success-light mr-2">
-                                                                <i class="fas fa-pen"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>*@
+                                                            <div class="actions">
+                                                                <a href="edit-room.html"
+                                                                   class="btn btn-sm bg-success-light mr-2">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
+                                                                <a href="#" class="btn btn-sm bg-danger-light">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>*@
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -224,6 +221,3 @@
     </div>
 </div>
 <!-- Đánh giá End -->
-
-
-
