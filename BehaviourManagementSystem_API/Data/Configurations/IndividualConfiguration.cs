@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BehaviourManagementSystem_API.Data.Configurations
 {
-    /// <summary>
-    /// Writer: DuyLh4
-    /// </summary>
     public class IndividualConfiguration : IEntityTypeConfiguration<Individual>
     {
         public void Configure(EntityTypeBuilder<Individual> builder)

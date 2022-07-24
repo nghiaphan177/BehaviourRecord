@@ -55,7 +55,18 @@
                         </div>
                         <a class="dropdown-item" href="profile.html">My Profile</a>
                         <a class="dropdown-item" href="inbox.html">Inbox</a>
-                        <a class="dropdown-item" href="/Account/Logout">Logout</a>
+
+                        @{
+                            var user_token = ViewBag.Token;
+                            if(string.IsNullOrEmpty(user_token))
+                            {
+                                <a class="dropdown-item" href="/Account/Logout">Login</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" href="/Account/Logout">Logout</a>
+                            }
+                        }
                     </div>
                 </li>
             </ul>
@@ -123,7 +134,7 @@
     <script src="~/assets/js/script.js"></script>
     @RenderSection("Scripts", false)
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
 
 
             //$('.stMenu li').click(function (e) {
@@ -135,7 +146,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                // Add active class to the current button (highlight it)
+                                    // Add active class to the current button (highlight it)
 
     </script>
 </body>

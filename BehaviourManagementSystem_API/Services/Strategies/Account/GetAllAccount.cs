@@ -60,8 +60,6 @@ namespace BehaviourManagementSystem_API.Services.Strategies.Account
             {
                 return new ResponseResultError<List<UserProfileRequest>>(ex.Message);
             }
-
-
         }
     }
 }
