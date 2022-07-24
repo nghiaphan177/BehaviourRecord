@@ -90,5 +90,22 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Intervention
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<InterventionRequest>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<InterventionRequest>> (await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseResult<InterventionRequest>> UpdateManage(InterventionRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"api/Intervention/update-manage?int_id={request.Id}&m_mild={request.ManageMild}&m_moder={request.ManageModerate}&m_extre={request.ManageExtreme}&m_reco={request.ManageRecovery}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<InterventionRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<InterventionRequest>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }

@@ -39,76 +39,88 @@
 
 
     $('#input-nhe-sua').hide();
-    $('#input-quanly-nhe').hide();
+    $('#input-ql-nhe-sua').hide();
     //show it when the checkbox is clicked
     $('input[id="check-nhe-sua"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-nhe-sua').fadeIn();
-            $('#input-quanly-nhe').fadeIn();
+            $('#input-ql-nhe-sua').fadeIn();
         } else {
             $('#input-nhe-sua').hide();
             $('#nhe-sua').val('');
+            $('#ql-nhe-sua').val('');
             $('.checkbox-nhe').prop('checked', false);
-            $('#input-quanly-nhe').hide();
+            $('#input-ql-nhe-sua').hide();
         }
     });
 
     if ($('#check-nhe-sua').prop('checked')) {
         $('#input-nhe-sua').fadeIn();
-        $('#input-quanly-nhe').fadeIn();
+        $('#input-ql-nhe-sua').fadeIn();
     } else {
         $('#input-nhe-sua').hide();
         $('#nhe-sua').val('');
-        $('#input-quanly-nhe').hide();
+        $('#ql-nhe-sua').val('');
+        $('#input-ql-nhe-sua').hide();
     }
     
 
     $('#input-vua-sua').hide();
-    $('#input-quanly-vua').hide();
+    $('#input-ql-vua-sua').hide();
     //show it when the checkbox is clicked
     $('input[id="check-vua-sua"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-vua-sua').fadeIn();
-            $('#input-quanly-vua-sua').fadeIn();
+            $('#input-ql-vua-sua').fadeIn();
         } else {
             $('#input-vua-sua').hide();
             $('#trungbinh-sua').val('');
+            $('#ql-vua-sua').val('');
             $('.checkbox-vua').prop('checked', false);
-            $('#input-quanly-vua').hide();
+            $('#input-ql-vua-sua').hide();
 
         }
     });
 
     if ($('#check-vua-sua').prop('checked')) {
         $('#input-vua-sua').fadeIn();
-        $('#input-quanly-vua').fadeIn();
+        $('#input-ql-vua-sua').fadeIn();
     } else {
         $('#input-vua-sua').hide();
         $('#trungbinh-sua').val('');
-        $('#input-quanly-vua').hide();
+        $('#ql-vua-sua').val('');
+        $('#input-ql-vua-sua').hide();
     }
 
     $('#input-kn-sua').hide();
     $('#input-quanly-kn').hide();
+    $('#input-ql-kn-sua').hide();
     //show it when the checkbox is clicked
     $('input[id="check-kn-sua"]').on('click', function () {
         if ($(this).prop('checked')) {
             $('#input-kn-sua').fadeIn();
             $('#input-quanly-kn').fadeIn();
+            $('#input-ql-kn-sua').fadeIn();
         } else {
             $('#input-kn-sua').hide();
             $('#khacnghiet-sua').val('');
+            $('#ql-khacnghiet-sua').val('');
             $('.checkbox-khac-nghiet').prop('checked', false);
             $('#input-quanly-kn').hide();
+            $('#input-ql-kn-sua').hide();
         }
     });
 
     if ($('#check-kn-sua').prop('checked')) {
         $('#input-kn-sua').fadeIn();
         $('#input-quanly-kn').fadeIn();
+        $('#input-ql-kn-sua').fadeIn();
+
     } else {
         $('#input-kn-sua').hide();
         $('#khacnghiet-sua').val('');
+        $('#ql-khacnghiet-sua').val('');
         $('#input-quanly-kn').hide();
+        $('#input-ql-kn-sua').hide();
     }
 });

@@ -66,6 +66,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> EditManage(InterventionRequest request)
+        {
+            try
+            {
+                var response = await _IInterventionAPIClient.UpdateManage(request);
+                if (response.Success == true)
+                {
+                    TempData["MessageCreate"] = "Sửa thành công!";
+                    return RedirectToAction("Index", response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CreateProfile(InterventionRequest request)
         {
             try
