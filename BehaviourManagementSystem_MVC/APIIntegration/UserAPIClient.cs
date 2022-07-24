@@ -49,6 +49,21 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             return JsonConvert.DeserializeObject<ResponseResultError<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<ResponseResult<List<UserProfileRequest>>> GetAllUserExAdmin(UserProfileRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.GetAsync($"/api/Account/GetUser");
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<ResponseResult<UserProfileRequest>> GetUserById(string id)
         {
             var client = _httpClientFactory.CreateClient();

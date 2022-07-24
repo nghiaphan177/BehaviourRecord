@@ -263,7 +263,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 				if(!ok)
 					return View(); // cần UI (UI với hình thức gửi mail không thành công) 
 			}
-			return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+			return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm emaiil with method get
 		}
 
 		[HttpGet]
@@ -274,23 +274,22 @@ namespace BehaviourManagementSystem_MVC.Controllers
 			return View();
 		}
 
-		[HttpPut]
+		[HttpPost]
 		public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
 		{
 			if(!ModelState.IsValid)
 				return View(ModelState);
 
-			if(request.PasswordNew != request.PasswordConfirm)
-			{
-				ViewBag.Error = "Mật khẩu không giống nhau";
-				return View(ModelState);
-			}
-
 			var response = await _accountAPIClient.ResetPassword(request);
 
 			if(!response.Success)
 				return View(); // reset pass không thành không
-			return View(); // reset thành công
+			return RedirectToAction("ChangePassSuccess"); // reset thành công
+		}
+		[HttpGet]
+		public IActionResult ChangePassSuccess()
+		{
+			return View();
 		}
 
 		private ClaimsPrincipal ValidateToken(string token)

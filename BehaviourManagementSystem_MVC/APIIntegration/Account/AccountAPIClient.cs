@@ -91,7 +91,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 
 			client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-			var response = await client.GetAsync($"/api/Account/ForgotPassword?userNameOrEmail={userNameOrEmail}");
+			var response = await client.GetAsync($"/api/Account/ForgotPassword?userNameOfEmail={userNameOrEmail}");
 
 			if(response.IsSuccessStatusCode)
 				return JsonConvert.DeserializeObject<ResponseResultSuccess<ResetPasswordRequest>>(await response.Content.ReadAsStringAsync());

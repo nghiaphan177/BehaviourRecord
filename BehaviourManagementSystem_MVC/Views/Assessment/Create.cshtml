@@ -77,7 +77,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button onclick="submitAssessment()"  id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button onclick="submitAssessment()" id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                     <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <div class="tab-content">
                                 <!-- Tab Phân Tích - Hành Vi Start-->
                                 <div class="tab-pane show active" id="pt-hanhvi">
-                                    <form action="#">
+                                    <form id="updateBehaviourForm" asp-action="CreateRecordBehaviour" asp-controller="Assessment" method="post" asp-route-assId="@Model.Id">
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi</label>
                                             <div class="col-md-10">
@@ -113,7 +113,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                            <button onclick="submitUpdateBehaviour()" type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
@@ -125,70 +125,70 @@
                                         @*<div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
-                                                <input asp-for="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                                @*<ul class="dropdown-menu" id="multiselect-drop-camxuc">
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Cảm Xúc 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 1</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Cảm Xúc 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 2</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
+                                            <input asp-for="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                            @*<ul class="dropdown-menu" id="multiselect-drop-camxuc">
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Cảm Xúc 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 1</span>
+                                            </label>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
+                                            </li>
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Cảm Xúc 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 2</span>
+                                            </label>
+                                            </div>
+                                            </li>
+                                            </ul>
+                                            @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
+                                            </div>
+                                            </div>
+                                            <div class="form-group row">
                                             <label class="col-form-label col-md-2">Môi Trường</label>
                                             <div class="col-md-10">
-                                                <input asp-for="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                                <ul class="dropdown-menu" id="multiselect-drop-moitruong">
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Môi Trường 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 1</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Môi Trường 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 2</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                            <input asp-for="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
+                                            <ul class="dropdown-menu" id="multiselect-drop-moitruong">
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Môi Trường 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 1</span>
+                                            </label>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
+                                            </li>
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Môi Trường 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 2</span>
+                                            </label>
+                                            </div>
+                                            </li>
+                                            </ul>
+                                            </div>
+                                            </div>
+                                            <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành Động</label>
                                             <div class="col-md-10">
-                                                <input asp-for="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                                <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Hành Động 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 1</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input value="Hành Động 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 2</span>
-                                                            </label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                            <input asp-for="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                            <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Hành Động 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 1</span>
+                                            </label>
                                             </div>
-                                        </div>*@
+                                            </li>
+                                            <li class="dropdown-item">
+                                            <div class="checkbox">
+                                            <label>
+                                            <input value="Hành Động 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 2</span>
+                                            </label>
+                                            </div>
+                                            </li>
+                                            </ul>
+                                            </div>
+                                            </div>*@
                                         @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
                                         <div class="col-sm-3 mx-auto text-center">
                                             <button type="submit" id="button-pt2" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
@@ -357,6 +357,7 @@
         dropdown: true,
         scrollbar: true
     });
+    //var assid="";
     function submitAssessment(){
 
 
@@ -366,6 +367,25 @@
     $.ajax({
         type: "POST",
         url: actionUrl,
+        data: data, // serializes the form's elements.
+        success: function(result)
+        {
+           $('.nav a[href="#phantich"]').removeClass("disabled")
+           $('.nav a[href="#phantich"]').tab('show');
+           //assid = result.assid;
+           //console.log(assid);
+        }
+    });
+    }
+        function submitUpdateBehaviour(){
+
+
+    var form = $(this);
+    var actionUrl = form.attr('action');
+    var data = $("#updateBehaviourForm").serialize();
+    $.ajax({
+        type: "POST",
+        url: actionUrl+"/"+assId,
         data: data, // serializes the form's elements.
         success: function(result)
         {
