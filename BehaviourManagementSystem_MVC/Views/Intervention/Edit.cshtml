@@ -114,13 +114,13 @@
                                         DateTime d = Convert.ToDateTime(Model.ProfileDate);
                                         string s = d.ToString("yyyy-MM-dd");
                                     }
-                                    <input type="date" value="@s" name="ProfileDate" class="form-control" />
+                                    <input type="date" autocomplete="off" value="@s" name="ProfileDate" class="form-control" />
                                 </div>
                             </div>
                                 <div id="input-nhe-sua" class="form-group row">
                                     <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
                                     <div class="col-md-10">
-                                        <input type="text" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                        <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                         @await Component.InvokeAsync("DropDown", new { name = "mild" })
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                 <div id="input-vua-sua" class="form-group row">
                                     <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
                                     <div class="col-md-10">
-                                        <input type="text" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                        <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                         @await Component.InvokeAsync("DropDown", new { name = "moderate" })
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                                 <div id="input-kn-sua" class="form-group row">
                                     <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
                                     <div class="col-md-10">
-                                        <input type="text" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                        <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                         @await Component.InvokeAsync("DropDown", new { name = "extreme" })
                                     </div>
                                 </div>
@@ -166,25 +166,25 @@
                             <div id="input-ql-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="ql-nhe-sua" name="ManageMild" value="@Model.ManageMild" class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" value="@Model.ManageMild" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div id="input-ql-vua-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="ql-vua-sua" name="ManageModerate" value="@Model.ManageModerate" class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" value="@Model.ManageModerate" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div id="input-ql-kn-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
                                 <div class="col-md-10">
-                                    <input type="text" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div class="col">
@@ -198,119 +198,39 @@
                     <!-- Tab Quản Lí Can Thiệp End -->
                     <!-- Tab ngăn chặn tái phạm Start -->
                     <div class="tab-pane" id="nganchantaipham">
-                        <div class="card-body">
-                            <ul class="nav nav-nganchan nav-tabs nav-tabs-bottom nav-justified">
-                                <li class="nav-item">
-                                    <a class="nav-link active"
-                                       href="#adhd" data-toggle="tab">ADHD</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#doilap"
-                                       data-toggle="tab">Đối Lập</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#tuki"
-                                       data-toggle="tab">Tự Kỉ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#hunghang"
-                                       data-toggle="tab">Hung Hăng</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#lolang"
-                                       data-toggle="tab">Lo Lắng</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <!-- Tab Ngăn Chặn Tái Phạm - ADHD Start-->
-                                <div class="tab-pane show active" id="adhd">
-                                    <form action="#">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
-                                            <div class="col-md-10">
-                                                <input type="text" id="text-key" class="form-control text-key" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control text-key" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col-sm-3 mx-auto text-center">
-                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                        <form action="/Intervention/EditPrevent" method="post">
+                            <input hidden name="Id" value="@Model.Id">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Tính Cách</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
-                                <!-- Tab Ngăn Chặn Tái Phạm - ADHD End-->
-                                <!-- Tab Ngăn Chặn Tái Phạm - Đối Lập Start-->
-                                <div class="tab-pane show" id="doilap">
-                                    <form action="#">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động </label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col-sm-3 mx-auto text-center">
-                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Tab Ngăn Chặn Tái Phạm - Đối Lập End-->
-                                <!-- Tab Ngăn Chặn Tái Phạm - Tự Kỉ Start-->
-                                <div class="tab-pane show" id="tuki">
-                                    <form action="#">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động </label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Nhập..." />
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col-sm-3 mx-auto text-center">
-                                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- Tab Ngăn Chặn Tái Phạm - Tự Kỉ End-->
                             </div>
-                        </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" autocomplete="off" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                     <!-- Tab ngăn chặn tái phạm End -->
                 </div>

@@ -15,7 +15,7 @@
             @foreach (var item in Model)
             {
             <tr id="inter-@item.Id" class="text-center">
-                @{ 
+                @{
                     DateTime d = Convert.ToDateTime(item.ProfileDate);
                     string s = d.ToString("dd/MM/yyyy");
                 }
@@ -44,9 +44,18 @@
                         <span class="badge badge-danger">Chưa Hoàn Thành</span>
                     </td>
                 }
-                <td>
-                    <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                </td>
+                @if (item.PreventIsCompleted == true)
+                {
+                    <td>
+                        <span class="badge badge-success">Hoàn Thành</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                    </td>
+                }
                 <td>Xin Chào</td>
                 <td class="text-right">
                     <div class="actions">
@@ -54,7 +63,7 @@
                            class="btn btn-sm bg-success-light mr-2">
                             <i class="fas fa-pen"></i>
                         </a>
-                        <a  onclick=" deleteActivity('@item.Id')" class="btn btn-sm bg-danger-light">
+                        <a onclick=" deleteActivity('@item.Id')" class="btn btn-sm bg-danger-light">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>

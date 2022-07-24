@@ -15,5 +15,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Intervention
         Task<ResponseResult<List<InterventionRequest>>> Delete(string id);
         Task<ResponseResult<InterventionRequest>> Update(InterventionRequest request);
         Task<ResponseResult<InterventionRequest>> UpdateManage(InterventionRequest request);
+        Task<ResponseResult<InterventionRequest>> UpdatePrevent(InterventionRequest request);
     }
 }
