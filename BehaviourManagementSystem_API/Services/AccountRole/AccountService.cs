@@ -290,38 +290,87 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultError<UserProfileRequest>("Xác thực Email không thành công");
         }
 
-        public async Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
-        {
-            var user = new User()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Gender = request.Gender,
-                DOB = request.DOB,
-                PhoneNumber = request.PhoneNumber,
-                Email = request.Email,
-                Address = request.Address,
-                AvtName = request.AvtName,
-            };
+        //        public async Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
+        //        {
+        //            var user = _userManager.FindByIdAsync(request.Id);
+        //            if(user == null)
+        //            {
+        //                var users = await GetAll(null);
+        //                return new ResponseResult<List<UserProfileRequest>>
+        //                {
+        //                    Success = false,
+        //                    Message = "Lỗi thông tin đăng nhập của bạn.",
+        //                    Result = users.Result
+        //                };
+        //            }
 
-            try
-            {
-                await _userManager.CreateAsync(user);
-                var res = await GetAll(null);
-                return new ResponseResultSuccess<List<UserProfileRequest>>(res.Result);
-            }
-            catch(Exception ex)
-            {
-                var res = await GetAll(null);
-                return new ResponseResult<List<UserProfileRequest>>()
-                {
-                    Success = false,
-                    Message = ex.Message,
-                    Result = res.Result
-                };
-            }
-        }
+        //            var userRole = await _context.UserRoles.Where(prop => prop.UserId == new Guid(request.Id)).FirstOrDefaultAsync();
+        //            if(userRole == null)
+        //            {
+        //                var users = await GetAll(null);
+        //                return new ResponseResult<List<UserProfileRequest>>
+        //                {
+        //                    Success = false,
+        //                    Message = "Tài khoản đăng nhập hiện tại chưa được cấp quyền",
+        //                    Result = users.Result
+        //                };
+        //            }
+
+        //            var role = await _roleManager.FindByNameAsync("admin");
+
+        //            if(userRole.RoleId != role.Id)
+        //            {
+        //                var users = await GetAll(null);
+        //                return new ResponseResult<List<UserProfileRequest>>
+        //                {
+        //                    Success = false,
+        //                    Message = "Tài khoản đăng nhập hiện tại chưa được cấp quyền",
+        //                    Result = users.Result
+        //                };
+        //            }
+
+        //            role = await _roleManager.FindByIdAsync(request.RoleId);
+
+        //            if(role == null)
+        //            {
+        //                var users = await GetAll(null);
+        //                return new ResponseResult<List<UserProfileRequest>>
+        //                {
+        //                    Success = false,
+        //                    Message = "Cấp ",
+        //                    Result = users.Result
+        //                };
+        //            }
+        //public string Id { get; set; }
+
+        //public string UserName { get; set; }
+
+        //public string FirstName { get; set; }
+
+        //public string LastName { get; set; }
+
+        //public string Gender { get; set; }
+
+        //public DateTime? DOB { get; set; }
+
+        //public string PhoneNumber { get; set; }
+
+        //public string Email { get; set; }
+
+        //public string Address { get; set; }
+
+        //public string AvtName { get; set; }
+
+        //public string RoleId { get; set; }
+
+        //public string RoleName { get; set; }
+
+        //public bool? Active { get; set; }
+
+        //public string TeacherId { get; set; }
+        //    }
+
+        //        }
 
         public async Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request)
         {
@@ -614,6 +663,11 @@ namespace BehaviourManagementSystem_API.Services
                 Success = true,
                 Message = "Mật khẩu đã tồn tại."
             };
+        }
+
+        public Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }
