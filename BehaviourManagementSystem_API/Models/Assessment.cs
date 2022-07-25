@@ -10,10 +10,10 @@ namespace BehaviourManagementSystem_API.Models
     
         [Column(TypeName = "date")]
         public DateTime? RecordDate { get; set; }
-        
-        public TimeSpan? RecordStart { get; set; }
-        
-        public TimeSpan? RecordEnd { get; set; }
+
+        public string RecordStart { get; set; } = null!;
+
+        public string RecordEnd { get; set; } = null!;
         
         public string RecordDuring { get; set; } = null!;
         

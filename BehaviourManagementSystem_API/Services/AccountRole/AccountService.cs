@@ -570,7 +570,7 @@ namespace BehaviourManagementSystem_API.Services
             }
         }
 
-        private string GenegatorPass()
+        public string GenegatorPass()
         {
         Start:
             var str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
@@ -595,6 +595,25 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<string>("Thông tin truy cập không tồn tại");
 
             return new ResponseResultSuccess<string>(user.AvtName);
+        }
+
+        public async Task<ResponseResult<bool>> CheckPassworkNull(string id)
+        {
+            if(!await _context.Users.AnyAsync())
+                return new ResponseResultError<bool>("Dữ liêu tồn tại không.");
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if(user == null)
+                return new ResponseResultError<bool>("Dữ liêu tồn tại không.");
+
+            if(user.PasswordHash.CheckRequest())
+                return new ResponseResultError<bool>("Không tồn tại mật khẩu.");
+            return new ResponseResult<bool>
+            {
+                Success = true,
+                Message = "Mật khẩu đã tồn tại."
+            };
         }
     }
 }

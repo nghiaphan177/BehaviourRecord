@@ -252,6 +252,23 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("CheckPasswordNull/{}")]
+        public async Task<IActionResult> CheckPasswordNull(string id)
+        {
+            Guid guid;
+            if(string.IsNullOrEmpty(id))
+                return BadRequest("Dữ liệu yêu cầu không hợp lệ");
+            if(!Guid.TryParse(id, out guid))
+                return BadRequest("Truy cập không hợp lệ.");
+
+            var res = await _accountService.CheckPassworkNull(id);
+
+            if(!res.Success)
+                return BadRequest(res);
+            
+            return Ok(res);
+        }
+
         [HttpGet("GetImg")]
         public async Task<IActionResult> GetImg([FromQuery] string id)
         {
