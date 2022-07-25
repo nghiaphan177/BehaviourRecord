@@ -204,6 +204,12 @@ namespace BehaviourManagementSystem_API.Controllers
         [HttpPost("CreateUserProfile")]
         public async Task<IActionResult> CreateUserProfile([FromBody] UserProfileRequest request)
         {
+            Guid idadmin;
+            Guid roleid;
+            if(!Guid.TryParse(request.Id, out idadmin) ||
+                !Guid.TryParse(request.RoleId, result: out roleid))
+                return BadRequest("Thông tin truy cập không hợp lệ.");
+
             var response = await _accountService.CreateUserProfile(request);
 
             if(!response.Success)
@@ -252,7 +258,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("CheckPasswordNull/{}")]
+        [HttpGet("CheckPasswordNull/{id}")]
         public async Task<IActionResult> CheckPasswordNull(string id)
         {
             Guid guid;
