@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
 {
     [Area("StudentApp")]
-    [Authorize(AuthenticationSchemes = "Student")]
+    [Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
     public class HomeController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
