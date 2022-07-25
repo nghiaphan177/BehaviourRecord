@@ -29,6 +29,7 @@ namespace BehaviourManagementSystem_API.Services
             start:
                 var id = Guid.NewGuid();
                 var stamp = Guid.NewGuid();
+
                 var user = await _userManager.FindByIdAsync(id.ToString());
                 var ind = await _context.Individuals.FindAsync(id);
                 if(user != null || ind != null)

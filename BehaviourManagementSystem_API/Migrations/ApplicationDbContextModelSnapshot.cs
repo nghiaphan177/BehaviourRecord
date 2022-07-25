@@ -139,14 +139,14 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.Property<string>("RecordDuring")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("RecordEnd")
-                        .HasColumnType("time");
+                    b.Property<string>("RecordEnd")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("RecordIsCompeleted")
                         .HasColumnType("bit");
 
-                    b.Property<TimeSpan?>("RecordStart")
-                        .HasColumnType("time");
+                    b.Property<string>("RecordStart")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RecordWhere")
                         .HasColumnType("nvarchar(max)");
@@ -291,40 +291,6 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.ToTable("Interventions");
                 });
 
-            modelBuilder.Entity("BehaviourManagementSystem_API.Models.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContentHTML")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tittle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.ProfileExtreme", b =>
                 {
                     b.Property<Guid>("Id")
@@ -435,45 +401,25 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe"),
-                            ConcurrencyStamp = "C2423512-6D89-4418-9239-881E1B89BD34",
+                            Id = new Guid("60002d7c-e4e0-468a-9b5e-f5d76246967f"),
+                            ConcurrencyStamp = "6AE595FF-9975-445F-8A6F-271E67C0A40B",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("85de9e5d-71fe-4e7b-8103-d7b28de785ce"),
-                            ConcurrencyStamp = "B197C32A-427D-4921-B153-5C713F97C27A",
+                            Id = new Guid("033fae0a-dac5-470f-9d25-14aac8ac7576"),
+                            ConcurrencyStamp = "BC35628A-4FC2-4A5F-8C04-387DDE83229C",
                             Name = "teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = new Guid("292b910c-6f5a-4dea-8280-28ec1f043b58"),
-                            ConcurrencyStamp = "9D096D0A-3436-41B9-867F-051B22A9A9CC",
+                            Id = new Guid("4dd7b2b7-72a0-4c0f-b6eb-06639897a8fb"),
+                            ConcurrencyStamp = "59FB9FCA-7A8D-412D-99A6-3FC3F42C0B2D",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
-                });
-
-            modelBuilder.Entity("BehaviourManagementSystem_API.Models.TermCondition", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TermConditions");
                 });
 
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.User", b =>
@@ -577,12 +523,12 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("30183400-0241-42e9-ae76-f0602e927713"),
+                            Id = new Guid("15746e42-b7f2-44ff-a38c-7e4d6aa84b19"),
                             AccessFailedCount = 0,
                             Activity = true,
                             ActivityDate = new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             AvtName = "default_avt.png",
-                            ConcurrencyStamp = "6C2D3C95-3F85-4A1C-8A79-47EBF1FE8045",
+                            ConcurrencyStamp = "733CF691-8A0A-4EA2-BA83-688824D9BA83",
                             DOB = new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lhduy3011@gmail.com",
                             EmailConfirmed = true,
@@ -592,10 +538,10 @@ namespace BehaviourManagementSystem_API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LHDUY3011@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDDV/M/vT+BuEN4tiJ+AvnZpquSUJypDF+ePkyFqTiSpsXqp0XSijqYyTxXv33qQvw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHFw/r2f6mIiTh+trGovd4+58ChYS2VNaum7jCI0RVleUNJdYtj0cfRDrq1EKj0+3Q==",
                             PhoneNumber = "0334102197",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6c2d3c95-3f85-4a1c-8a79-47ebf1fe8045",
+                            SecurityStamp = "733cf691-8a0a-4ea2-ba83-688824d9ba83",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -685,8 +631,8 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("30183400-0241-42e9-ae76-f0602e927713"),
-                            RoleId = new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe")
+                            UserId = new Guid("15746e42-b7f2-44ff-a38c-7e4d6aa84b19"),
+                            RoleId = new Guid("60002d7c-e4e0-468a-9b5e-f5d76246967f")
                         });
                 });
 
@@ -789,16 +735,6 @@ namespace BehaviourManagementSystem_API.Migrations
                     b.Navigation("ProfileRecovery");
                 });
 
-            modelBuilder.Entity("BehaviourManagementSystem_API.Models.Notification", b =>
-                {
-                    b.HasOne("BehaviourManagementSystem_API.Models.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("BehaviourManagementSystem_API.Models.Role", null)
@@ -898,8 +834,6 @@ namespace BehaviourManagementSystem_API.Migrations
             modelBuilder.Entity("BehaviourManagementSystem_API.Models.User", b =>
                 {
                     b.Navigation("Individuals");
-
-                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }
