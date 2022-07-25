@@ -24,7 +24,6 @@ namespace BehaviourManagementSystem_API.Data.EF
         public virtual DbSet<ProfileMild> ProfileMilds { get; set; }
         public virtual DbSet<ProfileModerate> ProfileModerates { get; set; }
         public virtual DbSet<ProfileRecovery> ProfileRecoveries { get; set; }
-        public virtual DbSet<TermCondition> TermConditions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,7 +48,6 @@ namespace BehaviourManagementSystem_API.Data.EF
             builder.ApplyConfiguration(new ProfileModerateConfiguration());
             builder.ApplyConfiguration(new ProfileRecoveryConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new TermConditionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.Seed();
         }
