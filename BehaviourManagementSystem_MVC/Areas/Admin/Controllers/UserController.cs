@@ -29,7 +29,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         public async Task<ActionResult> Index()
         {
             var response = await _userAPIClient.GetAllUser();
-            if (response.Success == true)
+            if(response.Success == true)
             {
                 return View(response.Result);
             }
@@ -44,8 +44,8 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             {
                 dynamic mymodel = new ExpandoObject();
                 var response = await _userAPIClient.GetUserById(id);
-                var responseStudent =  await _IIndividualAPIClient.GetAllStudentByTeacherId(id);
-                if (response.Success == true)
+                var responseStudent = await _IIndividualAPIClient.GetAllStudentByTeacherId(id);
+                if(response.Success == true)
                 {
                     mymodel.Teacher = response.Result;
                     mymodel.Students = responseStudent.Result;
@@ -53,7 +53,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 }
 
             }
-            catch (System.Exception)
+            catch(System.Exception)
             {
 
                 throw;
@@ -65,11 +65,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         public async Task<ActionResult> Create()
         {
             var listrole = await _userAPIClient.GetRole();
-            if (listrole.Result != null)
+            if(listrole.Result != null)
             {
-                ViewBag.Roles = listrole.Result.ConvertAll(r=> new SelectListItem
+                ViewBag.Roles = listrole.Result.ConvertAll(r => new SelectListItem
                 {
-                    Text = r.Name == "student"?"Học sinh":"Giáo viên",
+                    Text = r.Name == "student" ? "Học sinh" : "Giáo viên",
                     Value = r.Id
                 });
             }
@@ -84,19 +84,23 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             try
             {
                 request.Id = User.FindFirst("Id").Value;
+
                 var response = await _userAPIClient.Create(request);
-                if (response == null)
+
+                if(response == null)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                if (response.Success == true)
-                    return RedirectToAction(nameof(Index));
+
+                if(!response.Success == true)
+                    return RedirectToAction(nameof(Create));
+
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
-            return RedirectToAction(nameof(Index));
         }
 
         // GET: UserController/Edit/5
@@ -105,13 +109,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             try
             {
                 var response = await _userAPIClient.GetUserById(id);
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     return View(response.Result);
                 }
 
             }
-            catch (System.Exception)
+            catch(System.Exception)
             {
 
                 throw;
@@ -126,12 +130,12 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             try
             {
-                var response = await _userAPIClient.UpdateUser( user);
+                var response = await _userAPIClient.UpdateUser(user);
                 if(response.Success == false)
                 {
                     return RedirectToAction(nameof(Edit), user.Id);
                 }
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     return RedirectToAction(nameof(Index));
                 }
