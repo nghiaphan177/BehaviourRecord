@@ -26,7 +26,21 @@ namespace BehaviourManagementSystem_API.Controllers
 
             var response = await _roleService.GetRoleNameByUserId(id);
 
-            if (string.IsNullOrEmpty(response.Result))
+            if (!response.Success)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+        
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _roleService.GetAll();
+
+            if (!response.Success)
                 return BadRequest(response);
 
             return Ok(response);
