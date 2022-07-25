@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class UserController : Controller
     {
         private readonly IUserAPIClient _userAPIClient;
@@ -82,6 +83,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             try
             {
+                request.Id = User.FindFirst("Id").Value;
                 var response = await _userAPIClient.Create(request);
                 if (response == null)
                 {
