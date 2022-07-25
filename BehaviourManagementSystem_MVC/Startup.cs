@@ -89,11 +89,19 @@ namespace BehaviourManagementSystem_MVC
             var mailsettings = Configuration.GetSection("EmailSettings");  // đọc config
             services.Configure<EmailSettings>(mailsettings);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
+            {
+                ProgressBar = true,
+                Timeout = 3000,
+                Theme = "mint"
+            }) ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseNToastNotify();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

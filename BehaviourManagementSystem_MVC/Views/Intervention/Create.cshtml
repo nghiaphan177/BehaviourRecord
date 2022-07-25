@@ -1,6 +1,6 @@
-﻿@model InterventionRequest
+﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
 
@@ -34,14 +34,14 @@
                         <a class="nav-link"
                            href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link"
                            href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
                            href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
-                    </li>
+                    </li>*@
                 </ul>
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
@@ -81,8 +81,8 @@
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
 
-                        <form asp-action="CreateProfile" asp-controller="Intervention" method="post">
-                            <input hidden name="AssesetmentId" value="@Model.AssesetmentId">
+                        <form id="assessform1" asp-action="CreateProfile" asp-controller="Intervention" method="post">
+                            <input hidden name="AssesetmentId" value="@ViewBag.IdInter">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
@@ -128,80 +128,7 @@
                         <!-- form khác end -->
                     </div>
                     <!-- Tab Nâng Câp Hồ Sơ End-->
-                    <!-- Tab Quản Lí Can Thiệp Start -->
-                    <div class="tab-pane" id="quanlycanthiep">
-                        <form action="/Intervention/EditManage" method="post">
-                            <input hidden name="Id" value="">
-                            <div id="input-ql-nhe" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" value="" class="form-control" placeholder="Nhập ..." />
-                                </div>
-                            </div>
-                            <div id="input-ql-vua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" value="" class="form-control" placeholder="Nhập ..." />
-                                </div>
-                            </div>
-                            <div id="input-ql-kn" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="" class="form-control" placeholder="Nhập ..." />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="ManageRecovery" value="" class="form-control" placeholder="Nhập ..." />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Tab Quản Lí Can Thiệp End -->
-                    <!-- Tab ngăn chặn tái phạm Start -->
-                    <div class="tab-pane" id="nganchantaipham">
-                        <form action="/Intervention/EditPrevent" method="post">
-                            <input hidden name="Id" value="">
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Tính Cách</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventStatus" value="" id="text-key" class="form-control text-key" placeholder="Nhập..." />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventActivity" value="" id="text-key" class="form-control text-key" placeholder="Nhập..." />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventInteraction" value="" class="form-control text-key" placeholder="Nhập..." />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
-                                <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventInvironmental" value="" class="form-control text-key" placeholder="Nhập..." />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" autocomplete="off" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                    <!-- Tab ngăn chặn tái phạm End -->
+              
                 </div>
             </div>
         </div>
@@ -212,3 +139,4 @@
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/js/CheckBoxMoInput.js"></script>
 }
+

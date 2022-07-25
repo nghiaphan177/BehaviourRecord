@@ -1,8 +1,10 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Intervention;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
+using BehaviourManagementSystem_MVC.APIIntegration.Intervention;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -16,11 +18,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IOptionAPIClientRecovery _IOptionAPIClientRecovery;
         private readonly IOptionAPIClientExtreme _IOptionAPIClientExtreme;
         private readonly IInterventionAPIClient _IInterventionAPIClient;
-        public InterventionController(IOptionAPIClientRecovery IOptionAPIClientRecovery, IOptionAPIClientExtreme IOptionAPIClientExtreme, IInterventionAPIClient IInterventionAPIClient)
+        private readonly IToastNotification toastNotification;
+        private readonly IAssessmentAPIClient _assessmentAPIClient;
+        public InterventionController(IAssessmentAPIClient assessmentAPIClient,IOptionAPIClientRecovery IOptionAPIClientRecovery, IOptionAPIClientExtreme IOptionAPIClientExtreme, IInterventionAPIClient IInterventionAPIClient, IToastNotification toastNotification)
         {
+            this.toastNotification = toastNotification;
             _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
             _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
             _IInterventionAPIClient = IInterventionAPIClient;
+            _assessmentAPIClient = assessmentAPIClient;
         }
         public IActionResult Index()
         {
@@ -28,7 +34,36 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
+        //[HttpGet]
+        //public IActionResult GetAssetIntervention(string id)
+        //{
+        //    return ViewComponent("InterventionAll", new { id });
+        //}
 
+        
+        public async Task<IActionResult> GetInterventionById(string id)
+        {
+            try
+            {
+                var response = await _IInterventionAPIClient.GetAll(id);
+                if (response.Success == true)
+                {
+                    ViewBag.IdAssiment = id;
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+        public IActionResult Create(string id)
+        {
+            ViewBag.IdInter = id;
+            return View();
+        }
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -70,6 +105,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     TempData["MessageEdit"] = "Sửa thành công!";
                     return RedirectToAction("Edit", new { id = request.Id });
                 }
@@ -92,6 +128,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.UpdateManage(request);
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     TempData["MessageEditManage"] = "Sửa thành công!";
                     return RedirectToAction("Edit", new { id = request.Id });
                 }
@@ -112,14 +149,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.UpdatePrevent(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageEditPrevent"] = "Sửa thành công!";
-                    return RedirectToAction("StudentList", "Student");
+                    toastNotification.AddSuccessToastMessage("Đã Cập Nhật!");
+                    return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
                 }
             }
             catch (Exception)
             {
 
-                throw;
+                toastNotification.AddErrorToastMessage("Vui lòng thử lại!");
             }
             return RedirectToAction("Index");
         }
@@ -134,11 +171,16 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     return Json(new { success = false });
                 }
-                if (response.Success)
+                if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Thêm thành công!";
-                    return RedirectToAction("Index");
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
                 }
+                //if (response.Success)
+                //{
+                    
+                //    return RedirectToAction("Create", new { id = request.AssesetmentId });
+                //}
 
             }
             catch (Exception)

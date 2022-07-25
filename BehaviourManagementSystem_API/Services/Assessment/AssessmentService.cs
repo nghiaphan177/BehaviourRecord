@@ -86,13 +86,13 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<List<AssessmentRequest>>> GetAll(string ind_id)
         {
             var find = _context.Assessments.Where(p => p.IndividualId.ToString() == ind_id);
-            var assessment = _context.Assessments.Take(find.Count());
-            if (await assessment.AnyAsync() == false)
-            {
-                return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
-            }
+            //var assessment = _context.Assessments.Take(find.Count());
+            //if (await assessment.AnyAsync() == false)
+            //{
+            //    return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
+            //}
             var result = new List<AssessmentRequest>();
-            foreach (var item in assessment)
+            foreach (var item in find)
             {
                 result.Add(new AssessmentRequest()
                 {
