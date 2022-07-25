@@ -21,12 +21,11 @@ namespace BehaviourManagementSystem_MVC.ViewComponents
             
         }
        
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string id)
         {
-            string ass_id = "190a0735-a5df-41b5-bdc1-694f158d2322";
             try
             {
-                var response = await _IInterventionAPIClient.GetAll(ass_id);
+                var response = await _IInterventionAPIClient.GetAll(id);
                 if (response.Success == true)
                 {
                     return View("GetAllIntervention",response.Result);
