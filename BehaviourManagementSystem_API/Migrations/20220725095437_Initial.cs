@@ -120,20 +120,6 @@ namespace BehaviourManagementSystem_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TermConditions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TermConditions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -450,20 +436,20 @@ namespace BehaviourManagementSystem_API.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe"), "C2423512-6D89-4418-9239-881E1B89BD34", "admin", "ADMIN" },
-                    { new Guid("85de9e5d-71fe-4e7b-8103-d7b28de785ce"), "B197C32A-427D-4921-B153-5C713F97C27A", "teacher", "TEACHER" },
-                    { new Guid("292b910c-6f5a-4dea-8280-28ec1f043b58"), "9D096D0A-3436-41B9-867F-051B22A9A9CC", "student", "STUDENT" }
+                    { new Guid("92725cf0-bc21-490e-9e5a-cafa7564ece2"), "EF54F32D-0EA4-44F8-8262-132C1811D2F8", "admin", "ADMIN" },
+                    { new Guid("33cd2059-f662-495b-9a32-b6831eee4e38"), "9FE19C07-E736-44A9-B265-AB4F09FCA2D6", "teacher", "TEACHER" },
+                    { new Guid("98020572-4fa2-4e74-95a1-800450d50aa3"), "F3008974-4060-4212-994D-B051A4F5796B", "student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "Activity", "ActivityDate", "Address", "AvtName", "ConcurrencyStamp", "CreateDate", "DOB", "DisplayName", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdateDate", "UserName" },
-                values: new object[] { new Guid("30183400-0241-42e9-ae76-f0602e927713"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "6C2D3C95-3F85-4A1C-8A79-47EBF1FE8045", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "lhduy3011@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY3011@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDDV/M/vT+BuEN4tiJ+AvnZpquSUJypDF+ePkyFqTiSpsXqp0XSijqYyTxXv33qQvw==", "0334102197", true, "6c2d3c95-3f85-4a1c-8a79-47ebf1fe8045", false, null, "admin" });
+                values: new object[] { new Guid("0e2b207a-69fb-46e5-a907-0bf07e438760"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "BA9DB5F0-C04A-429A-993B-78D914BAB085", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "lhduy3011@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY3011@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJtIF+dOfgwdC5HnjRila7QxJK3q7XnX0ZnyrbVPq+VjBaXFRauLYeD4u/4iyQrB1w==", "0334102197", true, "ba9db5f0-c04a-429a-993b-78d914bab085", false, null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("8519d8e1-81e8-4ee8-b6c9-30516273befe"), new Guid("30183400-0241-42e9-ae76-f0602e927713") });
+                values: new object[] { new Guid("92725cf0-bc21-490e-9e5a-cafa7564ece2"), new Guid("0e2b207a-69fb-46e5-a907-0bf07e438760") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assessments_AnalyzeAntecedentActivityId",
@@ -570,9 +556,6 @@ namespace BehaviourManagementSystem_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
-
-            migrationBuilder.DropTable(
-                name: "TermConditions");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
