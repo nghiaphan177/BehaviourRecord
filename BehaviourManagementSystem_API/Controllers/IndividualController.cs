@@ -135,7 +135,7 @@ namespace BehaviourManagementSystem_API.Controllers
                 return BadRequest("Dữ liệu không hợp lệ.");
             if(!teacherId.CheckRequest())
                 return BadRequest("Dữ liệu không hợp lệ.");
-            if(!Guid.TryParse(teacherId, out indid))
+            if(!Guid.TryParse(teacherId, out teacherid))
                 return BadRequest("Dữ liệu không hợp lệ.");
 
             var res = await _individualService.Delete(indId, teacherId);

@@ -388,8 +388,8 @@ namespace BehaviourManagementSystem_API.Services
                         await _context.SaveChangesAsync();
                     }
 
-                    var user = await _userManager.FindByIdAsync(ind.StudentId.ToString());
-                    await _userManager.DeleteAsync(user); 
+                    var user_ = await _userManager.FindByIdAsync(ind.StudentId.ToString());
+                    await _userManager.DeleteAsync(user_); 
                         
                     _context.Entry(ind).State = EntityState.Deleted;
                     await _context.SaveChangesAsync();
