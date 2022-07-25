@@ -19,7 +19,6 @@ namespace BehaviourManagementSystem_API.Data.EF
         public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<Individual> Individuals { get; set; }
         public virtual DbSet<Intervention> Interventions { get; set; }
-        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<ProfileExtreme> ProfileExtremes { get; set; }
         public virtual DbSet<ProfileMild> ProfileMilds { get; set; }
         public virtual DbSet<ProfileModerate> ProfileModerates { get; set; }
@@ -42,7 +41,6 @@ namespace BehaviourManagementSystem_API.Data.EF
             builder.ApplyConfiguration(new AssesetmentConfiguration());
             builder.ApplyConfiguration(new IndividualConfiguration());
             builder.ApplyConfiguration(new InterventionConfiguration());
-            builder.ApplyConfiguration(new NotificationConfiguration());
             builder.ApplyConfiguration(new ProfileExtremeConfiguration());
             builder.ApplyConfiguration(new ProfileMildConfiguration());
             builder.ApplyConfiguration(new ProfileModerateConfiguration());
