@@ -271,7 +271,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             if(!res.Success)
                 return BadRequest(res);
-            
+
             return Ok(res);
         }
 
