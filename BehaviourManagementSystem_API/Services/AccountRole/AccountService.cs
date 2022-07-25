@@ -375,7 +375,7 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request)
         {
             Guid id;
-            if(Guid.TryParse(request.Id, out id))
+            if(!Guid.TryParse(request.Id, out id))
                 return new ResponseResultError<UserProfileRequest>("Thông tin truy xuất không hợp lệ.");
 
             var user = await _context.Users.FindAsync(new Guid(request.Id));
