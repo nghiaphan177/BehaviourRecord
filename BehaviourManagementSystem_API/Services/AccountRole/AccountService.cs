@@ -521,13 +521,13 @@ namespace BehaviourManagementSystem_API.Services
         private async Task<bool> CheckRoleUserLoginCurrent(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if(user != null)
+            if(user == null)
                 return false;
 
             var userRole = await _context.UserRoles
                 .Where(prop => prop.UserId == user.Id)
                 .FirstAsync();
-            if(userRole != null)
+            if(userRole == null)
                 return false;
 
             var role = await _roleManager.FindByIdAsync(userRole.RoleId.ToString());
