@@ -59,16 +59,23 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(UserProfileRequest request)
         {
             try
             {
+                var response = await _userAPIClient.Create(request);
+                if(response == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                if(response.Success == true)
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: UserController/Edit/5

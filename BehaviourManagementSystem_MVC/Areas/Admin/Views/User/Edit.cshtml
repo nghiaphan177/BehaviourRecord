@@ -6,7 +6,7 @@
     var imgSrc = ""; // src avt
 }
 @section styles {
-   
+
     <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
 <style>
@@ -70,6 +70,14 @@
     }
 </style>
 
+@*@{
+    var img = "";
+    if (Model.AvtName != null)
+    {
+        img = Model.AvtName;
+    }
+}*@
+
 
 <div class="row">
     <div class="col-sm-12">
@@ -83,8 +91,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="media m-b-30">
-                    <img class="img-fluid" src="@imgSrc" alt="Generic placeholder image" style="max-width:70%;">
-
+                    @*<img class="img-fluid" src="@img" alt="Generic placeholder image" style="max-width:70%;">*@
                 </div>
                 <h4 class="font-18 m-0">@(Model.FirstName+" "+Model.LastName)</h4>
                 <p class="text-muted">@Model.Email</p>
@@ -146,42 +153,45 @@
                     <div class="form-group">
                         <label>Giới tính</label>
                         <div>
-                            @if(Model.Gender == "Nam"){
-                            <div class="form-check mb-3">
-                                <input value="Nam" class="form-check-input" type="radio" checked name="Gender" id="formRadios1">
-                                <label class="form-check-label" for="formRadios1">
-                                    Nam
-                                </label>
-                            </div>
-                            <div class="form-check">
+                            @if (Model.Gender == "Nam")
+                            {
+                                <div class="form-check mb-3">
+                                    <input value="Nam" class="form-check-input" type="radio" checked name="Gender" id="formRadios1">
+                                    <label class="form-check-label" for="formRadios1">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="form-check">
 
-                                <input value="Nữ" class="form-check-input" type="radio" name="Gender" id="formRadios2">
-                                <label class="form-check-label" for="formRadios2">
-                                    Nữ
-                                </label>
-                            </div>
-                            }else{
-                            <div class="form-check mb-3">
-                                <input value="Nam" class="form-check-input" type="radio" name="Gender" id="formRadios1">
-                                <label class="form-check-label" for="formRadios1">
-                                    Nam
-                                </label>
-                            </div>
-                            <div class="form-check">
+                                    <input value="Nữ" class="form-check-input" type="radio" name="Gender" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios2">
+                                        Nữ
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-check mb-3">
+                                    <input value="Nam" class="form-check-input" type="radio" name="Gender" id="formRadios1">
+                                    <label class="form-check-label" for="formRadios1">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="form-check">
 
-                                <input value="Nữ" class="form-check-input" type="radio" checked name="Gender" id="formRadios2">
-                                <label class="form-check-label" for="formRadios2">
-                                    Nữ
-                                </label>
-                            </div>
+                                    <input value="Nữ" class="form-check-input" type="radio" checked name="Gender" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios2">
+                                        Nữ
+                                    </label>
+                                </div>
                             }
 
-                            
+
                         </div>
                     </div>
                     <div class="form-group m-b-0 pull-right">
                         <div>
-                            <button type="submit" onclick=" updateUser()" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 Sửa đổi thông tin
                             </button>
                         </div>

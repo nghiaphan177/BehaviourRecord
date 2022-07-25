@@ -1,8 +1,5 @@
 ﻿@using System.Security.Claims
-@*@{
-    var base64 = Convert.ToBase64String();
-    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-}*@
+
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -31,7 +28,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src=""
+                    <img class="rounded-circle header-profile-user" src="/images/default_avt.png"
                          alt="Header Avatar">
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
