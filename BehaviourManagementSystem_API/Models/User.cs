@@ -30,8 +30,6 @@ namespace BehaviourManagementSystem_API.Models
 
         public DateTime? UpdateDate { get; set; }
 
-        public virtual ICollection<Notification> Notifications { get; set; } = null!;
-
         public virtual ICollection<Individual> Individuals { get; set; } = null!;
 
     }
