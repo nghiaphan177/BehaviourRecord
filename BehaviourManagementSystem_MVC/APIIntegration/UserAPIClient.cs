@@ -58,7 +58,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
-            var response = await client.GetAsync($"/api/Account/AllUser");
+            var response = await client.GetAsync($"/api/Account/GetUser");
             
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());
@@ -104,7 +104,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             return JsonConvert.DeserializeObject<ResponseResultError<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseResult<UserProfileRequest>> UpdateUser(string id, UserProfileRequest request)
+        public async Task<ResponseResult<UserProfileRequest>> UpdateUser(UserProfileRequest request)
         {
             var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(request);

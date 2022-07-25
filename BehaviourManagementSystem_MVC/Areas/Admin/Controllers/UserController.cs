@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,11 +16,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IUserAPIClient _userAPIClient;
+        private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IConfiguration _config;
-        public UserController(IUserAPIClient userAPIClient, IConfiguration configuration)
+        public UserController(IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient)
         {
             _userAPIClient = userAPIClient;
             _config = configuration;
+            _IIndividualAPIClient = IIndividualAPIClient;
         }
         // GET: UserController
         public async Task<ActionResult> Index()
@@ -38,10 +41,14 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             try
             {
+                dynamic mymodel = new ExpandoObject();
                 var response = await _userAPIClient.GetUserById(id);
+                var responseStudent =  await _IIndividualAPIClient.GetAllStudentByTeacherId(id);
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    mymodel.Teacher = response.Result;
+                    mymodel.Students = responseStudent.Result;
+                    return View(mymodel);
                 }
 
             }
@@ -113,11 +120,15 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(string id, UserProfileRequest user)
+        public async Task<ActionResult> Edit(UserProfileRequest user)
         {
             try
             {
-                var response = await _userAPIClient.UpdateUser(id, user);
+                var response = await _userAPIClient.UpdateUser( user);
+                if(response.Success == false)
+                {
+                    return RedirectToAction(nameof(Edit), user.Id);
+                }
                 if (response.Success == true)
                 {
                     return RedirectToAction(nameof(Index));
