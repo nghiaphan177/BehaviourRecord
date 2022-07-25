@@ -57,12 +57,13 @@ namespace BehaviourManagementSystem_MVC
                     options.Cookie.Name = "Student";
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                    options.LoginPath = "/student-login";
-                    options.LogoutPath = "/student-logout";
+                    options.LoginPath = "/StudentApp/Account/Login";
+                    options.LogoutPath = "/StudentApp/Account/Logout";
                 });
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ADMIN"));
+                options.AddPolicy("StudentOnly", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "STUDENT"));
             });
             services.AddSession(options =>
             {
@@ -122,6 +123,10 @@ namespace BehaviourManagementSystem_MVC
                          name: "Admin",
                          areaName: "Admin",
                          pattern: "Admin/{controller=Home}/{action=Index}");
+                endpoints.MapAreaControllerRoute(
+                         name: "StudentApp",
+                         areaName: "StudentApp",
+                         pattern: "StudentApp/{controller=Home}/{action=Index}");
                 endpoints.MapDefaultControllerRoute();
 
                 endpoints.MapControllerRoute(

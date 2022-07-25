@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     public class UserController : Controller

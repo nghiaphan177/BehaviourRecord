@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BehaviourManagementSystem_MVC.Areas.Admin.Controllers
+namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     public class StudentController : Controller
