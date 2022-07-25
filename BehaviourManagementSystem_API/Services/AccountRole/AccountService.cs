@@ -290,92 +290,260 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultError<UserProfileRequest>("Xác thực Email không thành công");
         }
 
-        //        public async Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
-        //        {
-        //            var user = _userManager.FindByIdAsync(request.Id);
-        //            if(user == null)
-        //            {
-        //                var users = await GetAll(null);
-        //                return new ResponseResult<List<UserProfileRequest>>
-        //                {
-        //                    Success = false,
-        //                    Message = "Lỗi thông tin đăng nhập của bạn.",
-        //                    Result = users.Result
-        //                };
-        //            }
+        public async Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
+        {
+            try
+            {
+                var users = new ResponseResult<List<UserProfileRequest>>();
+                if(await CheckEmailIsExist(request.Email))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Email đã tồn tại.",
+                        Result = users.Result
+                    };
+                }
+                if(await CheckUserNameIsExist(request.UserName))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Tên tài khoản đã tồn tại.",
+                        Result = users.Result
+                    };
+                }
+                if(await CheckPhoneNumberIsExist(request.PhoneNumber))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Số điện thoại đã tồn tại.",
+                        Result = users.Result
+                    };
+                }
+                if(!CheckPhoneGenderIsvalid(request.Gender))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Giới tính không hợp lệ.",
+                        Result = users.Result
+                    };
+                }
 
-        //            var userRole = await _context.UserRoles.Where(prop => prop.UserId == new Guid(request.Id)).FirstOrDefaultAsync();
-        //            if(userRole == null)
-        //            {
-        //                var users = await GetAll(null);
-        //                return new ResponseResult<List<UserProfileRequest>>
-        //                {
-        //                    Success = false,
-        //                    Message = "Tài khoản đăng nhập hiện tại chưa được cấp quyền",
-        //                    Result = users.Result
-        //                };
-        //            }
+                if(!await CheckRoleUserLoginCurrent(request.Id))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Tài khoản đăng nhập không có quyền truy xuất này.",
+                        Result = users.Result
+                    };
+                }
 
-        //            var role = await _roleManager.FindByNameAsync("admin");
+                if(!await CheckRoleOfRoleIdRequest(request.RoleId))
+                {
+                    users = await GetAll(null);
+                    return new ResponseResult<List<UserProfileRequest>>
+                    {
+                        Success = false,
+                        Message = "Cấp quyền truy cập không hợp lệ.",
+                        Result = users.Result
+                    };
+                }
 
-        //            if(userRole.RoleId != role.Id)
-        //            {
-        //                var users = await GetAll(null);
-        //                return new ResponseResult<List<UserProfileRequest>>
-        //                {
-        //                    Success = false,
-        //                    Message = "Tài khoản đăng nhập hiện tại chưa được cấp quyền",
-        //                    Result = users.Result
-        //                };
-        //            }
+                var role = await _roleManager.FindByIdAsync(request.RoleId);
+                var id = Guid.NewGuid();
+                var stamp = Guid.NewGuid().ToString();
+                if(role.Name.ToLower() == "teacher")
+                {
+                    var user = new User
+                    {
+                        Id = id,
+                        UserName = request.UserName,
+                        NormalizedUserName = request.UserName.ToUpper(),
+                        FirstName = request.FirstName,
+                        LastName = request.LastName,
+                        Gender = request.Gender,
+                        DOB = request.DOB,
+                        PhoneNumber = request.PhoneNumber,
+                        Email = request.Email,
+                        EmailConfirmed = true,
+                        Address = request.Address,
+                        AvtName = request.AvtName,
+                        SecurityStamp = stamp,
+                        ConcurrencyStamp = stamp.ToUpper()
+                    };
 
-        //            role = await _roleManager.FindByIdAsync(request.RoleId);
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
 
-        //            if(role == null)
-        //            {
-        //                var users = await GetAll(null);
-        //                return new ResponseResult<List<UserProfileRequest>>
-        //                {
-        //                    Success = false,
-        //                    Message = "Cấp ",
-        //                    Result = users.Result
-        //                };
-        //            }
-        //public string Id { get; set; }
+                    var userRole = new IdentityUserRole<Guid>
+                    {
+                        UserId = id,
+                        RoleId = role.Id,
+                    };
 
-        //public string UserName { get; set; }
+                    await _context.UserRoles.AddAsync(userRole);
+                    await _context.SaveChangesAsync();
+                }
 
-        //public string FirstName { get; set; }
+                if(role.Name.ToLower() == "student")
+                {
+                    if(!await CheckTeacherIdRequest(request.TeacherId))
+                    {
+                        users = await GetAll(null);
+                        return new ResponseResult<List<UserProfileRequest>>
+                        {
+                            Success = false,
+                            Message = "Tài khoản giáo viên của thêm không tồn tại.",
+                            Result = users.Result
+                        };
+                    }
 
-        //public string LastName { get; set; }
+                    var user = new User
+                    {
+                        Id = id,
+                        UserName = request.UserName,
+                        NormalizedUserName = request.UserName.ToUpper(),
+                        FirstName = request.FirstName,
+                        LastName = request.LastName,
+                        Gender = request.Gender,
+                        DOB = request.DOB,
+                        PhoneNumber = request.PhoneNumber,
+                        Email = request.Email,
+                        EmailConfirmed = true,
+                        Address = request.Address,
+                        AvtName = request.AvtName,
+                        SecurityStamp = stamp,
+                        ConcurrencyStamp = stamp.ToUpper(),
+                        CreateDate = DateTime.Now,
+                        UpdateDate = DateTime.Now
+                    };
 
-        //public string Gender { get; set; }
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
 
-        //public DateTime? DOB { get; set; }
+                    var userRole = new IdentityUserRole<Guid>
+                    {
+                        UserId = id,
+                        RoleId = role.Id,
+                    };
 
-        //public string PhoneNumber { get; set; }
+                    await _context.UserRoles.AddAsync(userRole);
+                    await _context.SaveChangesAsync();
 
-        //public string Email { get; set; }
+                    var ind = new Individual
+                    {
+                        Id = id,
+                        TeacherId = new Guid(request.TeacherId),
+                        StudentId = id,
+                        CreateDate = DateTime.Now,
+                        UpdateDate = DateTime.Now
+                    };
 
-        //public string Address { get; set; }
+                    await _context.UserRoles.AddAsync(userRole);
+                    await _context.SaveChangesAsync();
+                }
+                users = await GetAll(null);
+                return new ResponseResultSuccess<List<UserProfileRequest>>(users.Result);
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<List<UserProfileRequest>>(ex.Message);
+            }
+        }
 
-        //public string AvtName { get; set; }
+        private bool CheckPhoneGenderIsvalid(string gender)
+        {
+            if(gender.ToLower() == "nam")
+                return true;
+            if(gender.ToLower() == "nữ")
+                return true;
+            return false;
+        }
 
-        //public string RoleId { get; set; }
+        private async Task<bool> CheckPhoneNumberIsExist(string phoneNumber)
+        {
+            var user = await _context.Users.Where(prop => prop.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+            if(user == null)
+                return false;
+            return true;
+        }
 
-        //public string RoleName { get; set; }
+        private async Task<bool> CheckUserNameIsExist(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if(user == null)
+                return false;
+            return true;
+        }
 
-        //public bool? Active { get; set; }
+        private async Task<bool> CheckEmailIsExist(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user == null)
+                return false;
+            return true;
+        }
 
-        //public string TeacherId { get; set; }
-        //    }
+        private async Task<bool> CheckTeacherIdRequest(string teacherId)
+        {
+            Guid id;
+            if(!Guid.TryParse(teacherId, out id))
+                return false;
 
-        //        }
+            var user = await _userManager.FindByIdAsync(teacherId);
+            if(user == null)
+                return false;
+
+            return true;
+        }
+
+        private async Task<bool> CheckRoleOfRoleIdRequest(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if(role == null)
+                return false;
+
+            if(role.Name.ToLower() != "admin")
+                return false;
+
+            return true;
+        }
+
+        private async Task<bool> CheckRoleUserLoginCurrent(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if(user != null)
+                return false;
+
+            var userRole = await _context.UserRoles
+                .Where(prop => prop.UserId == user.Id)
+                .FirstAsync();
+            if(userRole != null)
+                return false;
+
+            var role = await _roleManager.FindByIdAsync(userRole.RoleId.ToString());
+            if(role == null)
+                return false;
+
+            if(role.Name.ToLower() != "admin")
+                return false;
+
+            return true;
+        }
 
         public async Task<ResponseResult<UserProfileRequest>> UpdateUserProfile(UserProfileRequest request)
         {
             Guid id;
-            if(Guid.TryParse(request.Id, out id))
+            if(!Guid.TryParse(request.Id, out id))
                 return new ResponseResultError<UserProfileRequest>("Thông tin truy xuất không hợp lệ.");
 
             var user = await _context.Users.FindAsync(new Guid(request.Id));
@@ -663,11 +831,6 @@ namespace BehaviourManagementSystem_API.Services
                 Success = true,
                 Message = "Mật khẩu đã tồn tại."
             };
-        }
-
-        public Task<ResponseResult<List<UserProfileRequest>>> CreateUserProfile(UserProfileRequest request)
-        {
-            throw new NotImplementedException();
         }
     }
 }
