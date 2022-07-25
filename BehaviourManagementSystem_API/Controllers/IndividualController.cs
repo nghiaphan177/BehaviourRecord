@@ -123,5 +123,27 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(res);
         }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete([FromQuery] string indId, string teacherId)
+        {
+            Guid indid;
+            Guid teacherid;
+            if(!indId.CheckRequest())
+                return BadRequest("Dữ liệu không hợp lệ.");
+            if(!Guid.TryParse(indId, out indid))
+                return BadRequest("Dữ liệu không hợp lệ.");
+            if(!teacherId.CheckRequest())
+                return BadRequest("Dữ liệu không hợp lệ.");
+            if(!Guid.TryParse(teacherId, out indid))
+                return BadRequest("Dữ liệu không hợp lệ.");
+
+            var res = await _individualService.Delete(indId, teacherId);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
     }
 }

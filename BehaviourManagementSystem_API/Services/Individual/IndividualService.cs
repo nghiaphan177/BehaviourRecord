@@ -354,5 +354,52 @@ namespace BehaviourManagementSystem_API.Services
                 };
             }
         }
+
+        public async Task<ResponseResult<List<IndAssessRequest>>> Delete(string indId, string teacherId)
+        {
+            var ind = await _context.Individuals.FindAsync(indId);
+            var teacher = await _userManager.FindByIdAsync(teacherId);
+
+            if(teacher == null)
+                return new ResponseResultError<List<IndAssessRequest>>("Thông tin truy cập không hợp lệ.");
+
+            if(ind == null)
+            {
+                var inds = await GetAllIndWithTeacher(teacherId);
+                return new ResponseResult<List<IndAssessRequest>>
+                {
+                    Success = false,
+                    Message = "Không tìm thấy thông tin cần xóa.",
+                    Result = inds.Result
+                };
+            }
+            else
+            {
+                if(await _context.Assessments.CountAsync(prop => prop.IndividualId == ind.Id) > 0)
+                {
+                    var assess = await _context.Assessments
+                        .Where(prop => prop.IndividualId == ind.Id)
+                        .ToListAsync();
+
+                    foreach(var item in assess)
+                    {
+                        item.IndividualId = null;
+                        _context.Entry(item).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
+                    }
+
+                    _context.Entry(ind).State = EntityState.Deleted;
+                    await _context.SaveChangesAsync();
+
+                    var indss = await GetAllIndWithTeacher(teacherId);
+                    return new ResponseResultSuccess<List<IndAssessRequest>>(indss.Result);
+                }
+                _context.Entry(ind).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+
+                var inds = await GetAllIndWithTeacher(teacherId);
+                return new ResponseResultSuccess<List<IndAssessRequest>>(inds.Result);
+            }
+        }
     }
 }
