@@ -80,6 +80,18 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             return JsonConvert.DeserializeObject<ResponseResultError<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<ResponseResult<List<RoleRequest>>> GetRole()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            //truyen id user vao url api
+            var response = await client.GetAsync($"/api/Role/GetAll");
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<RoleRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<RoleRequest>>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<ResponseResult<UserProfileRequest>> GetUserById(string id)
         {
             var client = _httpClientFactory.CreateClient();

@@ -13,5 +13,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
         Task<ResponseResult<UserProfileRequest>> GetUserById(string id);
         Task<ResponseResult<UserProfileRequest>> UpdateUser(string id, UserProfileRequest user);
         Task<ResponseResult<List<UserProfileRequest>>> DeleteUser(string id);
+        Task<ResponseResult<List<RoleRequest>>> GetRole();
     }
 }

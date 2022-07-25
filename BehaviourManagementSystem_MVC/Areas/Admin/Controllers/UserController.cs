@@ -3,7 +3,10 @@ using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
@@ -51,8 +54,17 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         }
 
         // GET: UserController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var listrole = await _userAPIClient.GetRole();
+            if (listrole.Result != null)
+            {
+                ViewBag.Roles = listrole.Result.ConvertAll(r=> new SelectListItem
+                {
+                    Text = r.Name == "student"?"Học sinh":"Giáo viên",
+                    Value = r.Id
+                });
+            }
             return View();
         }
 
@@ -64,12 +76,12 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             try
             {
                 var response = await _userAPIClient.Create(request);
-                if(response == null)
+                if (response == null)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                if(response.Success == true)
-                return RedirectToAction(nameof(Index));
+                if (response.Success == true)
+                    return RedirectToAction(nameof(Index));
             }
             catch
             {
