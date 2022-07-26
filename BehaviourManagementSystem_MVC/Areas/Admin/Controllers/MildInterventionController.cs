@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     [Area("Admin")]
     public class MildInterventionController : Controller
     {
+        private readonly IToastNotification toastNotification;
         private readonly IOptionAPIClientMild _IOptionAPIClientMild;
-        public MildInterventionController(IOptionAPIClientMild IOptionAPIClientMild)
+        public MildInterventionController(IOptionAPIClientMild IOptionAPIClientMild, IToastNotification toastNotification)
         {
+            this.toastNotification = toastNotification;
             _IOptionAPIClientMild = IOptionAPIClientMild;
         }
         public async Task<IActionResult> Index(int? page)
@@ -50,7 +53,8 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientMild.Create(content);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Thêm thành công!";
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+
                     return RedirectToAction("Index",response.Result);
                 }
             }
@@ -89,7 +93,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientMild.Update(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageEdit"] = "SỬa thành công!";
+                    toastNotification.AddSuccessToastMessage("Sửa Thành Công!");
                     return RedirectToAction("Index", response.Result);
                 }
             }
@@ -108,9 +112,12 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientMild.Delete(id);
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Xóa Thành Công!");
+
                     return Json(new
                     {
-                        status = true
+                        status = true,
+
                     });
                 }
             }

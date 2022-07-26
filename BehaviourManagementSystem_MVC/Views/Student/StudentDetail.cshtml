@@ -109,19 +109,21 @@
             <ul class="nav nav-tabs nav-tabs-solid d-flex justify-content-center">
                 <li class="nav-item">
                     <a class="nav-link active" href="#solid-tab1"
-                       data-toggle="tab">Đánh Giá</a>
+                       data-toggle="tab">Danh Sách Đánh Giá Hành Vi</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#solid-tab2"
-                       data-toggle="tab">Can Thiệp</a>
-                </li>
+                @*<li class="nav-item">
+                <a class="nav-link" href="#solid-tab2"
+                   data-toggle="tab">Can Thiệp</a>
+            </li>*@
             </ul>
-            <hr style="height: 1px; border: none; color: #333; background-color: #b9b1b1;">
+            
             <div class="tab-content">
                 <div class="tab-pane show active" id="solid-tab1">
                     <a asp-action="Create" asp-controller="Assessment" asp-route-id="@Model.Individual.Id">
                         <button type="button" class="btn btn-info btn-danhgia">Thêm đánh giá</button>
                     </a>
+                    <hr style="height: 1px; border: none; color: #333; background-color: #b9b1b1; width: 100%; border-top: 1px dotted yellow;" />
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card card-table">
@@ -187,6 +189,12 @@
                                                             <td>Xin Chào</td>
                                                             <td class="text-right">
                                                                 <div class="actions">
+                                                                    <a href="/Intervention/GetInterventionById?id=@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                        <i class="fas fa-pen"></i>
+                                                                    </a>
+                                                                    <a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                        <i class="fas fa-pen"></i>
+                                                                    </a>
                                                                     <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
                                                                         <i class="fas fa-pen"></i>
                                                                     </a>
@@ -217,7 +225,6 @@
                         <div class="col-sm-12">
                             <div class="card card-table">
                                 <div class="card-body">
-                                    @await Component.InvokeAsync("InterventionAll")
                                 </div>
                             </div>
                         </div>
@@ -230,8 +237,7 @@
 </div>
 <!-- Đánh giá End -->
 
-<footer>
-</footer>
+
 @section scripts {
 <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
 <script>

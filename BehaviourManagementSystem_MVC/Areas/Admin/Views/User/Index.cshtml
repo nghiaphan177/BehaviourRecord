@@ -48,24 +48,24 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.Count; i++)
                                     {
-                                        <tr>
-                                            <th>@(i + 1)</th>
-                                            <td>@(@Model[i].FirstName + " " + @Model[i].LastName)</td>
-                                            <td>@Model[i].Email</td>
-                                            <td><span style="font-size:14px; text-align:center;" class="badge @(Model[i].RoleName=="TEACHER"? "badge-success":"badge-info")">@Model[i].RoleName</span></td>
-                                            <td>
-                                                @Model[i].PhoneNumber
-                                            </td>
-                                            <td>
-                                                <div class="button-items">
-                                                    <a href=@((Model[i].RoleName=="TEACHER"?"/admin/User/Detail/":"/admin/Student/Details/")+Model[i].Id) type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
-
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        if (Model[i].RoleName != "ADMIN")
+                                        {
+                                            <tr>
+                                                <th>@(i + 1)</th>
+                                                <td>@(@Model[i].FirstName + " " + @Model[i].LastName)</td>
+                                                <td>@Model[i].Email</td>
+                                                <td><span style="font-size:14px; text-align:center;" class="badge @(Model[i].RoleName=="TEACHER"? "badge-success":"badge-info")">@Model[i].RoleName</span></td>
+                                                <td>
+                                                    @Model[i].PhoneNumber
+                                                </td>
+                                                <td>
+                                                    <div class="button-items">
+                                                        <a href=@((Model[i].RoleName=="TEACHER"?"/admin/User/Detail/":"/admin/Student/Details/")+Model[i].Id) type="button" class="btn btn-info waves-effect waves-light">Xem thông tin</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-
-
                                 </tbody>
                             </table>
                         </div>

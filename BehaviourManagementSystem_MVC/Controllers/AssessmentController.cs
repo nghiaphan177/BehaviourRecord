@@ -16,13 +16,13 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IAntecedentActivityAPIClient _iAntecedentActivityAPIClient;
         private readonly IAntecedentEnvironmentalAPIClient _iAntecedentEnvironmentalAPIClient;
         private readonly IAntecedentPerceivedAPIClient _iAntecedentPerceivedAPIClient;
-        public AssessmentController(IAssessmentAPIClient assessmentAPIClient, 
-            IAntecedentActivityAPIClient IAntecedentActivityAPIClient, 
+        public AssessmentController(IAssessmentAPIClient assessmentAPIClient,
+            IAntecedentActivityAPIClient IAntecedentActivityAPIClient,
             IAntecedentEnvironmentalAPIClient IAntecedentEnvironmentalAPIClient,
             IAntecedentPerceivedAPIClient IAntecedentPerceivedAPIClient)
         {
             _assessmentAPIClient = assessmentAPIClient;
-            _iAntecedentActivityAPIClient= IAntecedentActivityAPIClient;
+            _iAntecedentActivityAPIClient = IAntecedentActivityAPIClient;
             _iAntecedentEnvironmentalAPIClient = IAntecedentEnvironmentalAPIClient;
             _iAntecedentPerceivedAPIClient = IAntecedentPerceivedAPIClient;
         }
@@ -35,7 +35,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.Get(assid);
-                if(response == null)
+                if (response == null)
                 {
                     return NotFound();
                 }
@@ -49,21 +49,21 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
         public IActionResult Create(string id)
         {
-            return View(new AssessmentRequest() { IndividualId = id });
+            return View(new AssessmentRequest() { Id = "", IndividualId = id });
         }
         [HttpPost]
-        public async Task<IActionResult> Create(string IndiId, AssessmentRequest request)
+        public async Task<IActionResult> Create(AssessmentRequest request)
         {
             try
             {
-                var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
+                var response = await _assessmentAPIClient.CreateRecord(request);
                 if (response == null)
                 {
                     return Json(new { success = false });
                 }
                 if (response.Success == true)
                 {
-                    ViewBag.AssId = response.Result.Id;
+                    ViewData["assid"] = response.Result.Id;
                     return Json(new { success = true, assid = response.Result.Id });
                 }
 
@@ -76,20 +76,23 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return Json(new { success = false });
         }
         [HttpPost]
-        public async Task<IActionResult> CreateRecordBehaviour(string assId, AssessmentRequest request)
+        public async Task<IActionResult> CreateRecordBehaviour( AssessmentRequest request)
         {
             try
             {
-                var response = await _assessmentAPIClient.CreateRecordBehaviour(ViewBag.AssId, request.AnalyzeBehaviour);
-                if (response == null)
+                if(ViewData["assid"] != null)
                 {
-                    return Json(new { success = false });
+                    string assid = ViewData["assid"].ToString();
+                    var response = await _assessmentAPIClient.CreateRecordBehaviour(assid, request.AnalyzeBehaviour);
+                    if (response == null)
+                    {
+                        return Json(new { success = false });
+                    }
+                    if (response.Success == true)
+                    {
+                        return Json(new { success = true });
+                    }
                 }
-                if (response.Success == true)
-                {
-                    return Json(new { success = true });
-                }
-
             }
             catch (Exception)
             {

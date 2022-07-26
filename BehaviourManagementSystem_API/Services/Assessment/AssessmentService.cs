@@ -34,8 +34,8 @@ namespace BehaviourManagementSystem_API.Services
                 {
                     Id = Guid.NewGuid(),
                     RecordDate = r_date,
-                    RecordStart = TimeSpan.Parse(r_start),
-                    RecordEnd = TimeSpan.Parse(r_end),
+                    RecordStart = r_start,
+                    RecordEnd = r_end,
                     RecordWhere = r_where,
                     RecordWho = r_who,
                     IndividualId = new Guid(ind_id),
@@ -86,13 +86,13 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<List<AssessmentRequest>>> GetAll(string ind_id)
         {
             var find = _context.Assessments.Where(p => p.IndividualId.ToString() == ind_id);
-            var assessment = _context.Assessments.Take(find.Count());
-            if (await assessment.AnyAsync() == false)
-            {
-                return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
-            }
+            //var assessment = _context.Assessments.Take(find.Count());
+            //if (await assessment.AnyAsync() == false)
+            //{
+            //    return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
+            //}
             var result = new List<AssessmentRequest>();
-            foreach (var item in assessment)
+            foreach (var item in find)
             {
                 result.Add(new AssessmentRequest()
                 {
@@ -223,8 +223,8 @@ namespace BehaviourManagementSystem_API.Services
             else
             {
                 obj.RecordDate = r_date;
-                obj.RecordStart = TimeSpan.Parse(r_start);
-                obj.RecordEnd = TimeSpan.Parse(r_end);
+                obj.RecordStart = r_start;
+                obj.RecordEnd = r_end;
                 obj.RecordWhere = r_where;
                 obj.RecordWho = r_who;
 

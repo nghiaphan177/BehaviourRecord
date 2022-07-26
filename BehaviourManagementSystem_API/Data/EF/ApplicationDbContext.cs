@@ -19,12 +19,10 @@ namespace BehaviourManagementSystem_API.Data.EF
         public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<Individual> Individuals { get; set; }
         public virtual DbSet<Intervention> Interventions { get; set; }
-        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<ProfileExtreme> ProfileExtremes { get; set; }
         public virtual DbSet<ProfileMild> ProfileMilds { get; set; }
         public virtual DbSet<ProfileModerate> ProfileModerates { get; set; }
         public virtual DbSet<ProfileRecovery> ProfileRecoveries { get; set; }
-        public virtual DbSet<TermCondition> TermConditions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,13 +41,11 @@ namespace BehaviourManagementSystem_API.Data.EF
             builder.ApplyConfiguration(new AssesetmentConfiguration());
             builder.ApplyConfiguration(new IndividualConfiguration());
             builder.ApplyConfiguration(new InterventionConfiguration());
-            builder.ApplyConfiguration(new NotificationConfiguration());
             builder.ApplyConfiguration(new ProfileExtremeConfiguration());
             builder.ApplyConfiguration(new ProfileMildConfiguration());
             builder.ApplyConfiguration(new ProfileModerateConfiguration());
             builder.ApplyConfiguration(new ProfileRecoveryConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new TermConditionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.Seed();
         }

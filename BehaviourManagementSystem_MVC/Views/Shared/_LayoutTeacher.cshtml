@@ -59,7 +59,7 @@
 
                         @{
                             var user_token = ViewBag.Token;
-                            if(string.IsNullOrEmpty(user_token))
+                            if (string.IsNullOrEmpty(user_token))
                             {
                                 <a class="dropdown-item" href="/Account/Logout">Login</a>
                             }
@@ -102,7 +102,7 @@
                                 <li><a href="/Account/Login">Đăng nhập</a></li>
                                 <li><a href="/Home/Register">Đăng kí</a></li>
                                 @*<li><a href="forgot-password.html">Forgot Password</a></li>
-                                <li><a href="error-404.html">Error Page</a></li>*@
+                                    <li><a href="error-404.html">Error Page</a></li>*@
                             </ul>
                         </li>
 
@@ -142,9 +142,26 @@
     <script src="~/assets/js/circle-progress.min.js"></script>
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/script.js"></script>
+    @await Component.InvokeAsync("NToastNotify")
     @RenderSection("Scripts", false)
+    @if (TempData["MessageEdit"] != null)
+    {
+        <script type="text/javascript">
+
+            $('.nav a[href="#quanlycanthiep"]').tab('show');
+
+        </script>
+    }
+    @if (TempData["MessageEditManage"] != null)
+    {
+        <script type="text/javascript">
+
+            $('.nav a[href="#nganchantaipham"]').tab('show');
+
+        </script>
+    }
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
 
 
             //$('.stMenu li').click(function (e) {
@@ -156,7 +173,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                // Add active class to the current button (highlight it)
+                            // Add active class to the current button (highlight it)
 
     </script>
 </body>

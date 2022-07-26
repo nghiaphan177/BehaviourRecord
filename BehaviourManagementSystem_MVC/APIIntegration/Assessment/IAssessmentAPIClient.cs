@@ -10,7 +10,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
     {
         Task<ResponseResult<List<AssessmentRequest>>> GetAll(string IndiID);
         Task<ResponseResult<AssessmentRequest>> Get(string id);
-        Task<ResponseResult<AssessmentRequest>> CreateRecord(string IndiId, AssessmentRequest content);
+        Task<ResponseResult<AssessmentRequest>> CreateRecord( AssessmentRequest content);
         Task<ResponseResult<AssessmentRequest>> CreateRecordBehaviour(string AssId, string content);
         Task<ResponseResult<AssessmentRequest>> CreateRecordAntecedent(string AssId, AssessmentRequest content);
         Task<ResponseResult<AssessmentRequest>> CreateRecordConsequence(string AssId, AssessmentRequest content);
