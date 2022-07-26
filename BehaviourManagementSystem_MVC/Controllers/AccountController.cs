@@ -46,12 +46,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult NewPass(string id)
+        public IActionResult NewPass()
         {
-            ViewData["id"] = id;
             return View(); // view đẻ người dùng nhập pass
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> NewPass(ResetPasswordRequest req)
         {
@@ -63,16 +62,32 @@ namespace BehaviourManagementSystem_MVC.Controllers
             req.PasswordNew != req.PasswordConfirm)
                 return View(ModelState); // view hiện tại không validate
 
-            req.Id = User.FindFirst("Id").Value; 
+            req.Id = HttpContext.Session.GetString("googleid");
 
             var res = await _accountAPIClient.NewPassOfAccountGoogle(req);
 
             if(!res.Success)
-                return RedirectToAction("Index", "Home");
+                return NotFound();
 
-            return View(ModelState);
+            var userPrincipal = ValidateToken(res.Result);
+
+            HttpContext.Session.SetString("Token", res.Result);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true
+            };
+
+            authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
+
+            await HttpContext.SignInAsync(
+                        "Teacher",
+                        userPrincipal,
+                        authProperties);
+
+            return RedirectToAction("Index", "Home");
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> GoogleSigin(string token)
         {
@@ -83,6 +98,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var id = userPrincipal.FindFirst("Id").Value;
 
+            HttpContext.Session.SetString("google", token);
+
+            if(!await CheckPasswordIsExist(id))
+            {
+                HttpContext.Session.SetString("googleid", id);
+                return RedirectToAction("NewPass", "Account");
+            }
+
             var authProperties = new AuthenticationProperties
             {
                 IsPersistent = true
@@ -90,18 +113,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
 
-            HttpContext.Session.SetString("google", token);
-
             await HttpContext.SignInAsync(
                         "Teacher",
                         userPrincipal,
                         authProperties);
-
-            if(!await CheckPasswordIsExist(id))
-            {
-                return RedirectToAction("NewPass", "Account", new { id });
-            }
-
+      
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
             return RedirectToAction("Index", "Home");
         }

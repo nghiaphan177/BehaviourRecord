@@ -28,6 +28,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
         
 		Task<ResponseResult<string>> CheckPasswordNull(string id);
 
-        Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req);
+        Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req);
+     
+		Task<ResponseResult<UserProfileRequest>> GetAccountById(string id);
     }
 }

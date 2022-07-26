@@ -835,7 +835,7 @@ namespace BehaviourManagementSystem_API.Services
             };
         }
 
-        public async Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req)
+        public async Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req)
         {
             var user = await _userManager.FindByIdAsync(req.Id);
 
@@ -843,9 +843,14 @@ namespace BehaviourManagementSystem_API.Services
 
             var result = await _userManager.ResetPasswordAsync(user, code, req.PasswordNew);
 
-            if(result.Succeeded)
-                return new ResponseResultSuccess<bool>();
-            return new ResponseResultError<bool>();
+            if(!result.Succeeded)
+                return new ResponseResultError<string>();
+
+            var token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
+
+            if(token == null)
+                return new ResponseResultError<string>();
+            return new ResponseResultSuccess<string>(token);
         }
     }
 }

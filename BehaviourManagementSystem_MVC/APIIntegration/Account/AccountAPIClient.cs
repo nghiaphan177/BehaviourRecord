@@ -14,11 +14,13 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 {
     public class AccountAPIClient : IAccountAPIClient
     {
+        private readonly IUserAPIClient _userAPIClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        public AccountAPIClient(IHttpContextAccessor httpContextAccessor, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public AccountAPIClient(IUserAPIClient userAPIClient, IHttpContextAccessor httpContextAccessor, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
+            this._userAPIClient = userAPIClient;
             this._httpContextAccessor = httpContextAccessor;
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
@@ -167,7 +169,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
             return JsonConvert.DeserializeObject<ResponseResultError<string>>(await res.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req)
+        public async Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req)
         {
             var client = _httpClientFactory.CreateClient();
 
@@ -182,13 +184,27 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
             var response = await client.PostAsync($"/api/Account/NewPassOfAccountGoogle", httpContent);
 
             if(response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ResponseResultSuccess<bool>>(await response.Content.ReadAsStringAsync());
-            return JsonConvert.DeserializeObject<ResponseResultError<bool>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<string>>(await response.Content.ReadAsStringAsync());
         }
 
         public Task<ResponseResult<string>> CheckImgUrl(string result)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ResponseResult<UserProfileRequest>> GetAccountById(string id)
+        {
+            try
+            {
+                var res = await _userAPIClient.GetUserById(id);
+                return res;
+            }
+            catch(Exception ex)
+            {
+                var res = new ResponseResultError<UserProfileRequest>(ex.Message);
+                return res;
+            }
         }
     }
 }
