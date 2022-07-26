@@ -174,8 +174,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 return RedirectToAction(nameof(Create));
             }
         }
-
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult NewPassword(string id, string code)
         {
             if(string.IsNullOrEmpty(id) ||
@@ -184,7 +183,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             return View(); // cần form new pass
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<IActionResult> NewPassword(ResetPasswordRequest req)
         {
             if(!ModelState.IsValid)
