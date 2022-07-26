@@ -176,12 +176,30 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public IActionResult NewPassword(string id, string code)
-        {
+        public async Task<IActionResult> NewPassword(string id, string code)
+        {            
             if(string.IsNullOrEmpty(id) ||
                 string.IsNullOrEmpty(code))
                 return NotFound();
-            return View(); // cần form new pass
+            try
+            {
+                var user = await _userAPIClient.GetUserById(id);
+                if(user == null)
+                {
+                    return NoContent();
+                }
+                if(user.Success == false)
+                {
+                    return NoContent();
+                }
+                ViewBag.User = user.Result;
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost, AllowAnonymous]
@@ -203,17 +221,17 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 
             if(res == null)
             {
-                ViewBag.MessageError = "Đặt mật khẩu không thành công";
+                toastNotification.AddErrorToastMessage("Đặt mật khẩu không thành công");
                 return View();
             }
 
             if(!res.Success)
             {
-                ViewBag.MessageError = "Đặt mật khẩu không thành công";
-                return View();
+                toastNotification.AddErrorToastMessage("Đặt mật khẩu không thành công");
+                return RedirectToAction("NewPassword",new { id = req.Id, code=req.Code });
             }
-
-            return RedirectToAction("Index", "Home");
+            toastNotification.AddSuccessToastMessage("Đổi tài khoản thành công");
+            return Redirect("/");
         }
 
         // GET: UserController/Edit/5
