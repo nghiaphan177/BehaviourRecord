@@ -77,7 +77,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button onclick="submitAssessment()" id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                     <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
@@ -106,6 +106,7 @@
                                 <!-- Tab Phân Tích - Hành Vi Start-->
                                 <div class="tab-pane show active" id="pt-hanhvi">
                                     <form id="updateBehaviourForm" asp-action="CreateRecordBehaviour" asp-controller="Assessment" method="post">
+                                        <input value="@ViewData["assid"]" type="text" class="form-control"  name="Id"/>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi</label>
                                             <div class="col-md-10">
@@ -357,44 +358,5 @@
             dropdown: true,
             scrollbar: true
         });
-        function submitAssessment(){
-
-        var form = $(this);
-        var actionUrl = form.attr('action');
-        var data = $("#assessform").serialize();
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: data, // serializes the form's elements.
-            success: function(result)
-            {
-                if(result.success == true){
-                     $('.nav a[href="#phantich"]').removeClass("disabled")
-                     $('.nav a[href="#phantich"]').tab('show');
-                }
-
-            }
-        });
-        }
-            $('#myform').on('submit', function (e) {
-    e.preventDefault();
-
-
-        var form = $(this);
-        var actionUrl = form.attr('action');
-        var data = $("#updateBehaviourForm").serialize();
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: data, // serializes the form's elements.
-            success: function(result)
-            {
-               $('.nav a[href="#phantich"]').removeClass("disabled")
-               $('.nav a[href="#phantich"]').tab('show');
-            }
-        });
-        }
-
-
 </script>
 }

@@ -169,19 +169,10 @@
             confirmButtonText: 'Yes!'
         }).then(function () {
             $.ajax({
-                url: "User/delete",
+                url: "/Admin/User/delete",
                 data: { "id": id },
-                type: "DELETE",
-                success: function (result) {
-                    if (result.status == true) {
-                        swal(
-                            'Đã Xóa Thành Công!',
-                            '',
-                            'success'
-                        ),
-                            $("#mild-" + id).remove();
-                    }
-                }
+                type: "DELETE"                                               
+           
             })
         })
     }

@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -16,15 +17,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IAntecedentActivityAPIClient _iAntecedentActivityAPIClient;
         private readonly IAntecedentEnvironmentalAPIClient _iAntecedentEnvironmentalAPIClient;
         private readonly IAntecedentPerceivedAPIClient _iAntecedentPerceivedAPIClient;
+        private readonly IToastNotification toastNotification;
         public AssessmentController(IAssessmentAPIClient assessmentAPIClient,
             IAntecedentActivityAPIClient IAntecedentActivityAPIClient,
             IAntecedentEnvironmentalAPIClient IAntecedentEnvironmentalAPIClient,
-            IAntecedentPerceivedAPIClient IAntecedentPerceivedAPIClient)
+            IAntecedentPerceivedAPIClient IAntecedentPerceivedAPIClient,
+            IToastNotification toastNotification)
         {
             _assessmentAPIClient = assessmentAPIClient;
             _iAntecedentActivityAPIClient = IAntecedentActivityAPIClient;
             _iAntecedentEnvironmentalAPIClient = IAntecedentEnvironmentalAPIClient;
             _iAntecedentPerceivedAPIClient = IAntecedentPerceivedAPIClient;
+            this.toastNotification = toastNotification;
         }
         public IActionResult Index()
         {
@@ -57,6 +61,50 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.CreateRecord(request);
+                if (response == null)
+                {
+                    return NotFound();
+                }
+                if (response.Success == true)
+                {
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return NotFound();
+        }
+        public async Task<IActionResult> Edit(string assid)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.Get(assid);
+                if (response == null)
+                {
+                    return NotFound();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.CreateRecord(request);
                 if(response == null)
                 {
                     return Json(new { success = false });
@@ -80,18 +128,16 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             try
             {
-                if(ViewData["assid"] != null)
+                var response = await _assessmentAPIClient.CreateRecordBehaviour(request.Id, request.AnalyzeBehaviour);
+                if (response == null)
                 {
-                    string assid = ViewData["assid"].ToString();
-                    var response = await _assessmentAPIClient.CreateRecordBehaviour(assid, request.AnalyzeBehaviour);
-                    if(response == null)
-                    {
-                        return Json(new { success = false });
-                    }
-                    if(response.Success == true)
-                    {
-                        return Json(new { success = true });
-                    }
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["MessageEditBeha"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { id = request.Id });
                 }
             }
             catch(Exception)
@@ -102,26 +148,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return Json(new { success = false });
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(string AssessId)
+public async Task<IActionResult> Delete(string AssessId)
+{
+    try
+    {
+        var response = await _assessmentAPIClient.Delete(AssessId);
+        if (response == null)
         {
-            try
-            {
-                var response = await _assessmentAPIClient.Delete(AssessId);
-                if(response == null)
-                {
-                    return Json(new { success = false });
-                }
-                if(response.Success)
-                {
-                    return Json(new { success = true });
-                }
-            }
-            catch(Exception)
-            {
-
-                throw;
-            }
             return Json(new { success = false });
         }
+        if (response.Success)
+        {
+            return Json(new { success = true });
+        }
+    }
+    catch (Exception)
+    {
+
+        throw;
+    }
+    return Json(new { success = false });
+}
     }
 }
