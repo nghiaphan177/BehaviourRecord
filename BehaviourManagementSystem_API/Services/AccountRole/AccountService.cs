@@ -150,6 +150,7 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest()
             {
                 Id = user.Id.ToString(),
+                UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,

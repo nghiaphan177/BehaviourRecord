@@ -39,13 +39,13 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.Get(assid);
-                if (response == null)
+                if(response == null)
                 {
                     return NotFound();
                 }
                 return View(response.Result);
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;
@@ -105,20 +105,20 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.CreateRecord(request);
-                if (response == null)
+                if(response == null)
                 {
                     return Json(new { success = false });
                 }
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     ViewData["assid"] = response.Result.Id;
                     return Json(new { success = true, assid = response.Result.Id });
                 }
 
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
+                return NotFound(ex.Message);
                 throw;
             }
             return Json(new { success = false });
@@ -140,7 +140,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     return RedirectToAction("Edit", new { id = request.Id });
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;

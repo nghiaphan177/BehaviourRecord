@@ -174,6 +174,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 return RedirectToAction(nameof(Create));
             }
         }
+
         [HttpGet, AllowAnonymous]
         public IActionResult NewPassword(string id, string code)
         {
