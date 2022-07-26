@@ -45,6 +45,34 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult NewPass(string id)
+        {
+            ViewData["id"] = id;
+            return View(); // view đẻ người dùng nhập pass
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewPass(ResetPasswordRequest req)
+        {
+            if(req == null)
+                return View(ModelState); // view hiện tại khi model null
+
+            if(string.IsNullOrEmpty(req.PasswordNew) ||
+            string.IsNullOrEmpty(req.PasswordConfirm) ||
+            req.PasswordNew != req.PasswordConfirm)
+                return View(ModelState); // view hiện tại không validate
+
+            req.Id = User.FindFirst("Id").Value; 
+
+            var res = await _accountAPIClient.NewPassOfAccountGoogle(req);
+
+            if(!res.Success)
+                return RedirectToAction("Index", "Home");
+
+            return View(ModelState);
+        }
+
         public async Task<IActionResult> GoogleSigin(string token)
         {
             if(string.IsNullOrEmpty(token))
@@ -52,22 +80,42 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var userPrincipal = ValidateToken(token);
 
+            var id = userPrincipal.FindFirst("Id").Value;
+
             var authProperties = new AuthenticationProperties
             {
                 IsPersistent = true
             };
 
-
             authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
 
-            HttpContext.Session.SetString("Token", token);
+            HttpContext.Session.SetString("google", token);
 
             await HttpContext.SignInAsync(
                         "Teacher",
                         userPrincipal,
                         authProperties);
+
+            if(!await CheckPasswordIsExist(id))
+            {
+                return RedirectToAction("NewPass", "Account", new { id });
+            }
+
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
             return RedirectToAction("Index", "Home");
+        }
+
+        private async Task<bool> CheckPasswordIsExist(string id)
+        {
+            if(string.IsNullOrEmpty(id))
+                return false;
+
+            var res = await _accountAPIClient.CheckPasswordNull(id);
+
+            if(!res.Success)
+                return false;
+
+            return true;
         }
 
         [HttpPost]
@@ -324,15 +372,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var response = await _accountAPIClient.ResetPassword(request);
 
-			if(!response.Success)
-				return View(); // reset pass không thành không
-			return RedirectToAction("ChangePassSuccess"); // reset thành công
-		}
-		[HttpGet]
-		public IActionResult ChangePassSuccess()
-		{
-			return View();
-		}
+            if(!response.Success)
+                return View(); // reset pass không thành không
+            return RedirectToAction("ChangePassSuccess"); // reset thành công
+        }
+        [HttpGet]
+        public IActionResult ChangePassSuccess()
+        {
+            return View();
+        }
 
         private ClaimsPrincipal ValidateToken(string token)
         {

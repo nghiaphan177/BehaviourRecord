@@ -258,8 +258,8 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("CheckPasswordNull/{id}")]
-        public async Task<IActionResult> CheckPasswordNull(string id)
+        [HttpGet("CheckPasswordNull/{id}"), AllowAnonymous]
+        public async Task<IActionResult> CheckPasswordNull([FromQuery] string id)
         {
             Guid guid;
             if(string.IsNullOrEmpty(id))
@@ -268,6 +268,18 @@ namespace BehaviourManagementSystem_API.Controllers
                 return BadRequest("Truy cập không hợp lệ.");
 
             var res = await _accountService.CheckPassworkNull(id);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> NewPassOfAccountGoogle([FromBody] ResetPasswordRequest req)
+        {
+            var res = await _accountService.NewPassOfAccountGoogle(req);
 
             if(!res.Success)
                 return BadRequest(res);
