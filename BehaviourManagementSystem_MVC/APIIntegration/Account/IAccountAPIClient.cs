@@ -18,6 +18,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 
 		Task<ResponseResult<string>> ResetPassword(ResetPasswordRequest repuest);
 
+		Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest request);
+
 		Task<ResponseResult<bool>> GetEmailConfirmed(string email);
     
 		Task<ResponseResult<string>> GetImg(string userId);

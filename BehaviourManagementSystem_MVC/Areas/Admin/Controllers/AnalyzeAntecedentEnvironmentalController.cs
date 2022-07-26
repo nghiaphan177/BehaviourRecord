@@ -13,7 +13,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
     public class AnalyzeAntecedentEnvironmentalController : Controller
-    {
+    {   
         private readonly IAntecedentEnvironmentalAPIClient _IAntecedentEnvironmentalAPIClient;
         private readonly IToastNotification toastNotification;
         public AnalyzeAntecedentEnvironmentalController(IAntecedentEnvironmentalAPIClient IAntecedentEnvironmentalAPIClient, IToastNotification toastNotification)

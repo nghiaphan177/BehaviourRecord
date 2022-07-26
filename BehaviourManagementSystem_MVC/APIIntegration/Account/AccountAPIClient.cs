@@ -193,6 +193,22 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
             throw new NotImplementedException();
         }
 
+        public async Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.PostAsync($"/api/Account/ChangePassword", httpContent);
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<ResponseResult<UserProfileRequest>> GetAccountById(string id)
         {
             try

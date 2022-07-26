@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_API.Services;
+﻿using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Services;
 using BehaviourManagementSystem_API.Utilities;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,6 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             _individualService = individualService;
         }
-
         [HttpGet("get-all")]
         //[Authorize(Roles="admin,teacher")]
         //Lấy danh sách individual

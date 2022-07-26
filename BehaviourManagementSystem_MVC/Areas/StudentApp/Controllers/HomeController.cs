@@ -1,12 +1,14 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.Individual;
+using BehaviourManagementSystem_MVC.APIIntegration.Intervention;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Net;
@@ -21,29 +23,82 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly IUserAPIClient _userAPIClient;
+        private readonly IInterventionAPIClient _interventionAPIClient;
 
-        public HomeController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment,IUserAPIClient userAPIClient)
+        public HomeController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment, IInterventionAPIClient interventionAPIClient )
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
-            _userAPIClient = userAPIClient;
+            _interventionAPIClient = interventionAPIClient;
         }
         public async Task<IActionResult> Index()
         {
             var id = User.FindFirst("Id").Value;
             try
             {
-                var response = await _userAPIClient.GetUserById(id);
+                var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+                
                 if (response.Success == true)
+                {
+                    try
+                    {
+                        var individualId = response.Result.Ind_Id;
+                        var response_assessment = await _assessmentAPIClient.GetAll(individualId);
+                        List<InterventionRequest> intervention_list = new List<InterventionRequest>();
+                        if (response_assessment.Success == true)
+                        {
+                            ViewBag.ListAssessment = response_assessment.Result;
+                            foreach (var item in response_assessment.Result)
+                            {
+                                var response_intervention = await _interventionAPIClient.GetAll(item.Id);
+                                response_intervention.Result.ForEach(inter => intervention_list.Add(inter)) ;
+                            }
+                        }
+                        ViewBag.ListIntervention = intervention_list;
+                        return View(response.Result);
+                    }
+                    catch(Exception)
+                    {
+                        throw;
+                    }
+                    
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return View();
+        }
+        public async Task<IActionResult> Assessment(string id)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.Get(id);
+                if(response.Success==true)
                 {
                     return View(response.Result);
                 }
             }
             catch (Exception)
             {
-
+                throw;
+            }
+            return View();
+        }
+        public async Task<IActionResult> Intervention (string id)
+        {
+            try
+            {
+                var response = await _interventionAPIClient.Get(id);
+                if(response.Success==true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
                 throw;
             }
             return View();

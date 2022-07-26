@@ -65,7 +65,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
         public async Task<ResponseResult<List<OptionsRequest>>> GetAll()
         {
             var client = _httpClientFactory.CreateClient();
-
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.GetAsync($"/api/AnalyzeAntecedentEnvironmental/get-all");
             if (response.IsSuccessStatusCode)
