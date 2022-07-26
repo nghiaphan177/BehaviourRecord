@@ -175,7 +175,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult NewPassword(string id, string code)
         {
             if(string.IsNullOrEmpty(id) ||
