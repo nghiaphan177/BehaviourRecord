@@ -51,7 +51,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             ViewData["id"] = id;
             return View(); // view đẻ người dùng nhập pass
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> NewPass(ResetPasswordRequest req)
         {
@@ -72,7 +72,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             return View(ModelState);
         }
-
+        
+        [HttpPost]
         public async Task<IActionResult> GoogleSigin(string token)
         {
             if(string.IsNullOrEmpty(token))
