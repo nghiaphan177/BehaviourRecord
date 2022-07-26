@@ -35,13 +35,13 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.Get(assid);
-                if (response == null)
+                if(response == null)
                 {
                     return NotFound();
                 }
                 return View(response.Result);
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;
@@ -57,26 +57,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.CreateRecord(request);
-                if (response == null)
+                if(response == null)
                 {
                     return Json(new { success = false });
                 }
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     ViewData["assid"] = response.Result.Id;
                     return Json(new { success = true, assid = response.Result.Id });
                 }
 
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
+                return NotFound(ex.Message);
                 throw;
             }
             return Json(new { success = false });
         }
         [HttpPost]
-        public async Task<IActionResult> CreateRecordBehaviour( AssessmentRequest request)
+        public async Task<IActionResult> CreateRecordBehaviour(AssessmentRequest request)
         {
             try
             {
@@ -84,17 +84,17 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     string assid = ViewData["assid"].ToString();
                     var response = await _assessmentAPIClient.CreateRecordBehaviour(assid, request.AnalyzeBehaviour);
-                    if (response == null)
+                    if(response == null)
                     {
                         return Json(new { success = false });
                     }
-                    if (response.Success == true)
+                    if(response.Success == true)
                     {
                         return Json(new { success = true });
                     }
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;
@@ -107,16 +107,16 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.Delete(AssessId);
-                if (response == null)
+                if(response == null)
                 {
                     return Json(new { success = false });
                 }
-                if (response.Success)
+                if(response.Success)
                 {
                     return Json(new { success = true });
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;
