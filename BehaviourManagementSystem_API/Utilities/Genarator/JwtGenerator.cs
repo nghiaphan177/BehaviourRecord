@@ -24,14 +24,15 @@ namespace BehaviourManagementSystem_API.Utilities.JwtGenarator
         public async Task<string> GenerateTokenLoginSuccessAsync(User user)
         {
             var role = await _roleService.GetRoleNameByUserId(user.Id.ToString());
+
             var roleNameNormal = role.Success ? role.Result : null;
 
             var claims = new[]
             {
                 new Claim("Id", user.Id.ToString()),
-                new Claim("UserName",user.UserName),
-                new Claim(ClaimTypes.Surname, user.FirstName),
-                new Claim(ClaimTypes.Name, user.LastName),
+                new Claim("UserName",user.UserName ?? ""),
+                new Claim(ClaimTypes.Surname, user.FirstName ?? ""),
+                new Claim(ClaimTypes.Name, user.LastName ?? ""),
                 new Claim(ClaimTypes.Role, roleNameNormal),
             };
 
