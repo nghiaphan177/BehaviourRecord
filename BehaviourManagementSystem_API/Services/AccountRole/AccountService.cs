@@ -376,7 +376,7 @@ namespace BehaviourManagementSystem_API.Services
                         Email = request.Email,
                         EmailConfirmed = true,
                         Address = request.Address,
-                        AvtName = request.AvtName,
+                        AvtName = request.AvtName == null ? "default_avt.png" : request.FirstName,
                         SecurityStamp = stamp,
                         ConcurrencyStamp = stamp.ToUpper()
                     };

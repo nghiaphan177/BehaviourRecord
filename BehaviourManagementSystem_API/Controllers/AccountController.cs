@@ -259,7 +259,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpGet("CheckPasswordNull/{id}"), AllowAnonymous]
-        public async Task<IActionResult> CheckPasswordNull([FromQuery] string id)
+        public async Task<IActionResult> CheckPasswordNull(string id)
         {
             Guid guid;
             if(string.IsNullOrEmpty(id))
@@ -275,7 +275,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
+        [HttpPost("NewPassOfAccountGoogle")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> NewPassOfAccountGoogle([FromBody] ResetPasswordRequest req)
         {

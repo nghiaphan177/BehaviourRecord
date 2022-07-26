@@ -101,12 +101,22 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 if(!response.Success == true)
                     return RedirectToAction(nameof(Create));
 
+                string id = "";
+                foreach(var item in response.Result)
+                {
+                    if(item.Email == request.Email)
+                    { 
+                        id = item.Id;
+                        break;
+                    }
+                }
+
                 // Chổ này cần gửi mail để cho account vừa tạo nhập mật khẩu
-                var res = await _accountAPIClient.ForgotPassword(request.Email);
+                var res = await _accountAPIClient.ForgotPassword(request.UserName);
 
                 var uri = new UriBuilder(_config["EmailSettings:MailBodyHtml"] + "/Admin/User/NewPassword");
                 var query = HttpUtility.ParseQueryString(uri.Query);
-                query["id"] = res.Result.Id;
+                query["id"] = id;
                 query["code"] = res.Result.Code;
                 uri.Query = query.ToString();
                 var url = uri.ToString();

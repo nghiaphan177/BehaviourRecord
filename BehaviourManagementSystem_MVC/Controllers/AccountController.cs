@@ -122,6 +122,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Home")
         {
+            ViewBag.api = _configuration["BaseAddress"];
+
+            var res = await _accountAPIClient.GetGoogleClientId();
+
+            ViewBag.GoogleClientId = res.Result;
+
             if(ReturnUrl == null)
             {
                 ReturnUrl = "/Home";
