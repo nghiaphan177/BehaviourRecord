@@ -78,7 +78,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             }
             catch (Exception ex)
             {
-
+                return NotFound(ex.Message);
                 throw;
             }
             return Json(new { success = false });

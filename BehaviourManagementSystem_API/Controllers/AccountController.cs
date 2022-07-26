@@ -187,7 +187,7 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("User")]
+        [HttpGet("User"), AllowAnonymous]
         public async Task<IActionResult> GetUser(string id)
         {
             if(!ModelState.IsValid || id.CheckRequest())

@@ -113,7 +113,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             catch (Exception ex)
             {
-
+                return NotFound(ex.Message);
                 throw;
             }
             return Json(new { success = false });
