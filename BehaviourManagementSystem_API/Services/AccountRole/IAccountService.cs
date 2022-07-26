@@ -42,6 +42,6 @@ namespace BehaviourManagementSystem_API.Services
         
         Task<ResponseResult<bool>> CheckPassworkNull(string id);
 
-        Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req);
+        Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req);
     }
 }

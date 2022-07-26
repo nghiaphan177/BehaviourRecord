@@ -61,38 +61,32 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.CreateRecord(request);
-                if (response == null)
+                if(response == null || !response.Success)
                 {
                     return NotFound();
                 }
-                if (response.Success == true)
-                {
-                    return RedirectToAction("Edit", new { assid = response.Result.Id });
-                }
-
+                return RedirectToAction("Edit", new { assid = response.Result.Id });
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
-                throw;
+                return NotFound(ex.Message);
             }
-            return NotFound();
         }
         public async Task<IActionResult> Edit(string assid)
         {
             try
             {
                 var response = await _assessmentAPIClient.Get(assid);
-                if (response == null)
+                if(response == null)
                 {
                     return NotFound();
                 }
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     return View(response.Result);
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
 
                 throw;
@@ -129,11 +123,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.CreateRecordBehaviour(request.Id, request.AnalyzeBehaviour);
-                if (response == null)
+                if(response == null)
                 {
                     return Json(new { success = false });
                 }
-                if (response.Success == true)
+                if(response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     TempData["MessageEditBeha"] = "Sửa thành công!";
@@ -148,26 +142,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return Json(new { success = false });
         }
         [HttpPost]
-public async Task<IActionResult> Delete(string AssessId)
-{
-    try
-    {
-        var response = await _assessmentAPIClient.Delete(AssessId);
-        if (response == null)
+        public async Task<IActionResult> Delete(string AssessId)
         {
+            try
+            {
+                var response = await _assessmentAPIClient.Delete(AssessId);
+                if(response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if(response.Success)
+                {
+                    return Json(new { success = true });
+                }
+            }
+            catch(Exception)
+            {
+
+                throw;
+            }
             return Json(new { success = false });
         }
-        if (response.Success)
-        {
-            return Json(new { success = true });
-        }
-    }
-    catch (Exception)
-    {
-
-        throw;
-    }
-    return Json(new { success = false });
-}
     }
 }

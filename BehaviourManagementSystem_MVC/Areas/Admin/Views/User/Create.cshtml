@@ -157,7 +157,11 @@
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Vai trò</label>
                         <div class="col-sm-6 mt-2">
-                            <select id="optionrole" asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles">
+                            @*<select  asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles">
+                            </select>*@
+                            <select id="option-role" asp-for="@Model.TeacherId" class="form-control">
+                                <option value="1">Học Sinh</option>
+                                <option value="2">Giáo Viên</option>
                             </select>
                         </div>
                     </div>
@@ -221,13 +225,24 @@
         //}
     </script>
     <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('#optionteacher').hide();
+        //    if ($('#option-role').val()=='1') {
+        //        $('#optionteacher').fadeIn();
+        //    } else {
+        //        $('#optionteacher').hide();
+        //    }
+        //});
         $(document).ready(function () {
             $('#optionteacher').hide();
-            if ($('#optionrole option:selected').text() == 'Giáo viên') {
-                $('#optionteacher').fadeIn();
-            } else {
-                $('#optionteacher').hide();
-            }
+            $('#option-role').on('change', function () {
+                var demovalue = $(this).val();
+                if (demovalue==1) {
+                    $('#optionteacher').fadeIn();
+                } else {
+                    $('#optionteacher').hide();
+                }
+            });
         });
         function onFileSelected(event) {
             var selectedFile = event.target.files[0];
