@@ -148,7 +148,6 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                     ViewBag.Message = "Gửi mail không thành công";
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
                 }
-                    
             }
             ViewBag.Message = "Gửi mail thành công";
             return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get

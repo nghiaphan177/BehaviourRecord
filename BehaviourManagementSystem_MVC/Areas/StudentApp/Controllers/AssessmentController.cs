@@ -36,11 +36,11 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             return View(new AssessmentRequest() { IndividualId = id });
         }
         [HttpPost]
-        public async Task<IActionResult> Create(string IndiId, AssessmentRequest request)
+        public async Task<IActionResult> Create(AssessmentRequest request)
         {
             try
             {
-                var response = await _assessmentAPIClient.CreateRecord(IndiId, request);
+                var response = await _assessmentAPIClient.CreateRecord( request);
                 if (response == null)
                 {
                     return Json(new { success = false });

@@ -512,7 +512,7 @@ namespace BehaviourManagementSystem_API.Services
             if(role == null)
                 return false;
 
-            if(role.Name.ToLower() != "admin")
+            if(role.Name.ToLower() == "admin")
                 return false;
 
             return true;

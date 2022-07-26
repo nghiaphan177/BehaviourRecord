@@ -24,7 +24,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ResponseResult<AssessmentRequest>> CreateRecord(string IndiId, AssessmentRequest request)
+        public async Task<ResponseResult<AssessmentRequest>> CreateRecord(AssessmentRequest request)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);

@@ -22,5 +22,5 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
         Task<ResponseResult<string>> GetImg(string userId);
         Task<ResponseResult<string>> CheckImgUrl(string result);
         Task<ResponseResult<string>> GetGoogleClientId();
-    }
+	}
 }
