@@ -4,6 +4,7 @@ using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -19,12 +20,14 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class UserController : Controller
     {
+        private readonly IEmailSender _emailSender;
         private readonly IAccountAPIClient _accountAPIClient;
         private readonly IUserAPIClient _userAPIClient;
         private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IConfiguration _config;
-        public UserController(IAccountAPIClient accountAPIClient, IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient)
+        public UserController(IEmailSender emailSender, IAccountAPIClient accountAPIClient, IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient)
         {
+            this._emailSender = emailSender;
             this._accountAPIClient = accountAPIClient;
             _userAPIClient = userAPIClient;
             _config = configuration;
@@ -98,13 +101,22 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 if(!response.Success == true)
                     return RedirectToAction(nameof(Create));
 
-                // Chổ này cần gửi mail để cho account vừa tạo nhập mật khẩu
-                var res = await _accountAPIClient.ForgotPassword(request.Email);
+                string id = "";
+                foreach(var item in response.Result)
+                {
+                    if(item.Email == request.Email)
+                    { 
+                        id = item.Id;
+                        break;
+                    }
+                }
 
-                // https://localhost:port/Account/ResetPassword?id=****&code=****/
+                // Chổ này cần gửi mail để cho account vừa tạo nhập mật khẩu
+                var res = await _accountAPIClient.ForgotPassword(request.UserName);
+
                 var uri = new UriBuilder(_config["EmailSettings:MailBodyHtml"] + "/Admin/User/NewPassword");
                 var query = HttpUtility.ParseQueryString(uri.Query);
-                query["id"] = res.Result.Id;
+                query["id"] = id;
                 query["code"] = res.Result.Code;
                 uri.Query = query.ToString();
                 var url = uri.ToString();
@@ -118,6 +130,8 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                             $"</u>" +
                         $"</strong>" +
                     $"</a>";
+
+                await _emailSender.SendEmailAsync(request.Email, subject, htmlMessage);
 
                 return RedirectToAction(nameof(Index));
             }
