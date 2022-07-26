@@ -57,6 +57,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 
                     return RedirectToAction("Index",response.Result);
                 }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
+                }
             }
             catch (Exception)
             {
@@ -95,6 +100,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 {
                     toastNotification.AddSuccessToastMessage("Sửa Thành Công!");
                     return RedirectToAction("Index", response.Result);
+                }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
                 }
             }
             catch (Exception)

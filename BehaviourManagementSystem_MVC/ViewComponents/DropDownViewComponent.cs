@@ -3,6 +3,7 @@ using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
+using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace BehaviourManagementSystem_MVC.ViewComponents
                 {
                     return View("Extreme",response.Result);
                 }
+                
                 return View();
             }
             if (name == "moderate")

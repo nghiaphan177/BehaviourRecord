@@ -44,7 +44,7 @@
                                 <tbody class="text-center">
                                     @foreach (var item in Model)
                                     {
-                                        <tr id="mild-@item.Id">
+                                        <tr id="extreme-@item.Id">
 
                                             <td>@item.STT</td>
                                             <td>@item.Content</td>
@@ -136,11 +136,6 @@
                     type: "DELETE",
                     success: function (result) {
                         if (result.status == true) {
-                            swal(
-                                'Đã Xóa Thành Công!',
-                                '',
-                                'success'
-                            ),
                                 $("#extreme-" + id).remove();
                         }
                     }
