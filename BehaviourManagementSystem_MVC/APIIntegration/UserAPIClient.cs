@@ -46,7 +46,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
-            var response = await client.DeleteAsync($"/api/Account/DeleteUserProfile?id=" +id);
+            var response = await client.DeleteAsync($"/api/Account/DeleteUserProfile?id=" + id);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<List<UserProfileRequest>>>(await response.Content.ReadAsStringAsync());

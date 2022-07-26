@@ -144,9 +144,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPrevent(InterventionRequest request)
         {
+            var response = await _IInterventionAPIClient.UpdatePrevent(request);
+
             try
             {
-                var response = await _IInterventionAPIClient.UpdatePrevent(request);
                 if (response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Đã Cập Nhật!");
@@ -158,7 +159,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 toastNotification.AddErrorToastMessage("Vui lòng thử lại!");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetInterventionById", "Intervention", new { id = request.AssesetmentId });
+
         }
 
         [HttpPost]

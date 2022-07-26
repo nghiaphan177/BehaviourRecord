@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
-
+@{TempData["Data2"] = Model.Id;}
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -51,41 +51,41 @@
                                 <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
                                 <div class="col-md-12 mx-auto">
                                     <div class="checkbox">
-                                        @if (Model.ProfileMildDesciption != null)
-                                        {
-                                            <label>
-                                                <input type="checkbox" checked id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
-                                            </label>
-                                        }
-                                        else
+                                        @if (Model.ProfileMildDesciption == null && Model.ManageMild == null)
                                         {
                                             <label>
                                                 <input type="checkbox" id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
                                             </label>
                                         }
+                                        else
+                                        {
+                                            <label>
+                                                <input type="checkbox" checked id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
+                                            </label>
+                                        }
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @if (Model.ProfileModerateDesciption != null)
+                                            @if (Model.ProfileModerateDesciption == null && Model.ManageModerate == null)
                                             {
-                                                <input type="checkbox" checked id="check-vua-sua" name="checkbox" />
+                                                <input type="checkbox" id="check-vua-sua" name="checkbox" />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" id="check-vua-sua" name="checkbox" />
+                                                <input type="checkbox" checked id="check-vua-sua" name="checkbox" />
                                             }
                                             Can Thiệp Vừa
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label style="margin-left: 62px;">
-                                            @if (Model.ProfileExtremeDesciption != null)
+                                            @if (Model.ProfileExtremeDesciption == null && Model.ManageExtreme == null)
                                             {
-                                                <input type="checkbox" checked id="check-kn-sua" name="checkbox" />
+                                                <input type="checkbox" id="check-kn-sua" name="checkbox" />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" id="check-kn-sua" name="checkbox" />
+                                                <input type="checkbox" checked id="check-kn-sua" name="checkbox" />
                                             }
                                             Can Thiệp Khắc Nghiệt
                                         </label>
@@ -184,7 +184,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" required autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div class="col">
@@ -203,25 +203,25 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Tính Cách</label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="col">

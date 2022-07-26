@@ -1,9 +1,11 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +15,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
@@ -20,6 +23,8 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class UserController : Controller
     {
+        private readonly IEmailSender _emailSender;
+        private readonly IAccountAPIClient _accountAPIClient;
         private readonly IUserAPIClient _userAPIClient;
         private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IConfiguration _config;
@@ -27,6 +32,8 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         public UserController(IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment)
         {
+            this._emailSender = emailSender;
+            this._accountAPIClient = accountAPIClient;
             _userAPIClient = userAPIClient;
             _config = configuration;
             _IIndividualAPIClient = IIndividualAPIClient;
@@ -112,7 +119,6 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 {
                     toastNotification.AddErrorToastMessage("Thêm người dùng không thành công");
                     return RedirectToAction(nameof(Index));
-                }
 
                 if (response.Success == false)
                 {
@@ -122,17 +128,85 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var uploads = Path.Combine(webrootpath, @"images");
                 var extension = Path.GetExtension(files[0].FileName);
 
-                using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                string id = "";
+                foreach(var item in response.Result)
                 {
-                    files[0].CopyTo(filestream);
+                    if(item.Email == request.Email)
+                    { 
+                        id = item.Id;
+                        break;
+                    }
                 }
-                toastNotification.AddSuccessToastMessage("Thêm người dùng thành công");
+
+                // Chổ này cần gửi mail để cho account vừa tạo nhập mật khẩu
+                var res = await _accountAPIClient.ForgotPassword(request.UserName);
+
+                var uri = new UriBuilder(_config["EmailSettings:MailBodyHtml"] + "/Admin/User/NewPassword");
+                var query = HttpUtility.ParseQueryString(uri.Query);
+                query["id"] = id;
+                query["code"] = res.Result.Code;
+                uri.Query = query.ToString();
+                var url = uri.ToString();
+                var subject = "Bạn đã được tạo mới một tại khoản tại GR4BMS";
+                var htmlMessage =
+                    $"Hãy nhấp vào link sao để đặt mật khẩu mới cho tài khoản của bạn." +
+                    $"<a href='{url}' style='color:red;'>" +
+                        $"<strong>" +
+                            $"<u>" +
+                                $"<i>link tại đây</i>" +
+                            $"</u>" +
+                        $"</strong>" +
+                    $"</a>";
+
+                await _emailSender.SendEmailAsync(request.Email, subject, htmlMessage);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return RedirectToAction(nameof(Create));
             }
+        }
+
+        [HttpGet]
+        public IActionResult NewPassword(string id, string code)
+        {
+            if(string.IsNullOrEmpty(id) ||
+                string.IsNullOrEmpty(code))
+                return NotFound();
+            return View(); // cần form new pass
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewPassword(ResetPasswordRequest req)
+        {
+            if(!ModelState.IsValid)
+                return NotFound(); // cần view lỗi
+
+            if(string.IsNullOrEmpty(req.Id) ||
+            string.IsNullOrEmpty(req.Code) ||
+            string.IsNullOrEmpty(req.PasswordNew) ||
+            string.IsNullOrEmpty(req.PasswordConfirm))
+                return View(ModelState); // cần view lỗi
+
+            if(req.PasswordNew != req.PasswordConfirm)
+                return View(ModelState);
+
+            var res = await _accountAPIClient.ResetPassword(req);
+
+            if(res == null)
+            {
+                ViewBag.MessageError = "Đặt mật khẩu không thành công";
+                return View();
+            }
+
+            if(!res.Success)
+            {
+                ViewBag.MessageError = "Đặt mật khẩu không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: UserController/Edit/5

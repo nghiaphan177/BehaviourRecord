@@ -75,6 +75,7 @@
             $('#input-nhe-sua').fadeIn();
             $('#nhe-sua').prop('required', true);
             $('#input-ql-nhe-sua').fadeIn();
+            $('#ql-nhe-sua').prop('required', true);
         } else {
             $('#input-nhe-sua').hide();
             $('#nhe-sua').val('');
@@ -82,6 +83,7 @@
             $('#ql-nhe-sua').val('');
             $('.checkbox-nhe').prop('checked', false);
             $('#input-ql-nhe-sua').hide();
+            $('#ql-nhe-sua').prop('required', null);
         }
     });
 
@@ -89,12 +91,14 @@
         $('#input-nhe-sua').fadeIn();
         $('#nhe-sua').prop('required', true);
         $('#input-ql-nhe-sua').fadeIn();
+        $('#ql-nhe-sua').prop('required', true);
     } else {
         $('#input-nhe-sua').hide();
         $('#nhe-sua').val('');
         $('#nhe-sua').prop('required', null);
         $('#ql-nhe-sua').val('');
         $('#input-ql-nhe-sua').hide();
+        $('#ql-nhe-sua').prop('required', null);
     }
     
 
@@ -106,6 +110,7 @@
             $('#input-vua-sua').fadeIn();
             $('#trungbinh-sua').prop('required', true);
             $('#input-ql-vua-sua').fadeIn();
+            $('#ql-vua-sua').prop('required', true);
         } else {
             $('#input-vua-sua').hide();
             $('#trungbinh-sua').val('');
@@ -113,6 +118,7 @@
             $('#ql-vua-sua').val('');
             $('.checkbox-vua').prop('checked', false);
             $('#input-ql-vua-sua').hide();
+            $('#ql-vua-sua').prop('required', null);
 
         }
     });
@@ -121,12 +127,14 @@
         $('#input-vua-sua').fadeIn();
         $('#trungbinh-sua').prop('required', true);
         $('#input-ql-vua-sua').fadeIn();
+        $('#ql-vua-sua').prop('required', true);
     } else {
         $('#input-vua-sua').hide();
         $('#trungbinh-sua').val('');
         $('#trungbinh-sua').prop('required', null);
         $('#ql-vua-sua').val('');
         $('#input-ql-vua-sua').hide();
+        $('#ql-vua-sua').prop('required', null);
     }
 
     $('#input-kn-sua').hide();
