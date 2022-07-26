@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NToastNotify;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,9 +24,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IAccountAPIClient _accountAPIClient;
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
+        private readonly IToastNotification toastNotification;
 
-        public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender)
+        public AccountController(IAccountAPIClient accountAPIClient, IToastNotification toastNotification, IConfiguration configuration, IEmailSender emailSender)
         {
+            this.toastNotification = toastNotification;
             _accountAPIClient = accountAPIClient;
             _configuration = configuration;
             _emailSender = emailSender;
@@ -207,8 +210,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                string a= ViewData.ModelState[String.Empty].Errors[0].ErrorMessage;
+                toastNotification.AddErrorToastMessage(a);
                 return View(request);
+            }
+
+            if (request.Password != request.RePassword)
+            {
+                toastNotification.AddErrorToastMessage("Mật Khẩu Nhập Lại Không Khớp!");
+                return View(request);
+            }
 
             var response = await _accountAPIClient.Register(request);
 
@@ -245,8 +258,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if(!ok)
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
             }
+            else
+            {
+                toastNotification.AddErrorToastMessage(response.Message);
+                return View(request);
+            }
             HttpContext.Session.SetString("EMAILCONFIRMED", request.Email);
-            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+            return RedirectToAction("SendMailSuccess"); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+        }
+
+        public IActionResult SendMailSuccess()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -268,7 +291,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             if(response.Success)
                 if(response.Result)
-                    return View();// trang home
+                    return RedirectToAction("Index","Home");// trang home
             return View(); // trang chờ confirm email
         }
 
@@ -282,7 +305,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var response = await _accountAPIClient.ConfirmEmail(request);
 
-            // response sucess true thì view view home / fasle thì resend mail
+            if (response.Success == true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         }

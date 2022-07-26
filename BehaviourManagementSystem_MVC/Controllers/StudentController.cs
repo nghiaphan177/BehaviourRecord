@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Dynamic;
 using System.IO;
@@ -19,11 +20,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
+        private readonly IToastNotification toastNotification;
+
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
+            this.toastNotification = toastNotification;
         }
         public async Task<IActionResult> StudentAssessment()
         {
@@ -153,7 +157,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IIndividualAPIClient.Update(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     return RedirectToAction("StudentList", response.Result);
                 }
             }
@@ -162,7 +166,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 throw;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("StudentList");
         }
         public IActionResult TeacherProfile()
         {

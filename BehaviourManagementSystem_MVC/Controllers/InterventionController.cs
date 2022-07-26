@@ -200,6 +200,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             var response = await _IInterventionAPIClient.Delete(id);
             if (response.Success == true)
             {
+                toastNotification.AddSuccessToastMessage("Đã Xóa Thành Công!");
                 return Json(new
                 {
                     status = true
