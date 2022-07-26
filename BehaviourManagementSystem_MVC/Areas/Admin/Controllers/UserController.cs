@@ -30,10 +30,10 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         private readonly IConfiguration _config;
         private readonly IToastNotification toastNotification;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public UserController(IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment)
+        public UserController(IAccountAPIClient accountAPIClient,IEmailSender emailSender,IUserAPIClient userAPIClient, IConfiguration configuration, IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IWebHostEnvironment webHostEnvironment)
         {
-            this._emailSender = emailSender;
-            this._accountAPIClient = accountAPIClient;
+            _emailSender = emailSender;
+            _accountAPIClient = accountAPIClient;
             _userAPIClient = userAPIClient;
             _config = configuration;
             _IIndividualAPIClient = IIndividualAPIClient;
@@ -107,7 +107,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 request.Id = User.FindFirst("Id").Value;
                 string webrootpath = webHostEnvironment.WebRootPath;
                 var files = HttpContext.Request.Form.Files;
-                string fileName = String.Empty;
+                string fileName = null;
                 if (files.Count != 0)
                 {
                     fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
@@ -119,15 +119,22 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 {
                     toastNotification.AddErrorToastMessage("Thêm người dùng không thành công");
                     return RedirectToAction(nameof(Index));
-
+                }
                 if (response.Success == false)
                 {
                     toastNotification.AddErrorToastMessage(response.Message);
                     return RedirectToAction(nameof(Create));
                 }
-                var uploads = Path.Combine(webrootpath, @"images");
-                var extension = Path.GetExtension(files[0].FileName);
-
+                if (fileName != null)
+                {
+                    var uploads = Path.Combine(webrootpath, @"images");
+                    var extension = Path.GetExtension(files[0].FileName);
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                }
+                
                 string id = "";
                 foreach(var item in response.Result)
                 {
@@ -159,7 +166,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                     $"</a>";
 
                 await _emailSender.SendEmailAsync(request.Email, subject, htmlMessage);
-
+                toastNotification.AddSuccessToastMessage("Thêm người dùng thành công");
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -260,11 +267,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             try
             {
                 var response = await _userAPIClient.DeleteUser(id);
-                /*var response = await _userAPIClient.DeleteUser(id);
                 if (response.Success == true)
                 {
-                    return RedirectToAction(nameof(Index));
-                }*/
+                    toastNotification.AddSuccessToastMessage("Thêm người dùng thành công");
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {
