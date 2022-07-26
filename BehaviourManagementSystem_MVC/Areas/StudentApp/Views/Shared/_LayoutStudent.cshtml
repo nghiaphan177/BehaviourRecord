@@ -52,9 +52,8 @@
                                 <p class="text-muted mb-0">Administrator</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="profile.html">Hồ sơ của tôi</a>
-                        <a class="dropdown-item" href="inbox.html">Inbox</a>
-                        <a class="dropdown-item" href="login.html">Đăng xuất</a>
+                        <a class="dropdown-item" href="/StudentApp/Account/ResetPassword">Đổi mật khẩu</a>
+                        <a class="dropdown-item" href="/StudentApp/Account/Logout">Đăng xuất</a>
                     </div>
                 </li>
             </ul>
@@ -72,8 +71,8 @@
                         <li class="submenu">
                             <a href="#"><i class="fas fa-shield-alt"></i> <span> Tài khoản </span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="forgot-password.html">Quên mật khẩu</a></li>
-                                <li><a href="error-404.html">Đăng xuất</a></li>
+                                <li><a href="/StudentApp/Account/ResetPassword">Đổi mật khẩu</a></li>
+                                <li><a href="/StudentApp/Account/Logout">Đăng xuất</a></li>
                             </ul>
                         </li>
                         
@@ -85,6 +84,7 @@
             <div class="content container-fluid">
                 @RenderBody()
             </div>
+
         </div>
     </div>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>

@@ -113,7 +113,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             catch (Exception ex)
             {
-
+                return NotFound(ex.Message);
                 throw;
             }
             return Json(new { success = false });
@@ -144,9 +144,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPrevent(InterventionRequest request)
         {
+            var response = await _IInterventionAPIClient.UpdatePrevent(request);
+
             try
             {
-                var response = await _IInterventionAPIClient.UpdatePrevent(request);
                 if (response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Đã Cập Nhật!");
@@ -158,7 +159,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 toastNotification.AddErrorToastMessage("Vui lòng thử lại!");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetInterventionById", "Intervention", new { id = request.AssesetmentId });
+
         }
 
         [HttpPost]
@@ -198,6 +200,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             var response = await _IInterventionAPIClient.Delete(id);
             if (response.Success == true)
             {
+                toastNotification.AddSuccessToastMessage("Đã Xóa Thành Công!");
                 return Json(new
                 {
                     status = true

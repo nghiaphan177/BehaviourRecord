@@ -150,6 +150,7 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<UserProfileRequest>(new UserProfileRequest()
             {
                 Id = user.Id.ToString(),
+                UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,
@@ -376,7 +377,7 @@ namespace BehaviourManagementSystem_API.Services
                         Email = request.Email,
                         EmailConfirmed = true,
                         Address = request.Address,
-                        AvtName = request.AvtName,
+                        AvtName = request.AvtName == null ? "default_avt.png" : request.FirstName,
                         SecurityStamp = stamp,
                         ConcurrencyStamp = stamp.ToUpper()
                     };
@@ -826,11 +827,25 @@ namespace BehaviourManagementSystem_API.Services
 
             if(user.PasswordHash.CheckRequest())
                 return new ResponseResultError<bool>("Không tồn tại mật khẩu.");
+
             return new ResponseResult<bool>
             {
                 Success = true,
                 Message = "Mật khẩu đã tồn tại."
             };
+        }
+
+        public async Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req)
+        {
+            var user = await _userManager.FindByIdAsync(req.Id);
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, code, req.PasswordNew);
+
+            if(result.Succeeded)
+                return new ResponseResultSuccess<bool>();
+            return new ResponseResultError<bool>();
         }
     }
 }

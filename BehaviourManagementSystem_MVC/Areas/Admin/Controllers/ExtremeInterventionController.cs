@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,10 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     public class ExtremeInterventionController : Controller
     {
         private readonly IOptionAPIClientExtreme _IOptionAPIClientExtreme;
-        public ExtremeInterventionController(IOptionAPIClientExtreme IOptionAPIClientExtreme)
+        private readonly IToastNotification toastNotification;
+        public ExtremeInterventionController(IOptionAPIClientExtreme IOptionAPIClientExtreme, IToastNotification toastNotification)
         {
+            this.toastNotification = toastNotification;
             _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
         }
         public async Task<IActionResult> Index(int? page)
@@ -37,7 +40,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             }
             return View();
         }
-
+        [HttpDelete]
         public async Task<IActionResult> DeleteAsync(string id)
         {
             try
@@ -45,6 +48,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientExtreme.Delete(id);
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Xóa Thành Công!");
                     return Json(new
                     {
                         status = true
@@ -67,8 +71,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientExtreme.Create(content);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Thêm thành công!";
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
                     return RedirectToAction("Index", response.Result);
+                }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
                 }
             }
             catch (Exception)
@@ -106,8 +115,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientExtreme.Update(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
+                    toastNotification.AddSuccessToastMessage("Sửa Thành Công!");
                     return RedirectToAction("Index", response.Result);
+                }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
                 }
             }
             catch (Exception)

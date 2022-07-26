@@ -2,6 +2,8 @@
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly IEmailSender _emailSender;
 
-        public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender)
+		public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _accountAPIClient = accountAPIClient;
             _configuration = configuration;
@@ -216,10 +218,9 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult ResetPassword(string id, string code)
+		public IActionResult ResetPassword()
 		{
-			if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(code))
-				return NotFound();// trang not found 
+			ViewBag.IdAccount = User.FindFirst("Id").Value;
 			return View();
 		}
 

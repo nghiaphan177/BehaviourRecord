@@ -48,12 +48,20 @@
     <Folder Include="wwwroot\lib\jquery-validation\dist\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
+    <Folder Include="wwwroot\Login\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\plugins\sweet-alert2\sweetalert2.common.js" />
     <None Include="wwwroot\plugins\sweet-alert2\sweetalert2.js" />
     <None Include="wwwroot\plugins\sweet-alert2\sweetalert2.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\StudentApp\Views\Account\Login.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

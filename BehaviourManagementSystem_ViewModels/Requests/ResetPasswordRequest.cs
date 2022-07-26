@@ -10,10 +10,15 @@ namespace BehaviourManagementSystem_ViewModels.Requests
 	public class ResetPasswordRequest
 	{
 		public string Id { get; set; }
+		
 		public string UserOrEmail { get; set; }
+		
 		public string Code { get; set; }
+		
 		public string PasswordOld { get; set; }
+		
 		public string PasswordNew { get; set; }
+		
 		public string PasswordConfirm { get; set; }
 	}
 }

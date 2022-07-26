@@ -43,7 +43,7 @@ namespace BehaviourManagementSystem_API.Services
                     Address = request.Address,
                     Gender = request.Gender,
                     DOB = request.DOB,
-                    AvtName = request.AvtName ?? "default_avt.png",
+                    AvtName = request.AvtName == null ? "default_avt.png" : request.AvtName,
                     Email = request.Email,
                     UserName = request.UserName,
                     NormalizedUserName = request.UserName.ToUpper(),
@@ -131,7 +131,8 @@ namespace BehaviourManagementSystem_API.Services
                     DOB = r_user.DOB,
                     Address = r_user.Address,
                     Classes = r_ind.Organization,
-                    Email = r_user.Email
+                    Email = r_user.Email,
+                    AvtName = r_user.AvtName
                 });
             }
 
