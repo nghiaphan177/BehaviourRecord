@@ -1,20 +1,20 @@
-using BehaviourManagementSystem_API.Data.EF;
-using BehaviourManagementSystem_API.Models;
-using BehaviourManagementSystem_API.Services;
-using BehaviourManagementSystem_API.Utilities.JwtGenarator;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
+using System;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Configuration;
+using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using BehaviourManagementSystem_API.Utilities.JwtGenarator;
 
 namespace BehaviourManagementSystem_API
 {
@@ -27,7 +27,6 @@ namespace BehaviourManagementSystem_API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -287,7 +286,6 @@ namespace BehaviourManagementSystem_API
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if(env.IsDevelopment())
