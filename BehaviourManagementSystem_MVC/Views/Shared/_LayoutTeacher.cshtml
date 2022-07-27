@@ -151,6 +151,24 @@
 
         </script>
     }
+    @if (TempData["MessageCreateAss"] != null)
+    {
+        <script type="text/javascript">
+
+            $('.nav a[href="#phantich"]').tab('show');
+
+
+        </script>
+    }
+    @if (TempData["MessageEditBehavior"] != null)
+    {
+        <script type="text/javascript">
+            $('.nav a[href="#phantich"]').tab('show');
+            $('.nav a[href="#pt-tiende"]').tab('show');
+
+
+        </script>
+    }
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -164,7 +182,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                            // Add active class to the current button (highlight it)
+                                // Add active class to the current button (highlight it)
 
     </script>
 </body>

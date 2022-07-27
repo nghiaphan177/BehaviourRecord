@@ -135,10 +135,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+
                 if (response.Success == true)
                 {
                     return View(response.Result);
                 }
+               
 
             }
             catch (System.Exception)
