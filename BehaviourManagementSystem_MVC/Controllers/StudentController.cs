@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -21,13 +22,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IToastNotification toastNotification;
+        private readonly IUserAPIClient _userAPIClient;
 
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment)
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment, IUserAPIClient userAPIClient)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
             this.toastNotification = toastNotification;
+            _userAPIClient = userAPIClient;
         }
         public async Task<IActionResult> StudentAssessment()
         {
@@ -180,15 +183,50 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 throw;
             }
-            return RedirectToAction("StudentList");
         }
-        public IActionResult TeacherProfile()
+        public async Task<IActionResult> TeacherProfile()
         {
+            try
+            {
+                var id = User.FindFirst("Id").Value;
+                var response = await _userAPIClient.GetUserById(id);
+                if(response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
-        public IActionResult TeacherProfileEdit()
+        public async Task<IActionResult> TeacherProfileEdit(string id)
         {
+            try
+            {
+                
+                var response = await _userAPIClient.GetUserById(id);
+                if (response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
