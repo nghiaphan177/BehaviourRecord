@@ -141,10 +141,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<IndividualRequest>> Detail(string id)
         {
-            if(!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == id))
-                return new ResponseResultError<IndividualRequest>("Id không tồn tại");
-
             var obj = await _context.Individuals.FindAsync(new Guid(id));
+           
+            if(obj == null)
+                return new ResponseResultError<IndividualRequest>("Truy xuất dữ liệu không hợp lệ.");
 
             foreach(var user in await _context.Users.ToListAsync())
                 if(obj.StudentId == user.Id)
