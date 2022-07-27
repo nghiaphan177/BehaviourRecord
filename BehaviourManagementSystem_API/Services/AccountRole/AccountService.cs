@@ -205,23 +205,37 @@ namespace BehaviourManagementSystem_API.Services
             if(!request.Password.CheckPaswordRepuest())
                 return new ResponseResultError<ConfirmEmailRequest>("Mật khẩu không hợp lệ.");
 
+            var id = Guid.NewGuid();
+            var stamp = Guid.NewGuid().ToString();
+
             var user = new User
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 UserName = request.UserName,
                 NormalizedUserName = request.UserName.ToUpper(),
                 Email = request.Email,
                 NormalizedEmail = request.Email.ToUpper(),
-                SecurityStamp = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString().ToUpper(),
-                AvtName = "default.png",
+                SecurityStamp = stamp,
+                ConcurrencyStamp = stamp.ToLower(),
+                AvtName = "default_avt.png",
                 Activity = false,
                 CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
             if(result.Succeeded)
             {
+                var role = await _roleManager.FindByNameAsync("teacher");
+
+                await _context.UserRoles.AddAsync(new IdentityUserRole<Guid>
+                {
+                    UserId = id,
+                    RoleId = role.Id
+                });
+
+                await _context.SaveChangesAsync();
+
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
@@ -849,7 +863,7 @@ namespace BehaviourManagementSystem_API.Services
             var token = await _jwtGenerator.GenerateTokenLoginSuccessAsync(user);
 
             if(token == null)
-                return new ResponseResultError<string>();
+                return new ResponseResultError<string>("Không có token");
             return new ResponseResultSuccess<string>(token);
         }
     }

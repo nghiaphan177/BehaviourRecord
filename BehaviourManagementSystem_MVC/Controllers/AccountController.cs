@@ -120,7 +120,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                         "Teacher",
                         userPrincipal,
                         authProperties);
-      
+
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
             return RedirectToAction("Index", "Home");
         }
@@ -210,14 +210,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                string a= ViewData.ModelState[String.Empty].Errors[0].ErrorMessage;
+                string a = ViewData.ModelState[String.Empty].Errors[0].ErrorMessage;
                 toastNotification.AddErrorToastMessage(a);
                 return View(request);
             }
 
-            if (request.Password != request.RePassword)
+            if(request.Password != request.RePassword)
             {
                 toastNotification.AddErrorToastMessage("Mật Khẩu Nhập Lại Không Khớp!");
                 return View(request);
@@ -273,10 +273,20 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult ConfirmEmail()
+        public async Task<IActionResult> ConfirmEmail(string id, string code)
         {
-            // màn hình chờ email confirm
-            return View(); // Cần UI
+            if(id == null || code == null)
+                return NotFound();
+
+            var request = new ConfirmEmailRequest { Id = id, Code = code };
+
+            var response = await _accountAPIClient.ConfirmEmail(request);
+
+            if(!response.Success)
+            {
+                return NotFound();
+            }
+            return View();
         }
 
         [HttpPost]
@@ -291,26 +301,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             if(response.Success)
                 if(response.Result)
-                    return RedirectToAction("Index","Home");// trang home
+                    return RedirectToAction("Index", "Home");// trang home
             return View(); // trang chờ confirm email
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ConfirmEmail(string id, string code)
-        {
-            if(id == null || code == null)
-                return NotFound(); // Cần UI
-
-            var request = new ConfirmEmailRequest { Id = id, Code = code };
-
-            var response = await _accountAPIClient.ConfirmEmail(request);
-
-            if (response.Success == true)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View();
         }
 
         [HttpPost]
