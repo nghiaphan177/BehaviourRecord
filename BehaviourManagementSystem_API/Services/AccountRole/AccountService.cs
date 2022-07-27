@@ -648,7 +648,7 @@ namespace BehaviourManagementSystem_API.Services
 
             try
             {
-                var checkPassOld = await _userManager.CheckPasswordAsync(user, repuest.PasswordNew);
+                var checkPassOld = await _userManager.CheckPasswordAsync(user, repuest.PasswordOld);
 
                 if(!checkPassOld)
                     return new ResponseResultError<UserProfileRequest>("Mật khẩu củ không chính xác.");

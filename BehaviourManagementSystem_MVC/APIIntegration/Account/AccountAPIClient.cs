@@ -199,10 +199,12 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
-            var response = await client.PostAsync($"/api/Account/ChangePassword", httpContent);
+            var response = await client.PostAsync($"/api/Account/ChangPassword", httpContent);
 
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<UserProfileRequest>>(await response.Content.ReadAsStringAsync());
