@@ -41,7 +41,7 @@ namespace BehaviourManagementSystem_API
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("MSSQLConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection"));
             });
 
             services.AddIdentity<User, Role>((options) =>

@@ -27,6 +27,11 @@ namespace BehaviourManagementSystem_API.Controllers
                 return NotFound();
 
                 var res = await _abBd.GetCountAllAccountRegisterOfYear(year);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
         }
     }
 }
