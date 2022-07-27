@@ -129,11 +129,11 @@ namespace BehaviourManagementSystem_API.Controllers
         {
             Guid indid;
             Guid teacherid;
-            if(!indId.CheckRequest())
+            if(indId.CheckRequest())
                 return BadRequest("Dữ liệu không hợp lệ.");
             if(!Guid.TryParse(indId, out indid))
                 return BadRequest("Dữ liệu không hợp lệ.");
-            if(!teacherId.CheckRequest())
+            if(teacherId.CheckRequest())
                 return BadRequest("Dữ liệu không hợp lệ.");
             if(!Guid.TryParse(teacherId, out teacherid))
                 return BadRequest("Dữ liệu không hợp lệ.");
