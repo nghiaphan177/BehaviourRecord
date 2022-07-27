@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.Individual;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -21,13 +22,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IToastNotification toastNotification;
+        private readonly IUserAPIClient _userAPIClient;
 
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment, IUserAPIClient userAPIClient)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
             this.toastNotification = toastNotification;
+            _userAPIClient = userAPIClient;
         }
         public async Task<IActionResult> StudentAssessment()
         {
@@ -75,7 +78,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             {
                 dynamic mymodel = new ExpandoObject();
                 var responseIndi = await _IIndividualAPIClient.Detail(id);
-                var responseAssess = await _assessmentAPIClient.GetAll(id);             
+                var responseAssess = await _assessmentAPIClient.GetAll(id);
                 if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
                 {
                     mymodel.Individual = responseIndi.Result;
@@ -102,18 +105,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 return NotFound();
             string webrootpath = webHostEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
-            string fileName = String.Empty;
+            string fileName = null;
             if (files.Count != 0)
             {
                 fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
                 request.AvtName = fileName;
-                var response = await _IIndividualAPIClient.Create(request);
-                if (response == null)
-                {
-                    ViewBag.MSError = response.Message;
-                    return View();
-                }
-                if (response.Success == true)
+            }
+            var response = await _IIndividualAPIClient.Create(request);
+            if (response == null)
+            {
+                toastNotification.AddErrorToastMessage("Tạo học sinh không thành công");
+                return View();
+            }
+            if (response.Success == false)
+            {
+                toastNotification.AddErrorToastMessage("Tạo tài khoản không thành công");
+                return View();
+            }
+            if (response.Success == true)
+            {
+                if (fileName != null)
                 {
                     var uploads = Path.Combine(webrootpath, @"images");
                     var extension = Path.GetExtension(files[0].FileName);
@@ -122,8 +133,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     {
                         files[0].CopyTo(filestream);
                     }
-                    return RedirectToAction(nameof(StudentList));
                 }
+                toastNotification.AddSuccessToastMessage("Tạo học sinh thành công");
+                return RedirectToAction(nameof(StudentList));
             }
             return View();
         }
@@ -135,10 +147,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+
                 if (response.Success == true)
                 {
                     return View(response.Result);
                 }
+               
 
             }
             catch (System.Exception)
@@ -171,15 +185,50 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 throw;
             }
-            return RedirectToAction("StudentList");
         }
-        public IActionResult TeacherProfile()
+        public async Task<IActionResult> TeacherProfile()
         {
+            try
+            {
+                var id = User.FindFirst("Id").Value;
+                var response = await _userAPIClient.GetUserById(id);
+                if(response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
-        public IActionResult TeacherProfileEdit()
+        public async Task<IActionResult> TeacherProfileEdit(string id)
         {
+            try
+            {
+                
+                var response = await _userAPIClient.GetUserById(id);
+                if (response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 

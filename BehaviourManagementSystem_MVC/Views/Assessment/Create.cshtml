@@ -106,7 +106,7 @@
                                 <!-- Tab Phân Tích - Hành Vi Start-->
                                 <div class="tab-pane show active" id="pt-hanhvi">
                                     <form id="updateBehaviourForm" asp-action="CreateRecordBehaviour" asp-controller="Assessment" method="post">
-                                        <input value="@ViewData["assid"]" type="text" class="form-control"  name="Id"/>
+                                        <input value="@ViewData["assid"]" type="text" class="form-control" hidden  name="Id"/>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi</label>
                                             <div class="col-md-10">
