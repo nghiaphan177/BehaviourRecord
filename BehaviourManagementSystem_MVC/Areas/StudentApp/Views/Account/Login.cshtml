@@ -80,65 +80,6 @@
                     </button>
                 </div>
             </div>
-
-
-
-            @*<div style=" margin-top: -8.5rem;" class="flex-col-c p-t-155">
-                    <span class="txt1 p-b-17 font-weight-bold">
-                        Hoặc
-                    </span>
-
-                    <a href="/Account/Register" class="txt2 font-weight-bold">
-                        Đăng Kí
-                    </a>
-                    <a href="/Account/ConfirmEmail" class="txt2 font-weight-bold">
-                        Test confirm email
-                    </a>
-                </div>*@
         </form>
     </div>
 </div>
-@{
-    <form asp-action="GoogleSigin" asp-controller="Account" id="sumitForm" hidden>
-        <input type="text" id="txt-token" name="token" />
-        <button type="submit"></button>
-    </form>
-}
-
-@section scripts{
-    <script>
-        window.onload = function() {
-            var googleclientid = "@ViewBag.GoogleClientId";
-            console.log(googleclientid)
-            google.accounts.id.initialize({
-                client_id: `${googleclientid}`,
-                callback: handlerCreadetial
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("GoogleLogin"),
-                {}
-            );
-            google.accounts.id.prompt();
-        }
-
-        function findByKey(key, value) {
-            return (item, i) => item[key] === value
-        }
-
-        function handlerCreadetial(res) {
-            var domain = '@ViewBag.api'
-            console.log(res.credential)
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: `${domain}/api/Account/GoogleSigin?token=${res.credential}`,
-                contentType: "application/json;charset=utf-8",
-                success: function(data) {
-                    $('#txt-token').val(data.result)
-                    $('#sumitForm').submit()
-                }
-            })
-        }
-    </script>
-}
-<a href="C:\Users\NghiaPT6\OneDrive - FPT Software\Desktop\LastProject\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem_MVC\Areas\StudentApp\Views\Shared\_LayoutAuth.cshtml">C:\Users\NghiaPT6\OneDrive - FPT Software\Desktop\LastProject\FAHCM.HCM22_FR_NET_06\BehaviourManagementSystem_MVC\Areas\StudentApp\Views\Shared\_LayoutAuth.cshtml</a>

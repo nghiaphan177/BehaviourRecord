@@ -54,17 +54,11 @@
                                 <p class="text-muted mb-0">Administrator</p>
                             </div>
                         </div>
-                        @{
-                            var user_token = ViewBag.Token;
-                            if (string.IsNullOrEmpty(user_token))
-                            {
-                                <a class="dropdown-item" href="/Account/Logout">Login</a>
-                            }
-                            else
-                            {
-                                <a class="dropdown-item" href="/Account/Logout">Logout</a>
-                            }
-                        }
+                        <a class="dropdown-item" href="profile.html">My Profile</a>
+                        <a class="dropdown-item" href="inbox.html">Inbox</a>
+
+                        <a class="dropdown-item" href="/Account/Logout">Logout</a>
+
                     </div>
                 </li>
             </ul>

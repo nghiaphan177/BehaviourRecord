@@ -7,7 +7,7 @@
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
-            <h3 class="page-title">Students</h3>
+            <h3 class="page-title">Học Sinh</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="index.html">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Học Sinh</li>
@@ -118,15 +118,15 @@
                                 </div>
                             </div>
                             <div id="input-nhe-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown"  />
                                     @await Component.InvokeAsync("DropDown", new { name = "mild" })
                                 </div>
                             </div>
 
                             <div id="input-vua-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                     @await Component.InvokeAsync("DropDown", new { name = "moderate" })
@@ -135,7 +135,7 @@
 
 
                             <div id="input-kn-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                     @await Component.InvokeAsync("DropDown", new { name = "extreme" })
@@ -143,7 +143,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required id="tbphuchoi" name="ProfileRecoveryDesciption" value="@Model.ProfileRecoveryDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                     @await Component.InvokeAsync("DropDown", new { name = "recovery" })
@@ -164,25 +164,25 @@
                         <form action="/Intervention/EditManage" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div id="input-ql-nhe-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" value="@Model.ManageMild" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div id="input-ql-vua-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" value="@Model.ManageModerate" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div id="input-ql-kn-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
                                 </div>
@@ -201,25 +201,25 @@
                         <form action="/Intervention/EditPrevent" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Tính Cách</label>
+                                <label class="col-form-label col-md-2">Tính Cách <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
+                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
                                 </div>

@@ -126,5 +126,17 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
                 return JsonConvert.DeserializeObject<ResponseResult<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResult<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseResult<List<IndAssessRequest>>> Delete(string idTeacher, string idIndi)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.DeleteAsync($"/api/Individual/Delete?indId={idIndi}&teacherId={idTeacher}");
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<List<IndAssessRequest>>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }
