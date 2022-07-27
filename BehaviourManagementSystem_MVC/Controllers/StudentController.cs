@@ -22,7 +22,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IToastNotification toastNotification;
 
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
@@ -75,7 +75,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             {
                 dynamic mymodel = new ExpandoObject();
                 var responseIndi = await _IIndividualAPIClient.Detail(id);
-                var responseAssess = await _assessmentAPIClient.GetAll(id);             
+                var responseAssess = await _assessmentAPIClient.GetAll(id);
                 if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
                 {
                     mymodel.Individual = responseIndi.Result;
@@ -106,18 +106,22 @@ namespace BehaviourManagementSystem_MVC.Controllers
             if (files.Count != 0)
             {
                 fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
-                request.AvtName = fileName;              
+                request.AvtName = fileName;
             }
             var response = await _IIndividualAPIClient.Create(request);
             if (response == null)
             {
-                ViewBag.MSError = response.Message;
                 toastNotification.AddErrorToastMessage("Tạo học sinh không thành công");
+                return View();
+            }
+            if (response.Success == false)
+            {
+                toastNotification.AddErrorToastMessage("Tạo tài khoản không thành công");
                 return View();
             }
             if (response.Success == true)
             {
-                if(fileName != null)
+                if (fileName != null)
                 {
                     var uploads = Path.Combine(webrootpath, @"images");
                     var extension = Path.GetExtension(files[0].FileName);
