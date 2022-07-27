@@ -1,6 +1,11 @@
-﻿@Model UserProfileRequest
+﻿@using BehaviourManagementSystem_ViewModels.Requests
+@using System 
+@Model IndAssessRequest
 @{
     ViewData["Title"] = "StudentDetail";
+    List<AssessmentRequest> assessmentRequests = ViewBag.ListAssessment;
+    List<InterventionRequest> interventionRequests = ViewBag.ListIntervention;
+
 }
 
 <div class="page-header">
@@ -30,10 +35,10 @@
                             <span class="title-span">Địa chỉ : </span>
                             <span class="info-span">@(Model.Address)</span>
                         </li>
-                        <li>
+                        @*<li>
                             <span class="title-span">Số điện thoại : </span>
                             <span class="info-span">@(Model.PhoneNumber)</span>
-                        </li>
+                        </li>*@
                         <li>
                             <span class="title-span">Email : </span>
                             <span class="info-span">@(Model.Email)</span>
@@ -108,9 +113,7 @@
             <hr>
             <div class="tab-content">
                 <div class="tab-pane show active" id="solid-tab1">
-                    <a href="/Assessment">
-                        <button type="button" class="btn btn-info btn-danhgia">Xem đánh giá</button>
-                    </a>
+                    
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card card-table">
@@ -125,35 +128,37 @@
                                                     <th>Phân Tích</th>
                                                     <th>Chi Tiết</th>
                                                     <th class="">Tóm Tắt</th>
-                                                    @*<th class="text-right">Tùy Chọn</th>*@
+                                                    <th class="text-right">Tùy Chọn</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach (var item in assessmentRequests)
+                                                { 
                                                 <tr class="text-center">
-                                                    <td>14/12/2022</td>
-                                                    <td>14:12</td>
+                                                    <td>@item.RecordDate?.ToShortDateString()</td>
+                                                    <td>@item.RecordStart</td>
                                                     <td>
-                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                        <span class="badge @(item.RecordIsCompeleted==true? "badge-success" : "badge-danger")">@(item.RecordIsCompeleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
                                                     <td>
-                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                        <span class="badge @(item.AnalyzeIsCompeleted==true? "badge-success" : "badge-danger")">@(item.AnalyzeIsCompeleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
                                                     <td>
-                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                        <span class="badge @(item.FunctionIsCompeleted==true? "badge-success" : "badge-danger")">@(item.FunctionIsCompeleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
-                                                    <td>Xin Chào</td>
-                                                    @*<td class="text-right">
-                                                            <div class="actions">
-                                                                <a href="edit-room.html"
-                                                                   class="btn btn-sm bg-success-light mr-2">
-                                                                    <i class="fas fa-pen"></i>
-                                                                </a>
-                                                                <a href="#" class="btn btn-sm bg-danger-light">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>*@
+                                                    <td>
+                                                        @item.AnalyzeBehaviour
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <div class="actions">
+                                                            <a href="/StudentApp/Home/Assessment/@item.Id"
+                                                               class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
                                                 </tr>
+                                                 }
                                             </tbody>
                                         </table>
                                     </div>
@@ -163,9 +168,6 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="solid-tab2">
-                    <a href="danhgia.html">
-                        <button type="button" class="btn btn-info btn-danhgia">Xem Can Thiệp</button>
-                    </a>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card card-table">
@@ -183,30 +185,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach (var item in interventionRequests)
+                                                {
                                                 <tr class="text-center">
-                                                    <td>14/12/2022</td>
+                                                    <td>@item.ProfileDate?.ToShortDateString()</td>
                                                     <td>
-                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                        <span class="badge @(item.ProfileIsCompeleted==true? "badge-success" : "badge-danger")">@(item.ProfileIsCompeleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
                                                     <td>
-                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                        <span class="badge @(item.ManageIsCompleted==true? "badge-success" : "badge-danger")">@(item.ManageIsCompleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
                                                     <td>
-                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                        <span class="badge @(item.PreventIsCompleted==true? "badge-success" : "badge-danger")">@(item.PreventIsCompleted==true? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
-                                                    <td>Xin Chào</td>
+                                                    <td>@item.Summary</td>
                                                     <td class="text-right">
                                                         <div class="actions">
-                                                            <a href="edit-room.html"
+                                                            <a href="/StudentApp/Home/Intervention/@item.Id"
                                                                class="btn btn-sm bg-success-light mr-2">
-                                                                <i class="fas fa-pen"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-trash"></i>
+                                                                <i class="fas fa-eye"></i>
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

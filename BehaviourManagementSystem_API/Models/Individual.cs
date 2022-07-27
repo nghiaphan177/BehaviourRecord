@@ -8,7 +8,7 @@ namespace BehaviourManagementSystem_API.Models
         public Guid Id { get; set; }
        
         public Guid? TeacherId { get; set; }
-        
+
         public string Organization { get; set; } = null!;
 
         public DateTime? CreateDate { get; set; }
@@ -21,4 +21,5 @@ namespace BehaviourManagementSystem_API.Models
 
         public virtual ICollection<Assessment> Assesetments { get; set; } = null!;
     }
+    
 }

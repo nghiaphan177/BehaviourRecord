@@ -45,7 +45,7 @@
                                     @foreach (var item in Model)
                                     {
 
-                                        <tr id="mild-@item.Id">
+                                        <tr id="moderate-@item.Id">
                                             <td>@item.STT</td>
                                             <td>@item.Content</td>
                                             <td>
@@ -122,28 +122,25 @@
     @*<script src="~/js/sweet-alert.init.js"></script>*@
     <script>
         //Warning Message
-        function deleteMild(id) {
+        function deleteModerate(id) {
             swal({
                 title: 'Bạn đã chắc chắn?',
                 text: "Xóa trường này!",
                 type: 'warning',
+                width: '25rem',
+                height: '23rem',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger m-l-10',
                 confirmButtonText: 'Yes!'
             }).then(function () {
                 $.ajax({
-                    url: "MildIntervention/delete",
+                    url: "ModerateIntervention/delete",
                     data: { "id": id },
                     type: "DELETE",
                     success: function (result) {
                         if (result.status == true) {
-                            swal(
-                                'Đã Xóa Thành Công!',
-                                '',
-                                'success'
-                            ),
-                                $("#mild-" + id).remove();
+                            $("#moderate-" + id).remove();
                         }
                     }
                 })

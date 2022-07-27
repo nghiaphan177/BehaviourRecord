@@ -18,6 +18,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
 
 		Task<ResponseResult<string>> ResetPassword(ResetPasswordRequest repuest);
 
+		Task<ResponseResult<UserProfileRequest>> ChangePassword(ResetPasswordRequest request);
+
 		Task<ResponseResult<bool>> GetEmailConfirmed(string email);
     
 		Task<ResponseResult<string>> GetImg(string userId);
@@ -28,6 +30,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Account
         
 		Task<ResponseResult<string>> CheckPasswordNull(string id);
 
-        Task<ResponseResult<bool>> NewPassOfAccountGoogle(ResetPasswordRequest req);
+        Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req);
+     
+		Task<ResponseResult<UserProfileRequest>> GetAccountById(string id);
     }
 }

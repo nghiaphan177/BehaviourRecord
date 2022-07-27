@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@model ResetPasswordRequest
+
+<div class="container-login100">
+
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <form asp-action="NewPass" asp-controller="Account" method="post" class="login100-form validate-form">
+            @if(!ViewData.ModelState.IsValid)
+            {
+                <div id="ErrorLogin" class="alert alert-danger" role="alert">
+                    <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
+                </div>
+            }
+            <a href="index.html" class="logo logo-admin">
+                <img src="~/assets/img/favicon.png" height="60" alt="logo">
+            </a>
+            <span class="login100-form-title p-b-49">
+                NHẬP MẬT KHẨU MỚI CHO TÀI KHOẢN
+            </span>
+
+            <div class="wrap-input100 validate-input m-b-23" data-validate="Password is required">
+                <span class="label-input100 font-weight-bold"></span>
+                <input id="password" class="input100" type="password" asp-for="PasswordNew" placeholder="Nhập mật khẩu...">
+                <span class="focus-input100" data-symbol="&#xf190;"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Confirm password is required">
+                <span class="label-input100 font-weight-bold"></span>
+                <input id="confirm_password" class="input100" type="password" asp-for="PasswordConfirm" placeholder="Nhập lại mật khẩu...">
+                <span class="focus-input100" data-symbol="&#xf190;"></span>
+            </div>
+
+
+            <div class="container-login100-form-btn mt-5">
+                <div class="wrap-login100-form-btn">
+                    <div class="login100-form-bgbtn"></div>
+                    <button type="submit" class="login100-form-btn">
+                        Tiếp tục
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+@section scripts{
+    <script>
+   
+        $('#confirm_password').on('keyup', function() {
+
+            if ($('#password').val() == "" || $('#confirm_password').val() == "") {
+                $('#password').css('color', 'black');
+                $('#confirm_password').css('color', 'black');
+            }
+
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#password').css('color', 'green');
+                $('#confirm_password').css('color', 'green');
+            } else {
+                $('#confirm_password').css('color', 'red');
+            }
+        });
+
+    </script>
+}

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Dynamic;
 using System.IO;
@@ -19,11 +20,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         private readonly IIndividualAPIClient _IIndividualAPIClient;
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public StudentController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
+        private readonly IToastNotification toastNotification;
+
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IToastNotification toastNotification, IAssessmentAPIClient assessmentAPIClient,IWebHostEnvironment webHostEnvironment)
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
+            this.toastNotification = toastNotification;
         }
         public async Task<IActionResult> StudentAssessment()
         {
@@ -98,18 +102,22 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 return NotFound();
             string webrootpath = webHostEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
-            string fileName = String.Empty;
+            string fileName = null;
             if (files.Count != 0)
             {
                 fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
-                request.AvtName = fileName;
-                var response = await _IIndividualAPIClient.Create(request);
-                if (response == null)
-                {
-                    ViewBag.MSError = response.Message;
-                    return View();
-                }
-                if (response.Success == true)
+                request.AvtName = fileName;              
+            }
+            var response = await _IIndividualAPIClient.Create(request);
+            if (response == null)
+            {
+                ViewBag.MSError = response.Message;
+                toastNotification.AddErrorToastMessage("Tạo học sinh không thành công");
+                return View();
+            }
+            if (response.Success == true)
+            {
+                if(fileName != null)
                 {
                     var uploads = Path.Combine(webrootpath, @"images");
                     var extension = Path.GetExtension(files[0].FileName);
@@ -118,8 +126,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     {
                         files[0].CopyTo(filestream);
                     }
-                    return RedirectToAction(nameof(StudentList));
                 }
+                toastNotification.AddSuccessToastMessage("Tạo học sinh thành công");
+                return RedirectToAction(nameof(StudentList));
             }
             return View();
         }
@@ -153,7 +162,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IIndividualAPIClient.Update(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     return RedirectToAction("StudentList", response.Result);
                 }
             }
@@ -162,7 +171,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 throw;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("StudentList");
         }
         public IActionResult TeacherProfile()
         {

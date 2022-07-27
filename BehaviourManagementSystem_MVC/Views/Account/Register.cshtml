@@ -1,4 +1,4 @@
-﻿@model LoginRequest
+﻿@model RegisterRequest
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
@@ -40,34 +40,40 @@
 <div class="container-login100">
 
     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-        <form action="/Account/Login" method="post" class="login100-form validate-form">
-            @if (!ViewData.ModelState.IsValid)
+        <form action="/Account/Register" method="post" class="login100-form validate-form">
+            @if(!ViewData.ModelState.IsValid)
             {
                 <div id="ErrorLogin" class="alert alert-danger" role="alert">
                     <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
                 </div>
             }
-            <a href="index.html" class="logo logo-admin">
-                <img src="~/assets/img/favicon.png" height="60" alt="logo">
-            </a>
-            <span class="login100-form-title p-b-49">
-                ĐĂNG KÍ GIÁO VIÊN
-            </span>
+            <div class="logo logo-admin">
+                <img src="~/assets/img/favicon.png" height="50" alt="logo">
+            </div>
+            @*<span class="login100-form-title p-b-49">
+            ĐĂNG KÝ GIÁO VIÊN
+            </span>*@
 
             <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
-                <span class="label-input100 font-weight-bold">Username</span>
-                <input class="input100" type="text" asp-for="UserNameOrEmail" placeholder="Nhập UserName...">
+                <span class="label-input100 font-weight-bold"></span>
+                <input class="input100" type="text" asp-for="UserName" placeholder="Tên tài khoản . . .">
+                <span class="focus-input100" data-symbol="&#xf206;"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+                <span class="label-input100 font-weight-bold"></span>
+                <input class="input100" type="email" asp-for="Email" placeholder="Email . . .">
                 <span class="focus-input100" data-symbol="&#xf206;"></span>
             </div>
 
             <div class="wrap-input100 validate-input" data-validate="Password is required">
-                <span class="label-input100 font-weight-bold">Password</span>
-                <input class="input100" type="password" asp-for="Password" placeholder="Nhập Mật Khẩu...">
+                <span class="label-input100 font-weight-bold"></span>
+                <input id="password" class="input100" type="password" asp-for="Password" placeholder="Mật khẩu . . .">
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
             </div>
             <div style="margin-top:1rem;" class="wrap-input100 validate-input" data-validate="Password is required">
-                <span class="label-input100 font-weight-bold">Nhập lại password</span>
-                <input class="input100" type="password" asp-for="Password" placeholder="Nhập Lại Mật Khẩu...">
+                <span class="label-input100 font-weight-bold"></span>
+                <input id="confirm_password" class="input100" type="password" asp-for="RePassword" placeholder="Nhập lại mật khẩu . . .">
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
             </div>
 
@@ -75,78 +81,41 @@
             <div style="margin-top: 2rem;" class="container-login100-form-btn">
                 <div class="wrap-login100-form-btn">
                     <div class="login100-form-bgbtn"></div>
-                    <button class="login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
                         Đăng Kí
                     </button>
                 </div>
             </div>
 
-            <div class="txt1 text-center p-t-54 p-b-20">
-                <span>
-                    Hoặc Đăng Nhập Bằng
-                </span>
-            </div>
-
-            <div class="flex-c-m">
-
-                <button type id="GoogleLogin">
-                </button>
-            </div>
-
             <div style=" margin-top: -8.5rem;" class="flex-col-c p-t-155">
-                <span class="txt1 p-b-17">
-                    Đã có tài khoản?
+                <span class="txt1 p-b-17 font-weight-bold">
+                    Bạn đã có tài khoản?
+                    <a href="/Account/Login" class="txt3 font-weight-bold ml-1">
+                        <u><i>Đăng nhập</i></u>
+                    </a>
                 </span>
-
-                <a href="/Account/Login" class="txt2">
-                    Đăng Nhập
-                </a>
             </div>
         </form>
     </div>
 </div>
-@{
-    <form asp-action="GoogleSigin" asp-controller="Account" id="sumitForm" hidden>
-        <input type="text" id="txt-token" name="token" />
-        <button type="submit"></button>
-    </form>
-}
 
 @section scripts{
     <script>
-        window.onload = function() {
-            var googleclientid = "@ViewBag.GoogleClientId";
-            console.log(googleclientid)
-            google.accounts.id.initialize({
-                client_id: `${googleclientid}`,
-                callback: handlerCreadetial
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("GoogleLogin"),
-                {}
-            );
-            google.accounts.id.prompt();
-        }
 
-        function findByKey(key, value) {
-            return (item, i) => item[key] === value
-        }
+        $('#confirm_password').on('keyup', function() {
 
-        function handlerCreadetial(res) {
-            var domain = '@ViewBag.api'
-            console.log(res.credential)
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: `${domain}/api/Account/GoogleSigin?token=${res.credential}`,
-                contentType: "application/json;charset=utf-8",
-                success: function(data) {
-                    $('#txt-token').val(data.result)
-                    $('#sumitForm').submit()
-                }
-            })
-        }
+            if ($('#password').val() == "" || $('#confirm_password').val() == "") {
+                $('#password').css('color', 'black');
+                $('#confirm_password').css('color', 'black');
+            }
+
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#password').css('color', 'green');
+                $('#confirm_password').css('color', 'green');
+            } else {
+                $('#confirm_password').css('color', 'red');
+            }
+        });
+
     </script>
 }
-
-

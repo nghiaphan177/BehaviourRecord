@@ -2,6 +2,7 @@
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,10 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     public class RecoveryInterventionController : Controller
     {
         private readonly IOptionAPIClientRecovery _IOptionAPIClientRecovery;
-        public RecoveryInterventionController(IOptionAPIClientRecovery IOptionAPIClientRecovery)
+        private readonly IToastNotification toastNotification;
+        public RecoveryInterventionController(IOptionAPIClientRecovery IOptionAPIClientRecovery, IToastNotification toastNotification)
         {
+            this.toastNotification = toastNotification;
             _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
         }
         public async Task<IActionResult> Index(int? page)
@@ -50,8 +53,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientRecovery.Create(content);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Thêm thành công!";
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
                     return RedirectToAction("Index", response.Result);
+                }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
                 }
             }
             catch (Exception)
@@ -89,8 +97,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientRecovery.Update(request);
                 if (response.Success == true)
                 {
-                    TempData["MessageCreate"] = "Sửa thành công!";
+                    toastNotification.AddSuccessToastMessage("Sửa Thành Công!");
                     return RedirectToAction("Index", response.Result);
+                }
+                else
+                {
+                    string Message = response.Message;
+                    toastNotification.AddErrorToastMessage(Message);
                 }
             }
             catch (Exception)
@@ -108,6 +121,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _IOptionAPIClientRecovery.Delete(id);
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Xóa Thành Công!");
                     return Json(new
                     {
                         status = true

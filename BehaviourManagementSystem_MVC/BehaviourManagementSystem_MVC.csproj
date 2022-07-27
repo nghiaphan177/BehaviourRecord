@@ -57,4 +57,11 @@
     <None Include="wwwroot\plugins\sweet-alert2\sweetalert2.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Areas\StudentApp\Views\Account\Login.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
