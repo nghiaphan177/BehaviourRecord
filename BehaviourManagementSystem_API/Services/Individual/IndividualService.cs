@@ -295,6 +295,7 @@ namespace BehaviourManagementSystem_API.Services
                         LastName = user.LastName,
                         Gender = user.Gender,
                         DOB = user.DOB,
+                        AvtName = user.AvtName,
                         Address = user.Address,
                         Classes = ind.Organization,
                         Email = user.Email,
