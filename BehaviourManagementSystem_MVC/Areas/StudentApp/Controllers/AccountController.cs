@@ -20,244 +20,245 @@ using System.Web;
 
 namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
 {
-	[Area("StudentApp")]
-	public class AccountController : Controller
-	{
-		private readonly IAccountAPIClient _accountAPIClient;
-		private readonly IConfiguration _configuration;
-		private readonly IEmailSender _emailSender;
+    [Area("StudentApp")]
+    public class AccountController : Controller
+    {
+        private readonly IAccountAPIClient _accountAPIClient;
+        private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
 
-		public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _accountAPIClient = accountAPIClient;
             _configuration = configuration;
             _emailSender = emailSender;
         }
-		[HttpGet]
-		public async Task<IActionResult> Login(string ReturnUrl = "/StudentApp/Home")
-		{
-			await HttpContext.SignOutAsync(
-			   "Student");
-			ViewBag.ReturnUrl = ReturnUrl;
-			return View();
-		}
+        [HttpGet]
+        public async Task<IActionResult> Login(string ReturnUrl = "/StudentApp/Home")
+        {
+            await HttpContext.SignOutAsync(
+               "Student");
+            ViewBag.ReturnUrl = ReturnUrl;
+            return View();
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/StudentApp/Home")
-		{
-			if (ReturnUrl == null)
-			{
-				ReturnUrl = "/StudentApp/Home";
-			}
-			if (!ModelState.IsValid)
-				return View(request);
-
-			var result = await _accountAPIClient.Login(request);
-
-			if (result == null)
-			{
-				ModelState.AddModelError("", "Đăng nhập không thành công");
-				return View();
-			}
-			if(result.Success == false)
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/StudentApp/Home")
+        {
+            if (ReturnUrl == null)
             {
-				ModelState.AddModelError("", result.Message);
-				return View();
-			}
+                ReturnUrl = "/StudentApp/Home";
+            }
+            if (!ModelState.IsValid)
+                return View(request);
 
-			var userPrincipal = ValidateToken(result.Result);
+            var result = await _accountAPIClient.Login(request);
 
-			var authProperties = new AuthenticationProperties
-			{
-				IsPersistent = request.Remember
-			};
-			if (request.Remember)
-			{
-				authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
-			}
+            if (result == null)
+            {
+                ModelState.AddModelError("", "Đăng nhập không thành công");
+                return View();
+            }
+            if (result.Success == false)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
 
-			HttpContext.Session.SetString("Token", result.Result);
+            var userPrincipal = ValidateToken(result.Result);
 
-			await HttpContext.SignInAsync(
-						"Student",
-						userPrincipal,
-						authProperties);
-			return LocalRedirect(ReturnUrl);
-		}
-		public async Task<IActionResult> Logout(string returnUrl = null)
-		{
-			// Clear the existing external cookie
-			await HttpContext.SignOutAsync(
-				"Student");
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = request.Remember
+            };
+            if (request.Remember)
+            {
+                authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
+            }
 
-			return RedirectToAction("Login");
-		}
+            HttpContext.Session.SetString("Token", result.Result);
 
-		[HttpGet]
-		public IActionResult ConfirmEmail()
-		{
-			// màn hình chờ email confirm
-			return View(); // Cần UI
-		}
+            await HttpContext.SignInAsync(
+                        "Student",
+                        userPrincipal,
+                        authProperties);
+            return LocalRedirect(ReturnUrl);
+        }
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            // Clear the existing external cookie
+            await HttpContext.SignOutAsync(
+                "Student");
 
-		[HttpPost]
-		public async Task<IActionResult> ConfirmEmailed()
-		{
-			var email = HttpContext.Session.GetString("EMAILCONFIRMED");
+            return RedirectToAction("Login");
+        }
 
-			var response = await _accountAPIClient.GetEmailConfirmed(email);
+        [HttpGet]
+        public IActionResult ConfirmEmail()
+        {
+            // màn hình chờ email confirm
+            return View(); // Cần UI
+        }
 
-			if(response == null)
-				return NotFound(); // trang not found
+        [HttpPost]
+        public async Task<IActionResult> ConfirmEmailed()
+        {
+            var email = HttpContext.Session.GetString("EMAILCONFIRMED");
 
-			if(response.Success)
-				if(response.Result)
-					return View();// trang home
-			return View(); // trang chờ confirm email
-		}
+            var response = await _accountAPIClient.GetEmailConfirmed(email);
 
-		[HttpPost]
-		public async Task<IActionResult> ConfirmEmail(string id, string code)
-		{
-			if(id == null || code == null)
-				return NotFound(); // Cần UI
+            if (response == null)
+                return NotFound(); // trang not found
 
-			var request = new ConfirmEmailRequest { Id = id, Code = code };
+            if (response.Success)
+                if (response.Result)
+                    return View();// trang home
+            return View(); // trang chờ confirm email
+        }
 
-			var response = await _accountAPIClient.ConfirmEmail(request);
+        [HttpPost]
+        public async Task<IActionResult> ConfirmEmail(string id, string code)
+        {
+            if (id == null || code == null)
+                return NotFound(); // Cần UI
 
-			// response sucess true thì view view home / fasle thì resend mail
+            var request = new ConfirmEmailRequest { Id = id, Code = code };
 
-			return View();
-		}
+            var response = await _accountAPIClient.ConfirmEmail(request);
 
-		[HttpPost]
-		public async Task<IActionResult> ResendConfirmEmail(string email)
-		{
-			if(string.IsNullOrEmpty(email))
-				return View(); // lỗi không có email
+            // response sucess true thì view view home / fasle thì resend mail
 
-			var response = await _accountAPIClient.ResendConfirmEmail(email);
+            return View();
+        }
 
-			if(response.Success)
-			{
-				// https://localhost:port/Account/ConfirmEmail?id=****&code=****/
-				var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ConfirmEmail");
-				var query = HttpUtility.ParseQueryString(uri.Query);
-				query["id"] = response.Result.Id;
-				query["code"] = response.Result.Code;
-				uri.Query = query.ToString();
-				var url = uri.ToString();
-				var subject = "XÁC THỰC TÀI KHOẢN NGƯỜI DÙNG";
-				var htmlMessage =
-					$"Xác thực tài khoản của bạn." +
-					$"<a href='{url}' style='color:red;'>" +
-						$"<strong>" +
-							$"<u>" +
-								$"<i>link tại đây</i>" +
-							$"</u>" +
-						$"</strong>" +
-					$"</a>";
-				var ok = true;
-				try
-				{
-					await _emailSender.SendEmailAsync(email, subject, htmlMessage);
-				}
-				catch { ok = false; }
+        [HttpPost]
+        public async Task<IActionResult> ResendConfirmEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return View(); // lỗi không có email
 
-				if(!ok)
-					return View(); // cần UI (UI với hình thức gửi mail không thành công) 
-			}
-			return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
-		}
+            var response = await _accountAPIClient.ResendConfirmEmail(email);
 
-		[HttpGet]
-		public IActionResult ForgotPassword()
-		{
-			return View();
-		}
+            if (response.Success)
+            {
+                // https://localhost:port/Account/ConfirmEmail?id=****&code=****/
+                var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ConfirmEmail");
+                var query = HttpUtility.ParseQueryString(uri.Query);
+                query["id"] = response.Result.Id;
+                query["code"] = response.Result.Code;
+                uri.Query = query.ToString();
+                var url = uri.ToString();
+                var subject = "XÁC THỰC TÀI KHOẢN NGƯỜI DÙNG";
+                var htmlMessage =
+                    $"Xác thực tài khoản của bạn." +
+                    $"<a href='{url}' style='color:red;'>" +
+                        $"<strong>" +
+                            $"<u>" +
+                                $"<i>link tại đây</i>" +
+                            $"</u>" +
+                        $"</strong>" +
+                    $"</a>";
+                var ok = true;
+                try
+                {
+                    await _emailSender.SendEmailAsync(email, subject, htmlMessage);
+                }
+                catch { ok = false; }
 
-		[HttpPost]
-		public async Task<IActionResult> ForgotPassword(string userNameOrEmail)
-		{
-			if(string.IsNullOrEmpty(userNameOrEmail))
-				return View(); // màn hình lỗi text rỗng
+                if (!ok)
+                    return View(); // cần UI (UI với hình thức gửi mail không thành công) 
+            }
+            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+        }
 
-			var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
 
-			if(response.Success)
-			{
-				// https://localhost:port/Account/ResetPassword?id=****&code=****/
-				var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ResetPassword");
-				var query = HttpUtility.ParseQueryString(uri.Query);
-				query["id"] = response.Result.Id;
-				query["code"] = response.Result.Code;
-				uri.Query = query.ToString();
-				var url = uri.ToString();
-				var subject = "Đặt lại mật khẩu của bạn";
-				var htmlMessage =
-					$"Đặt lại mật khẩu của bạn." +
-					$"<a href='{url}' style='color:red;'>" +
-						$"<strong>" +
-							$"<u>" +
-								$"<i>link tại đây</i>" +
-							$"</u>" +
-						$"</strong>" +
-					$"</a>";
-				var ok = true;
-				try
-				{
-					await _emailSender.SendEmailAsync(response.Result.UserOrEmail, subject, htmlMessage);
-				}
-				catch { ok = false; }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string userNameOrEmail)
+        {
+            if (string.IsNullOrEmpty(userNameOrEmail))
+                return View(); // màn hình lỗi text rỗng
 
-				if(!ok)
-					return View(); // cần UI (UI với hình thức gửi mail không thành công) 
-			}
-			return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm emaiil with method get
-		}
+            var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
 
-		[HttpGet]
-		public IActionResult ResetPassword()
-		{
-			ViewBag.IdAccount = User.FindFirst("Id").Value;
-			return View();
-		}
+            if (response.Success)
+            {
+                // https://localhost:port/Account/ResetPassword?id=****&code=****/
+                var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ResetPassword");
+                var query = HttpUtility.ParseQueryString(uri.Query);
+                query["id"] = response.Result.Id;
+                query["code"] = response.Result.Code;
+                uri.Query = query.ToString();
+                var url = uri.ToString();
+                var subject = "Đặt lại mật khẩu của bạn";
+                var htmlMessage =
+                    $"Đặt lại mật khẩu của bạn." +
+                    $"<a href='{url}' style='color:red;'>" +
+                        $"<strong>" +
+                            $"<u>" +
+                                $"<i>link tại đây</i>" +
+                            $"</u>" +
+                        $"</strong>" +
+                    $"</a>";
+                var ok = true;
+                try
+                {
+                    await _emailSender.SendEmailAsync(response.Result.UserOrEmail, subject, htmlMessage);
+                }
+                catch { ok = false; }
 
-		[HttpPost]
-		public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
-		{
-			if(!ModelState.IsValid)
-				return View(ModelState);
+                if (!ok)
+                    return View(); // cần UI (UI với hình thức gửi mail không thành công) 
+            }
+            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm emaiil with method get
+        }
 
-			var response = await _accountAPIClient.ResetPassword(request);
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
+        public IActionResult ChangePassword()
+        {
+            ViewBag.IdAccount = User.FindFirst("Id").Value;
+            return View();
+        }
 
-			if(!response.Success)
-				return View(); // reset pass không thành không
-			return RedirectToAction("ChangePassSuccess"); // reset thành công
-		}
-		[HttpGet]
-		public IActionResult ChangePassSuccess()
-		{
-			return View();
-		}
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ResetPasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
 
-		private ClaimsPrincipal ValidateToken(string token)
-		{
-			IdentityModelEventSource.ShowPII = true;
+            var response = await _accountAPIClient.ChangePassword(request);
+            if (response != null)
+                if (!response.Success)
+                    return View(); // reset pass không thành không
+            return RedirectToAction("ChangePassSuccess"); // reset thành công
+        }
+        [HttpGet]
+        public IActionResult ChangePassSuccess()
+        {
+            return RedirectToAction("Logout");
+        }
 
-			SecurityToken validatedToken;
-			TokenValidationParameters validationParameters = new TokenValidationParameters();
+        private ClaimsPrincipal ValidateToken(string token)
+        {
+            IdentityModelEventSource.ShowPII = true;
 
-			validationParameters.ValidateLifetime = true;
+            SecurityToken validatedToken;
+            TokenValidationParameters validationParameters = new TokenValidationParameters();
 
-			validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
-			validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
-			validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            validationParameters.ValidateLifetime = true;
 
-			ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
+            validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
+            validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
+            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
 
-			return principal;
-		}
-	}
+            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
+
+            return principal;
+        }
+    }
 }

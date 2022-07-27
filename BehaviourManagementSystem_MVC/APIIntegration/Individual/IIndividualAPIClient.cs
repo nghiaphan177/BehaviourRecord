@@ -15,5 +15,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Individual
         Task<ResponseResult<List<IndAssessRequest>>> GetAllStudentByTeacherId(string id);
         Task<ResponseResult<IndAssessRequest>> GetThongTinSUa(string id);
         Task<ResponseResult<List<IndAssessRequest>>> Update(IndAssessRequest request);
+        Task<ResponseResult<List<IndAssessRequest>>> Delete(string idTeacher, string idIndi);
     }
 }

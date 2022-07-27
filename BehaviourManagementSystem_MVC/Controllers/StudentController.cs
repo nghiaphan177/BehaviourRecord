@@ -169,6 +169,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     return RedirectToAction("StudentList", response.Result);
                 }
+                else
+                {
+                    toastNotification.AddErrorToastMessage(response.Message);
+                    return RedirectToAction("StudentList", response.Result);
+                }
             }
             catch (Exception)
             {
@@ -185,6 +190,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
         public IActionResult TeacherProfileEdit()
         {
             return View();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string idIndi, string idTeacher)
+        {
+
+            var response = await _IIndividualAPIClient.Delete(idTeacher,idIndi);
+            if (response.Success == true)
+            {
+                toastNotification.AddSuccessToastMessage("Đã Xóa Thành Công!");
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            else
+            {
+                toastNotification.AddErrorToastMessage(response.Message);
+            }
+            return NoContent();
         }
     }
 }
