@@ -102,18 +102,22 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 return NotFound();
             string webrootpath = webHostEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
-            string fileName = String.Empty;
+            string fileName = null;
             if (files.Count != 0)
             {
                 fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
-                request.AvtName = fileName;
-                var response = await _IIndividualAPIClient.Create(request);
-                if (response == null)
-                {
-                    ViewBag.MSError = response.Message;
-                    return View();
-                }
-                if (response.Success == true)
+                request.AvtName = fileName;              
+            }
+            var response = await _IIndividualAPIClient.Create(request);
+            if (response == null)
+            {
+                ViewBag.MSError = response.Message;
+                toastNotification.AddErrorToastMessage("Tạo học sinh không thành công");
+                return View();
+            }
+            if (response.Success == true)
+            {
+                if(fileName != null)
                 {
                     var uploads = Path.Combine(webrootpath, @"images");
                     var extension = Path.GetExtension(files[0].FileName);
@@ -122,8 +126,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     {
                         files[0].CopyTo(filestream);
                     }
-                    return RedirectToAction(nameof(StudentList));
                 }
+                toastNotification.AddSuccessToastMessage("Tạo học sinh thành công");
+                return RedirectToAction(nameof(StudentList));
             }
             return View();
         }

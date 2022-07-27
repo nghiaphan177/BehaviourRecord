@@ -54,6 +54,7 @@ namespace BehaviourManagementSystem_API.Services
                     UpdateDate = DateTime.Now.Date
                 };
                 var result_save_user = await _userManager.CreateAsync(user, request.Password);
+         
                 if(result_save_user.Succeeded)
                 {
                     ind = new Individual()
@@ -295,6 +296,7 @@ namespace BehaviourManagementSystem_API.Services
                         LastName = user.LastName,
                         Gender = user.Gender,
                         DOB = user.DOB,
+                        AvtName = user.AvtName,
                         Address = user.Address,
                         Classes = ind.Organization,
                         Email = user.Email,
