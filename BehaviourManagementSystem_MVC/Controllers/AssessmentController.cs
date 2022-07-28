@@ -68,7 +68,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 TempData["MessageCreateAss"] = "Sửa thành công!";
                 toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
-                return RedirectToAction("Edit", new { assid = response.Result.Id });
+                return RedirectToAction("StudentDetail", "Student", new { id = request.IndividualId });
             }
             catch(Exception ex)
             {

@@ -83,6 +83,8 @@ namespace BehaviourManagementSystem_API.Services
                 RecordWhere = obj.RecordWhere,
                 RecordWho = obj.RecordWho,
                 AnalyzeAntecedentPerceivedDescription = obj.AnalyzeAntecedentPerceivedDescription,
+                AnalyzeAntecedentEnvironmentalDescription = obj.AnalyzeAntecedentEnvironmentalDescription,
+                AnalyzeAntecedentActivityDescription = obj.AnalyzeAntecedentActivityDescription,
                 AnalyzeConsequencesPerceive = obj.AnalyzeConsequencesPerceive,
                 AnalyzeConsequenceEnvironmental = obj.AnalyzeConsequenceEnvironmental,
                 AnalyzeConsequencesActivity = obj.AnalyzeConsequencesActivity,
