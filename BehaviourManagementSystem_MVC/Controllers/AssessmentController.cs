@@ -63,8 +63,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _assessmentAPIClient.CreateRecord(request);
                 if(response == null || !response.Success)
                 {
-                    return NotFound();
+                    toastNotification.AddErrorToastMessage(response.Message);
+                    return View();
                 }
+                TempData["MessageCreateAss"] = "Sửa thành công!";
+                toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                 return RedirectToAction("Edit", new { assid = response.Result.Id });
             }
             catch(Exception ex)
@@ -130,8 +133,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if(response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
-                    TempData["MessageEditBeha"] = "Sửa thành công!";
-                    return RedirectToAction("Edit", new { id = request.Id });
+                    TempData["MessageEditBehavior"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
                 }
             }
             catch(Exception)
@@ -141,6 +144,31 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return Json(new { success = false });
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateAnaEntecedent(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateAnalyzeAntecedent(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["UpdateAnalyzeAntecedent"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(string AssessId)
         {

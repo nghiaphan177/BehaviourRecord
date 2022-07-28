@@ -38,9 +38,18 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<AssessmentRequest>> CreateRecordAntecedent(string AssId, AssessmentRequest content)
+        public async Task<ResponseResult<AssessmentRequest>> UpdateAnalyzeAntecedent(string AssId, AssessmentRequest content)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Assessment/update-antecedent?ass_id={AssId}&ana_ant_per={content.AnalyzeAntecedentPerceivedDescription}&ana_ant_envi={content.AnalyzeAntecedentEnvironmentalDescription}&ana_ant_act={content.AnalyzeAntecedentActivityDescription}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ResponseResult<AssessmentRequest>> CreateRecordBehaviour(string AssId, string content)

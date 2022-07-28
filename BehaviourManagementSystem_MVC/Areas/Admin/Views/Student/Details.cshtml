@@ -1,9 +1,14 @@
-﻿@{
+﻿@model dynamic
+@{
     ViewData["Title"] = "Thông tin chi tiết học sinh";
 }
-@*@section styles {
-    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" media="screen">
-    }*@
+@section styles {
+    <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-button/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-reponsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+}
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
@@ -18,14 +23,14 @@
                 <div class="media m-b-30">
                     <div class="row">
                         <div class="col-sm-12 col-lg-6 col-xl-6 text-center">
-                            <img class="rounded img-fluid" src="~/assets/img/user.jpg" alt="Generic placeholder image">
+                            <img class="rounded img-fluid" src="~/images/@Model.Individual.AvtName" alt="Generic placeholder image">
                         </div>
                         <div class="col-sm-12 col-lg-6 col-xl-6">
                             <div class="row">
                                 <label class="col-sm-6 mt-2 font-16">Họ và tên</label>
                                 <div class="col-sm-6 mt-2">
                                     <span>
-                                        sadfasdf
+                                        @(Model.Individual.FirstName + " "+ Model.Individual.LastName)
                                     </span>
                                 </div>
                             </div>
@@ -33,25 +38,25 @@
                                 <label class="col-sm-6 mt-2 font-16">Địa chỉ</label>
                                 <div class="col-sm-6 mt-2">
                                     <span>
-                                        Quận 9
-                                    </span>
-                                </div>
-                            </div>
-
-                           <div class="row">
-                                <label class="col-sm-6 mt-2 font-16">Số điện thoại</label>
-                                <div class="col-sm-6 mt-2">
-                                    <span>
-                                        0946165151
+                                        @Model.Individual.Address
                                     </span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <label class="col-sm-6 mt-2 font-16">Email</label>
+                                <label class="col-sm-6 mt-2 font-16">Lớp</label>
                                 <div class="col-sm-6 mt-2">
                                     <span>
-                                        0946165151
+                                        @Model.Individual.Classes
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-lg-6 col-sm-6 mt-2 font-16">Email</label>
+                                <div class="col-lg-6 col-sm-6 mt-2">
+                                    <span>
+                                        @Model.Individual.Email
                                     </span>
                                 </div>
                             </div>
@@ -60,7 +65,7 @@
                                 <label class="col-sm-6 mt-2 font-16">Giới tính</label>
                                 <div class="col-sm-6 mt-2">
                                     <span>
-                                        0946165151
+                                        @Model.Individual.Gender
                                     </span>
                                 </div>
                             </div>
@@ -69,7 +74,11 @@
                                 <label class="col-sm-6 mt-2 font-16">Ngày sinh</label>
                                 <div class="col-sm-6 mt-2">
                                     <span>
-                                        0946165151
+                                        @{
+                                            DateTime d = Convert.ToDateTime(@Model.Individual.DOB);
+                                            string s = d.ToString("dd/MM/yyyy");
+                                        }
+                                        @s
                                     </span>
                                 </div>
                             </div>
@@ -95,69 +104,90 @@
                     <div class="tab-content">
                         <div role="tabpanel" id="tabdanhgia" class="tab-pane active">
                             <!-- Table Đánh Giá -->
-                            <table class="table table-hover table-center mb-0 datatable">
+                            <table id="datatable" class="table table-hover table-center mb-0 datatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Ngày</th>
                                         <th class="text-center">Thời Gian</th>
                                         <th class="text-center">Tường Trình</th>
                                         <th class="text-center">Phân Tích</th>
-                                        <!-- <th>Parent Name</th>
-                                        <th>Mobile Number</th> -->
                                         <th class="text-center">Chi Tiết</th>
-                                        <th class="text-center">Tóm Tắt</th>
-                                        <th class="text-center">Tùy Chọn</th>
+                                        @*<th class="text-center">Tùy Chọn</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">14/05/2022</td>
-                                        <td class="text-center">
-                                            14:20
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                        </td>
-                                        <!-- <td>Jeffrey Wong</td>
-                                        <td>097 3584 5870</td> -->
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
-                                        </td>
-                                        <td class="text-center">911 Deer Ridge Drive,USA</td>
-                                        <td class="text-center">
-                                            <div class="actions">
-                                                <a href="/Admin/Student/AssesetmentStudent" class="btn btn-sm bg-success-light mr-2">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @if (Model.Assessment != null)
+                                    {
+                                        @foreach (AssessmentRequest assessment in Model.Assessment)
+                                        {
+                                            <tr id="assess-@assessment.Id" class="text-center">
+                                                <td class="text-center">@assessment.RecordDate?.ToString("dd/MM/yyyy")</td>
+                                                <td class="text-center">@assessment.RecordStart</td>
+                                                <td class="text-center">
+                                                    @{
+                                                        if (assessment.RecordIsCompeleted == true)
+                                                        {
+                                                            <span class="btn btn-success btn-sm">Hoàn Thành</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger btn-sm">Chưa Hoàn Thành</span>
+                                                        }
+                                                    }
+
+                                                </td>
+                                                <td class="text-center">
+                                                    @{
+                                                        if (assessment.AnalyzeIsCompeleted == true)
+                                                        {
+                                                            <span class="btn btn-success btn-sm">Hoàn Thành</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger btn-sm">Chưa Hoàn Thành</span>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    @{
+                                                        if (assessment.FunctionIsCompeleted == true)
+                                                        {
+                                                            <span class="btn btn-success btn-sm">Hoàn Thành</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger btn-sm">Chưa Hoàn Thành</span>
+                                                        }
+                                                    }
+                                                </td>
+                                                @*<td class="text-right">
+                                                        <div class="actions">
+                                                            <a href="/Intervention/GetInterventionById?id=@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            <a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-plus-circle"></i>
+                                                            </a>
+                                                            <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-pen"></i>
+                                                            </a>
+                                                            <button onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>*@
+                                            </tr>
+                                        }
+                                    }
+                                    @if (Model.Assessment == null)
+                                    { }
 
                                 </tbody>
                             </table>
-                            <nav aria-label="...">
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
-                        <div role="tabpanel" id="tabcanthiep" class="tab-pane text-center">
+                        <div role="tabpanel" id="tabcanthiep" class="tab-pane">
                             <!-- Table Can Thiêp -->
-                            <table class="table table-hover table-center mb-0 datatable">
-
+                            <table id="datatable2" class="table table-hover table-center mb-0 datatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Ngày</th>
@@ -165,46 +195,68 @@
                                         <th class="text-center">Quản Lí</th>
                                         <th class="text-center">Ngăn Chặn</th>
                                         <th class="text-center">Tóm Tắt</th>
-                                        <th class="text-center">Tùy Chọn</th>
+                                        @*<th class="text-center">Tùy Chọn</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">14/05/2022</td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm">Hoàn thành</button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-danger btn-sm">Chưa hoàn thành</button>
-                                        </td>
-                                        <td class="text-center">911 Deer Ridge Drive,USA</td>
-                                        <td class="text-center">
-                                            <div class="actions">
-                                                <a href="/Admin/Student/InterventionStudent" class="btn btn-sm bg-success-light mr-2">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in Model.Intervention)
+                                    {
+                                        <tr id="inter-@item.Id" class="text-center">
+                                            <td>@item.ProfileDate?.ToString("dd/MM/yyyy")</td>
+                                            @if (item.ProfileIsCompeleted == true)
+                                            {
+                                                <td>
+                                                    <span class="badge badge-success">Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            @if (item.ManageIsCompleted == true)
+                                            {
+                                                <td>
+                                                    <span class="badge badge-success">Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            @if (item.PreventIsCompleted == true)
+                                            {
+                                                <td>
+                                                    <span class="badge badge-success">Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                </td>
+                                            }
+                                            <td>@item.Summary</td>
+                                            @*<td class="text-right">
+                                                <div class="actions">
+                                                    <a href="/Intervention/Edit?id=@item.Id"
+                                                       class="btn btn-sm bg-success-light mr-2">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    <a onclick=" deleteActivity('@item.Id')" class="btn btn-sm bg-danger-light">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>*@
+                                        </tr>
+
+                                    }
 
                                 </tbody>
                             </table>
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
                         </div>
 
                     </div>
@@ -213,4 +265,22 @@
         </div>
     </div>
 </div>
-</div><!--end row-->
+@section scripts {
+    @*<script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>*@
+    <script src="~/lib/datables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="~/lib/datatables.net-reponsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    @*<script src="~/lib/datatables.net-button/js/buttons.bootstrap4.min.js"></script>
+        <script src="~/lib/datatables.net-button/js/buttons.html5.min.js"></script>
+        <script src="~/lib/datatables.net-button/js/dataTables.buttons.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $("#datatable").DataTable({ lengthMenu: [4] });
+            $("#datatable2").DataTable({ lengthMenu: [4] });
+            $("#datatable-buttons").DataTable({ lengthChange: !1, buttons: ["colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+        });
+       
+    </script>
+}

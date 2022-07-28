@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
+using BehaviourManagementSystem_MVC.APIIntegration.Individual;
+using BehaviourManagementSystem_MVC.APIIntegration.Intervention;
+using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +16,15 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
     [Area("Admin")]
     public class StudentController : Controller
     {
+        private readonly IIndividualAPIClient _IIndividualAPIClient;
+        private readonly IAssessmentAPIClient _assessmentAPIClient;
+        private readonly IInterventionAPIClient _IInterventionAPIClient;
+        public StudentController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient, IInterventionAPIClient IInterventionAPIClient)
+        {
+            _IIndividualAPIClient = IIndividualAPIClient;
+            _assessmentAPIClient = assessmentAPIClient;
+            _IInterventionAPIClient = IInterventionAPIClient;
+        }
         // GET: StudentController
         public ActionResult Index()
         {
@@ -18,9 +32,33 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         }
 
         // GET: StudentController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            try
+            {
+                dynamic mymodel = new ExpandoObject();
+                var responseIndi = await _IIndividualAPIClient.Detail(id);
+                var responseAssess = await _assessmentAPIClient.GetAll(id);               
+                if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
+                {
+                    List<InterventionRequest> intervention_list = new List<InterventionRequest>();
+                    foreach (var item in responseAssess.Result)
+                    {
+                        var response_intervention = await _IInterventionAPIClient.GetAll(item.Id);
+                        response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
+                    }
+                    mymodel.Individual = responseIndi.Result;
+                    mymodel.Assessment = responseAssess.Result;
+                    mymodel.Intervention = intervention_list;
+                    return View(mymodel);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return NotFound();
         }
 
         // GET: StudentController/Create

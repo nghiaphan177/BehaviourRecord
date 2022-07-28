@@ -7,7 +7,6 @@ using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
-using BehaviourManagementSystem_MVC.Utilities;
 using BehaviourManagementSystem_MVC.Utilities.EmailSender;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +16,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Net.Http.Headers;
 using System;
 
 namespace BehaviourManagementSystem_MVC

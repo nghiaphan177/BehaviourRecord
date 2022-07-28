@@ -26,15 +26,15 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a id="tuongtrinhlink" class="nav-link"
                            href="#tuongtrinh" data-toggle="tab">Tường trình</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a id="phantichlink" class="nav-link"
                            href="#phantich" data-toggle="tab">Phân tích</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a id="chitietlink" class="nav-link"
                            href="#chitiet" data-toggle="tab">Chi Tiết</a>
                     </li>
                 </ul>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button onclick="submitAssessment()" id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                     <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
@@ -90,21 +90,21 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 <li class="nav-item">
-                                    <a class="nav-link active"
+                                    <a id="phantich-hanhvi-link" class="nav-link"
                                        href="#pt-hanhvi" data-toggle="tab">Hành Vi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#pt-tiende"
+                                    <a id="phantich-tiende-link" class="nav-link" href="#pt-tiende"
                                        data-toggle="tab">Tiền Đề</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#pt-hauqua"
+                                    <a id="phantich-hauqua-link" class="nav-link" href="#pt-hauqua"
                                        data-toggle="tab">Hậu Quả</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
                                 <!-- Tab Phân Tích - Hành Vi Start-->
-                                <div class="tab-pane show active" id="pt-hanhvi">
+                                <div class="tab-pane" id="pt-hanhvi">
                                     <form id="updateBehaviourForm" asp-action="CreateRecordBehaviour" asp-controller="Assessment" method="post">
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
@@ -114,7 +114,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
-                                            <button onclick="submitUpdateBehaviour()" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                            <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
@@ -122,77 +122,11 @@
                                 <!-- Tab Phân Tích - Hành Vi End-->
                                 <!-- Tab Phân Tích - Tiền Đề Start-->
                                 <div class="tab-pane" id="pt-tiende">
-                                    <form action="#">
-                                        @*<div class="form-group row">
-                                            <label class="col-form-label col-md-2">Cảm Xúc</label>
-                                            <div class="col-md-10">
-                                            <input asp-for="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                            @*<ul class="dropdown-menu" id="multiselect-drop-camxuc">
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Cảm Xúc 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 1</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Cảm Xúc 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Cảm Xúc 2</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            </ul>
-                                            @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
-                                            </div>
-                                            </div>
-                                            <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Môi Trường</label>
-                                            <div class="col-md-10">
-                                            <input asp-for="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="--Chọn--" class="form-control" data-toggle="dropdown" class="dropdown-toggle" />
-                                            <ul class="dropdown-menu" id="multiselect-drop-moitruong">
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Môi Trường 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 1</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Môi Trường 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Môi Trường 2</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            </ul>
-                                            </div>
-                                            </div>
-                                            <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Hành Động</label>
-                                            <div class="col-md-10">
-                                            <input asp-for="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="--Chọn--" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                            <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Hành Động 1" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 1</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            <li class="dropdown-item">
-                                            <div class="checkbox">
-                                            <label>
-                                            <input value="Hành Động 2" style="zoom: 1.2;" type="checkbox"><span style="zoom: 1.5; margin-left:8px;">Hành Động 2</span>
-                                            </label>
-                                            </div>
-                                            </li>
-                                            </ul>
-                                            </div>
-                                            </div>*@
+                                    <form asp-action="CreateAnaEntecedent" asp-controller="Assessment" method="post">
+                                        <input hidden asp-for="Id" type="text" class="form-control" />
                                         @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
                                         <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-pt2" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                            <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
@@ -205,37 +139,37 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Cảm xúc trước</label>
-                                                    <input readonly="readonly" type="text" class="form-control" value="Nathan Humphries">
+                                                    <input readonly="readonly" type="text" class="form-control" value="@Model.AnalyzeAntecedentPerceivedDescription">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Cảm xúc sau</label>
-                                                    <input asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="@Model.AnalyzeConsequencesPerceive">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Môi truòng trước</label>
-                                                    <input readonly="readonly" type="text" class="form-control" value="Nathan Humphries">
+                                                    <input readonly="readonly" type="text" class="form-control" value="@Model.AnalyzeAntecedentEnvironmentalDescription">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Môi trường sau</label>
-                                                    <input asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="@Model.AnalyzeConsequenceEnvironmental">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Hành vi trước</label>
-                                                    <input readonly="readonly" type="text" class="form-control" value="Nathan Humphries">
+                                                    <input readonly="readonly" type="text" class="form-control" value="@Model.AnalyzeAntecedentActivityDescription">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Hành vi sau</label>
-                                                    <input asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="Stephen Marley">
+                                                    <input asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="@Model.AnalyzeConsequencesActivity">
                                                 </div>
                                             </div>
                                         </div>
@@ -343,14 +277,7 @@
     </div>
 </div>
 <!-- Đánh giá End -->
-@if (TempData["MessageEditBeha"] != null)
-{
-    <script type="text/javascript">
 
-        $('#pt-tiende').tab('show');
-
-    </script>
-}
 @section scripts {
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
@@ -368,43 +295,65 @@
         });
 
 
-        $('.nav a[href="#phantich"]').tab('show');
 
 
-        function submitAssessment() {
+        //function submitAssessment() {
 
-            var form = $(this);
-            var actionUrl = form.attr('action');
-            var data = $("#assessform").serialize();
-            $.ajax({
-                type: "POST",
-                url: actionUrl,
-                data: data, // serializes the form's elements.
-                success: function (result) {
-                    if (result.success == true) {
-                        $('.nav a[href="#phantich"]').removeClass("disabled")
-                        $('.nav a[href="#phantich"]').tab('show');
-                    }
+        //    var form = $(this);
+        //    var actionUrl = form.attr('action');
+        //    var data = $("#assessform").serialize();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: actionUrl,
+        //        data: data, // serializes the form's elements.
+        //        success: function (result) {
+        //            if (result.success == true) {
+        //                $('.nav a[href="#phantich"]').tab('show');
 
-                }
-            });
-        }
-        $('#myform').on('submit', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            var actionUrl = form.attr('action');
-            var data = $("#updateBehaviourForm").serialize();
-            $.ajax({
-                type: "POST",
-                url: actionUrl,
-                data: data, // serializes the form's elements.
-                success: function (result) {
-                    $('.nav a[href="#phantich"]').removeClass("disabled")
-                    $('.nav a[href="#phantich"]').tab('show');
-                }
-            });
-        })
+        //                $('.nav a[href="#phantich"]').removeClass("disabled")
+        //            }
 
+        //        }
+        //    });
+        //}
 
     </script>
+    @if (TempData["MessageCreateAss"] != null)
+    {
+        <script type="text/javascript">
+
+            $('.nav a[href="#phantich"]').tab('show');
+            $('#chitietlink').addClass('disabled');
+            $('#phantich-hanhvi-link').addClass('active');
+            $('#pt-hanhvi').addClass('show');
+            $('#pt-hanhvi').addClass('active');
+            $('#phantich-tiende-link').addClass('disabled');
+            $('#phantich-hauqua-link').addClass('disabled');
+            
+
+        </script>
+    }
+    @if (TempData["MessageEditBehavior"] != null)
+    {
+        <script type="text/javascript">
+            $('.nav a[href="#phantich"]').tab('show');
+            $('#chitietlink').addClass('disabled');
+            $('#phantich-tiende-link').addClass('active');
+            $('#pt-tiende').addClass('show');
+            $('#pt-tiende').addClass('active');
+            $('#phantich-hauqua-link').addClass('disabled');
+
+        </script>
+    }
+    @if (TempData["UpdateAnalyzeAntecedent"] != null)
+    {
+        <script type="text/javascript">
+            $('.nav a[href="#phantich"]').tab('show');
+            $('#chitietlink').addClass('disabled');
+            $('#phantich-hauqua-link').addClass('active');
+            $('#pt-hauqua').addClass('show');
+            $('#pt-hauqua').addClass('active');
+        </script>
+    }
 }
+

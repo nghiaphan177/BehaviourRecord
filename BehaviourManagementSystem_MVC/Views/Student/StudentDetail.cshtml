@@ -21,20 +21,20 @@
     <div class="col-md-12">
         <div class="about-info d-flex justify-content-center">
             <div class="media mt-3">
-                <img style="border-radius: 25px" src="~/assets/img/user.jpg" class="mr-3" alt="...">
+                <img style="border-radius: 25px" src="/images/@Model.Individual.AvtName" class="mr-3" alt="...">
                 <div class="media-body">
                     <ul>
                         <li>
                             <span class="title-span">Họ và Tên : </span>
-                            <span class="info-span">@Model.Individual.FullName</span>
+                            <span class="info-span">@(Model.Individual.FirstName + " "+ Model.Individual.LastName)</span>
                         </li>
                         <li>
                             <span class="title-span">Địa chỉ : </span>
                             <span class="info-span">@Model.Individual.Address</span>
                         </li>
                         <li>
-                            <span class="title-span">Số điện thoại : </span>
-                            <span class="info-span">@Model.Individual.PhoneIndividual</span>
+                            <span class="title-span">Lớp : </span>
+                            <span class="info-span">@Model.Individual.Classes</span>
                         </li>
                         <li>
                             <span class="title-span">Email : </span>
@@ -49,8 +49,8 @@
                        
                             @{ 
                                 DateTime d = Convert.ToDateTime(@Model.Individual.DOB);
-                                string s = d.ToString("dd/MM/yyyy");
-                            }
+        string s = d.ToString("dd/MM/yyyy");
+    }
                        
                         <li>
                             <span class="title-span">Ngày sinh : </span>
@@ -119,7 +119,7 @@
             
             <div class="tab-content">
                 <div class="tab-pane show active" id="solid-tab1">
-                    <a asp-action="Create" asp-controller="Assessment" asp-route-id="@Model.Individual.Id">
+                    <a asp-action="Create" asp-controller="Assessment" asp-route-id="@Model.Individual.Ind_Id">
                         <button type="button" class="btn btn-info btn-danhgia">Thêm đánh giá</button>
                     </a>
                     <hr style="height: 1px; border: none; color: #333; background-color: #b9b1b1; width: 100%; border-top: 1px dotted yellow;" />
