@@ -135,40 +135,9 @@
     <script src="~/assets/js/script.js"></script>
     @await Component.InvokeAsync("NToastNotify")
     @RenderSection("Scripts", false)
-    @if (TempData["MessageEdit"] != null)
-    {
-        <script type="text/javascript">
+    @RenderSection("EditIntervention", false)
+    
 
-            $('.nav a[href="#quanlycanthiep"]').tab('show');
-
-        </script>
-    }
-    @if (TempData["MessageEditManage"] != null)
-    {
-        <script type="text/javascript">
-
-            $('.nav a[href="#nganchantaipham"]').tab('show');
-
-        </script>
-    }
-    @if (TempData["MessageCreateAss"] != null)
-    {
-        <script type="text/javascript">
-
-            $('.nav a[href="#phantich"]').tab('show');
-
-
-        </script>
-    }
-    @if (TempData["MessageEditBehavior"] != null)
-    {
-        <script type="text/javascript">
-            $('.nav a[href="#phantich"]').tab('show');
-            $('.nav a[href="#pt-tiende"]').tab('show');
-
-
-        </script>
-    }
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -182,7 +151,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                                // Add active class to the current button (highlight it)
+                                    // Add active class to the current button (highlight it)
 
     </script>
 </body>

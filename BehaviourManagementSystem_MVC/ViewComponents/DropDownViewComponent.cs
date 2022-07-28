@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
@@ -22,7 +23,8 @@ namespace BehaviourManagementSystem_MVC.ViewComponents
         private readonly IAntecedentActivityAPIClient _IAntecedentActivityAPIClient;
         private readonly IAntecedentEnvironmentalAPIClient _IAntecedentEnvironmentalAPIClient;
         private readonly IAntecedentPerceivedAPIClient _IAntecedentPerceivedAPIClient;
-        public DropDownViewComponent(IOptionAPIClientRecovery IOptionAPIClientRecovery, 
+        private readonly IAssessmentAPIClient _assessmentAPIClient;
+        public DropDownViewComponent(IAssessmentAPIClient assessmentAPIClient, IOptionAPIClientRecovery IOptionAPIClientRecovery, 
             IOptionAPIClientExtreme IOptionAPIClientExtreme, 
             IOptionAPIClientModerate IOptionAPIClientModerate, 
             IOptionAPIClientMild IOptionAPIClientMild,
@@ -31,6 +33,7 @@ namespace BehaviourManagementSystem_MVC.ViewComponents
             IAntecedentPerceivedAPIClient IAntecedentPerceivedAPIClient
             )
         {
+            _assessmentAPIClient = assessmentAPIClient;
             _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
             _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
             _IOptionAPIClientModerate = IOptionAPIClientModerate;
