@@ -21,6 +21,9 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> CreateRecord(string ind_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
         {
+            Guid guid;
+            if(!Guid.TryParse(ind_id, out guid))
+                return new ResponseResultError<Assessment>("Truy xuất không hợp lệ.");
             var a = new Assessment();
             if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == ind_id))
                 return new ResponseResultError<Assessment>("Id individual không tồn tại");
@@ -40,7 +43,7 @@ namespace BehaviourManagementSystem_API.Services
                     RecordWho = r_who,
                     IndividualId = new Guid(ind_id),
                     CreateDate = DateTime.Now,
-
+                    UpdateDate = DateTime.Now,
                     RecordIsCompeleted = true
 
                 });
@@ -79,12 +82,16 @@ namespace BehaviourManagementSystem_API.Services
                 RecordDuring = obj.RecordDuring,
                 RecordWhere = obj.RecordWhere,
                 RecordWho = obj.RecordWho,
-                AnalyzeAntecedentActivityDescription = obj.AnalyzeAntecedentActivityDescription,
-                AnalyzeAntecedentEnvironmentalDescription = obj.AnalyzeAntecedentEnvironmentalDescription,
                 AnalyzeAntecedentPerceivedDescription = obj.AnalyzeAntecedentPerceivedDescription,
+                AnalyzeAntecedentEnvironmentalDescription = obj.AnalyzeAntecedentEnvironmentalDescription,
+                AnalyzeAntecedentActivityDescription = obj.AnalyzeAntecedentActivityDescription,
+                AnalyzeConsequencesPerceive = obj.AnalyzeConsequencesPerceive,
+                AnalyzeConsequenceEnvironmental = obj.AnalyzeConsequenceEnvironmental,
+                AnalyzeConsequencesActivity = obj.AnalyzeConsequencesActivity,
                 AnalyzeBehaviour = obj.AnalyzeBehaviour,
                 FunctionAntecedent = obj.FunctionAntecedent,
                 FunctionConsequece = obj.FunctionConsequece,
+                IndividualId = obj.IndividualId.ToString()
             });
         }
 

@@ -29,14 +29,14 @@
                         <a class="nav-link active"
                            href="#tuongtrinh" data-toggle="tab">Tường trình</a>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link"
                            href="#phantich" data-toggle="tab">Phân tích</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
                            href="#chitiet" data-toggle="tab">Chi Tiết</a>
-                    </li>
+                    </li>*@
                 </ul>
                 <div class="tab-content">
                     <!-- Tab Tường Trình Start -->
@@ -86,7 +86,7 @@
                     </div>
                     <!-- Tab Tường Trình End -->
                     <!-- Tab phân tích Start-->
-                    <div class="tab-pane" id="phantich">
+                    <!--<div class="tab-pane" id="phantich">
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 <li class="nav-item">
@@ -104,7 +104,7 @@
                             </ul>
                             <div class="tab-content">
                                 <!-- Tab Phân Tích - Hành Vi Start-->
-                                <div class="tab-pane show active" id="pt-hanhvi">
+                                <!--<div class="tab-pane show active" id="pt-hanhvi">
                                     <form id="updateBehaviourForm" asp-action="CreateRecordBehaviour" asp-controller="Assessment" method="post">
                                         <input value="@ViewData["assid"]" type="text" class="form-control" hidden  name="Id"/>
                                         <div class="form-group row">
@@ -118,11 +118,11 @@
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div>-->
                                 <!-- Tab Phân Tích - Hành Vi End-->
                                 <!-- Tab Phân Tích - Tiền Đề Start-->
-                                <div class="tab-pane" id="pt-tiende">
-                                    <form action="#">
+                                <!--<div class="tab-pane" id="pt-tiende">
+                                    <form action="#">-->
                                         @*<div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
@@ -190,16 +190,16 @@
                                             </ul>
                                             </div>
                                             </div>*@
-                                        @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
+                                        @*@await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
                                         <div class="col-sm-3 mx-auto text-center">
                                             <button type="submit" id="button-pt2" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
-                                    </form>
-                                </div>
+                                    </form>*@
+                                @*</div>-->*@
                                 <!-- Tab Phân Tích - Tiền Đề End-->
                                 <!-- Tab Phân Tích - Hậu Quả Start-->
-                                <div class="tab-pane" id="pt-hauqua">
+                                <!--<div class="tab-pane" id="pt-hauqua">
                                     <form action="#">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
@@ -244,14 +244,14 @@
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div>-->
                                 <!-- Tab Phân Tích - Hậu Quả End-->
-                            </div>
+                            <!--</div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Tab phân tích End-->
                     <!-- Tab Chi Tiết Start -->
-                    <div class="tab-pane" id="chitiet">
+                    <!--<div class="tab-pane" id="chitiet">
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 <li class="nav-item">
@@ -263,9 +263,9 @@
                                        data-toggle="tab">Hậu Quả</a>
                                 </li>
                             </ul>
-                            <div class="tab-content">
+                            <div class="tab-content">-->
                                 <!-- Tab Chi Tiết - Tiền Đề Start -->
-                                <div class="tab-pane show active" id="ct-tiende">
+                                <!--<div class="tab-pane show active" id="ct-tiende">
                                     <form action="#">
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Cảm Xúc</label>
@@ -297,10 +297,10 @@
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div>-->
                                 <!-- Tab Chi Tiết - Tiền Đề End -->
                                 <!-- Tab Chi Tiết - Hậu Quả Start -->
-                                <div class="tab-pane" id="ct-hauqua">
+                                <!--<div class="tab-pane" id="ct-hauqua">
                                     <form action="#">
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Cảm Xúc</label>
@@ -331,11 +331,11 @@
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div>-->
                                 <!-- Tab Chi Tiết - Hậu Quả End -->
-                            </div>
+                            <!--</div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Tab Chi Tiết End -->
                 </div>
             </div>

@@ -8,5 +8,6 @@ namespace BehaviourManagementSystem_API.Services
     public interface IAbBd
     {
         Task<ResponseResult<List<Tuple<int, int>>>> GetCountAllAccountRegisterOfYear(string year);
+        Task<ResponseResult<List<Tuple<int, int>>>> GetCountAllAccountRegisterOfMonth(int m, int y);
     }
 }
