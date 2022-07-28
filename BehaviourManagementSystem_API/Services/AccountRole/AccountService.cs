@@ -770,6 +770,8 @@ namespace BehaviourManagementSystem_API.Services
                         SecurityStamp = stamp.ToString(),
                         ConcurrencyStamp = stamp.ToString().ToUpper(),
                         Activity = false,
+                        CreateDate = DateTime.Now.Date,
+                        UpdateDate = DateTime.Now.Date
                     };
                     //var pass = GenegatorPass();
                     var irs = await _userManager.CreateAsync(user);

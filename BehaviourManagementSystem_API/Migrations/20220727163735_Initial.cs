@@ -412,20 +412,20 @@ namespace BehaviourManagementSystem_API.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("60002d7c-e4e0-468a-9b5e-f5d76246967f"), "6AE595FF-9975-445F-8A6F-271E67C0A40B", "admin", "ADMIN" },
-                    { new Guid("033fae0a-dac5-470f-9d25-14aac8ac7576"), "BC35628A-4FC2-4A5F-8C04-387DDE83229C", "teacher", "TEACHER" },
-                    { new Guid("4dd7b2b7-72a0-4c0f-b6eb-06639897a8fb"), "59FB9FCA-7A8D-412D-99A6-3FC3F42C0B2D", "student", "STUDENT" }
+                    { new Guid("7a583707-8b2d-492d-892c-8d1c657fc984"), "F45037C5-3F04-422C-8227-67B71A83EC30", "admin", "ADMIN" },
+                    { new Guid("6c3ea888-bae5-4f68-a9a8-ec2613dae5e5"), "341396E6-9E4B-485A-9EE6-C7A5D3DC5D29", "teacher", "TEACHER" },
+                    { new Guid("4e3ea122-20df-4614-b498-172e612ee150"), "B2ED1E05-C205-4808-A32B-012796FEA8BA", "student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "Activity", "ActivityDate", "Address", "AvtName", "ConcurrencyStamp", "CreateDate", "DOB", "DisplayName", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdateDate", "UserName" },
-                values: new object[] { new Guid("15746e42-b7f2-44ff-a38c-7e4d6aa84b19"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "733CF691-8A0A-4EA2-BA83-688824D9BA83", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "lhduy3011@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY3011@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEHFw/r2f6mIiTh+trGovd4+58ChYS2VNaum7jCI0RVleUNJdYtj0cfRDrq1EKj0+3Q==", "0334102197", true, "733cf691-8a0a-4ea2-ba83-688824d9ba83", false, null, "admin" });
+                values: new object[] { new Guid("1d4b5586-be20-4b90-beee-67bf3ffe8d2b"), 0, true, new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "default_avt.png", "A487EE80-7E07-41EE-97DB-3C7759A76C22", null, new DateTime(1998, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "lhduy12cb34@gmail.com", true, "Lê", "Nam", "Hoàng Duy", false, null, "LHDUY12CB34@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEBEakPjvU6YHHRzURzxWdHw21kH4uPnmKC2qWzaGNXcHHx8QHc8q+/0joPX8MXxkiw==", "0334102197", true, "a487ee80-7e07-41ee-97db-3c7759a76c22", false, null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("60002d7c-e4e0-468a-9b5e-f5d76246967f"), new Guid("15746e42-b7f2-44ff-a38c-7e4d6aa84b19") });
+                values: new object[] { new Guid("7a583707-8b2d-492d-892c-8d1c657fc984"), new Guid("1d4b5586-be20-4b90-beee-67bf3ffe8d2b") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assessments_AnalyzeAntecedentActivityId",

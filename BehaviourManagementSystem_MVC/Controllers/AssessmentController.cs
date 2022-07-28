@@ -145,6 +145,31 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return Json(new { success = false });
         }
         [HttpPost]
+        public async Task<IActionResult> CreateAnaEntecedent(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateAnalyzeAntecedent(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["UpdateAnalyzeAntecedent"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Delete(string AssessId)
         {
             try
