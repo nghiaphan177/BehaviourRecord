@@ -70,11 +70,23 @@
                     </div>
                 </div>
 
-                <div id="morris-donut-example" class="morris-charts morris-charts-height" dir="ltr"></div>
+                <div id="pie-chart" class="morris-charts morris-charts-height" dir="ltr"></div>
             </div>
         </div>
     </div>
 </div>
 @section scripts {
     <script src="~/lib/morris.js/morris.min.js"></script>
+    <script src="~/lib/raphael/raphael.min.js"></script>
+    <script>
+        Morris.Donut({
+            element: 'pie-chart',
+            data: [
+                { label: "Số can thiệp", value: 30 },
+                { label: "Số đánh giá", value: 15 },
+                { label: "Số học sinh", value: 45 },
+            ]
+        });
+
+    </script>
 }

@@ -2,7 +2,6 @@
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
 @*<div class="login-right">
         <div class="login-right-wrap">
             <h1>Đăng nhập</h1>
@@ -41,25 +40,25 @@
 
     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
         <form action="/Account/Register" method="post" class="login100-form validate-form">
-            @if(!ViewData.ModelState.IsValid)
+            @if (!ViewData.ModelState.IsValid)
             {
                 <div id="ErrorLogin" class="alert alert-danger" role="alert">
                     <strong>@ViewData.ModelState[String.Empty].Errors[0].ErrorMessage</strong>
                 </div>
             }
-        <div style="display: flex; justify-content: center; margin-left: -10rem ">
-            <div class="logo logo-admin">
-                <img src="~/assets/img/favicon.png" height="50" alt="logo">
+            <div style="display: flex; justify-content: center; margin-left: -10rem ">
+                <div class="logo logo-admin">
+                    <img src="~/assets/img/favicon.png" height="50" alt="logo">
+                </div>
+                <div style="margin-left: -9rem; margin-top: 0.5rem; margin-left: -10rem ">
+                    <span style="margin-left:1rem;" class="login100-form-title p-b-49">
+                        PreKool
+                    </span>
+                </div>
             </div>
-            <div style="margin-left: -9rem; margin-top: 0.5rem; margin-left: -10rem ">
-                <span style="margin-left:1rem;" class="login100-form-title p-b-49">
-                    PreKool
-                </span>
-            </div>
-        </div>
             @*<span class="login100-form-title p-b-49">
-            ĐĂNG KÝ GIÁO VIÊN
-            </span>*@
+                ĐĂNG KÝ GIÁO VIÊN
+                </span>*@
 
             <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                 <span class="label-input100 font-weight-bold"></span>
@@ -75,9 +74,15 @@
 
             <div class="wrap-input100 validate-input" data-validate="Password is required">
                 <span class="label-input100 font-weight-bold"></span>
-                <input id="password" class="input100" type="password" asp-for="Password" placeholder="Mật khẩu . . .">
+                <input onkeyup="trigger()" id="password" class="input100" type="password" asp-for="Password" placeholder="Mật khẩu . . .">
                 <span class="focus-input100" data-symbol="&#xf190;"></span>
             </div>
+            <div class="indicator">
+                <span class="weak"></span>
+                <span class="medium"></span>
+                <span class="strong"></span>
+            </div>
+            <div class="text"></div>
             <div style="margin-top:1rem;" class="wrap-input100 validate-input" data-validate="Password is required">
                 <span class="label-input100 font-weight-bold"></span>
                 <input id="confirm_password" class="input100" type="password" asp-for="RePassword" placeholder="Nhập lại mật khẩu . . .">
@@ -109,7 +114,7 @@
 @section scripts{
     <script>
 
-        $('#confirm_password').on('keyup', function() {
+        $('#confirm_password').on('keyup', function () {
 
             if ($('#password').val() == "" || $('#confirm_password').val() == "") {
                 $('#password').css('color', 'black');
@@ -123,6 +128,59 @@
                 $('#confirm_password').css('color', 'red');
             }
         });
-
+        function trigger() {
+            let no;
+            let regWeak = /[A-z]/;
+            let regMedium = /\d+/;
+            let regStrong = /.[!,@@,#,$,%,^,&,*,?,_,~,-,(,),]/;
+            var input = $('#password');
+            var indicator = $('.indicator');
+            var weak = $('.weak');
+            var medium = $('.medium');
+            var strong = $('.strong');
+            var text = $('.text');
+            if (input.val() != '') {
+                indicator.css('display', 'block');
+                indicator.css('display', 'flex');
+                if (input.val().length <= 3 && (input.val().match(regWeak) || input.val().match(regMedium) || input.val().match(regStrong))) {
+                    no = 1;
+                }
+                if (input.val().length >= 6 && ((input.val().match(regWeak) && input.val().match(regMedium)) || (input.val().match(regMedium) && input.val().match(regStrong)) || (input.val().match(regWeak) && (input.val().match(regStrong))))) {
+                    no = 2;
+                }
+                if (input.val().length >= 6 && input.val().match(regWeak) && input.val().match(regMedium) && input.val().match(regStrong)) {
+                    no = 3;
+                }
+                if (no == 1) {
+                    weak.addClass('active');
+                    text.css('display', 'block');
+                    text.html("Mật khẩu của bạn yếu");
+                    text.addClass('weak');
+                }
+                if (no == 2) {
+                    medium.addClass('active');
+                    text.html("Mật khẩu của bạn trung bình");
+                    text.addClass('medium');
+                }
+                else {
+                    medium.removeClass('active');
+                    text.removeClass('medium');
+                }
+                if (no == 3) {
+                    medium.addClass('active');
+                    strong.addClass('active');
+                    text.html("Mật khẩu của bạn mạnh");
+                    text.addClass('strong');
+                }
+                else {
+                    strong.removeClass('active');
+                    text.removeClass('strong');
+                }
+            }
+            else {
+                indicator.css('display', 'none');
+                text.css('display', 'none');
+            }
+        };
     </script>
 }

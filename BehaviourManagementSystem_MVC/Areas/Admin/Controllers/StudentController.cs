@@ -45,7 +45,10 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                     foreach (var item in responseAssess.Result)
                     {
                         var response_intervention = await _IInterventionAPIClient.GetAll(item.Id);
-                        response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
+                        if(response_intervention != null && response_intervention.Success == true)
+                        {
+                            response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
+                        }               
                     }
                     mymodel.Individual = responseIndi.Result;
                     mymodel.Assessment = responseAssess.Result;
