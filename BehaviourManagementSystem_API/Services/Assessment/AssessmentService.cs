@@ -41,9 +41,9 @@ namespace BehaviourManagementSystem_API.Services
                     RecordEnd = r_end,
                     RecordWhere = r_where,
                     RecordWho = r_who,
-                    IndividualId = guid,
+                    IndividualId = new Guid(ind_id),
                     CreateDate = DateTime.Now,
-
+                    UpdateDate = DateTime.Now,
                     RecordIsCompeleted = true
 
                 });
