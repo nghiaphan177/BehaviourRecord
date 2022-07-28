@@ -48,10 +48,9 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
-
         [HttpDelete("delete")]
         //[Authorize(Roles="teacher")]
-        //Xóa assessment của individual
+        //Xóa toàn bộ intervention có trong assessment của individual
         public async Task<IActionResult> Delete(string ass_id)
         {
             var response = await _assessmentService.Delete(ass_id);
