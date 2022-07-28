@@ -3,6 +3,7 @@ using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Services
@@ -65,6 +66,48 @@ namespace BehaviourManagementSystem_API.Services
             {
                 return new ResponseResultError<List<Tuple<int, int>>>(ex.Message);
             }
+        }
+
+        public async Task<ResponseResult<List<Tuple<string, int>>>> GetCountAllStudentOfAllClasses(Guid guid)
+        {
+            var classes = await GetAllClassesOfTeacher(guid);
+
+            var result = new List<Tuple<string, int>>();
+
+            foreach(var className in classes)
+            {
+                var count = await _context.Individuals.CountAsync(prop => prop.Organization == className);
+                result.Add(new Tuple<string, int>(className, count));
+            }
+
+            return new ResponseResultSuccess<List<Tuple<string, int>>>(result);
+        }
+
+        private async Task<List<string>> GetAllClassesOfTeacher(Guid guid)
+        {
+            var inds = await _context.Individuals.Where(prop => prop.TeacherId == guid).ToListAsync();
+
+            var classes = new List<string>();
+
+            foreach(var ind in inds)
+            {
+                if(classes.Count > 0)
+                {
+                    var count = 0;
+                    foreach(var className in classes)
+                    {
+                        if(ind.Organization == className)
+                            break;
+                        count++;
+
+                        if(count == classes.Count)
+                            classes.Add(ind.Organization);
+                    }
+                }
+                else
+                    classes.Add(ind.Organization);
+            }
+            return classes;
         }
     }
 }
