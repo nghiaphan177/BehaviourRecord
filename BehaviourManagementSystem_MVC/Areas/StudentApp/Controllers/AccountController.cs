@@ -233,9 +233,9 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
 
             var response = await _accountAPIClient.ChangePassword(request);
             if (response != null)
-                if (!response.Success)
-                    return View(); // reset pass không thành không
-            return RedirectToAction("ChangePassSuccess"); // reset thành công
+                if (response.Success)
+                    return RedirectToRoute("~/StudentApp/Home/Index");
+            return RedirectToAction("/StudentApp/Home/Index"); // reset thành công
         }
         [HttpGet]
         public IActionResult ChangePassSuccess()
