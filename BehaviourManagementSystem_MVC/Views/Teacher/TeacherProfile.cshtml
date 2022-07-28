@@ -48,9 +48,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#per_details_tab">Thông Tin</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#password_tab">Mật Khẩu</a>
-                </li>
             </ul>
         </div>
         <div class="tab-content profile-tab-cont">
@@ -63,7 +60,7 @@
                                     <span class="">Thông Tin Cá Nhân</span>
                                 </h5>
                                 <div class="text-right">
-                                    <a class="edit-link" href="/Student/TeacherProfileEdit/@Model.Id"><i class="far fa-edit mr-1"></i>Edit</a>
+                                    <a class="edit-link" href="/Teacher/TeacherProfileEdit/@Model.Id"><i class="far fa-edit mr-1"></i>Edit</a>
                                 </div>
 
                                 <div class="row">
@@ -71,8 +68,13 @@
                                     <p class="col-sm-8 text-sm-left">@(Model.FirstName+" "+Model.LastName)</p>
                                 </div>
                                 <div class="row">
+                                    @{
+                                        DateTime d = Convert.ToDateTime(@Model.DOB);
+                                        string s = d.ToString("dd/MM/yyyy");
+                                    }
                                     <p class="col-sm-4 text-muted text-sm-right mb-0 mb-sm-3">Ngày Sinh:</p>
-                                    <p class="col-sm-8 text-sm-left"> @(Model.DOB?.ToShortDateString())</p>
+                                    <p class="col-sm-8 text-sm-left"> @s</p>
+
                                 </div>
                                 <div class="row">
                                     <p class="col-sm-4 text-muted text-sm-right mb-0 mb-sm-3">Email:</p>
@@ -91,32 +93,6 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-            <div id="password_tab" class="tab-pane fade">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Change Password</h5>
-                        <div class="row">
-                            <div class="col-md-10 col-lg-6 mx-auto">
-                                <form>
-                                    <div class="form-group">
-                                        <label>Old Password</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>New Password</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Confirm Password</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <button class="btn btn-primary" type="submit">Save Changes</button>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

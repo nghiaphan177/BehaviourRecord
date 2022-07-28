@@ -34,10 +34,10 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var id = User.FindFirst("Id").Value;
+            var user_id = User.FindFirst("Id").Value;
             try
             {
-                var response = await _IIndividualAPIClient.GetThongTinSUa(id);
+                var response = await _IIndividualAPIClient.GetThongTinSUa(user_id);
                 
                 if (response.Success == true)
                 {
@@ -52,17 +52,28 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                             foreach (var item in response_assessment.Result)
                             {
                                 var response_intervention = await _interventionAPIClient.GetAll(item.Id);
-                                response_intervention.Result.ForEach(inter => intervention_list.Add(inter)) ;
+                                if(response_intervention.Success)
+                                {
+                                    response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
+                                }
                             }
+                            ViewBag.ListIntervention = intervention_list;
                         }
-                        ViewBag.ListIntervention = intervention_list;
+                        else
+                        {
+                            ViewBag.ListIntervention = null;
+                        }
                         return View(response.Result);
                     }
                     catch(Exception)
                     {
                         throw;
                     }
-                    
+                }
+                else
+                {
+                    ViewBag.ListAssessment = null;
+                    ViewBag.ListIntervention = null;
                 }
             }
             catch (Exception)

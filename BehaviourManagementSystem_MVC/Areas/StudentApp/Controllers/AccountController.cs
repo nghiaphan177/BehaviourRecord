@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NToastNotify;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -26,12 +27,14 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         private readonly IAccountAPIClient _accountAPIClient;
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
+        private readonly IToastNotification _toastNotification;
 
-        public AccountController(IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IToastNotification toastNotification, IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _accountAPIClient = accountAPIClient;
             _configuration = configuration;
             _emailSender = emailSender;
+            _toastNotification = toastNotification;
         }
         [HttpGet]
         public async Task<IActionResult> Login(string ReturnUrl = "/StudentApp/Home")
@@ -234,13 +237,21 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             var response = await _accountAPIClient.ChangePassword(request);
             if (response != null)
                 if (response.Success)
-                    return RedirectToRoute("~/StudentApp/Home/Index");
-            return RedirectToAction("/StudentApp/Home/Index"); // reset thành công
+                {
+                    _toastNotification.AddSuccessToastMessage("Đổi mật khẩu thành công");
+                    return RedirectToAction("ChangePassSuccess");
+                }
+                else if (response.Success == false)
+                {
+                    _toastNotification.AddErrorToastMessage("Đổi mật khẩu thất bại");
+                }
+            _toastNotification.AddAlertToastMessage("Không thể đổi mật khẩu");
+            return RedirectToAction("ChangePassword"); // response =null
         }
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {
-            return RedirectToAction("Logout");
+            return View();
         }
 
         private ClaimsPrincipal ValidateToken(string token)
