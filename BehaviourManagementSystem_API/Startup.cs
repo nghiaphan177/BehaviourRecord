@@ -85,6 +85,7 @@ namespace BehaviourManagementSystem_API
             services.AddScoped<IAssessmentService, Assessmentservice>();
             services.AddScoped<IInterventionService, InterventionService>();
             services.AddScoped<IIndividualService, IndividualService>();
+            services.AddScoped<IAbBd, AbBd>();
             #endregion
 
             services.AddAuthentication(options =>
