@@ -175,6 +175,57 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return Json(new { success = false });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFuntionAntecedent(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateFuntionAntecedent(request.Id, request.FunctionAntecedent);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["UpdateFuntionAntecedent"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFuntionConsequence(AssessmentRequest request)
+        {
+            try
+            {
+                var responseIndividual = await _assessmentAPIClient.Get(request.Id);
+                var response = await _assessmentAPIClient.UpdateFuntionConsequence(request.Id, request.FunctionConsequece);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    return RedirectToAction("StudentDetail", "Student", new { id = responseIndividual.Result.IndividualId });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateAnaEntecedent(AssessmentRequest request)
         {

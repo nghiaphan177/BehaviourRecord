@@ -21,6 +21,9 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> CreateRecord(string ind_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
         {
+            Guid guid;
+            if(!Guid.TryParse(ind_id, out guid))
+                return new ResponseResultError<Assessment>("Truy xuất không hợp lệ.");
             var a = new Assessment();
             if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == ind_id))
                 return new ResponseResultError<Assessment>("Id individual không tồn tại");
@@ -38,7 +41,7 @@ namespace BehaviourManagementSystem_API.Services
                     RecordEnd = r_end,
                     RecordWhere = r_where,
                     RecordWho = r_who,
-                    IndividualId = new Guid(ind_id),
+                    IndividualId = guid,
                     CreateDate = DateTime.Now,
 
                     RecordIsCompeleted = true
@@ -84,9 +87,6 @@ namespace BehaviourManagementSystem_API.Services
                 AnalyzeConsequenceEnvironmental = obj.AnalyzeConsequenceEnvironmental,
                 AnalyzeConsequencesActivity = obj.AnalyzeConsequencesActivity,
                 AnalyzeBehaviour = obj.AnalyzeBehaviour,
-                AnalyzeConsequencesPerceive = obj.AnalyzeConsequencesPerceive,
-                AnalyzeConsequenceEnvironmental = obj.AnalyzeConsequenceEnvironmental,
-                AnalyzeConsequencesActivity = obj.AnalyzeConsequencesActivity,
                 FunctionAntecedent = obj.FunctionAntecedent,
                 FunctionConsequece = obj.FunctionConsequece,
             });

@@ -137,5 +137,33 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
                 return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<ResponseResult<AssessmentRequest>> UpdateFuntionAntecedent(string AssId, string content)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Assessment/update-funtion-antecedent?ass_id={AssId}&fun_ant={content}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ResponseResult<AssessmentRequest>> UpdateFuntionConsequence(string AssId, string content)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Assessment/update-funtion-consequece?ass_id={AssId}&fun_con={content}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+        }
     }
 }
