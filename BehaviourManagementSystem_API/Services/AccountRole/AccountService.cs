@@ -571,7 +571,7 @@ namespace BehaviourManagementSystem_API.Services
                 user.LastName = request.LastName;
             if(!request.Gender.CheckRequest())
                 user.Gender = request.Gender;
-            if(string.IsNullOrEmpty(request.DOB.ToString()))
+            if(!string.IsNullOrEmpty(request.DOB.ToString()))
                 user.DOB = request.DOB;
             if(!request.PhoneNumber.CheckRequest())
                 user.PhoneNumber = request.PhoneNumber;
