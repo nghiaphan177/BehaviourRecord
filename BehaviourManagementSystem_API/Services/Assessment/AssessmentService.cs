@@ -89,6 +89,7 @@ namespace BehaviourManagementSystem_API.Services
                 AnalyzeBehaviour = obj.AnalyzeBehaviour,
                 FunctionAntecedent = obj.FunctionAntecedent,
                 FunctionConsequece = obj.FunctionConsequece,
+                IndividualId = obj.IndividualId.ToString()
             });
         }
 
