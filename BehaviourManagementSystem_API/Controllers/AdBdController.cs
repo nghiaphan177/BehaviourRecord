@@ -1,7 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Services;
-using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -23,10 +21,26 @@ namespace BehaviourManagementSystem_API.Controllers
         public async Task<IActionResult> GetCountAllAccountRegisterOfYear([FromQuery] string year)
         {
             int _int;
-            if(int.TryParse(year, out _int))
+            if(!int.TryParse(year, out _int))
                 return NotFound();
 
-                var res = await _abBd.GetCountAllAccountRegisterOfYear(year);
+            var res = await _abBd.GetCountAllAccountRegisterOfYear(year);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
+        [HttpGet("GetCountAllAccountRegisterOfMonth")]
+        public async Task<IActionResult> GetCountAllAccountRegisterOfMonth([FromQuery] string month, string year)
+        {
+            int m, y;
+            if(!int.TryParse(month, out m) ||
+                !int.TryParse(year, out y))
+                return NotFound("Truy cập không hợp lệ.");
+
+            var res = await _abBd.GetCountAllAccountRegisterOfMonth(m, y);
 
             if(!res.Success)
                 return BadRequest(res);

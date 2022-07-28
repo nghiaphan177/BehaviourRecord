@@ -85,6 +85,7 @@ namespace BehaviourManagementSystem_API
             services.AddScoped<IAssessmentService, Assessmentservice>();
             services.AddScoped<IInterventionService, InterventionService>();
             services.AddScoped<IIndividualService, IndividualService>();
+            services.AddScoped<IAbBd, AbBd>();
             #endregion
 
             services.AddAuthentication(options =>
@@ -291,12 +292,6 @@ namespace BehaviourManagementSystem_API
             if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
-
-            }
-            else if(env.IsProduction())
-            {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
             }
