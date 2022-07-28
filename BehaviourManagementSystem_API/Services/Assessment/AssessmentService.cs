@@ -55,6 +55,11 @@ namespace BehaviourManagementSystem_API.Services
             if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<List<Assessment>>("Id không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
+            var inter = await _context.Interventions.Where(i => i.AssesetmentId == obj.Id).ToListAsync();
+            foreach (var item in inter)
+            {
+                _context.Interventions.Remove(item);
+            }
             _context.Assessments.Remove(obj);
             await _context.SaveChangesAsync();
             return new ResponseResultSuccess<List<Assessment>>(await _context.Assessments.ToListAsync());
@@ -86,11 +91,11 @@ namespace BehaviourManagementSystem_API.Services
         public async Task<ResponseResult<List<AssessmentRequest>>> GetAll(string ind_id)
         {
             var find = _context.Assessments.Where(p => p.IndividualId.ToString() == ind_id);
-            //var assessment = _context.Assessments.Take(find.Count());
-            //if (await assessment.AnyAsync() == false)
-            //{
-            //    return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
-            //}
+            var assessment = _context.Assessments.Take(find.Count());
+            if (await assessment.AnyAsync() == false)
+            {
+                return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
+            }
             var result = new List<AssessmentRequest>();
             foreach (var item in find)
             {
