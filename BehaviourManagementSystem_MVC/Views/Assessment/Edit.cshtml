@@ -41,30 +41,30 @@
                 <div class="tab-content">
                     <!-- Tab Tường Trình Start -->
                     <div class="tab-pane show active" id="tuongtrinh">
-                        <form id="assessform" asp-action="Create" asp-controller="Assessment" method="post">
-                            <input hidden asp-for="IndividualId" type="text" class="form-control" />
+                        <form id="assessform" asp-action="EditRecord" asp-controller="Assessment" method="post">
+                            <input hidden asp-for="Id" type="text" class="form-control" />
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordDate" type="date" class="form-control" />
+                                    <input required asp-for="RecordDate" type="date" value="@Model.RecordDate" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Bắt Đầu</label>
                                 <div class="col-md-10">
-                                    <input asp-for="RecordStart" asp type="text" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input asp-for="RecordStart" asp type="text" value="@Model.RecordStart" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Kết Thúc</label>
                                 <div class="col-md-10">
-                                    <input asp-for="RecordEnd" type="text" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input asp-for="RecordEnd" type="text" value="@Model.RecordEnd" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ở Đâu</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWhere" type="text"
+                                    <input required asp-for="RecordWhere" type="text" value="@Model.RecordWhere"
                                            class="form-control"
                                            placeholder="Nhập địa điểm..." />
                                 </div>
@@ -72,7 +72,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Học sinh vi phạm</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." />
+                                    <input required asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
                             </div>
                             <div class="col">
@@ -124,7 +124,60 @@
                                 <div class="tab-pane" id="pt-tiende">
                                     <form asp-action="CreateAnaEntecedent" asp-controller="Assessment" method="post">
                                         <input hidden asp-for="Id" type="text" class="form-control" />
-                                        @await Component.InvokeAsync("DropDown", new { name = "Antecedent" })
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Cảm Xúc</label>
+                                            <div class="col-md-10">
+                                                <input name="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="@Model.AnalyzeAntecedentPerceivedDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <ul class="dropdown-menu " id="multiselect-drop-camxuc">
+                                                    @foreach (var item in ViewBag.AntecedentPerceived)
+                                                    {
+                                                        <li class="dropdown-item">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Môi Trường</label>
+                                            <div class="col-md-10">
+                                                <input name="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="@Model.AnalyzeAntecedentEnvironmentalDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <ul class="dropdown-menu" id="multiselect-drop-moitruong">
+                                                    @foreach (var item in ViewBag.AntecedentEnvironment)
+                                                    {
+                                                        <li class="dropdown-item">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2">Hành Động</label>
+                                            <div class="col-md-10">
+                                                <input name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" placeholder="Chọn hoặc viết vào đây..." />
+                                                <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
+                                                    @foreach (var item in ViewBag.AntecedentActivity)
+                                                    {
+                                                        <li class="dropdown-item">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-3 mx-auto text-center">
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
@@ -134,7 +187,8 @@
                                 <!-- Tab Phân Tích - Tiền Đề End-->
                                 <!-- Tab Phân Tích - Hậu Quả Start-->
                                 <div class="tab-pane" id="pt-hauqua">
-                                    <form action="#">
+                                    <form asp-action="CreateAnaConsequence" asp-controller="Assessment" method="post">
+                                        <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
@@ -174,7 +228,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-pt3" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                            <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                         </div>
                                     </form>
@@ -204,25 +258,25 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Cảm Xúc</label>
                                             <div class="col-md-9">
-                                                <input readonly type="text" class="form-control" placeholder="" />
+                                                <input readonly value="@Model.AnalyzeAntecedentPerceivedDescription" type="text" class="form-control" placeholder="" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Bối cảnh môi trường</label>
                                             <div class="col-md-9">
-                                                <input readonly type="text" class="form-control" placeholder="" />
+                                                <input readonly value="@Model.AnalyzeAntecedentEnvironmentalDescription" type="text" class="form-control" placeholder="" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Bối cảnh hành động</label>
                                             <div class="col-md-9">
-                                                <input readonly type="text" class="form-control" placeholder="" />
+                                                <input readonly value="@Model.AnalyzeAntecedentActivityDescription" type="text" class="form-control" placeholder="" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Chi tiết tiền đề</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Nhập chi tiết tiền đề..." />
+                                                <input type="text" asp-for="FunctionAntecedent" class="form-control" placeholder="Nhập chi tiết tiền đề..." />
                                             </div>
                                         </div>
 
@@ -318,7 +372,8 @@
         //}
 
     </script>
-    @if (TempData["MessageCreateAss"] != null)
+
+    @if (TempData["UpdateRecord"] != null)
     {
         <script type="text/javascript">
 
@@ -329,7 +384,7 @@
             $('#pt-hanhvi').addClass('active');
             $('#phantich-tiende-link').addClass('disabled');
             $('#phantich-hauqua-link').addClass('disabled');
-            
+
 
         </script>
     }
@@ -353,6 +408,17 @@
             $('#phantich-hauqua-link').addClass('active');
             $('#pt-hauqua').addClass('show');
             $('#pt-hauqua').addClass('active');
+        </script>
+    }
+
+    @if (TempData["UpdateAnalyzeConsequence"] != null)
+    {
+        <script type="text/javascript">
+            $('.nav a[href="#chitiet"]').tab('show');
+            //$('#chitietlink').addClass('disabled');
+            //$('#phantich-hauqua-link').addClass('active');
+            //$('#pt-hauqua').addClass('show');
+            //$('#pt-hauqua').addClass('active');
         </script>
     }
 }

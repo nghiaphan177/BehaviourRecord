@@ -66,9 +66,18 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<ResponseResult<AssessmentRequest>> CreateRecordConsequence(string AssId, AssessmentRequest content)
+        public async Task<ResponseResult<AssessmentRequest>> UpdateAnalyzeConsequence(string AssId, AssessmentRequest content)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Assessment/update-consequence?ass_id={AssId}&ana_con_per={content.AnalyzeConsequencesPerceive}&ana_con_envi={content.AnalyzeConsequenceEnvironmental}&ana_con_act={content.AnalyzeConsequencesActivity}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ResponseResult<List<AssessmentRequest>>> Delete(string AssId)
@@ -113,6 +122,20 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
         public Task<ResponseResult<List<AssessmentRequest>>> Update(AssessmentRequest request)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<ResponseResult<AssessmentRequest>> UpdateRecord(string AssId, AssessmentRequest content)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var httpRequestMessage = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Assessment/update-record?ass_id={AssId}&r_date={content.RecordDate}&r_start={content.RecordStart}&r_end={content.RecordEnd}&r_where={content.RecordWhere}&r_who={content.RecordWho}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
+            var response = await client.SendAsync(httpRequestMessage);
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
     }
 }

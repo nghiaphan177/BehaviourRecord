@@ -80,12 +80,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
             try
             {
                 var response = await _assessmentAPIClient.Get(assid);
-                if(response == null)
+                var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
+                var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
+                var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
+                if (response == null)
                 {
                     return NotFound();
                 }
                 if(response.Success == true)
                 {
+                    ViewBag.AntecedentPerceived = responseAnaPer.Result;
+                    ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
+                    ViewBag.AntecedentActivity = responseAnaActi.Result;
                     return View(response.Result);
                 }
             }
@@ -96,6 +102,31 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
+        public async Task<IActionResult> EditRecord(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateRecord(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["UpdateRecord"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(AssessmentRequest request)
         {
@@ -169,6 +200,31 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return Json(new { success = false });
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAnaConsequence(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateAnalyzeConsequence(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["UpdateAnalyzeConsequence"] = "Sửa thành công!";
+                    return RedirectToAction("Edit", new { assid = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
         [HttpPost]
         public async Task<IActionResult> Delete(string AssessId)
         {

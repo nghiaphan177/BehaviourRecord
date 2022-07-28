@@ -157,12 +157,13 @@
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Vai trò</label>
                         <div class="col-sm-6 mt-2">
-                            @*<select  asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles">
-                            </select>*@
-                            <select id="option-role" asp-for="@Model.TeacherId" class="form-control">
+                            <select asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles">
+                                <option value="">--Chọn Quyền --</option>
+                            </select>
+                            @*<select id="option-role" asp-for="@Model.TeacherId" class="form-control">
                                 <option value="1">Học Sinh</option>
                                 <option value="2">Giáo Viên</option>
-                            </select>
+                            </select>*@
                         </div>
                     </div>
                     <div id="optionteacher" class="form-group row">

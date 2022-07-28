@@ -13,7 +13,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
         Task<ResponseResult<AssessmentRequest>> CreateRecord( AssessmentRequest content);
         Task<ResponseResult<AssessmentRequest>> CreateRecordBehaviour(string AssId, string content);
         Task<ResponseResult<AssessmentRequest>> UpdateAnalyzeAntecedent(string AssId, AssessmentRequest content);
-        Task<ResponseResult<AssessmentRequest>> CreateRecordConsequence(string AssId, AssessmentRequest content);
+        Task<ResponseResult<AssessmentRequest>> UpdateRecord(string AssId, AssessmentRequest content);
+        Task<ResponseResult<AssessmentRequest>> UpdateAnalyzeConsequence(string AssId, AssessmentRequest content);
         Task<ResponseResult<List<AssessmentRequest>>> Update(AssessmentRequest request);
         Task<ResponseResult<List<AssessmentRequest>>> Delete(string id);
     }
