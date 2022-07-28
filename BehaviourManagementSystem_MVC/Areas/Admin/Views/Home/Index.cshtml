@@ -1,6 +1,80 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<h1>Index</h1>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">@ViewData["Title"]</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-md-6">
+        <div class="card mini-stat bg-primary">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-cube-outline float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3 font-size-16">Số lượng giáo viên</h6>
+                    <h2 class="mb-4">1,587</h2>
+                    <span class="badge badge-info"> +11% </span> <span class="ml-2">From previous period</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card mini-stat bg-primary">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-buffer float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3 font-size-16">Số lượng học sinh</h6>
+                    <h2 class="mb-4">$46,782</h2>
+                    <span class="badge badge-danger"> -29% </span> <span class="ml-2">From previous period</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="card mini-stat bg-primary">
+            <div class="card-body mini-stat-img">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-tag-text-outline float-right"></i>
+                </div>
+                <div class="text-white">
+                    <h6 class="text-uppercase mb-3 font-size-16">Average Price</h6>
+                    <h2 class="mb-4">$15.9</h2>
+                    <span class="badge badge-warning"> 0% </span> <span class="ml-2">From previous period</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Monthly Earnings</h4>
 
+                <div class="row text-center mt-4">
+                    <div class="col-6">
+                        <h5 class="font-size-20">$56241</h5>
+                        <p class="text-muted">Marketplace</p>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="font-size-20">$23651</h5>
+                        <p class="text-muted">Total Income</p>
+                    </div>
+                </div>
+
+                <div id="morris-donut-example" class="morris-charts morris-charts-height" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/lib/morris.js/morris.min.js"></script>
+}
