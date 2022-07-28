@@ -208,7 +208,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return View();
         }
-
+        
+        [HttpGet]
         public async Task<IActionResult> TeacherProfileEdit(string id)
         {
             try
@@ -228,6 +229,48 @@ namespace BehaviourManagementSystem_MVC.Controllers
             {
 
                 throw;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TeacherProfileEdit(IFormFile file,UserProfileRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
+            string webrootpath = webHostEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            string fileName = null;
+            if (files.Count != 0)
+            {
+                fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                request.AvtName = fileName;
+            }
+            var response = await _userAPIClient.UpdateUser(request);
+            if (response == null)
+            {
+                toastNotification.AddErrorToastMessage("Không thể cập nhật");
+                return View();
+            }
+            if (response.Success == false)
+            {
+                toastNotification.AddErrorToastMessage("Cập nhật thông tin không thành công");
+                return View();
+            }
+            if (response.Success == true)
+            {
+                if (fileName != null)
+                {
+                    var uploads = Path.Combine(webrootpath, @"images");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                }
+                toastNotification.AddSuccessToastMessage("Cập nhật thành công");
+                return RedirectToAction("TeacherProfileEdit",new { Id = User.FindFirst("Id").Value });
             }
             return View();
         }
