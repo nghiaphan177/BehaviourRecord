@@ -82,18 +82,26 @@ namespace BehaviourManagementSystem_MVC.ViewComponents
                 }
                 return View();
             }
-            if (name == "Antecedent")
+            //if (name == "Antecedent")
+            //{
+            //    dynamic mymodel = new ExpandoObject();
+            //    var responseEn = await _IAntecedentEnvironmentalAPIClient.GetAll();
+            //    var responseAc = await _IAntecedentActivityAPIClient.GetAll();
+            //    if (responsePer.Success == true && responseEn.Success == true && responseAc.Success == true)
+            //    {
+            //        mymodel.Perceived = responsePer.Result;
+            //        mymodel.Environmental = responseEn.Result;
+            //        mymodel.Activity = responseAc.Result;
+            //        return View("Antecedent", mymodel);
+            //    }
+            //    return View();
+            //}
+            if (name == "AntecedentPerceived")
             {
-                dynamic mymodel = new ExpandoObject();
                 var responsePer = await _IAntecedentPerceivedAPIClient.GetAll();
-                var responseEn = await _IAntecedentEnvironmentalAPIClient.GetAll();
-                var responseAc = await _IAntecedentActivityAPIClient.GetAll();
-                if (responsePer.Success == true && responseEn.Success == true && responseAc.Success == true)
+                if (responsePer.Success == true)
                 {
-                    mymodel.Perceived = responsePer.Result;
-                    mymodel.Environmental = responseEn.Result;
-                    mymodel.Activity = responseAc.Result;
-                    return View("Antecedent", mymodel);
+                    return View("AntecedentPerceived", responsePer.Result);
                 }
                 return View();
             }
