@@ -23,7 +23,7 @@ namespace BehaviourManagementSystem_API.Controllers
         public async Task<IActionResult> GetCountAllAccountRegisterOfYear([FromQuery] string year)
         {
             int _int;
-            if(int.TryParse(year, out _int))
+            if(!int.TryParse(year, out _int))
                 return NotFound();
 
                 var res = await _abBd.GetCountAllAccountRegisterOfYear(year);

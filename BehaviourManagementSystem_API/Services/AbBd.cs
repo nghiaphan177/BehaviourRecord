@@ -21,16 +21,15 @@ namespace BehaviourManagementSystem_API.Services
             try
             {
                 var index = 0;
-                var lenght = int.Parse(year);
                 var result = new List<Tuple<int, int>>();
-                while(index < lenght)
+
+                while(index < 12)
                 {
-                    var user = await _context.Users
-                        .CountAsync(prop => prop.CreateDate.Value.Month == (index + 1));
-
-                    result.Add(new Tuple<int, int>(index + 1, user));
-
+                    var count_user = await _context.Users
+                        .CountAsync(prop => prop.CreateDate.Value.Month == (index + 1)&&
+                        prop.CreateDate.Value.Year == int.Parse(year));
                     index++;
+                    result.Add(new Tuple<int, int>(index, count_user));
                 }
 
                 return new ResponseResultSuccess<List<Tuple<int, int>>>(result);
