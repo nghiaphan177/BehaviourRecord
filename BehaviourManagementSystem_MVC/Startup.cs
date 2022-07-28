@@ -50,6 +50,7 @@ namespace BehaviourManagementSystem_MVC
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
+                    options.AccessDeniedPath = new PathString("/Admin/Account/AccessDenined");
                 }).AddCookie("Student", options =>
                 {
                     options.Cookie.Name = "Student";

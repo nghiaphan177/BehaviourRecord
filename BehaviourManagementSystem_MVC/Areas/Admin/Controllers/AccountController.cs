@@ -178,6 +178,12 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
         private ClaimsPrincipal ValidateToken(string token)
         {
             IdentityModelEventSource.ShowPII = true;
