@@ -108,7 +108,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi</label>
                                             <div class="col-md-10">
-                                                <input asp-for="AnalyzeBehaviour" type="text" class="form-control" placeholder="Nhập hành vi..." />
+                                                <input required asp-for="AnalyzeBehaviour" type="text" class="form-control" placeholder="Nhập hành vi..." />
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
@@ -124,7 +124,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc</label>
                                             <div class="col-md-10">
-                                                <input name="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="@Model.AnalyzeAntecedentPerceivedDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <input required name="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="@Model.AnalyzeAntecedentPerceivedDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu " id="multiselect-drop-camxuc">
                                                     @foreach (var item in ViewBag.AntecedentPerceived)
                                                     {
@@ -142,7 +142,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Môi Trường</label>
                                             <div class="col-md-10">
-                                                <input name="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="@Model.AnalyzeAntecedentEnvironmentalDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <input required name="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="@Model.AnalyzeAntecedentEnvironmentalDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-moitruong">
                                                     @foreach (var item in ViewBag.AntecedentEnvironment)
                                                     {
@@ -160,7 +160,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành Động</label>
                                             <div class="col-md-10">
-                                                <input name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong1" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <input required name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong1" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-hanhdong1">
                                                     @foreach (var item in ViewBag.AntecedentActivity)
                                                     {
@@ -195,7 +195,7 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Cảm xúc sau</label>
-                                                    <input asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="@Model.AnalyzeConsequencesPerceive">
+                                                    <input required asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="@Model.AnalyzeConsequencesPerceive">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
@@ -207,7 +207,7 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Môi trường sau</label>
-                                                    <input asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="@Model.AnalyzeConsequenceEnvironmental">
+                                                    <input required asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="@Model.AnalyzeConsequenceEnvironmental">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
@@ -219,7 +219,7 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label>Hành vi sau</label>
-                                                    <input asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="@Model.AnalyzeConsequencesActivity">
+                                                    <input required asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="@Model.AnalyzeConsequencesActivity">
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +272,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Chi tiết tiền đề</label>
                                             <div class="col-md-9">
-                                                <input type="text" asp-for="FunctionAntecedent" value="@Model.FunctionAntecedent" class="form-control" placeholder="Nhập chi tiết tiền đề..." />
+                                                <input required type="text" asp-for="FunctionAntecedent" value="@Model.FunctionAntecedent" class="form-control" placeholder="Nhập chi tiết tiền đề..." />
                                             </div>
                                         </div>
 
@@ -307,7 +307,7 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Chi tiết hậu quả</label>
                                             <div class="col-md-9">
-                                                <input type="text" asp-for="FunctionConsequece" value="@Model.FunctionConsequece" class="form-control" placeholder="Nhập chi tiết hậu quả..." />
+                                                <input required  type="text" asp-for="FunctionConsequece" value="@Model.FunctionConsequece" class="form-control" placeholder="Nhập chi tiết hậu quả..." />
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
