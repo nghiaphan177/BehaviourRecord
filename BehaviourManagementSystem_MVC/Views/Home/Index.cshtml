@@ -113,6 +113,7 @@
                 success: function (response) {
                     var label = response["result"].map(a => a.item1);
                     var data = response["result"].map(a => a.item2);
+                    console.log(response["result"]);
                     var options = {
                         series: data,
                         chart: {
