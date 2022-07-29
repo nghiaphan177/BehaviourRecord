@@ -35,13 +35,13 @@
                            href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
                     </li>
                     @*<li class="nav-item">
-                        <a class="nav-link"
-                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
-                    </li>*@
+                            <a class="nav-link"
+                               href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
+                        </li>*@
                 </ul>
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
@@ -82,7 +82,7 @@
                         <!-- form nhẹ start -->
 
                         <form id="assessform1" asp-action="CreateProfile" asp-controller="Intervention" method="post">
-                            <input hidden name="AssesetmentId" value="@ViewBag.IdInter">
+                            <input hidden name="AssesetmentId" value="@ViewBag.IdIntervention">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
@@ -128,7 +128,7 @@
                         <!-- form khác end -->
                     </div>
                     <!-- Tab Nâng Câp Hồ Sơ End-->
-              
+
                 </div>
             </div>
         </div>

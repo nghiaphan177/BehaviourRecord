@@ -34,12 +34,6 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult GetAssetIntervention(string id)
-        //{
-        //    return ViewComponent("InterventionAll", new { id });
-        //}
-
         
         public async Task<IActionResult> GetInterventionById(string id)
         {
@@ -48,9 +42,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.GetAll(id);
                 if (response.Success == true)
                 {
-                    ViewBag.IdAssiment = id;
                     return View(response.Result);
                 }
+                ViewBag.IdAssiment = id;
+
             }
             catch (Exception)
             {
@@ -59,11 +54,65 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return View();
         }
-        public IActionResult Create(string id)
+
+        public async Task<IActionResult> Detail(string id)
         {
-            ViewBag.IdInter = id;
+            try
+            {
+                var response = await _IInterventionAPIClient.Get(id);
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
+
+        //Create Start
+        public IActionResult Create(string id)
+        {
+            ViewBag.IdIntervention = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProfile(InterventionRequest request)
+        {
+            try
+            {
+                var response = await _IInterventionAPIClient.CreateProfile(request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
+                }
+                //if (response.Success)
+                //{
+
+                //    return RedirectToAction("Create", new { id = request.AssesetmentId });
+                //}
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+        //Create End
+
+        //Edit Start
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -85,17 +134,6 @@ namespace BehaviourManagementSystem_MVC.Controllers
         public async Task<IActionResult> Edit(InterventionRequest request)
         {
 
-            //var response = await _IInterventionAPIClient.Update(request);
-            //if (response == null)
-            //{
-            //    return Content("alert('No data was found to create a CSV file!');", "application/javascript");
-            //}
-
-            //if (response.Success)
-            //{
-            //    return Content("alert('No data was found to create a CSV file!');", "application/javascript");
-            //}
-            //return Json(new { success = false });
             try
             {
                 var response = await _IInterventionAPIClient.Update(request);
@@ -163,36 +201,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateProfile(InterventionRequest request)
-        {
-            try
-            {
-                var response = await _IInterventionAPIClient.CreateProfile(request);
-                if (response == null)
-                {
-                    return Json(new { success = false });
-                }
-                if (response.Success == true)
-                {
-                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
-                    return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
-                }
-                //if (response.Success)
-                //{
-                    
-                //    return RedirectToAction("Create", new { id = request.AssesetmentId });
-                //}
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return Json(new { success = false });
-        }
-
+        
+      //Edit End
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
