@@ -894,17 +894,21 @@ input[type="checkbox"] :active {
 	background-color:rgba(17, 148, 247,0.12) !important;
 	color:#2196f3 !important;
 }
-.bg-danger-light{
-	background-color:#FFBC53 !important;
-	color:#fff !important;
-}
-.bg-warning-light{
-	background-color:rgba(255, 152, 0,0.12) !important;
-	color:#f39c12 !important;
-}
-.bg-success-light{
+.bg-detail {
+	color: #fff !important;
 	background-color: #18aefa;
-    color: #fff;
+}
+.bg-danger-light {
+	background-color: #dc3545 !important;
+	color: #fff !important;
+}
+.bg-warning-light {
+	background-color: #6c757d !important;
+	color: #f8f9fa !important;
+}
+.bg-success-light {
+	background-color: #ffbc53;
+	color: #fff;
 }
 .bg-purple-light{
 	background-color:rgba(197, 128, 255,0.12) !important;
