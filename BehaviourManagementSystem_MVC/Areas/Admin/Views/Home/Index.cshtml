@@ -16,12 +16,11 @@
         <div class="card mini-stat bg-primary">
             <div class="card-body mini-stat-img">
                 <div class="mini-stat-icon">
-                    <i class="mdi mdi-cube-outline float-right"></i>
+                    <i class="mdi mdi-human-male float-right"></i>
                 </div>
                 <div class="text-white">
                     <h6 class="text-uppercase mb-3 font-size-16">Số lượng giáo viên</h6>
-                    <h2 class="mb-4">1,587</h2>
-                    <span class="badge badge-info"> +11% </span> <span class="ml-2">From previous period</span>
+                    <h2 class="mb-4" id="teacount"></h2>                   
                 </div>
             </div>
         </div>
@@ -30,27 +29,34 @@
         <div class="card mini-stat bg-primary">
             <div class="card-body mini-stat-img">
                 <div class="mini-stat-icon">
-                    <i class="mdi mdi-buffer float-right"></i>
+                    <i class="mdi mdi-human-male-female float-right"></i>
                 </div>
                 <div class="text-white">
                     <h6 class="text-uppercase mb-3 font-size-16">Số lượng học sinh</h6>
-                    <h2 class="mb-4">$46,782</h2>
-                    <span class="badge badge-danger"> -29% </span> <span class="ml-2">From previous period</span>
+                    <h2 class="mb-4" id="stucount"></h2>                  
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-4 col-md-6">
-        <div class="card mini-stat bg-primary">
-            <div class="card-body mini-stat-img">
-                <div class="mini-stat-icon">
-                    <i class="mdi mdi-tag-text-outline float-right"></i>
-                </div>
-                <div class="text-white">
-                    <h6 class="text-uppercase mb-3 font-size-16">Average Price</h6>
-                    <h2 class="mb-4">$15.9</h2>
-                    <span class="badge badge-warning"> 0% </span> <span class="ml-2">From previous period</span>
-                </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title mb-4">Số tài khoản theo vai trò</h4>
+                <div class="row text-center mt-4">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20" id="sumacc"></h5>
+                            <p class="text-muted">Tổng số tài khoản</p>
+                        </div>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                <canvas id="donut" height="100"></canvas>
+
             </div>
         </div>
     </div>
@@ -179,7 +185,6 @@
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('baraccountmonth').getContext('2d');
-                    console.log(response["result"].map(a => a.item2));
                     var datalabel = response["result"].map(a => ("ngày " + a.item1))
                     var data1 = response["result"].map(a => a.item2)
                     var mychar = new Chart(chart, {
@@ -202,11 +207,47 @@
                 }
             });
         }
+        function LoadDonutTeacherStudent() {
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetAllStudentAndTeacherAndAllAccount",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var chart = document.getElementById('donut').getContext('2d');
+                    console.log(response["result"]);
+                    $("#teacount").text(response["result"]['item2']);
+                    $("#stucount").text(response["result"]['item1']);
+                    $("#sumacc").text(response["result"]['item3']);
+                    var data1 = [response["result"]['item1'], response["result"]['item2']];
+                    console.log(data1);
+                    var mychar = new Chart(chart, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Học sinh', 'Giáo viên'],
+                            datasets: [
+                                {
+                                    label: "Tài khoản đăng ký",
+                                    data: data1,
+                                    backgroundColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(54, 162, 235)',
+                                    ],
+                                },
+                            ],
+                        }
+                    });
+                }
+            });
+        }
         $(document).ready(function () {
             var d = new Date();
             var output = d.getFullYear()
             LoadChartMonth(d.getMonth() + 1, d.getFullYear());
             LoadChart(output);
+            LoadDonutTeacherStudent();
             $("#datepicker").val(output);
             $("#monthpicker").val(d.getMonth() + 1 + "-" + d.getFullYear());
             $("#monthpicker").datepicker({
