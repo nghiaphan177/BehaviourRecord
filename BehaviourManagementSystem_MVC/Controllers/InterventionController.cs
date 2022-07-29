@@ -1,6 +1,8 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_MVC.APIIntegration.Intervention;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileExtreme;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
+using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -15,18 +17,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
 {
     public class InterventionController : Controller
     {
+        private readonly IOptionAPIClientModerate _IOptionAPIClientModerate;
+        private readonly IOptionAPIClientMild _IOptionAPIClientMild;
         private readonly IOptionAPIClientRecovery _IOptionAPIClientRecovery;
         private readonly IOptionAPIClientExtreme _IOptionAPIClientExtreme;
         private readonly IInterventionAPIClient _IInterventionAPIClient;
         private readonly IToastNotification toastNotification;
         private readonly IAssessmentAPIClient _assessmentAPIClient;
-        public InterventionController(IAssessmentAPIClient assessmentAPIClient,IOptionAPIClientRecovery IOptionAPIClientRecovery, IOptionAPIClientExtreme IOptionAPIClientExtreme, IInterventionAPIClient IInterventionAPIClient, IToastNotification toastNotification)
+        public InterventionController(IOptionAPIClientModerate IOptionAPIClientModerate,
+            IOptionAPIClientMild IOptionAPIClientMild, IAssessmentAPIClient assessmentAPIClient,
+            IOptionAPIClientRecovery IOptionAPIClientRecovery, IOptionAPIClientExtreme IOptionAPIClientExtreme, 
+            IInterventionAPIClient IInterventionAPIClient, IToastNotification toastNotification)
         {
             this.toastNotification = toastNotification;
+            _IOptionAPIClientModerate = IOptionAPIClientModerate;
+            _IOptionAPIClientMild = IOptionAPIClientMild;
             _IOptionAPIClientRecovery = IOptionAPIClientRecovery;
             _IOptionAPIClientExtreme = IOptionAPIClientExtreme;
             _IInterventionAPIClient = IInterventionAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
+
         }
         public IActionResult Index()
         {
@@ -42,6 +52,8 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IInterventionAPIClient.GetAll(id);
                 if (response.Success == true)
                 {
+                    ViewBag.IdAssiment = id;
+
                     return View(response.Result);
                 }
                 ViewBag.IdAssiment = id;
@@ -75,9 +87,35 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         //Create Start
-        public IActionResult Create(string id)
+
+        public async Task<IActionResult> CreateIntervention(string id)
         {
-            ViewBag.IdIntervention = id;
+            var responseMild = await _IOptionAPIClientMild.GetAll();
+            var responseModerate = await _IOptionAPIClientModerate.GetAll();
+            var responseExtreme = await _IOptionAPIClientExtreme.GetAll();
+            var responseRecovery = await _IOptionAPIClientRecovery.GetAll();
+            ViewBag.Mild = responseMild.Result;
+            ViewBag.Moderate = responseModerate.Result;
+            ViewBag.Extreme = responseExtreme.Result;
+            ViewBag.Recovery = responseRecovery.Result;
+            var response = await _IInterventionAPIClient.Get(id);
+            if (response.Success == true)
+            {
+                return View(response.Result);
+            }
+            return View();
+        }
+        public async Task<IActionResult> Create(string id)
+        {
+            var responseMild = await _IOptionAPIClientMild.GetAll();
+            var responseModerate = await _IOptionAPIClientModerate.GetAll();
+            var responseExtreme = await _IOptionAPIClientExtreme.GetAll();
+            var responseRecovery = await _IOptionAPIClientRecovery.GetAll();
+            ViewBag.Mild = responseMild.Result;
+            ViewBag.Moderate = responseModerate.Result;
+            ViewBag.Extreme = responseExtreme.Result;
+            ViewBag.Recovery = responseRecovery.Result;
+            ViewBag.IdAssement = id;
             return View();
         }
 
@@ -94,7 +132,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if (response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
-                    return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
+                    TempData["CreateProfile"] = "Thêm Thành Công!";
+                    //return RedirectToAction("GetInterventionById", "Intervention", new { id = response.Result.AssesetmentId });
+                    return RedirectToAction("CreateIntervention", new { id = response.Result.Id });
                 }
                 //if (response.Success)
                 //{
@@ -110,6 +150,55 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return Json(new { success = false });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProfileIntervention(InterventionRequest request)
+        {
+
+            try
+            {
+                var response = await _IInterventionAPIClient.Update(request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
+                    TempData["MessageEdit"] = "Sửa thành công!";
+                    return RedirectToAction("CreateIntervention", new { id = response.Result.Id });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+                throw;
+            }
+            return Json(new { success = false });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateManage(InterventionRequest request)
+        {
+            try
+            {
+                var response = await _IInterventionAPIClient.UpdateManage(request);
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    TempData["MessageEditManage"] = "Sửa thành công!";
+                    return RedirectToAction("CreateIntervention", new { id = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
         //Create End
 
         //Edit Start
@@ -117,6 +206,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         {
             try
             {
+                var responseMild = await _IOptionAPIClientMild.GetAll();
+                var responseModerate = await _IOptionAPIClientModerate.GetAll();
+                var responseExtreme = await _IOptionAPIClientExtreme.GetAll();
+                var responseRecovery = await _IOptionAPIClientRecovery.GetAll();
+                ViewBag.Mild = responseMild.Result;
+                ViewBag.Moderate = responseModerate.Result;
+                ViewBag.Extreme = responseExtreme.Result;
+                ViewBag.Recovery = responseRecovery.Result;
                 var response = await _IInterventionAPIClient.Get(id);
                 if (response.Success == true)
                 {

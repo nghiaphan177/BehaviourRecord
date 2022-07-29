@@ -52,17 +52,17 @@
                                 <div class="col-md-12 mx-auto">
                                     <div class="checkbox">
                                         <label>
-                                            <input readonly disabled type="checkbox" id="check-nhe" name="checkbox" @((Model.ProfileMildDesciption != null) ? "checked" : "") /> Can Thiệp Nhẹ
+                                            <input readonly disabled type="checkbox" id="check-nhe-sua" name="checkbox" @((Model.ProfileMildDesciption != null) ? "checked" : "") /> Can Thiệp Nhẹ
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input readonly disabled type="checkbox" id="check-vua" name="checkbox" @((Model.ProfileModerateDesciption != null) ? "checked" : "") /> Can Thiệp Vừa
+                                            <input readonly disabled type="checkbox" id="check-vua-sua" name="checkbox" @((Model.ProfileModerateDesciption != null) ? "checked" : "") /> Can Thiệp Vừa
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label style="margin-left: 62px;">
-                                            <input readonly disabled type="checkbox" id="check-kn" name="checkbox" @((Model.ProfileExtremeDesciption != null) ? "checked" : "") /> Can Thiệp Khắc Nghiệt
+                                            <input readonly disabled type="checkbox" id="check-kn-sua" name="checkbox" @((Model.ProfileExtremeDesciption != null) ? "checked" : "") /> Can Thiệp Khắc Nghiệt
                                         </label>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                             }
-                            
+
                         </form>
                         <!-- form khác end -->
                     </div>
@@ -132,19 +132,19 @@
                     <!-- Tab Quản Lí Can Thiệp Start -->
                     <div class="tab-pane" id="quanlycanthiep">
                         <form action="#">
-                            <div id="input-quanly-nhe" class="form-group row">
+                            <div id="input-ql-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ</label>
                                 <div class="col-md-10">
                                     <input readonly type="text" value="@Model.ManageMild" class="form-control" />
                                 </div>
                             </div>
-                            <div id="input-quanly-vua" class="form-group row">
+                            <div id="input-ql-vua-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa</label>
                                 <div class="col-md-10">
                                     <input readonly type="text" value="@Model.ManageModerate" class="form-control" />
                                 </div>
                             </div>
-                            <div id="input-quanly-kn" class="form-group row">
+                            <div id="input-ql-kn-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
                                 <div class="col-md-10">
                                     <input readonly type="text" value="@Model.ManageExtreme" class="form-control" />
@@ -156,7 +156,7 @@
                                     <input readonly type="text" value="@Model.ManageRecovery" class="form-control" />
                                 </div>
                             </div>
-                            
+
                         </form>
                     </div>
                     <!-- Tab Quản Lí Can Thiệp End -->
@@ -201,3 +201,7 @@
     </div>
 </div>
 <!-- Can Thiệp End -->
+@section scripts {
+    <script src="~/js/CheckBoxMoInput.js"></script>
+
+}
