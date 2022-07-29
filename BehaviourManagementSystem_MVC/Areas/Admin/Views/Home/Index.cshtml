@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Trang chủ";
 }
-
+@section styles{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
+}
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
@@ -54,23 +56,65 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xl-3">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Monthly Earnings</h4>
 
-                <div class="row text-center mt-4">
-                    <div class="col-6">
-                        <h5 class="font-size-20">$56241</h5>
-                        <p class="text-muted">Marketplace</p>
-                    </div>
-                    <div class="col-6">
-                        <h5 class="font-size-20">$23651</h5>
-                        <p class="text-muted">Total Income</p>
+                <h4 class="card-title mb-4">Số lượng tài khoản mới theo năm</h4>
+                <div class="row text-right mt-4">
+                    <div class="col-sm-12">
+                        Năm: <input type="text" name="datepicker" id="datepicker" width="10" />
                     </div>
                 </div>
+                @*<div class="row text-center mt-4">
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">2541</h5>
+                            <p class="text-muted">Activated</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">84845</h5>
+                            <p class="text-muted">Pending</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">12001</h5>
+                            <p class="text-muted">Deactivated</p>
+                        </div>
+                    </div>*@
 
-                <div id="pie-chart" class="morris-charts morris-charts-height" dir="ltr"></div>
+                <canvas id="bar" height="100"></canvas>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title mb-4">Số lượng tài khoản mới theo tháng</h4>
+                <div class="row text-right mt-4">
+                    <div class="col-sm-12">
+                        Tháng: <input type="text" name="monthpicker" id="monthpicker" />
+                    </div>
+                </div>
+                @*<div class="row text-center mt-4">
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">2541</h5>
+                            <p class="text-muted">Activated</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">84845</h5>
+                            <p class="text-muted">Pending</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h5 class="mb-0 font-size-20">12001</h5>
+                            <p class="text-muted">Deactivated</p>
+                        </div>
+                    </div>*@
+
+                <canvas id="baraccountmonth" height="100"></canvas>
+
             </div>
         </div>
     </div>
@@ -78,15 +122,117 @@
 @section scripts {
     <script src="~/lib/morris.js/morris.min.js"></script>
     <script src="~/lib/raphael/raphael.min.js"></script>
+    <script src="~/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
     <script>
-        Morris.Donut({
-            element: 'pie-chart',
-            data: [
-                { label: "Số can thiệp", value: 30 },
-                { label: "Số đánh giá", value: 15 },
-                { label: "Số học sinh", value: 45 },
-            ]
+        function LoadChart(year) {
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetCountAllAccountRegisterOfYear?year=" + year,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var chart = document.getElementById('bar').getContext('2d');                    
+                    var data1 = response["result"].map(a => a.item2)
+                    var mychar = new Chart(chart, {
+                        type: 'bar',
+                        data: {
+                            labels: [
+                                "Tháng 1",
+                                "Tháng 2",
+                                "Tháng 3",
+                                "Tháng 4",
+                                "Tháng 5",
+                                "Tháng 6",
+                                "Tháng 7",
+                                "Tháng 8",
+                                "Tháng 9",
+                                "Tháng 10",
+                                "Tháng 11",
+                                "Tháng 12",
+                            ],
+                            datasets: [
+                                {
+                                    label: "Tài khoản đăng ký",
+                                    backgroundColor: "#28bbe3",
+                                    borderColor: "#28bbe3",
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: "#28bbe3",
+                                    hoverBorderColor: "#28bbe3",
+                                    data: data1,
+                                },
+                            ],
+                        }
+                    });
+                }
+            });
+        }
+        function LoadChartMonth(month, year) {
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd//GetCountAllAccountRegisterOfMonth?month=" + month + " &year=" + year,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var chart = document.getElementById('baraccountmonth').getContext('2d');
+                    console.log(response["result"].map(a => a.item2));
+                    var datalabel = response["result"].map(a => ("ngày " + a.item1))
+                    var data1 = response["result"].map(a => a.item2)
+                    var mychar = new Chart(chart, {
+                        type: 'bar',
+                        data: {
+                            labels: datalabel,
+                            datasets: [
+                                {
+                                    label: "Tài khoản đăng ký",
+                                    backgroundColor: "#28bbe3",
+                                    borderColor: "#28bbe3",
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: "#28bbe3",
+                                    hoverBorderColor: "#28bbe3",
+                                    data: data1,
+                                },
+                            ],
+                        }
+                    });
+                }
+            });
+        }
+        $(document).ready(function () {
+            var d = new Date();
+            var output = d.getFullYear()
+            LoadChartMonth(d.getMonth() + 1, d.getFullYear());
+            LoadChart(output);
+            $("#datepicker").val(output);
+            $("#monthpicker").val(d.getMonth() + 1 + "-" + d.getFullYear());
+            $("#monthpicker").datepicker({
+                language: 'vi',
+                locale: 'vi',
+                format: "mm-yyyy",
+                startView: "months",
+                minViewMode: "months"
+            }).on("changeDate", function () {
+                // get date value
+                var d = $("#monthpicker").datepicker("getDate");
+                LoadChartMonth(d.getMonth() + 1, d.getFullYear());
+            });;
+            $("#datepicker").datepicker({
+                language: 'vi',
+                locale: 'vi',
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                updateViewDate: true,
+                autoclose: true //to close picker once year is selected
+            }).on("changeDate", function () {
+                // get date value
+                var year = $("#datepicker").datepicker("getDate").getFullYear();
+                LoadChart(year);
+            });
         });
-
     </script>
 }

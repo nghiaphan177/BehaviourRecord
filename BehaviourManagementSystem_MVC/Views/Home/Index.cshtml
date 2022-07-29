@@ -76,203 +76,269 @@
             </div>
         </div>
     </div>
-</div>
-
-
-@*<div class="row">
-    <div class="col-12 col-lg-12 col-xl-9">
-        <div class="row">
-            <div class="col-12 col-lg-8 col-xl-8 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-6">
-                                <h5 class="card-title">Upcoming Lesson</h5>
-                            </div>
-                            <div class="col-6">
-                                <span class="float-right view-link">
-                                    <a href="#">
-                                        View All
-                                        Courses
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
+    <div class="col-md-6 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">Số học sinh các lớp</h5>
                     </div>
-                    <div class="pt-3 pb-3">
-                        <div class="table-responsive lesson">
-                            <table class="table table-center">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="date">
-                                                <b>Aug 4, Tuesday</b>
-                                                <p>2.30pm - 3.30pm (60min)</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="date">
-                                                <b>Lessons 30</b>
-                                                <p>3.1 Ipsuum dolor</p>
-                                            </div>
-                                        </td>
-                                        <td><a href="#">Confirmed</a></td>
-                                        <td>
-                                            <button type="submit"
-                                                    class="btn btn-info">
-                                                Reschedule
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="date">
-                                                <b>Aug 5, Wednesday</b>
-                                                <p>3.00pm - 4.30pm (90min)</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="date">
-                                                <b>Lessons 31</b>
-                                                <p>3.2 Ipsuum dolor</p>
-                                            </div>
-                                        </td>
-                                        <td><a href="#">Confirmed</a></td>
-                                        <td>
-                                            <button type="submit"
-                                                    class="btn btn-info">
-                                                Reschedule
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="date">
-                                                <b>Aug 6, Thursday</b>
-                                                <p>11.00am - 12.00pm (20min)</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="date">
-                                                <b>Lessons 32</b>
-                                                <p>3.3 Ipsuum dolor</p>
-                                            </div>
-                                        </td>
-                                        <td><a href="#">Confirmed</a></td>
-                                        <td>
-                                            <button type="submit"
-                                                    class="btn btn-info">
-                                                Reschedule
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="col-6">
+                        <ul class="list-inline-group text-right mb-0 pl-0">
+                            <li class="list-inline-item">
+                                <div class="form-group mb-0 amount-spent-select">
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 col-xl-4 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-12">
-                                <h5 class="card-title">Semester Progress</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dash-widget">
-                        <div class="circle-bar circle-bar1">
-                            <div class="circle-graph1" data-percent="50">
-                                <b>50%</b>
-                            </div>
-                        </div>
-                        <div class="dash-info">
-                            <h6>Lesson Progressed</h6>
-                            <h4>30 <span>/ 60</span></h4>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+                <div id="bar"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-lg-6 col-xl-8 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-6">
-                                <h5 class="card-title">Teaching Activity</h5>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/assets/plugins/apexchart/apexcharts.min.js"></script>
+    <script>
+        function LoadChart(idteacher) {
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetCountAllStudentOfAllClasses?teacherId=" + idteacher,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var label = response["result"].map(a => a.item1);
+                    var data = response["result"].map(a => a.item2);
+                    var options = {
+                        series: data,
+                        chart: {
+                            type: 'donut',
+                            height: 200
+                        },
+                        labels: label,
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    };
+                    var chartBar = new ApexCharts(document.querySelector('#bar'), options);
+                    chartBar.render();
+                }
+            })
+        };
+        $(document).ready(function () {
+            // Bar chart
+            var id = '@User.FindFirst("Id").Value';
+            LoadChart(id);
+        });
+    </script>
+}
+
+@*<div class="row">
+        <div class="col-12 col-lg-12 col-xl-9">
+            <div class="row">
+                <div class="col-12 col-lg-8 col-xl-8 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="card-title">Upcoming Lesson</h5>
+                                </div>
+                                <div class="col-6">
+                                    <span class="float-right view-link">
+                                        <a href="#">
+                                            View All
+                                            Courses
+                                        </a>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <ul class="list-inline-group text-right mb-0 pl-0">
-                                    <li class="list-inline-item">
-                                        <div class="form-group mb-0 amount-spent-select">
-                                            <select class="form-control form-control-sm">
-                                                <option>Weekly</option>
-                                                <option>Monthly</option>
-                                                <option>Yearly</option>
-                                            </select>
-                                        </div>
+                        </div>
+                        <div class="pt-3 pb-3">
+                            <div class="table-responsive lesson">
+                                <table class="table table-center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Aug 4, Tuesday</b>
+                                                    <p>2.30pm - 3.30pm (60min)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Lessons 30</b>
+                                                    <p>3.1 Ipsuum dolor</p>
+                                                </div>
+                                            </td>
+                                            <td><a href="#">Confirmed</a></td>
+                                            <td>
+                                                <button type="submit"
+                                                        class="btn btn-info">
+                                                    Reschedule
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Aug 5, Wednesday</b>
+                                                    <p>3.00pm - 4.30pm (90min)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Lessons 31</b>
+                                                    <p>3.2 Ipsuum dolor</p>
+                                                </div>
+                                            </td>
+                                            <td><a href="#">Confirmed</a></td>
+                                            <td>
+                                                <button type="submit"
+                                                        class="btn btn-info">
+                                                    Reschedule
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Aug 6, Thursday</b>
+                                                    <p>11.00am - 12.00pm (20min)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="date">
+                                                    <b>Lessons 32</b>
+                                                    <p>3.3 Ipsuum dolor</p>
+                                                </div>
+                                            </td>
+                                            <td><a href="#">Confirmed</a></td>
+                                            <td>
+                                                <button type="submit"
+                                                        class="btn btn-info">
+                                                    Reschedule
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-xl-4 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h5 class="card-title">Semester Progress</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash-widget">
+                            <div class="circle-bar circle-bar1">
+                                <div class="circle-graph1" data-percent="50">
+                                    <b>50%</b>
+                                </div>
+                            </div>
+                            <div class="dash-info">
+                                <h6>Lesson Progressed</h6>
+                                <h4>30 <span>/ 60</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 col-xl-8 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="card-title">Teaching Activity</h5>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-inline-group text-right mb-0 pl-0">
+                                        <li class="list-inline-item">
+                                            <div class="form-group mb-0 amount-spent-select">
+                                                <select class="form-control form-control-sm">
+                                                    <option>Weekly</option>
+                                                    <option>Monthly</option>
+                                                    <option>Yearly</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="apexcharts-area"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-4 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <h5 class="card-title">Teaching History</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="teaching-card">
+                                <ul class="activity-feed">
+                                    <li class="feed-item">
+                                        <div class="feed-date1">Sep 05, 9 am - 10 am (60min)</div>
+                                        <span class="feed-text1"><a>Lorem ipsum dolor</a></span>
+                                        <p><span>In Progress</span></p>
+                                    </li>
+                                    <li class="feed-item">
+                                        <div class="feed-date1">Sep 04, 2 pm - 3 pm (70min)</div>
+                                        <span class="feed-text1"><a>Et dolore magna</a></span>
+                                        <p>Completed</p>
+                                    </li>
+                                    <li class="feed-item">
+                                        <div class="feed-date1">Sep 02, 1 pm - 2 am (80min)</div>
+                                        <span class="feed-text1"><a>Exercitation ullamco</a></span>
+                                        <p>Completed</p>
+                                    </li>
+                                    <li class="feed-item">
+                                        <div class="feed-date1">Aug 30, 10 am - 12 pm (90min)</div>
+                                        <span class="feed-text1"><a>Occaecat cupidatat</a></span>
+                                        <p>Completed</p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div id="apexcharts-area"></div>
-                    </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6 col-xl-4 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <h5 class="card-title">Teaching History</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="teaching-card">
-                            <ul class="activity-feed">
-                                <li class="feed-item">
-                                    <div class="feed-date1">Sep 05, 9 am - 10 am (60min)</div>
-                                    <span class="feed-text1"><a>Lorem ipsum dolor</a></span>
-                                    <p><span>In Progress</span></p>
-                                </li>
-                                <li class="feed-item">
-                                    <div class="feed-date1">Sep 04, 2 pm - 3 pm (70min)</div>
-                                    <span class="feed-text1"><a>Et dolore magna</a></span>
-                                    <p>Completed</p>
-                                </li>
-                                <li class="feed-item">
-                                    <div class="feed-date1">Sep 02, 1 pm - 2 am (80min)</div>
-                                    <span class="feed-text1"><a>Exercitation ullamco</a></span>
-                                    <p>Completed</p>
-                                </li>
-                                <li class="feed-item">
-                                    <div class="feed-date1">Aug 30, 10 am - 12 pm (90min)</div>
-                                    <span class="feed-text1"><a>Occaecat cupidatat</a></span>
-                                    <p>Completed</p>
-                                </li>
-                            </ul>
+        </div>
+        <div class="col-12 col-lg-12 col-xl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h5 class="card-title">Calendar</h5>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-lg-12 col-xl-3 d-flex">
-        <div class="card flex-fill">
-            <div class="card-header">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <h5 class="card-title">Calendar</h5>
-                    </div>
+                <div class="card-body">
+                    <div id="calendar-doctor" class="calendar-container"></div>
                 </div>
             </div>
-            <div class="card-body">
-                <div id="calendar-doctor" class="calendar-container"></div>
-            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <!--<div class="page-header">
     <div class="row">
         <div class="col-sm-12">
