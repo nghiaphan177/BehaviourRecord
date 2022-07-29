@@ -92,15 +92,14 @@ namespace BehaviourManagementSystem_MVC
             {
                 ProgressBar = true,
                 Timeout = 3000,
-                Theme = "mint"
-            }) ;
+                Theme = "metroui"
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseNToastNotify();
-
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -136,7 +135,8 @@ namespace BehaviourManagementSystem_MVC
             app.UseAuthorization();
 
             app.UseSession();
-            
+            app.UseNToastNotify();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(

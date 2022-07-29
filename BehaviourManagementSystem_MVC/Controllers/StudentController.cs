@@ -60,6 +60,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IIndividualAPIClient.GetAllStudentByTeacherId(id);
                 if (response.Success == true)
                 {
+                    toastNotification.AddSuccessToastMessage("Hello");
                     return View(response.Result);
                 }
             }
