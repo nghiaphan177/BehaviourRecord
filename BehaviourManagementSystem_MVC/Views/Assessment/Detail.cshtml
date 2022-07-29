@@ -45,7 +45,11 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
-                                    <input readonly type="date" value="@Model.RecordDate?.ToShortDateString()" class="form-control" />
+                                    @{
+                                        DateTime d = Convert.ToDateTime(Model.RecordDate);
+                                        string date = d.ToString("yyyy-MM-dd");
+                                    }
+                                    <input readonly type="date" value="@date" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -78,12 +82,7 @@
                                            class="form-control" />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-TuongTrinh" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                </div>
-                            </div>
+
 
                         </form>
                     </div>
@@ -115,10 +114,7 @@
                                                 <input readonly type="text" value="@Model.AnalyzeBehaviour" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- Tab Phân Tích - Hành Vi End-->
@@ -145,10 +141,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-pt2" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- Tab Phân Tích - Tiền Đề End-->
@@ -193,10 +186,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-pt3" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- Tab Phân Tích - Hậu Quả End-->
@@ -246,10 +236,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-ct1" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- Tab Chi Tiết - Tiền Đề End -->
@@ -280,10 +267,7 @@
                                                 <input readonly type="text" value="@Model.FunctionConsequece" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
-                                            <button type="submit" id="button-ct1" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
-                                            <button type="submit" class="btn btn-success btn-sm btn-block">Thoát</button>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- Tab Chi Tiết - Hậu Quả End -->
@@ -293,6 +277,13 @@
                     <!-- Tab Chi Tiết End -->
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="col">
+        <div style="margin-top: -3.5rem;" class="col-sm-3 mx-auto text-center">
+            <a href="/Student/StudentDetail?id=@Model.IndividualId">
+                <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
+            </a>
         </div>
     </div>
 </div>
