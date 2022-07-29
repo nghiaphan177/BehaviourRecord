@@ -79,8 +79,8 @@ namespace BehaviourManagementSystem_API.Services
                 PreventStatus = obj.PreventStatus,
                 PreventActivity = obj.PreventActivity,
                 PreventInteraction = obj.PreventInteraction,
-                PreventInvironmental = obj.PreventInvironmental
-
+                PreventInvironmental = obj.PreventInvironmental,
+                AssesetmentId = obj.AssesetmentId.ToString()
             });
         }
 

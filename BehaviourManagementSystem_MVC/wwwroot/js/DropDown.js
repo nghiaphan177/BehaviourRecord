@@ -12,11 +12,11 @@ $('#multiselect-drop-moitruong input').change(function () {
     $('#moitruong').val((s.length > 0 ? s : ""));
 });
 
-$('#multiselect-drop-hanhdong input').change(function () {
-    var s = $('#multiselect-drop-hanhdong input:checked').map(function () {
+$('#multiselect-drop-hanhdong1 input').change(function () {
+    var s = $('#multiselect-drop-hanhdong1 input:checked').map(function () {
         return this.value;
     }).get().join(',');
-    $('#hanhdong').val((s.length > 0 ? s : ""));
+    $('#hanhdong1').val((s.length > 0 ? s : ""));
 });
 
 $('#multiselect-drop input').change(function () {

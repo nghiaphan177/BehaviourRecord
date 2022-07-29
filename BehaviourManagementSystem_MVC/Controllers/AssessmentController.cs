@@ -51,8 +51,29 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 throw;
             }
         }
-        public IActionResult Create(string id)
+
+        //Create Start
+
+        public async Task<IActionResult> CreateAssement(string id)
         {
+            var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
+            var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
+            var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
+            ViewBag.AntecedentPerceived = responseAnaPer.Result;
+            ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
+            ViewBag.AntecedentActivity = responseAnaActi.Result;
+            var response = await _assessmentAPIClient.Get(id);
+            return View(response.Result);
+        }
+
+        public async Task<IActionResult> Create(string id)
+        {
+            var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
+            var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
+            var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
+            ViewBag.AntecedentPerceived = responseAnaPer.Result;
+            ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
+            ViewBag.AntecedentActivity = responseAnaActi.Result;
             return View(new AssessmentRequest() { Id = "", IndividualId = id });
         }
         [HttpPost]
@@ -66,15 +87,145 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     toastNotification.AddErrorToastMessage(response.Message);
                     return View();
                 }
-                TempData["MessageCreateAss"] = "Sửa thành công!";
-                toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
-                return RedirectToAction("StudentDetail", "Student", new { id = request.IndividualId });
+                TempData["MessageCreateAss"] = "Thêm Thành Công!";
+                TempData["IdAsssetment"] = response.Result.Id;
+                toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                return RedirectToAction("CreateAssement", new { id = response.Result.Id });
             }
             catch(Exception ex)
             {
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRecordBehaviour(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.CreateRecordBehaviour(request.Id, request.AnalyzeBehaviour);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    TempData["MessageEditBehavior"] = "Thêm Thành Công!!";
+                    return RedirectToAction("CreateAssement", new { id = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAnaEntecedent(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateAnalyzeAntecedent(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    TempData["UpdateAnalyzeAntecedent"] = "Thêm Thành Công!";
+                    return RedirectToAction("CreateAssement", new { id = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAnaConsequence(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateAnalyzeConsequence(request.Id, request);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm Thành Công!");
+                    TempData["UpdateAnalyzeConsequence"] = "Thêm Thành Công!";
+                    return RedirectToAction("CreateAssement", new { id = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFuntionAntecedent(AssessmentRequest request)
+        {
+            try
+            {
+                var response = await _assessmentAPIClient.UpdateFuntionAntecedent(request.Id, request.FunctionAntecedent);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm thành công!");
+                    TempData["UpdateFuntionAntecedent"] = "Thêm thành công!";
+                    return RedirectToAction("CreateAssement", new { id = response.Result.Id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFuntionConsequence(AssessmentRequest request)
+        {
+            try
+            {
+                var responseIndividual = await _assessmentAPIClient.Get(request.Id);
+                var response = await _assessmentAPIClient.UpdateFuntionConsequence(request.Id, request.FunctionConsequece);
+                if (response == null)
+                {
+                    return Json(new { success = false });
+                }
+                if (response.Success == true)
+                {
+                    toastNotification.AddSuccessToastMessage("Thêm thành công!");
+                    return RedirectToAction("StudentDetail", "Student", new { id = responseIndividual.Result.IndividualId });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { success = false });
+        }
+        //Create End
+
+        //Edit Start
+
         public async Task<IActionResult> Edit(string assid)
         {
             try
@@ -151,24 +302,26 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return Json(new { success = false });
         }
+        
+
         [HttpPost]
-        public async Task<IActionResult> CreateRecordBehaviour(AssessmentRequest request)
+        public async Task<IActionResult> UpdateRecordBehaviour(AssessmentRequest request)
         {
             try
             {
                 var response = await _assessmentAPIClient.CreateRecordBehaviour(request.Id, request.AnalyzeBehaviour);
-                if(response == null)
+                if (response == null)
                 {
                     return Json(new { success = false });
                 }
-                if(response.Success == true)
+                if (response.Success == true)
                 {
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     TempData["MessageEditBehavior"] = "Sửa thành công!";
                     return RedirectToAction("Edit", new { assid = response.Result.Id });
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
 
                 throw;
@@ -227,7 +380,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAnaEntecedent(AssessmentRequest request)
+        public async Task<IActionResult> UpdateAnaEntecedent(AssessmentRequest request)
         {
             try
             {
@@ -253,7 +406,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateAnaConsequence(AssessmentRequest request)
+        public async Task<IActionResult> UpdateAnaConsequence(AssessmentRequest request)
         {
             try
             {

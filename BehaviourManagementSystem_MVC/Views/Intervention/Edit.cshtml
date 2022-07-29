@@ -95,7 +95,6 @@
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
                                     <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
 
@@ -152,7 +151,6 @@
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
                                     <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
                         </form>
@@ -190,7 +188,6 @@
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
                                     <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
                         </form>
@@ -235,6 +232,11 @@
                     <!-- Tab ngăn chặn tái phạm End -->
                 </div>
             </div>
+        </div>
+        <div style="padding: 0 22px; margin-top: -2.5rem;" class="col-sm-3 mx-auto text-center">
+            <a href="Intervention/GetInterventionById?id=@Model.AssesetmentId">
+                <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
+            </a>
         </div>
     </div>
 </div>
