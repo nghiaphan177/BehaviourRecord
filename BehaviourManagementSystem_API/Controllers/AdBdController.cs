@@ -1,6 +1,7 @@
 ﻿using BehaviourManagementSystem_API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Controllers
@@ -41,6 +42,21 @@ namespace BehaviourManagementSystem_API.Controllers
                 return NotFound("Truy cập không hợp lệ.");
 
             var res = await _abBd.GetCountAllAccountRegisterOfMonth(m, y);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
+        [HttpGet("GetCountAllStudentOfAllClasses")]
+        public async Task<IActionResult> GetCountAllStudentOfAllClasses([FromQuery] string teacherId)
+        {
+            Guid guid;
+            if(!Guid.TryParse(teacherId, out guid))
+                return NotFound("Truy cập dữ liệu không hợp lệ.");
+
+            var res = await _abBd.GetCountAllStudentOfAllClasses(guid);
 
             if(!res.Success)
                 return BadRequest(res);
