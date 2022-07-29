@@ -63,5 +63,16 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(res);
         }
+
+        [HttpGet("GetAllAccountNotVerifyMail")]
+        public async Task<IActionResult> GetAllAccountNotVerifyMail()
+        {
+            var res = await _abBd.GetAllAccountNotVerifyMail();
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
     }
 }
