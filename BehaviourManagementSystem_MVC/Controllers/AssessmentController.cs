@@ -509,7 +509,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if (response.Success)
                 {
                     toastNotification.AddErrorToastMessage("Xóa Thành Công!");
-
+                    return Json(new
+                    {
+                        status = true
+                    });
                 }
                 if (response.Success == false)
                 {

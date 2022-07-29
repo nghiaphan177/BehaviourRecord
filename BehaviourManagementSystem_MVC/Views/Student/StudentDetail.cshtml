@@ -259,20 +259,10 @@
                     url: "/Assessment/Delete?AssessId=" + id,
                     type: "POST",
                     success: function (result) {
-                        if (result.success == true) {
-                            swal(
-                                'Đã Xóa Thành Công!',
-                                '',
-                                'success'
-                            ),
+                        if (result.status == true) {
                                 $("#assess-" + id).remove();
                         }
-                        else {
-                            Swal.fire({
-                                icon: 'error',
-                                text: 'Xóa không thành công',
-                            })
-                        }
+                        
                     }
                 })
             })
