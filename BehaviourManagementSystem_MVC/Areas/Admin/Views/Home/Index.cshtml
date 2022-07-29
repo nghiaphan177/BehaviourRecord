@@ -134,8 +134,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var chart = document.getElementById('bar').getContext('2d');
-                    console.log(response["result"].map(a => a.item2));
+                    var chart = document.getElementById('bar').getContext('2d');                    
                     var data1 = response["result"].map(a => a.item2)
                     var mychar = new Chart(chart, {
                         type: 'bar',

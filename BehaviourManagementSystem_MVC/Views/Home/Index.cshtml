@@ -76,12 +76,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-lg-12">
+    <div class="col-md-6 col-lg-6">
         <div class="card card-chart">
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <h5 class="card-title">Number of Students</h5>
+                        <h5 class="card-title">Số học sinh các lớp</h5>
                     </div>
                     <div class="col-6">
                         <ul class="list-inline-group text-right mb-0 pl-0">
@@ -103,70 +103,43 @@
     <script src="~/assets/plugins/apexchart/apexcharts.min.js"></script>
     <script>
         function LoadChart(idteacher) {
-            if ($('#bar').length > 0) {
-                var optionsBar = {
-                    chart: {
-                        type: 'bar',
-                        height: 350,
-                        width: '100%',
-                        toolbar: {
-                            show: false
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetCountAllStudentOfAllClasses?teacherId=" + idteacher,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var label = response["result"].map(a => a.item1);
+                    var data = response["result"].map(a => a.item2);
+                    var options = {
+                        series: data,
+                        chart: {
+                            type: 'donut',
+                            height: 200
                         },
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    plotOptions: {
-                        bar: {
-                            columnWidth: '45%',
-                        }
-                    },
-                    series: [{
-                        name: "Boys",
-                        color: '#fdbb38',
-                        data: [420, 532, 516, 575, 519, 517, 454, 392, 262, 383, 446, 551, 563, 421, 563, 254, 452],
-                    }],
-                    labels: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020],
-                    xaxis: {
-                        labels: {
-                            show: true
-                        },
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        },
-                    },
-                    yaxis: {
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        },
-                        labels: {
-                            style: {
-                                colors: '#777'
+                        labels: label,
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
                             }
-                        }
-                    },
-                    title: {
-                        text: '',
-                        align: 'left',
-                        style: {
-                            fontSize: '18px'
-                        }
-                    }
-
+                        }]
+                    };
+                    var chartBar = new ApexCharts(document.querySelector('#bar'), options);
+                    chartBar.render();
                 }
-
-                var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
-                chartBar.render();
-            }
-        });
+            })
+        };
         $(document).ready(function () {
             // Bar chart
+            var id = '@User.FindFirst("Id").Value';
             LoadChart(id);
         });
     </script>
