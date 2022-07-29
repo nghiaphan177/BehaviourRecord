@@ -44,7 +44,7 @@
                         <form id="assessform" asp-action="EditRecord" asp-controller="Assessment" method="post">
                             <input hidden asp-for="Id" type="text" class="form-control" />
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
+                                <label class="col-form-label col-md-2">Ngày<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     @{
                                         DateTime d = Convert.ToDateTime(Model.RecordDate);
@@ -54,19 +54,19 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giờ Bắt Đầu</label>
+                                <label class="col-form-label col-md-2">Giờ Bắt Đầu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordStart" asp type="text" value="@Model.RecordStart" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giờ Kết Thúc</label>
+                                <label class="col-form-label col-md-2">Giờ Kết Thúc<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordEnd" type="text" value="@Model.RecordEnd" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ở Đâu</label>
+                                <label class="col-form-label col-md-2">Ở Đâu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordWhere" type="text" value="@Model.RecordWhere"
                                            class="form-control"
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Học sinh vi phạm</label>
+                                <label class="col-form-label col-md-2">Học sinh vi phạm<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
@@ -109,7 +109,7 @@
                                     <form id="updateBehaviourForm" asp-action="UpdateRecordBehaviour" asp-controller="Assessment" method="post">
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Hành vi</label>
+                                            <label class="col-form-label col-md-2">Hành vi<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
                                                 <input required asp-for="AnalyzeBehaviour" type="text" class="form-control" placeholder="Nhập hành vi..." />
                                             </div>
@@ -125,7 +125,7 @@
                                     <form asp-action="UpdateAnaEntecedent" asp-controller="Assessment" method="post">
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Cảm Xúc</label>
+                                            <label class="col-form-label col-md-2">Cảm Xúc<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="@Model.AnalyzeAntecedentPerceivedDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu " id="multiselect-drop-camxuc">
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Môi Trường</label>
+                                            <label class="col-form-label col-md-2">Môi Trường<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="@Model.AnalyzeAntecedentEnvironmentalDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-moitruong">
@@ -161,7 +161,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Hành Động</label>
+                                            <label class="col-form-label col-md-2">Hành Động<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-hanhdong">

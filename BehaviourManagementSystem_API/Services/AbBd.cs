@@ -112,29 +112,13 @@ namespace BehaviourManagementSystem_API.Services
 
         private async Task<List<string>> GetAllClassesOfTeacher(Guid guid)
         {
-            var inds = await _context.Individuals.Where(prop => prop.TeacherId == guid).ToListAsync();
+            var Organizations = await _context.Individuals
+                .Where(prop => prop.TeacherId == guid)
+                .Select(prop => prop.Organization)
+                .Distinct()
+                .ToListAsync();
 
-            var classes = new List<string>();
-
-            foreach(var ind in inds)
-            {
-                if(classes.Count > 0)
-                {
-                    var count = 0;
-                    foreach(var className in classes)
-                    {
-                        if(ind.Organization == className)
-                            break;
-                        count++;
-
-                        if(count == classes.Count)
-                            classes.Add(ind.Organization);
-                    }
-                }
-                else
-                    classes.Add(ind.Organization);
-            }
-            return classes;
+            return Organizations;
         }
     }
 }
