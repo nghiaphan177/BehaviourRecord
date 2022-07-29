@@ -26,10 +26,18 @@
                         console.log(@User.FindFirst("Id").Value)
                     </script>*@
                 <div class="row">
+
                     <div class="col-12">
                         <h5 class="form-title"><span>Thông tin học sinh</span></h5>
                     </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <img id="uploadPreview" style="width: 150px; height: 150px; position:relative" />
+                            <input style="position: absolute; bottom: 1rem; left: 12rem;" id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
 
+                            @*<input asp-for="@Model.AvtName" type="file" class="form-control">*@
+                        </div>
+                    </div>
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
                             <label>Họ <span style="color: red;">*</span></label>
@@ -73,12 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label>Hình Học Sinh</label>
-                            <input asp-for="@Model.AvtName" type="file" class="form-control">
-                        </div>
-                    </div>
+                   
                     @*<div class="col-12 col-sm-6">
             <div class="form-group">
                 <label>Số Điện Thoại</label>
@@ -97,7 +100,7 @@
                             <input required asp-for="@Model.Email" type="text" class="form-control">
                         </div>
                     </div>
-                    
+
                     <div class="col-12 text-xl-center">
                         <button type="submit" class="btn btn-primary ">Sửa</button>
                     </div>

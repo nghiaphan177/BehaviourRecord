@@ -1,9 +1,9 @@
 ﻿@model InterventionRequest
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "CreateIntervention";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
-@{TempData["Data2"] = Model.Id;}
+
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -104,7 +104,7 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <form id="EditProfileForm" action="/Intervention/Edit" method="post">
+                        <form id="EditProfileForm" action="/Intervention/CreateProfileIntervention" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
@@ -206,7 +206,7 @@
                     <!-- Tab Nâng Câp Hồ Sơ End-->
                     <!-- Tab Quản Lí Can Thiệp Start -->
                     <div class="tab-pane" id="quanlycanthiep">
-                        <form action="/Intervention/EditManage" method="post">
+                        <form action="/Intervention/CreateManage" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div id="input-ql-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ <span style="color: red;">*</span></label>
@@ -297,6 +297,14 @@
 }
 
 @section EditIntervention {
+    @if (TempData["CreateProfile"] != null)
+    {
+        <script type="text/javascript">
+
+            $('.nav a[href="#quanlycanthiep"]').tab('show');
+
+        </script>
+    }
     @if (TempData["MessageEdit"] != null)
     {
         <script type="text/javascript">

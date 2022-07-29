@@ -13,9 +13,9 @@
                 <li class="breadcrumb-item active">Danh sách học sinh</li>
             </ul>
         </div>
-        <div class="col-auto text-right float-right ml-auto">
+        @*<div class="col-auto text-right float-right ml-auto">
             <a href="/Student/StudentAdd" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="row">
@@ -47,7 +47,7 @@
                                             @{
                                                 var fName = item.FirstName + " " + item.LastName;
                                             }
-                                            <a href="student-details.html">@fName</a>
+                                            <a href="/Student/StudentDetail?id=@item.Ind_Id">@fName</a>
                                         </h2>
                                     </td>
                                     <td>@item.Classes</td>

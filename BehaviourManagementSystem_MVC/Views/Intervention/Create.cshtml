@@ -34,14 +34,14 @@
                         <a class="nav-link"
                            href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
                     </li>
-                    @*<li class="nav-item">
-                            <a class="nav-link"
+                    <li class="nav-item">
+                            <a class="nav-link disabled"
                                href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"
+                            <a class="nav-link disabled"
                                href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
-                        </li>*@
+                        </li>
                 </ul>
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
@@ -82,7 +82,7 @@
                         <!-- form nhẹ start -->
 
                         <form id="assessform1" asp-action="CreateProfile" asp-controller="Intervention" method="post">
-                            <input hidden name="AssesetmentId" value="@ViewBag.IdIntervention">
+                            <input hidden name="AssesetmentId" value="@ViewBag.IdAssement">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
@@ -94,28 +94,75 @@
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="nhe" name="ProfileMildDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "mild" })
+                                    <ul class="dropdown-menu" id="multiselect-drop">
+                                        @foreach (var item in ViewBag.Mild)
+                                        {
+                                            <li class="dropdown-item">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input class="checkbox-nhe" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div id="input-vua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="trungbinh" name="ProfileModerateDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "moderate" })
+                                    <ul class="dropdown-menu" id="multiselect-drop-tb">
+                                        @foreach (var item in ViewBag.Moderate)
+                                        {
+                                            <li class="dropdown-item">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input class="checkbox-vua" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div id="input-kn" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="khacnghiet" name="ProfileExtremeDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "extreme" })
+                                    <ul class="dropdown-menu" id="multiselect-drop-kn">
+                                        @foreach (var item in ViewBag.Extreme)
+                                        {
+                                            <li class="dropdown-item">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input class="checkbox-khac-nghiet" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" required id="tbphuchoi" name="ProfileRecoveryDesciption" placeholder="Nhấp vào để chọn" value="" class="form-control dropdown-toggle" data-toggle="dropdown" />
-                                    @await Component.InvokeAsync("DropDown", new { name = "recovery" })
+                                    <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
+                                        @foreach (var item in ViewBag.Recovery)
+                                        {
+                                            <li class="dropdown-item">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                             <div class="col">
@@ -128,7 +175,79 @@
                         <!-- form khác end -->
                     </div>
                     <!-- Tab Nâng Câp Hồ Sơ End-->
+                    <!-- Tab Quản Lí Can Thiệp Start -->
+                    <div class="tab-pane" id="quanlycanthiep">
+                        <form action="/Intervention/EditManage" method="post">
+                            @*<input hidden name="Id" value="@Model.Id">*@
+                            <div id="input-ql-nhe-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-ql-vua-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate"  class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div id="input-ql-kn-sua" class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme"  class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Giai Đoạn Phục hồi <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" required autocomplete="off" name="ManageRecovery" class="form-control" placeholder="Nhập ..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Tab Quản Lí Can Thiệp End -->
+                    <!-- Tab ngăn chặn tái phạm Start -->
+                    <div class="tab-pane" id="nganchantaipham">
+                        <form action="/Intervention/EditPrevent" method="post">
+                            @*<input hidden name="Id" value="@Model.Id">*@
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Tính Cách <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" required autocomplete="off" name="PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" required autocomplete="off" name="PreventActivity"  id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" required autocomplete="off" name="PreventInteraction"  class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường <span style="color: red;">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="text" required autocomplete="off" name="PreventInvironmental"  class="form-control text-key" placeholder="Nhập..." />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col-sm-3 mx-auto text-center">
+                                    <button type="submit" autocomplete="off" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                </div>
+                            </div>
 
+                        </form>
+                    </div>
+                    <!-- Tab ngăn chặn tái phạm End -->
                 </div>
             </div>
         </div>

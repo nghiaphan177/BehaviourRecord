@@ -25,7 +25,14 @@
                         <div class="col-12">
                             <h5 class="form-title"><span>Student Information</span></h5>
                         </div>
+                        <div class="col-12 col-sm-12">
+                            <div class="form-group">
+                                <img id="uploadPreview" style="width: 150px; height: 150px; position:relative" />
+                                <input style="position: absolute; bottom: 1rem; left: 12rem;" id="uploadImage" type="file" asp-for="@Model.AvtName" onchange="PreviewImage();" />
 
+                                @*<input asp-for="@Model.AvtName" type="file" class="form-control">*@
+                            </div>
+                        </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Họ</label>
@@ -62,12 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="form-group">
-                                <label>Hình Học Sinh</label>
-                                <input asp-for="AvtName" type="file" class="form-control">
-                            </div>
-                        </div>
+                    
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Địa Chỉ</label>
