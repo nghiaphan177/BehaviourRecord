@@ -44,25 +44,25 @@
                         <form id="assessform" asp-action="Create" asp-controller="Assessment" method="post">
                             <input hidden asp-for="IndividualId" type="text" class="form-control" />
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
+                                <label class="col-form-label col-md-2">Ngày<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordDate" type="date" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giờ Bắt Đầu</label>
+                                <label class="col-form-label col-md-2">Giờ Bắt Đầu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordStart" asp type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Giờ Kết Thúc</label>
+                                <label class="col-form-label col-md-2">Giờ Kết Thúc<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordEnd" type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ở Đâu</label>
+                                <label class="col-form-label col-md-2">Ở Đâu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordWhere" type="text"
                                            class="form-control"
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Học sinh vi phạm</label>
+                                <label class="col-form-label col-md-2">Học sinh vi phạm<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
