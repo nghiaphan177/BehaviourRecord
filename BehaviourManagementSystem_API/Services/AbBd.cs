@@ -28,6 +28,22 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<Tuple<int, int>>(new Tuple<int, int>(count, total));
         }
 
+        public async Task<ResponseResult<Tuple<int, int, int>>> GetAllStudentAndTeacherAndAllAccount()
+        {
+            var role_sd = await _context.Roles.FirstOrDefaultAsync(prop => prop.Name == "student");
+            var role_tc = await _context.Roles.FirstOrDefaultAsync(prop => prop.Name == "teacher");
+
+            var count_sd = await _context.UserRoles.CountAsync(prop => prop.RoleId == role_sd.Id);
+            var count_tc = await _context.UserRoles.CountAsync(prop => prop.RoleId == role_tc.Id);
+
+            var total = count_sd + count_tc;
+
+            return new ResponseResultSuccess<Tuple<int, int, int>>(new Tuple<int, int, int>(
+                count_sd,
+                count_tc,
+                total));
+        }
+
         public async Task<ResponseResult<List<Tuple<int, int>>>> GetCountAllAccountRegisterOfMonth(int m, int y)
         {
 

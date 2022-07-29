@@ -74,5 +74,12 @@ namespace BehaviourManagementSystem_API.Controllers
 
             return Ok(res);
         }
+
+        [HttpGet("GetAllStudentAndTeacherAndAllAccount")]
+        public async Task<IActionResult> GetAllStudentAndTeacherAndAllAccount()
+        {
+            var res = await _abBd.GetAllStudentAndTeacherAndAllAccount();
+            return Ok(res);
+        }
     }
 }
