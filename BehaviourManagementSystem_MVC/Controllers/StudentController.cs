@@ -12,6 +12,7 @@ using System.Dynamic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
@@ -51,8 +52,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> StudentList()
+        public async Task<IActionResult> StudentList(int? page)
         {
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
             try
             {
                 var id = User.FindFirst("Id").Value;
@@ -60,7 +63,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var response = await _IIndividualAPIClient.GetAllStudentByTeacherId(id);
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
             }
             catch (Exception)
@@ -164,13 +167,31 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StudentEdit(IndAssessRequest request)
+        public async Task<IActionResult> StudentEdit(IFormFile imageModel, IndAssessRequest request)
         {
             try
             {
+                string webrootpath = webHostEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+                string fileName = null;
+                if (files.Count != 0)
+                {
+                    fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                    request.AvtName = fileName;
+                }
                 var response = await _IIndividualAPIClient.Update(request);
                 if (response.Success == true)
                 {
+                    if (fileName != null)
+                    {
+                        var uploads = Path.Combine(webrootpath, @"images");
+                        var extension = Path.GetExtension(files[0].FileName);
+
+                        using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                        {
+                            files[0].CopyTo(filestream);
+                        }
+                    }
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     return RedirectToAction("StudentList", response.Result);
                 }

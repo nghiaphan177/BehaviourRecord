@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
@@ -45,8 +46,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         
-        public async Task<IActionResult> GetInterventionById(string id)
+        public async Task<IActionResult> GetInterventionById(string id, int? page)
         {
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
             try
             {
                 var response = await _IInterventionAPIClient.GetAll(id);
@@ -54,7 +57,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     ViewBag.IdAssiment = id;
 
-                    return View(response.Result);
+                    return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
                 ViewBag.IdAssiment = id;
 

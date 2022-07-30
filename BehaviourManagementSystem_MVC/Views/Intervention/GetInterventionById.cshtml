@@ -1,5 +1,6 @@
-﻿@model IEnumerable<BehaviourManagementSystem_ViewModels.Requests.InterventionRequest>
-
+﻿@model X.PagedList.IPagedList<BehaviourManagementSystem_ViewModels.Requests.InterventionRequest>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 @{
     ViewData["Title"] = "GetInterventionByIdAsync";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -14,7 +15,7 @@
                 <li class="breadcrumb-item active"><a href="students.html">Can Thiệp Hành Vi</a></li>
             </ul>
         </div>
-        
+
     </div>
 </div>
 <!-- Đánh giá Start -->
@@ -96,7 +97,7 @@
                                                                     <span class="badge badge-danger">Chưa Hoàn Thành</span>
                                                                 </td>
                                                             }
-                                                            
+
                                                             <td class="text-center">
                                                                 <div class="actions">
                                                                     <a asp-action="Detail" asp-controller="Intervention" asp-route-id="@item.Id" title="Chi Tiết Đánh Giá" class="btn btn-sm bg-detail mr-2">
@@ -116,9 +117,24 @@
                                                     }
 
                                                 }
-                                              
+
                                             </tbody>
                                         </table>
+                                        @if (Model != null)
+                                        {
+                                            <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                                            @Html.PagedListPager(Model,
+                                                    page => Url.Action("GetInterventionById", new {id = @ViewBag.IdAssiment, page }),
+                                                    new PagedListRenderOptions
+                                                {
+                                                    DisplayLinkToIndividualPages = true,
+                                                    DisplayPageCountAndCurrentLocation = false,
+                                                    MaximumPageNumbersToDisplay = 3,
+                                                    LiElementClasses = new string[] { "page-item" },
+                                                        PageClasses = new string[] { "page-link" },
+                                                })
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -150,8 +166,8 @@
                 type: "DELETE",
                 success: function (result) {
                     if (result.status == true) {
-                        
-                            $("#inter-" + id).remove();
+
+                        $("#inter-" + id).remove();
                     }
                 }
             })
