@@ -27,7 +27,7 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active"
+                        <a class="nav-link"
                            href="#giaidoan" data-toggle="tab">Can Thiệp</a>
                     </li>
                     <li class="nav-item">
@@ -242,7 +242,7 @@
                     <!-- Tab Quản Lí Can Thiệp End -->
                     <!-- Tab ngăn chặn tái phạm Start -->
                     <div class="tab-pane" id="nganchantaipham">
-                        <form action="/Intervention/EditPrevent" method="post">
+                        <form action="/Intervention/CreatePrevent" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Tính Cách <span style="color: red;">*</span></label>
