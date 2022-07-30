@@ -89,13 +89,15 @@
     //Warning Message
     function deleteIndi(idind,idteacher) {
         swal({
-            title: 'Bạn đã chắc chắn?',
-            text: "Xóa trường này!",
-            type: 'warning',
+            title: 'Bạn đã chắc chắn xóa?',
+            text: "",
+            type: '',
             showCancelButton: true,
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger m-l-10',
-            confirmButtonText: 'Yes!'
+            confirmButtonText: 'Có',
+            cancelButtonText: "Không"
+            
         }).then(function () {
             $.ajax({
                 url: "/Student/Delete",
