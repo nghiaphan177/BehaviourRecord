@@ -69,8 +69,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
+                                    <button type="button" onclick="submitNextStep()" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
                                 </div>
                             </div>
 
@@ -257,5 +256,12 @@
 @section scripts {
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/js/CheckBoxMoInput.js"></script>
+    <script>
+        function submitNextStep() {
+
+            $('.nav a[href="#hoso"]').tab('show');
+
+        }
+    </script>
 }
 
