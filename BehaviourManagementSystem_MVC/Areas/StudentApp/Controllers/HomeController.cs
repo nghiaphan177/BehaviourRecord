@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -24,13 +25,17 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         private readonly IAssessmentAPIClient _assessmentAPIClient;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IInterventionAPIClient _interventionAPIClient;
+        private readonly IToastNotification _toastNotification;
+        private readonly IUserAPIClient _userAPIClient;
 
-        public HomeController(IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment, IInterventionAPIClient interventionAPIClient )
+        public HomeController(IToastNotification toastNotification, IUserAPIClient userAPIClient, IIndividualAPIClient IIndividualAPIClient, IAssessmentAPIClient assessmentAPIClient, IWebHostEnvironment webHostEnvironment, IInterventionAPIClient interventionAPIClient )
         {
             _IIndividualAPIClient = IIndividualAPIClient;
             _assessmentAPIClient = assessmentAPIClient;
             this.webHostEnvironment = webHostEnvironment;
             _interventionAPIClient = interventionAPIClient;
+            _userAPIClient = userAPIClient;
+            _toastNotification = toastNotification;
         }
         public async Task<IActionResult> Index()
         {
@@ -111,6 +116,95 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             catch (Exception)
             {
                 throw;
+            }
+            return View();
+        }
+        public async Task<IActionResult> StudentProfile()
+        {
+            try
+            {
+                var id = User.FindFirst("Id").Value;
+                var response = await _userAPIClient.GetUserById(id);
+                if (response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> StudentProfileEdit(string id)
+        {
+            try
+            {
+
+
+                var response = await _userAPIClient.GetUserById(id);
+                if (response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    return View(response.Result);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
+
+        public async Task<IActionResult> StudentProfileEdit(IFormFile file, UserProfileRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
+            string webrootpath = webHostEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            string fileName = null;
+            if (files.Count != 0)
+            {
+                fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                request.AvtName = fileName;
+            }
+            var response = await _userAPIClient.UpdateUser(request);
+            if (response == null)
+            {
+                _toastNotification.AddErrorToastMessage("Không thể cập nhật");
+                return View();
+            }
+            if (response.Success == false)
+            {
+                _toastNotification.AddErrorToastMessage("Cập nhật thông tin không thành công");
+                return View();
+            }
+            if (response.Success == true)
+            {
+                if (fileName != null)
+                {
+                    var uploads = Path.Combine(webrootpath, @"images");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                }
+                _toastNotification.AddSuccessToastMessage("Cập nhật thành công");
+                return RedirectToAction("TeacherProfileEdit", new { Id = User.FindFirst("Id").Value });
             }
             return View();
         }
