@@ -25,9 +25,9 @@ namespace BehaviourManagementSystem_API.Services
             if(!Guid.TryParse(ind_id, out guid))
                 return new ResponseResultError<Assessment>("Truy xuất không hợp lệ.");
             var a = new Assessment();
-            if (!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == ind_id))
+            if(!await _context.Individuals.AnyAsync(prop => prop.Id.ToString() == ind_id))
                 return new ResponseResultError<Assessment>("Id individual không tồn tại");
-            if (r_date.ToString() == null || r_start == null || r_end == null)
+            if(r_date.ToString() == null || r_start == null || r_end == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -49,17 +49,17 @@ namespace BehaviourManagementSystem_API.Services
                 });
                 await _context.SaveChangesAsync();
             }
-                          
+
             return new ResponseResultSuccess<Assessment>(a);
         }
 
         public async Task<ResponseResult<List<Assessment>>> Delete(string ass_id)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<List<Assessment>>("Id không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
             var inter = await _context.Interventions.Where(i => i.AssesetmentId == obj.Id).ToListAsync();
-            foreach (var item in inter)
+            foreach(var item in inter)
             {
                 _context.Interventions.Remove(item);
             }
@@ -68,9 +68,28 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<List<Assessment>>(await _context.Assessments.ToListAsync());
         }
 
+        public async Task<ResponseResult<string>> DeleteAllAssessWithInd(string id)
+        {
+            try
+            {
+                foreach(var item in await _context.Assessments
+                .Where(prop => prop.IndividualId == new Guid(id))
+                .ToListAsync())
+                {
+                    item.IndividualId = null;
+                    await _context.SaveChangesAsync();
+                }
+                return new ResponseResultSuccess<string>("Xóa thành công");
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<string>(ex.Message);
+            }
+        }
+
         public async Task<ResponseResult<AssessmentRequest>> Detail(string ass_id)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<AssessmentRequest>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
             return new ResponseResultSuccess<AssessmentRequest>(new AssessmentRequest()
@@ -99,12 +118,12 @@ namespace BehaviourManagementSystem_API.Services
         {
             var find = _context.Assessments.Where(p => p.IndividualId.ToString() == ind_id);
             var assessment = _context.Assessments.Take(find.Count());
-            if (await assessment.AnyAsync() == false)
+            if(await assessment.AnyAsync() == false)
             {
                 return new ResponseResultError<List<AssessmentRequest>>("Hiện tại không có dữ liệu");
             }
             var result = new List<AssessmentRequest>();
-            foreach (var item in find)
+            foreach(var item in find)
             {
                 result.Add(new AssessmentRequest()
                 {
@@ -124,10 +143,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateAnalyzeAntecedent(string ass_id, string ana_ant_per, string ana_ant_envi, string ana_ant_act)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (ana_ant_per == null || ana_ant_envi == null || ana_ant_act == null)
+            if(ana_ant_per == null || ana_ant_envi == null || ana_ant_act == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -145,10 +164,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateAnalyzeBehaviour(string ass_id, string ana_behaviour)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (ana_behaviour == null)
+            if(ana_behaviour == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -164,10 +183,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateAnalyzeConsequence(string ass_id, string ana_con_per, string ana_con_envi, string ana_con_act)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (ana_con_per == null || ana_con_envi == null || ana_con_act == null)
+            if(ana_con_per == null || ana_con_envi == null || ana_con_act == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -186,10 +205,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateFuntionAntecedent(string ass_id, string fun_ant)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (fun_ant == null)
+            if(fun_ant == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -205,10 +224,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateFuntionConsequece(string ass_id, string fun_con)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (fun_con == null)
+            if(fun_con == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -225,10 +244,10 @@ namespace BehaviourManagementSystem_API.Services
 
         public async Task<ResponseResult<Assessment>> UpdateRecord(string ass_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
         {
-            if (!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
+            if(!await _context.Assessments.AnyAsync(prop => prop.Id.ToString() == ass_id))
                 return new ResponseResultError<Assessment>("Id assessment không tồn tại");
             var obj = await _context.Assessments.FindAsync(new Guid(ass_id));
-            if (r_date.ToString() == null || r_start == null || r_end == null)
+            if(r_date.ToString() == null || r_start == null || r_end == null)
             {
                 return new ResponseResultError<Assessment>("Chưa có dữ liệu");
             }
@@ -243,7 +262,7 @@ namespace BehaviourManagementSystem_API.Services
                 obj.UpdateDate = DateTime.Now;
                 _context.Entry(obj).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-            }          
+            }
             return new ResponseResultSuccess<Assessment>(obj);
         }
     }

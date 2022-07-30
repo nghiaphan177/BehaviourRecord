@@ -117,15 +117,14 @@
         //Warning Message
         function deleteRecovery(id) {
             swal({
-                title: 'Bạn đã chắc chắn?',
-                text: "Xóa trường này!",
-                type: 'warning',
+                title: 'Bạn đã chắc chắn xóa?',
+                text: "",
+                type: '',
                 showCancelButton: true,
-                width: '25rem',
-                height: '23rem',
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger m-l-10',
-                confirmButtonText: 'Yes!'
+                confirmButtonText: 'Có',
+                cancelButtonText: "Không"
             }).then(function () {
                 $.ajax({
                     url: "RecoveryIntervention/delete",

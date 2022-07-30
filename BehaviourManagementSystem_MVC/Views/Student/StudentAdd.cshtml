@@ -91,14 +91,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label>Địa Chỉ</label>
-                                <input asp-for="Address" type="text" class="form-control">
+                                <label>Email<span style="color: red;">*</span></label>
+                                <input required asp-for="Email" type="email" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label>Email<span style="color: red;">*</span></label>
                                 <input required asp-for="Email" type="email" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
@@ -110,6 +109,7 @@
                                 <input class="form-control" id="uploadImage" type="file" asp-for="@Model.AvtName" onchange="PreviewImage();" />
                             </div>
                         </div>
+                        
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Tài Khoản Học Sinh<span style="color: red;">*</span></label>
