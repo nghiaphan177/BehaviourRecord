@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourManagementSystem_API", "BehaviourManagementSystem_API\BehaviourManagementSystem_API.csproj", "{65F9691C-6946-48D3-8339-22C345649ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourManagementSystem_API", "BehaviourManagementSystem_API\BehaviourManagementSystem_API.csproj", "{65F9691C-6946-48D3-8339-22C345649ECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourManagementSystem_ViewModels", "BehaviourManagementSystem_ViewModels\BehaviourManagementSystem_ViewModels.csproj", "{7A9158CB-8E1F-455C-BE4B-40A9E0614DB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourManagementSystem_ViewModels", "BehaviourManagementSystem_ViewModels\BehaviourManagementSystem_ViewModels.csproj", "{7A9158CB-8E1F-455C-BE4B-40A9E0614DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourManagementSystem_MVC", "BehaviourManagementSystem_MVC\BehaviourManagementSystem_MVC.csproj", "{68AB60F6-F937-4AC5-A886-BC725EDEE96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BehaviourManagementSystem_MVC", "BehaviourManagementSystem_MVC\BehaviourManagementSystem_MVC.csproj", "{68AB60F6-F937-4AC5-A886-BC725EDEE96B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D5AAAF50-D8AA-4F13-BCBC-95945222458A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{68AB60F6-F937-4AC5-A886-BC725EDEE96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68AB60F6-F937-4AC5-A886-BC725EDEE96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68AB60F6-F937-4AC5-A886-BC725EDEE96B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5AAAF50-D8AA-4F13-BCBC-95945222458A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5AAAF50-D8AA-4F13-BCBC-95945222458A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5AAAF50-D8AA-4F13-BCBC-95945222458A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5AAAF50-D8AA-4F13-BCBC-95945222458A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
