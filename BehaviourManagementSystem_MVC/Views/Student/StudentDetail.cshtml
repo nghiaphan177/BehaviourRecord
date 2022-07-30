@@ -247,13 +247,14 @@
         //Warning Message
         function deleteAssessment(id) {
             swal({
-                title: 'Bạn đã chắc chắn?',
-                text: "Xóa hồ sơ đánh giá này này!",
-                type: 'warning',
+                title: 'Bạn đã chắc chắn xóa?',
+                text: "",
+                type: '',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger m-l-10',
-                confirmButtonText: 'Yes!'
+                confirmButtonText: 'Có',
+                cancelButtonText: "Không"
             }).then(function () {
                 $.ajax({
                     url: "/Assessment/Delete?AssessId=" + id,
