@@ -61,6 +61,21 @@ namespace BehaviourManagementSystem_API.Controllers
             return Ok(response);
         }
 
+        [HttpDelete("DeleteAllAssessWithInd")]
+        public async Task<IActionResult> DeleteAllAssessWithInd(string id)
+        {
+            Guid guid;
+            if(!Guid.TryParse(id, out guid))
+                return BadRequest("Thông tin không hợp lệ.");
+
+            var res = await _assessmentService.DeleteAllAssessWithInd(id);
+
+            if(res.Result == null)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
+
         [HttpPost("create-record")]
         //[Authorize(Roles="teacher")]
         //Tạo record assessment của individual
