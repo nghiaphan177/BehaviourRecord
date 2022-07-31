@@ -7,8 +7,7 @@
         <div class="col-sm-12">
             <h3 class="page-title">Chào Thầy Cô!</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                <li class="breadcrumb-item active">Teacher Dashboard</li>
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
             </ul>
         </div>
     </div>
@@ -24,8 +23,8 @@
                         <i class="fas fa-chalkboard"></i>
                     </div>
                     <div class="db-info">
-                        <h3>04/06</h3>
-                        <h6>Total Classes</h6>
+                        <h3 id="totalclass"></h3>
+                        <h6>Tổng số lớp</h6>
                     </div>
                 </div>
             </div>
@@ -39,8 +38,8 @@
                         <i class="fas fa-user-graduate"></i>
                     </div>
                     <div class="db-info">
-                        <h3>40/60</h3>
-                        <h6>Total Students</h6>
+                        <h3 id="totalstu"></h3>
+                        <h6>Tổng số học sinh</h6>
                     </div>
                 </div>
             </div>
@@ -111,16 +110,46 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var label = response["result"].map(a => a.item1);
+                    var label = response["result"].map(a => 'Lớp ' +a.item1);
                     var data = response["result"].map(a => a.item2);
-                    console.log(response["result"]);
+                    console.log(data);
+                    $("#totalclass").text(label.length);
+                    $("#totalstu").text(data.reduce((a, b) => a + b, 0));
                     var options = {
                         series: data,
                         chart: {
                             type: 'donut',
-                            height: 200
+                            height: 250
                         },
                         labels: label,
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    labels: {
+                                        show: true,
+                                        name: {
+            },
+                                        value: {
+                                            formatter: function (val) {
+                                                return val + ' người';
+                                            }
+            }
+                                    }
+                                }
+                            }
+                        },
+                        noData: {
+                            text: 'Chưa có học sinh',
+                            align: 'center',
+                            verticalAlign: 'middle',
+                            offsetX: 0,
+                            offsetY: 0,
+                            style: {
+                                color: undefined,
+                                fontSize: '14px',
+                                fontFamily: undefined
+                            }
+                        },
                         responsive: [{
                             breakpoint: 480,
                             options: {
@@ -132,9 +161,9 @@
                                 }
                             }
                         }]
-                    };
+                    };                    
                     var chartBar = new ApexCharts(document.querySelector('#bar'), options);
-                    chartBar.render();
+                    chartBar.render();                    
                 }
             })
         };
@@ -142,7 +171,7 @@
             // Bar chart
             var id = '@User.FindFirst("Id").Value';
             LoadChart(id);
-        });
+        });       
     </script>
 }
 

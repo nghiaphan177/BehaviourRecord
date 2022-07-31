@@ -5,6 +5,7 @@ using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileRecovery;
 using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System;
@@ -16,6 +17,7 @@ using X.PagedList;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class InterventionController : Controller
     {
         private readonly IOptionAPIClientModerate _IOptionAPIClientModerate;

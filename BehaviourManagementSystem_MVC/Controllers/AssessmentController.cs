@@ -1,16 +1,19 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
 using BehaviourManagementSystem_MVC.APIIntegration.Assesstment;
 using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_MVC.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Teacher")]
     public class AssessmentController : Controller
     {
         private readonly IAssessmentAPIClient _assessmentAPIClient;
