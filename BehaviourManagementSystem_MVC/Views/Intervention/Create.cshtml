@@ -46,23 +46,23 @@
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
                     <div class="tab-pane show active" id="giaidoan">
-                        <form action="#">
+                        <form id="form-check" asp-action="CheckBoxCreate" asp-controller="Intervention" method="post">
                             <div class="form-group row text-center">
                                 <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
                                 <div class="col-md-12 mx-auto">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="check-nhe" name="checkbox" /> Can Thiệp Nhẹ
+                                            <input type="checkbox" id="check-nhe-sua" name="checkboxnhe" value="Can Thiệp Nhẹ" /> Can Thiệp Nhẹ
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="check-vua" name="checkbox" /> Can Thiệp Vừa
+                                            <input type="checkbox" id="check-vua-sua" name="checkboxvua" value="Can Thiệp Vừa" /> Can Thiệp Vừa
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label style="margin-left: 62px;">
-                                            <input type="checkbox" id="check-kn" name="checkbox" /> Can Thiệp Khắc Nghiệt
+                                            <input type="checkbox" id="check-kn-sua" name="checkboxkn" value="Can Thiệp Khắc Nghiệt" /> Can Thiệp Khắc Nghiệt
                                         </label>
                                     </div>
                                 </div>
@@ -80,19 +80,25 @@
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
 
-                        <form id="assessform1" asp-action="CreateProfile" asp-controller="Intervention" method="post">
+                        <form class="needs-validation" id="assessform1" asp-action="CreateProfile" asp-controller="Intervention" method="post" novalidate>
                             <input hidden name="AssesetmentId" value="@ViewBag.IdAssement">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
+                                <label class="col-form-label col-md-2">Ngày <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="date" name="ProfileDate" class="form-control" />
+                                    <input required type="date" name="ProfileDate" class="form-control" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
 
-                            <div id="input-nhe" class="form-group row">
+                            <div id="input-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="nhe" name="ProfileMildDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <input type="text" autocomplete="off" id="nhe-sua" name="ProfileMildDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop">
                                         @foreach (var item in ViewBag.Mild)
                                         {
@@ -107,10 +113,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="input-vua" class="form-group row">
+                            <div id="input-vua-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="trungbinh" name="ProfileModerateDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <input type="text" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tb">
                                         @foreach (var item in ViewBag.Moderate)
                                         {
@@ -126,10 +135,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="input-kn" class="form-group row">
+                            <div id="input-kn-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="khacnghiet" name="ProfileExtremeDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <input type="text" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="" placeholder="Nhấp vào để chọn" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-kn">
                                         @foreach (var item in ViewBag.Extreme)
                                         {
@@ -149,6 +161,9 @@
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" required id="tbphuchoi" name="ProfileRecoveryDesciption" placeholder="Nhấp vào để chọn" value="" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
                                         @foreach (var item in ViewBag.Recovery)
                                         {
@@ -257,11 +272,34 @@
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/js/CheckBoxMoInput.js"></script>
     <script>
+        //function submitNextStep() {
+        //    var checked = $("#form-check input:checked").length > 0;
+        //    if (!checked) {
+        //        tostlMessage("Please check at least one checkbox");
+        //        return false;
+        //    } else {
+        //        $('.nav a[href="#hoso"]').tab('show');
+
+        //    }
+                
+
+        //}
+
         function submitNextStep() {
-
-            $('.nav a[href="#hoso"]').tab('show');
-
+            var valdata = $("#form-check").serialize();
+                $.ajax({
+                    url: "/intervention/checkboxcreate",
+                    data: valdata,
+                    type: "post",
+                    success: function (result) {
+                        if (result.success == true) {
+                            $('.nav a[href="#hoso"]').tab('show');
+                        }
+                    }
+                })
         }
     </script>
+
+
 }
 
