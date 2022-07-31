@@ -355,8 +355,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         public async Task<IActionResult> ForgotPassword(string userNameOrEmail)
         {
             if(string.IsNullOrEmpty(userNameOrEmail))
+            {
                 return View(); // màn hình lỗi text rỗng
-
+            }
+                
             var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
 
             if(response.Success)
@@ -388,7 +390,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if(!ok)
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
             }
-            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+            return RedirectToAction("SendMailSuccess"); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
         }
 
         [HttpGet]
@@ -399,7 +401,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
             if(!ModelState.IsValid)
