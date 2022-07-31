@@ -52,16 +52,16 @@
                 <i class="fas fa-align-left"></i>
             </a>
             @*<div class="top-nav-search">
-                <form>
-                    <input type="text" class="form-control" placeholder="Search here">
-                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                </form>
-            </div>*@
+                    <form>
+                        <input type="text" class="form-control" placeholder="Search here">
+                        <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>*@
             <a class="mobile_btn" id="mobile_btn">
                 <i class="fas fa-bars"></i>
             </a>
 
-            <ul class="nav user-menu">
+            <ul class="nav user-menu ">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <span class="user-img"><img class="rounded-circle" src="@img" width="31" alt="@userProfileRequest.LastName @userProfileRequest.FirstName"></span>
@@ -90,7 +90,7 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="menu-title">
-                            <span>Main Menu</span>
+                            <span>Menu Chính</span>
                         </li>
 
                         <li class="submenu" id="menu-student">
@@ -98,7 +98,7 @@
                             <ul class="stMenu">
                                 <li><a asp-area="StudentApp" asp-controller="Home" asp-action="Index" class="submenu-stList">Tổng quan</a></li>
                                 @*<li><a href="~/StudentApp/Home/Assessment/@user_id" class="submenu-stList">Danh sách đánh giá</a></li>
-                                <li><a href="~/StudentApp/Home/Intervention/@user_id" class="submenu-stAdd">Danh sách can thiệp</a></li>*@
+                                    <li><a href="~/StudentApp/Home/Intervention/@user_id" class="submenu-stAdd">Danh sách can thiệp</a></li>*@
                             </ul>
                         </li>
 
@@ -147,6 +147,7 @@
     <script src="~/assets/js/circle-progress.min.js"></script>
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/script.js"></script>
+    <script src="~/js/ValidateRequired.js"></script>
     @await Component.InvokeAsync("NToastNotify")
     @RenderSection("Scripts", false)
     @RenderSection("EditIntervention", false)
@@ -176,7 +177,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                                                                            // Add active class to the current button (highlight it)
+                                                                                // Add active class to the current button (highlight it)
 
     </script>
 </body>

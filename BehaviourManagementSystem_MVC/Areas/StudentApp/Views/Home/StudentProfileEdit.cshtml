@@ -14,6 +14,7 @@
         img = "/images/" + img;
     }
 }
+
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -53,21 +54,21 @@
                                     <input hidden asp-for="@Model.Id" value="@Model.Id" type="text" class="form-control">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label>Họ <span style="color: red;">*</span></label>
-                                            <input required asp-for="@Model.FirstName" value="@Model.FirstName" type="text" class="form-control">
+                                            <label>Họ<span style="color: red;">*</span></label>
+                                            <input disabled asp-for="@Model.FirstName" value="@Model.FirstName" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label>Tên <span style="color: red;">*</span></label>
-                                            <input required asp-for="@Model.LastName" type="text" value="@Model.LastName" class="form-control">
+                                            <label>Tên<span style="color: red;">*</span></label>
+                                            <input disabled asp-for="@Model.LastName" type="text" value="@Model.LastName" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label>Giới Tính </label>
-                                            <select asp-for="@Model.Gender" value="@Model.Gender" class="form-control">
-                                                <option value="null">-- Chọn Giới Tính --</option>
+                                            <label>Giới Tính<span style="color: red;">*</span> </label>
+                                            <select required asp-for="@Model.Gender" value="@Model.Gender" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
+                                                @*<option value="null">-- Chọn Giới Tính --</option>*@
                                                 <option value="Nam">Nam</option>
                                                 <option value="Nữ">Nữ</option>
                                             </select>
@@ -75,9 +76,9 @@
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label>Ngày Sinh</label>
+                                            <label>Ngày Sinh<span style="color: red;">*</span></label>
                                             <div>
-                                                <input asp-for="@Model.DOB" type="date" class="form-control">
+                                                <input required asp-for="@Model.DOB" type="date" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                                             </div>
                                         </div>
                                     </div>
@@ -96,12 +97,12 @@
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label>Số điên thoại</label>
-                                            <input asp-for="@Model.PhoneNumber" value="@Model.PhoneNumber" type="text" class="form-control">
+                                            <input asp-for="@Model.PhoneNumber" value="@Model.PhoneNumber" type="text" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label>Email</label>
+                                            <label>Email<span style="color: red;">*</span></label>
                                             <input disabled asp-for="@Model.Email" value="@Model.Email" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -132,5 +133,12 @@
 
             reader.readAsDataURL(selectedFile);
         }
+    </script>
+    <script src="~/plugins/parsleyjs/parsley.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').parsley();
+        });
+
     </script>
 }
