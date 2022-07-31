@@ -56,7 +56,11 @@
                         </li>
                         <li>
                             <span class="title-span">Ngày sinh : </span>
-                            <span class="info-span">@(Model.DOB)</span>
+                            @{
+                                DateTime d = Convert.ToDateTime(Model.DOB);
+                                string s = d.ToString("dd/MM/yyyy");
+                            }
+                            <span class="info-span">@s</span>
                         </li>
                     </ul>
                 </div>
