@@ -121,6 +121,21 @@ namespace BehaviourManagementSystem_MVC.Controllers
             ViewBag.IdAssement = id;
             return View();
         }
+        [HttpPost]
+        public  IActionResult CheckBoxCreate(string checkboxnhe, string checkboxvua, string checkboxkn)
+        {
+            if (checkboxnhe != null || checkboxvua != null || checkboxkn != null)
+            {
+                return Json(new { success = true });
+            }
+            else
+            {
+                toastNotification.AddWarningToastMessage("Vui lòng chọn ít nhất một loại can thiệp!");
+            }
+            
+            return Json(new { success = false });
+
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateProfile(InterventionRequest request)

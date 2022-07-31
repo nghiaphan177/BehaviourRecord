@@ -87,6 +87,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     ViewBag.IdIndi = id;
                     mymodel.Individual = responseIndi.Result;
+                    mymodel.Assessment = responseAssess.Result;
+                    if (mymodel.Assessment !=null)
+                    {
+                        mymodel.Assessment = responseAssess.Result.ToPagedList(pageNumber, pageSize);
+                    }
+                    return View(mymodel);
+                }
+                else
+                {
                     mymodel.Assessment = responseAssess.Result.ToPagedList(pageNumber, pageSize);
                     return View(mymodel);
                 }

@@ -46,7 +46,7 @@
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
                     <div class="tab-pane show active" id="giaidoan">
-                        <form action="#">
+                        <form id="form-check" asp-action="CheckBoxCreate" asp-controller="Intervention" method="post">
                             <div class="form-group row text-center">
                                 <label class="col-form-label col-md-10">Chọn Giai Đoạn Can Thiệp: </label>
                                 <div class="col-md-12 mx-auto">
@@ -54,13 +54,13 @@
                                         @if (Model.ProfileMildDesciption == null && Model.ManageMild == null)
                                         {
                                             <label>
-                                                <input type="checkbox" id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
+                                                <input type="checkbox" id="check-nhe-sua" name="checkboxnhe" value="Can Thiệp Nhẹ" /> Can Thiệp Nhẹ
                                             </label>
                                         }
                                         else
                                         {
                                             <label>
-                                                <input type="checkbox" checked id="check-nhe-sua" name="checkbox" /> Can Thiệp Nhẹ
+                                                <input type="checkbox" checked id="check-nhe-sua" name="checkboxnhe" value="Can Thiệp Nhẹ" /> Can Thiệp Nhẹ
                                             </label>
                                         }
                                     </div>
@@ -68,11 +68,11 @@
                                         <label>
                                             @if (Model.ProfileModerateDesciption == null && Model.ManageModerate == null)
                                             {
-                                                <input type="checkbox" id="check-vua-sua" name="checkbox" />
+                                                <input type="checkbox" id="check-vua-sua" name="checkboxvua" value="Can Thiệp Vừa" />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" checked id="check-vua-sua" name="checkbox" />
+                                                <input type="checkbox" checked id="check-vua-sua" name="checkboxvua" value="Can Thiệp Vừa" />
                                             }
                                             Can Thiệp Vừa
                                         </label>
@@ -81,11 +81,11 @@
                                         <label style="margin-left: 62px;">
                                             @if (Model.ProfileExtremeDesciption == null && Model.ManageExtreme == null)
                                             {
-                                                <input type="checkbox" id="check-kn-sua" name="checkbox" />
+                                                <input type="checkbox" id="check-kn-sua" name="checkboxkn" value="Can Thiệp Khắc Nghiệt" />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" checked id="check-kn-sua" name="checkbox" />
+                                                <input type="checkbox" checked id="check-kn-sua" name="checkboxkn" value="Can Thiệp Khắc Nghiệt" />
                                             }
                                             Can Thiệp Khắc Nghiệt
                                         </label>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="button" onclick="submitNextStep()" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                 </div>
                             </div>
 
@@ -104,22 +104,28 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <form id="EditProfileForm" action="/Intervention/CreateProfileIntervention" method="post">
+                        <form class="needs-validation" id="EditProfileForm" action="/Intervention/CreateProfileIntervention" method="post" novalidate>
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ngày</label>
+                                <label class="col-form-label col-md-2">Ngày <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     @{
                                         DateTime d = Convert.ToDateTime(Model.ProfileDate);
                                         string s = d.ToString("yyyy-MM-dd");
                                     }
-                                    <input type="date" autocomplete="off" value="@s" name="ProfileDate" class="form-control" />
+                                    <input required type="date" autocomplete="off" value="@s" name="ProfileDate" class="form-control" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div id="input-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" placeholder="--Chọn Hoặc Nhập--" id="nhe-sua" name="ProfileMildDesciption" value="@Model.ProfileMildDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop">
                                         @foreach (var item in ViewBag.Mild)
                                         {
@@ -139,6 +145,9 @@
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" placeholder="--Chọn Hoặc Nhập--" autocomplete="off" id="trungbinh-sua" name="ProfileModerateDesciption" value="@Model.ProfileModerateDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tb">
                                         @foreach (var item in ViewBag.Moderate)
                                         {
@@ -160,6 +169,9 @@
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" placeholder="--Chọn Hoặc Nhập--" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-kn">
                                         @foreach (var item in ViewBag.Extreme)
                                         {
@@ -180,6 +192,9 @@
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục Hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" placeholder="--Chọn Hoặc Nhập--" required id="tbphuchoi" name="ProfileRecoveryDesciption" value="@Model.ProfileRecoveryDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
                                         @foreach (var item in ViewBag.Recovery)
                                         {
@@ -206,30 +221,42 @@
                     <!-- Tab Nâng Câp Hồ Sơ End-->
                     <!-- Tab Quản Lí Can Thiệp Start -->
                     <div class="tab-pane" id="quanlycanthiep">
-                        <form action="/Intervention/CreateManage" method="post">
+                        <form class="needs-validation" action="/Intervention/CreateManage" method="post" novalidate>
                             <input hidden name="Id" value="@Model.Id">
                             <div id="input-ql-nhe-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Can Thiệp Nhẹ <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-nhe-sua" name="ManageMild" value="@Model.ManageMild" class="form-control" placeholder="Nhập ..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div id="input-ql-vua-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" value="@Model.ManageModerate" class="form-control" placeholder="Nhập ..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div id="input-ql-kn-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Phục hồi <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="ManageRecovery" value="@Model.ManageRecovery" class="form-control" placeholder="Nhập ..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="col">
@@ -242,30 +269,42 @@
                     <!-- Tab Quản Lí Can Thiệp End -->
                     <!-- Tab ngăn chặn tái phạm Start -->
                     <div class="tab-pane" id="nganchantaipham">
-                        <form action="/Intervention/CreatePrevent" method="post">
+                        <form action="/Intervention/CreatePrevent" method="post" class="needs-validation" novalidate>
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Tính Cách <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Hoạt Động <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Môi Trường <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="col">
@@ -293,6 +332,21 @@
 <!-- Can Thiệp End -->
 @section scripts {
     <script src="~/js/CheckBoxMoInput.js"></script>
+    <script>
+        function submitNextStep() {
+            var valdata = $("#form-check").serialize();
+            $.ajax({
+                url: "/intervention/checkboxcreate",
+                data: valdata,
+                type: "post",
+                success: function (result) {
+                    if (result.success == true) {
+                        $('.nav a[href="#hoso"]').tab('show');
+                    }
+                }
+            })
+        }
+    </script>
 
 }
 

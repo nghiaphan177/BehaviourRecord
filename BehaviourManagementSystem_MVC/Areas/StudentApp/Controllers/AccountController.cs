@@ -1,4 +1,5 @@
-﻿using BehaviourManagementSystem_MVC.APIIntegration.Account;
+﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Account;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -28,13 +29,16 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
         private readonly IToastNotification _toastNotification;
+        private readonly IUserAPIClient _userAPIClient;
 
-        public AccountController(IToastNotification toastNotification, IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+
+        public AccountController(IUserAPIClient userAPIClient, IToastNotification toastNotification, IAccountAPIClient accountAPIClient, IConfiguration configuration, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _accountAPIClient = accountAPIClient;
             _configuration = configuration;
             _emailSender = emailSender;
             _toastNotification = toastNotification;
+            _userAPIClient = userAPIClient;
         }
         [HttpGet]
         public async Task<IActionResult> Login(string ReturnUrl = "/StudentApp/Home")
@@ -220,22 +224,43 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm emaiil with method get
         }
 
-        [HttpGet]
         [Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
-        public IActionResult ChangePassword()
+        public async Task<IActionResult> ChangePassword()
         {
-            ViewBag.IdAccount = User.FindFirst("Id").Value;
+            try
+            {
+                var id = User.FindFirst("Id").Value;
+                var response = await _userAPIClient.GetUserById(id);
+                if (response == null)
+                {
+                    return NoContent();
+                }
+                if (response.Success == true)
+                {
+                    ViewBag.userProfileRequest = response.Result;
+                    return View();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
-
+        //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ResetPasswordRequest request)
         {
             if (!ModelState.IsValid)
+            {
+                _toastNotification.AddErrorToastMessage("Đổi mật khẩu thất bại");
                 return View(ModelState);
+            }
 
             var response = await _accountAPIClient.ChangePassword(request);
             if (response != null)
+            {
                 if (response.Success)
                 {
                     _toastNotification.AddSuccessToastMessage("Đổi mật khẩu thành công");
@@ -243,11 +268,15 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                 }
                 else if (response.Success == false)
                 {
-                    _toastNotification.AddErrorToastMessage("Đổi mật khẩu thất bại");
+                    _toastNotification.AddErrorToastMessage(response.Message);
+                    return RedirectToAction("ChangePassword");
                 }
+            }
+
             _toastNotification.AddAlertToastMessage("Không thể đổi mật khẩu");
-            return RedirectToAction("ChangePassword"); // response =null
+            return RedirectToAction("ChangePassword");
         }
+        //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {

@@ -1,7 +1,8 @@
-﻿@model UserProfileRequest
+﻿@using BehaviourManagementSystem_ViewModels.Requests; 
+@model UserProfileRequest
 @{
-    ViewData["Title"] = "TeacherProfile";
-    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    ViewData["Title"] = "StudentProfile";
+    //Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 @{
     ViewData["Title"] = "Thông tin người dùng";
@@ -18,7 +19,7 @@
 <div class="page-header">
     <div class="row">
         <div class="col">
-            <h3 class="page-title">Profile</h3>
+            <h3 class="page-title">Hồ sơ học sinh</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Hồ sơ</li>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="col ml-md-n2 profile-user-info">
                     <h4 class="user-name mb-0">@(Model.FirstName+" "+Model.LastName)</h4>
-                    <h6 class="text-muted">Giáo Viên</h6>
+                    <h6 class="text-muted">Học sinh</h6>
                     <div class="user-Location"><i class="fas fa-map-marker-alt"></i> Địa Chỉ</div>
                     <div class="user-Location">@Model.Address</div>
                 </div>
@@ -60,7 +61,7 @@
                                     <span class="">Thông Tin Cá Nhân</span>
                                 </h5>
                                 <div class="text-right">
-                                    <a class="edit-link" href="/Teacher/TeacherProfileEdit/@Model.Id"><i class="far fa-edit mr-1"></i>Cập nhật</a>
+                                    <a class="edit-link" href="~/StudentApp/Home/StudentProfileEdit/@Model.Id"><i class="far fa-edit mr-1"></i>Cập nhật</a>
                                 </div>
 
                                 <div class="row">

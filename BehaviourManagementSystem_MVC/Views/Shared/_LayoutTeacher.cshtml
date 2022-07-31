@@ -1,4 +1,21 @@
 ﻿<!DOCTYPE html>
+@using System.Security.Claims
+@using BehaviourManagementSystem_MVC.APIIntegration;
+@using BehaviourManagementSystem_ViewModels.Requests;
+@inject IUserAPIClient _userAPIClient;
+@{ var user_id = User.FindFirst("Id").Value;
+    var response = await _userAPIClient.GetUserById(user_id);
+    UserProfileRequest userProfileRequest;
+    userProfileRequest = response.Result;
+    var img = userProfileRequest.AvtName;
+    Uri uriResult;
+    bool result = Uri.TryCreate(userProfileRequest.AvtName, UriKind.Absolute, out uriResult)
+        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    if (result != true)
+    {
+        img = "/images/" + img;
+    }
+}
 <html lang="en">
 <!-- Mirrored from preschool.dreamguystech.com/html-template/students.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:43 GMT -->
 <head>
@@ -42,15 +59,15 @@
             <ul class="nav user-menu">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img class="rounded-circle" src="~/assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                        <span class="user-img"><img class="rounded-circle" src="@img" width="31" alt="@userProfileRequest.LastName @userProfileRequest.FirstName"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
                             <div class="avatar avatar-sm">
-                                <img src="~/assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+                                <img src="@img" alt="User Image" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>Ryan Taylor</h6>
+                                <h6>@userProfileRequest.FirstName @userProfileRequest.LastName</h6>
                                 <p class="text-muted mb-0">Giáo viên</p>
                             </div>
                         </div>
@@ -93,7 +110,7 @@
                                 <li><a href="/Account/Login">Đăng nhập</a></li>
                                 <li><a href="/Home/Register">Đăng kí</a></li>
                                 <li><a href="/Teacher/ChangePassword">Thay đổi mật khẩu</a></li>
-                                    @*<li><a href="error-404.html">Error Page</a></li>*@
+                                @*<li><a href="error-404.html">Error Page</a></li>*@
                             </ul>
                         </li>
 
@@ -133,21 +150,22 @@
     <script src="~/assets/js/circle-progress.min.js"></script>
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/script.js"></script>
+    <script src="~/js/ValidateRequired.js"></script>
     @await Component.InvokeAsync("NToastNotify")
     @RenderSection("Scripts", false)
     @RenderSection("EditIntervention", false)
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    function PreviewImage() {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+        function PreviewImage() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
 
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("uploadPreview").src = oFREvent.target.result;
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("uploadPreview").src = oFREvent.target.result;
+            };
         };
-    };
 
-</script>
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -162,7 +180,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                                    // Add active class to the current button (highlight it)
+                                        // Add active class to the current button (highlight it)
 
     </script>
 </body>

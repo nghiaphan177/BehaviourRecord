@@ -19,6 +19,6 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
         Task<ResponseResult<AssessmentRequest>> UpdateAnalyzeConsequence(string AssId, AssessmentRequest content);
         Task<ResponseResult<List<AssessmentRequest>>> Update(AssessmentRequest request);
         Task<ResponseResult<List<AssessmentRequest>>> Delete(string id);
-        Task<ResponseResult<List<AssessmentRequest>>> DeleteAssementIndi(string id);
+        Task<ResponseResult<string>> DeleteAssementIndi(string id);
     }
 }

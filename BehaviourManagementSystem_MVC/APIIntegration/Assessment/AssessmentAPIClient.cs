@@ -166,7 +166,7 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             return JsonConvert.DeserializeObject<ResponseResultError<AssessmentRequest>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ResponseResult<List<AssessmentRequest>>> DeleteAssementIndi(string id)
+        public async Task<ResponseResult<string>> DeleteAssementIndi(string id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -176,8 +176,8 @@ namespace BehaviourManagementSystem_MVC.APIIntegration.Assesstment
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             var response = await client.SendAsync(httpRequestMessage);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ResponseResultSuccess<List<AssessmentRequest>>>(await response.Content.ReadAsStringAsync());
-            return JsonConvert.DeserializeObject<ResponseResultError<List<AssessmentRequest>>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ResponseResultSuccess<string>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ResponseResultError<string>>(await response.Content.ReadAsStringAsync());
         }
     }
 }

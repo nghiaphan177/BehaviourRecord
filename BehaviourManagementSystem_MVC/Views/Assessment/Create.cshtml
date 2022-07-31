@@ -73,9 +73,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ở Đâu<span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Ở Đâu</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWhere" type="text"
+                                    <input asp-for="RecordWhere" type="text"
                                            class="form-control"
                                            placeholder="Nhập địa điểm..." data-parsley-required-message="Trường này là bắt buộc" />
                                     <div class="invalid-feedback">
@@ -86,7 +86,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Học sinh cùng vi phạm</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." data-parsley-required-message="Trường này là bắt buộc" />
+                                    <input asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." data-parsley-required-message="Trường này là bắt buộc" />
                                     <div class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
