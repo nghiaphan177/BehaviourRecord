@@ -1,11 +1,18 @@
 ﻿@using BehaviourManagementSystem_ViewModels.Requests
 @using System 
-@Model IndAssessRequest
+@model IndAssessRequest
 @{
-    ViewData["Title"] = "StudentDetail";
+    ViewData["Title"] = "Thông tin học sinh";
     List<AssessmentRequest> assessmentRequests = ViewBag.ListAssessment;
     List<InterventionRequest> interventionRequests = ViewBag.ListIntervention;
-
+    var img = Model.AvtName;
+    Uri uriResult;
+    bool result = Uri.TryCreate(Model.AvtName, UriKind.Absolute, out uriResult)
+     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    if (result != true)
+    {
+        img = "/images/" + img;
+    }
 }
 
 <div class="page-header">
@@ -24,7 +31,7 @@
         <div class="about-info">
             <h4>Hồ sơ học sinh</h4>
             <div class="media mt-3">
-                <img src="~/assets/img/user.jpg" class="mr-3" alt="...">
+                <img src="@img" class="mr-3" alt="...">
                 <div class="media-body">
                     <ul>
                         <li>
