@@ -228,5 +228,25 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStudentAssement(string id)
+        {
+
+            var response = await _assessmentAPIClient.DeleteAssementIndi(id);
+            if (response.Success == true)
+            {
+                toastNotification.AddSuccessToastMessage("Đã Xóa Thành Công!");
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            else
+            {
+                toastNotification.AddErrorToastMessage(response.Message);
+            }
+            return NoContent();
+        }
     }
 }
