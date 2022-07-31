@@ -256,7 +256,6 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 
         // POST: UserController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(UserProfileRequest user)
         {
             try
@@ -264,11 +263,13 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 var response = await _userAPIClient.UpdateUser(user);
                 if (response.Success == false)
                 {
+                    toastNotification.AddErrorToastMessage("Cập nhật thông tin người dùng không thành công");
                     return RedirectToAction(nameof(Edit), user.Id);
                 }
                 if (response.Success == true)
                 {
-                    return RedirectToAction(nameof(Index));
+                    toastNotification.AddSuccessToastMessage("Cập nhật thông tin người dùng thành công");
+                    return RedirectToAction("Detail", new {id=user.Id });
                 }
             }
             catch

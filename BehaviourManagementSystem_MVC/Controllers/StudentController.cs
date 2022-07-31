@@ -88,7 +88,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     ViewBag.IdIndi = id;
                     mymodel.Individual = responseIndi.Result;
                     mymodel.Assessment = responseAssess.Result;
-                    if (mymodel.Assessment !=null)
+                    if (mymodel.Assessment != null)
                     {
                         mymodel.Assessment = responseAssess.Result.ToPagedList(pageNumber, pageSize);
                     }
@@ -105,7 +105,6 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
                 throw;
             }
-            return NotFound();
         }
 
         public IActionResult StudentAdd()
@@ -166,7 +165,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     return View(response.Result);
                 }
-               
+
 
             }
             catch (System.Exception)
@@ -178,16 +177,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StudentEdit(IFormFile imageModel, IndAssessRequest request)
+        public async Task<IActionResult> StudentEdit(IndAssessRequest request)
         {
             try
             {
                 string webrootpath = webHostEnvironment.WebRootPath;
                 var files = HttpContext.Request.Form.Files;
                 string fileName = null;
+                string oldfile = null;
                 if (files.Count != 0)
                 {
                     fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                    oldfile = request.AvtName;
                     request.AvtName = fileName;
                 }
                 var response = await _IIndividualAPIClient.Update(request);
@@ -202,6 +203,15 @@ namespace BehaviourManagementSystem_MVC.Controllers
                         {
                             files[0].CopyTo(filestream);
                         }
+                        if (oldfile != null && oldfile != "default_avt.png")
+                        {
+                            string _imageToBeDeleted = Path.Combine(webrootpath, @"images", oldfile);
+                            if (System.IO.File.Exists(_imageToBeDeleted))
+                            {
+                                System.IO.File.Delete(_imageToBeDeleted);
+                            }
+                        }
+
                     }
                     toastNotification.AddSuccessToastMessage("Cập Nhật Thành Công!");
                     return RedirectToAction("StudentList", response.Result);
@@ -218,13 +228,13 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 throw;
             }
         }
-        
+
 
         [HttpDelete]
         public async Task<IActionResult> Delete(string idIndi, string idTeacher)
         {
 
-            var response = await _IIndividualAPIClient.Delete(idTeacher,idIndi);
+            var response = await _IIndividualAPIClient.Delete(idTeacher, idIndi);
             if (response.Success == true)
             {
                 toastNotification.AddSuccessToastMessage("Đã Xóa Thành Công!");

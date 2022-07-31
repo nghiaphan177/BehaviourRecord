@@ -11,7 +11,7 @@
         <div class="col">
             <h3 class="page-title">Chỉnh Sửa Học Sinh</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="students.html">Học sinh</a></li>
+                <li class="breadcrumb-item"><a href="./StudentList">Học sinh</a></li>
                 <li class="breadcrumb-item active">Chỉnh Sửa học sinh</li>
             </ul>
         </div>
@@ -34,10 +34,8 @@
                     </div>
                     <div class="col-12 col-sm-12">
                         <div class="form-group">
-                            <img id="uploadPreview" style="width: 150px; height: 150px; position:relative" src="@img" />
-                            <input style="position: absolute; bottom: 1rem; left: 12rem; color: transparent" id="uploadImage" type="file" asp-for="@Model.AvtName" class="hidden" onchange="PreviewImage();" />
-                            
-                            @*<input asp-for="@Model.AvtName" type="file" class="form-control">*@
+                            <img id="uploadPreview" style="width: 150px; height: 150px; position:relative" src="@img" />                           
+                            <input hidden asp-for="@Model.AvtName" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="col-12 col-sm-6">
@@ -98,18 +96,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Ảnh Học Sinh</label>
+                            <input class="form-control" id="uploadImage" type="file" asp-for="@Model.AvtName" onchange="PreviewImage();" />
+                        </div>
+                    </div>
 
-         
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
                             <label>Email <span style="color: red;">*</span></label>
-                            <input required asp-for="@Model.Email" type="text" class="form-control">
+                            <input required asp-for="@Model.Email" type="email" class="form-control">
                             <div class="invalid-feedback">
                                 Trường này là bắt buộc
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12">
+                    <div class="col-12 col-sm-6">
                         <div class="form-group">
                             <label>Địa Chỉ</label>
                             <input asp-for="@Model.Address" type="text" class="form-control">
@@ -139,5 +142,18 @@
                 }
             });
         })
+        function onFileSelected(event) {
+            var selectedFile = event.target.files[0];
+            var reader = new FileReader();
+
+            var imgtag = document.getElementById("image");
+            imgtag.title = selectedFile.name;
+
+            reader.onload = function (event) {
+                imgtag.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
     </script>
 }
