@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
-@{TempData["Data2"] = Model.Id;}
+
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -27,7 +27,7 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active"
+                        <a class="nav-link"
                            href="#giaidoan" data-toggle="tab">Can Thiệp</a>
                     </li>
                     <li class="nav-item">
@@ -94,7 +94,7 @@
                             </div>
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                                    <button type="button" onclick="submitNextStep()" id="button-giaidoan" class="btn btn-success btn-sm btn-block">Tiếp Tục</button>
                                 </div>
                             </div>
 
@@ -104,7 +104,7 @@
                     <!-- Tab Nâng Câp Hồ Sơ Start-->
                     <div class="tab-pane" id="hoso">
                         <!-- form nhẹ start -->
-                        <form id="EditProfileForm" action="/Intervention/Edit" method="post">
+                        <form id="EditProfileForm" action="/Intervention/EditProfile" method="post">
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
@@ -293,14 +293,20 @@
 <!-- Can Thiệp End -->
 @section scripts {
     <script src="~/js/CheckBoxMoInput.js"></script>
+    <script>
+        function submitNextStep() {
 
+            $('.nav a[href="#hoso"]').tab('show');
+
+        }
+    </script>
 }
 
 @section EditIntervention {
     @if (TempData["MessageEdit"] != null)
     {
         <script type="text/javascript">
-
+            $('.nav a[href="#giaidoan"]').removeClass('active');
             $('.nav a[href="#quanlycanthiep"]').tab('show');
 
         </script>

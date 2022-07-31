@@ -34,7 +34,7 @@
         <div class="col">
             <h3 class="page-title">Thêm Học Sinh</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="students.html">Học sinh</a></li>
+                <li class="breadcrumb-item"><a href="./StudentList">Học sinh</a></li>
                 <li class="breadcrumb-item active">Thêm học sinh</li>
             </ul>
         </div>
@@ -48,41 +48,38 @@
                     <input hidden asp-for="TeacherId" value="@User.FindFirst("Id").Value">
                     <div class="row">
                         <div class="col-12">
-                            <h5 class="form-title"><span>Student Information</span></h5>
+                            <h5 class="form-title"><span>Thông tin học sinh</span></h5>
                         </div>
                         <div class="col-12 col-sm-12">
                             <div class="form-group">
-                                <img id="uploadPreview" style="width: 150px; height: 150px; position:relative" />
-                                <input style="position: absolute; bottom: 1rem; left: 12rem;" id="uploadImage" type="file" asp-for="@Model.AvtName" onchange="PreviewImage();" />
-
-                                @*<input asp-for="@Model.AvtName" type="file" class="form-control">*@
+                                <img src="/images/default_avt.png" class="avatar-img rounded border" id="uploadPreview" style="width: 150px; height: 150px; position:relative" />
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Họ<span style="color: red;">*</span></label>
-                                <input required asp-for="FirstName" type="text" class="form-control">
+                                <input required asp-for="FirstName" type="text" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Tên<span style="color: red;">*</span></label>
-                                <input required asp-for="LastName" type="text" class="form-control">
+                                <input required asp-for="LastName" type="text" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Lớp<span style="color: red;">*</span></label>
-                                <input required asp-for="Classes" type="text" class="form-control">
+                                <input required asp-for="Classes" type="text" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Giới Tính<span style="color: red;">*</span></label>
-                                <select required asp-for="Gender" class="form-control">
-                                    <option>-- Chọn Giới Tính --</option>
-                                    <option>Nữ</option>
-                                    <option>Nam</option>
+                                <select required asp-for="Gender" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
+                                    <option value="">-- Chọn Giới Tính --</option>
+                                    <option value="Nữ">Nữ</option>
+                                    <option value="Nam">Nam</option>
                                 </select>
                             </div>
                         </div>
@@ -90,14 +87,13 @@
                             <div class="form-group">
                                 <label>Ngày Sinh<span style="color: red;">*</span></label>
                                 <div>
-                                    <input asp-for="DOB" type="date" class="form-control">
+                                    <input required asp-for="DOB" type="date" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                                 </div>
                             </div>
                         </div>
-                    
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label>Địa Chỉ</label>
+                                <label>Địa chỉ</label>
                                 <input asp-for="Address" type="text" class="form-control">
                             </div>
                         </div>
@@ -109,14 +105,21 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
+                                <label>Ảnh Học Sinh</label>
+                                <input class="form-control" id="uploadImage" type="file" asp-for="@Model.AvtName" onchange="PreviewImage();" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
                                 <label>Tài Khoản Học Sinh<span style="color: red;">*</span></label>
-                                <input required asp-for="UserName" type="text" class="form-control">
+                                <input required asp-for="UserName" type="text" class="form-control" data-parsley-required-message="Trường này là bắt buộc">
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label>Mật Khẩu Học Sinh<span style="color: red;">*</span></label>
-                                <input asp-for="Password" type="password" class="form-control pr-password">
+                                <input required asp-for="Password" type="password" class="form-control pr-password" data-parsley-required-message="Trường này là bắt buộc">
                             </div>
                         </div>
                         <div class="col-12 text-xl-center">

@@ -19,5 +19,6 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<Assessment>> UpdateAnalyzeConsequence(string ass_id, string ana_con_per, string ana_con_envi, string ana_con_act);
         Task<ResponseResult<Assessment>> UpdateFuntionAntecedent(string ass_id, string fun_ant);
         Task<ResponseResult<Assessment>> UpdateFuntionConsequece(string ass_id, string fun_con);
+        Task<ResponseResult<string>> DeleteAllAssessWithInd(string id);
     }
 }

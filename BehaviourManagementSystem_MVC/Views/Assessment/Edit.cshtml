@@ -9,7 +9,7 @@
         <div class="col">
             <h3 class="page-title">Students</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active"><a href="/">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Học Sinh</li>
                 <li class="breadcrumb-item active">Đánh Giá</li>
             </ul>
@@ -41,7 +41,7 @@
                 <div class="tab-content">
                     <!-- Tab Tường Trình Start -->
                     <div class="tab-pane show active" id="tuongtrinh">
-                        <form id="assessform" asp-action="EditRecord" asp-controller="Assessment" method="post">
+                        <form class="needs-validation" id="assessform" asp-action="EditRecord" asp-controller="Assessment" method="post" novalidate>
                             <input hidden asp-for="Id" type="text" class="form-control" />
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày<span style="color: red;">*</span></label>
@@ -51,18 +51,27 @@
                                         string date = d.ToString("yyyy-MM-dd");
                                     }
                                     <input required asp-for="RecordDate" type="date" value="@date" class="form-control" />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Bắt Đầu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordStart" asp type="text" value="@Model.RecordStart" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Kết Thúc<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordEnd" type="text" value="@Model.RecordEnd" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -71,12 +80,18 @@
                                     <input required asp-for="RecordWhere" type="text" value="@Model.RecordWhere"
                                            class="form-control"
                                            placeholder="Nhập địa điểm..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Học sinh vi phạm<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input required asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
+                                    <div class="invalid-feedback">
+                                        Trường này là bắt buộc
+                                    </div>
                                 </div>
                             </div>
                                 <div style="margin-bottom:1rem;" class="col-sm-3 mx-auto text-center">
@@ -106,12 +121,15 @@
                             <div class="tab-content">
                                 <!-- Tab Phân Tích - Hành Vi Start-->
                                 <div class="tab-pane show active" id="pt-hanhvi">
-                                    <form id="updateBehaviourForm" asp-action="UpdateRecordBehaviour" asp-controller="Assessment" method="post">
+                                    <form class="needs-validation" id="updateBehaviourForm" asp-action="UpdateRecordBehaviour" asp-controller="Assessment" method="post" novalidate>
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành vi<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
                                                 <input required asp-for="AnalyzeBehaviour" type="text" class="form-control" placeholder="Nhập hành vi..." />
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
@@ -122,7 +140,7 @@
                                 <!-- Tab Phân Tích - Hành Vi End-->
                                 <!-- Tab Phân Tích - Tiền Đề Start-->
                                 <div class="tab-pane" id="pt-tiende">
-                                    <form asp-action="UpdateAnaEntecedent" asp-controller="Assessment" method="post">
+                                    <form class="needs-validation" asp-action="UpdateAnaEntecedent" asp-controller="Assessment" method="post" novalidate>
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Cảm Xúc<span style="color: red;">*</span></label>
@@ -140,6 +158,9 @@
                                                         </li>
                                                     }
                                                 </ul>
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -158,6 +179,9 @@
                                                         </li>
                                                     }
                                                 </ul>
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -176,6 +200,9 @@
                                                         </li>
                                                     }
                                                 </ul>
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
@@ -186,7 +213,7 @@
                                 <!-- Tab Phân Tích - Tiền Đề End-->
                                 <!-- Tab Phân Tích - Hậu Quả Start-->
                                 <div class="tab-pane" id="pt-hauqua">
-                                    <form asp-action="UpdateAnaConsequence" asp-controller="Assessment" method="post">
+                                    <form class="needs-validation" asp-action="UpdateAnaConsequence" asp-controller="Assessment" method="post" novalidate>
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
@@ -197,20 +224,26 @@
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Cảm xúc sau</label>
+                                                    <label>Cảm xúc sau<span style="color: red;">*</span></label>
                                                     <input required asp-for="AnalyzeConsequencesPerceive" type="text" class="form-control" value="@Model.AnalyzeConsequencesPerceive">
+                                                    <div class="invalid-feedback">
+                                                        Trường này là bắt buộc
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Môi truòng trước</label>
+                                                    <label>Môi trường trước</label>
                                                     <input readonly="readonly" type="text" class="form-control" value="@Model.AnalyzeAntecedentEnvironmentalDescription">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Môi trường sau</label>
+                                                    <label>Môi trường sau<span style="color: red;">*</span></label>
                                                     <input required asp-for="AnalyzeConsequenceEnvironmental" type="text" class="form-control" value="@Model.AnalyzeConsequenceEnvironmental">
+                                                    <div class="invalid-feedback">
+                                                        Trường này là bắt buộc
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
@@ -221,8 +254,11 @@
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Hành vi sau</label>
+                                                    <label>Hành vi sau <span style="color: red;">*</span></label>
                                                     <input required asp-for="AnalyzeConsequencesActivity" type="text" class="form-control" value="@Model.AnalyzeConsequencesActivity">
+                                                    <div class="invalid-feedback">
+                                                        Trường này là bắt buộc
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -252,7 +288,7 @@
                             <div class="tab-content">
                                 <!-- Tab Chi Tiết - Tiền Đề Start -->
                                 <div class="tab-pane show active" id="ct-tiende">
-                                    <form asp-action="UpdateFuntionAntecedent" asp-controller="Assessment" method="post">
+                                    <form class="needs-validation" asp-action="UpdateFuntionAntecedent" asp-controller="Assessment" method="post" novalidate>
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Cảm Xúc</label>
@@ -273,9 +309,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-3">Chi tiết tiền đề</label>
+                                            <label class="col-form-label col-md-3">Chi tiết tiền đề<span style="color: red;">*</span></label>
                                             <div class="col-md-9">
                                                 <input required type="text" asp-for="FunctionAntecedent" value="@Model.FunctionAntecedent" class="form-control" placeholder="Nhập chi tiết tiền đề..." />
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
 
@@ -287,7 +326,7 @@
                                 <!-- Tab Chi Tiết - Tiền Đề End -->
                                 <!-- Tab Chi Tiết - Hậu Quả Start -->
                                 <div class="tab-pane" id="ct-hauqua">
-                                    <form asp-action="UpdateFuntionConsequence" asp-controller="Assessment" method="post">
+                                    <form class="needs-validation" asp-action="UpdateFuntionConsequence" asp-controller="Assessment" method="post" novalidate>
                                         <input hidden asp-for="Id" type="text" class="form-control" />
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-3">Cảm Xúc</label>
@@ -308,9 +347,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-3">Chi tiết hậu quả</label>
+                                            <label class="col-form-label col-md-3">Chi tiết hậu quả<span style="color: red;">*</span></label>
                                             <div class="col-md-9">
                                                 <input required type="text" asp-for="FunctionConsequece" value="@Model.FunctionConsequece" class="form-control" placeholder="Nhập chi tiết hậu quả..." />
+                                                <div class="invalid-feedback">
+                                                    Trường này là bắt buộc
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 mx-auto text-center">
@@ -339,7 +381,26 @@
 @section scripts {
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#RecordDate").attr("max", new Date().toISOString().split('T')[0]);
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        });
+    </script>    
+<script>
         $('.timepicker').timepicker({
             timeFormat: 'HH:mm',
             interval: 30,

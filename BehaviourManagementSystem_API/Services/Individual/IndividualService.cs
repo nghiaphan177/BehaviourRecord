@@ -332,6 +332,7 @@ namespace BehaviourManagementSystem_API.Services
                 user.Gender = request.Gender;
                 user.DOB = request.DOB;
                 user.Address = request.Address;
+                user.AvtName = request.AvtName;
                 ind.Organization = request.Classes;
                 ind.UpdateDate = DateTime.Now;
                 user.Email = request.Email;

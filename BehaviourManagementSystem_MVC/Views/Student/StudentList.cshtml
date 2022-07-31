@@ -1,4 +1,6 @@
-﻿@model List<BehaviourManagementSystem_ViewModels.Requests.IndAssessRequest>
+﻿@model X.PagedList.IPagedList<BehaviourManagementSystem_ViewModels.Requests.IndAssessRequest>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -9,7 +11,7 @@
         <div class="col">
             <h3 class="page-title">Học sinh</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Danh sách học sinh</li>
             </ul>
         </div>
@@ -24,22 +26,22 @@
             <div class="card-body">
                 @if (Model != null)
                 {
-                    <div class="table-responsive">
-                        <table class="table table-hover table-center mb-0 datatable">
-                            <thead>
-                                <tr>
-                                    <th>Tên</th>
-                                    <th>Lớp</th>
-                                    <th>Ngày sinh</th>
-                                    <!-- <th>Parent Name</th>
-                                    <th>Mobile Number</th> -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-center mb-0 datatable">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Lớp</th>
+                                <th>Ngày sinh</th>
+                                <!-- <th>Parent Name</th>
+                <th>Mobile Number</th> -->
                                 <th>Địa chỉ</th>
-                                    <th class="text-right">Tùy chọn</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                                <th class="text-right">Tùy chọn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
                                 <tr id="Individual-@item.Ind_Id">
                                     <td>
                                         <h2 class="table-avatar">
@@ -69,11 +71,25 @@
                                     </td>
                                 </tr>
 
-                                }
+                            }
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
+                    @if (Model != null)
+                    {
+                        <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                        @Html.PagedListPager(Model,
+                                page => Url.Action("StudentList", new { page }),
+                                new PagedListRenderOptions
+                            {
+                                DisplayLinkToIndividualPages = true,
+                                DisplayPageCountAndCurrentLocation = false,
+                                MaximumPageNumbersToDisplay = 3,
+                                LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" },
+                            })
+                    }
+                </div>
 
                 }
                 else
@@ -87,19 +103,21 @@
 
 <script>
     //Warning Message
-    function deleteIndi(idind,idteacher) {
+    function deleteIndi(idind, idteacher) {
         swal({
-            title: 'Bạn đã chắc chắn?',
-            text: "Xóa trường này!",
-            type: 'warning',
+            title: 'Bạn đã chắc chắn xóa?',
+            text: "",
+            type: '',
             showCancelButton: true,
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger m-l-10',
-            confirmButtonText: 'Yes!'
+            confirmButtonText: 'Có',
+            cancelButtonText: "Không"
+
         }).then(function () {
             $.ajax({
                 url: "/Student/Delete",
-                data: { "idIndi": idind, "idTeacher": idteacher},
+                data: { "idIndi": idind, "idTeacher": idteacher },
                 type: "DELETE",
                 success: function (result) {
                     if (result.status == true) {

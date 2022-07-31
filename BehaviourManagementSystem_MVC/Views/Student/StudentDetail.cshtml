@@ -1,7 +1,11 @@
 ﻿@model dynamic
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 @{
     ViewData["Title"] = "StudentDetail";
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    X.PagedList.IPagedList<AssessmentRequest>? assePages = Model.Assessment as X.PagedList.IPagedList<AssessmentRequest>;
+
 }
 @section styles {
     <link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
@@ -11,8 +15,8 @@
         <div class="col-sm-12">
             <h3 class="page-title">Student Details</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="students.html">Student</a></li>
-                <li class="breadcrumb-item active">Student Details</li>
+                <li class="breadcrumb-item"><a href="./StudentList">Danh sách học sinh</a></li>
+                <li class="breadcrumb-item active">Chi tiết học sinh</li>
             </ul>
         </div>
     </div>
@@ -59,45 +63,6 @@
                     </ul>
                 </div>
             </div>
-            <!-- <div class="row mt-3">
-                <div class="col-md-12">
-                    <p>Hello I am Daisy Parks. Lorem Ipsum is simply dummy text of the printing
-                        and typesetting industry, simply dummy text of the printing and
-                        typesetting industry.</p>
-                </div>
-            </div>
-            <div class="row follow-sec">
-                <div class="col-md-4 mb-3">
-                    <div class="blue-box">
-                        <h3>2850</h3>
-                        <p>Followers</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="blue-box">
-                        <h3>2050</h3>
-                        <p>Following</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="blue-box">
-                        <h3>2950</h3>
-                        <p>Friends</p>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row mt-2">
-                <div class="col-md-12">
-                    <h5>Permanent Address</h5>
-                    <p>480, Estern Avenue, Courtage area, New York</p>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-md-12">
-                    <h5>Present Address</h5>
-                    <p>480, Estern Avenue, Courtage area, New York</p>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>
@@ -196,8 +161,8 @@
                                                                         <i class="fas fa-eye"></i>
                                                                     </a>
                                                                     @*<a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
-                                                                            <i class="fas fa-plus-circle"></i>
-                                                                        </a>*@
+                                        <i class="fas fa-plus-circle"></i>
+                                    </a>*@
                                                                     <a asp-action="Edit" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chỉnh Sửa Đánh Giá" class="btn btn-sm bg-success-light mr-2">
                                                                         <i class="fas fa-pen"></i>
                                                                     </a>
@@ -214,6 +179,20 @@
 
                                             </tbody>
                                         </table>
+                                        @if (assePages != null)
+                                        {
+                                            <span class="show-page-text text-black">Trang @(Model.Assessment.PageCount < Model.Assessment.PageNumber ? 0 : Model.Assessment.PageNumber) / @Model.Assessment.PageCount</span>
+                                            @Html.PagedListPager(assePages,
+                                                    page => Url.Action("StudentDetail", new { id = ViewBag.IdIndi, page }),
+                                                    new PagedListRenderOptions
+                                                    {
+                                                        DisplayLinkToIndividualPages = true,
+                                                        DisplayPageCountAndCurrentLocation = false,
+                                                        MaximumPageNumbersToDisplay = 3,
+                                                        LiElementClasses = new string[] { "page-item" },
+                                                        PageClasses = new string[] { "page-link" },
+                                                    })
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -247,22 +226,23 @@
         //Warning Message
         function deleteAssessment(id) {
             swal({
-                title: 'Bạn đã chắc chắn?',
-                text: "Xóa hồ sơ đánh giá này này!",
-                type: 'warning',
+                title: 'Bạn đã chắc chắn xóa?',
+                text: "",
+                type: '',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger m-l-10',
-                confirmButtonText: 'Yes!'
+                confirmButtonText: 'Có',
+                cancelButtonText: "Không"
             }).then(function () {
                 $.ajax({
                     url: "/Assessment/Delete?AssessId=" + id,
                     type: "POST",
                     success: function (result) {
                         if (result.status == true) {
-                                $("#assess-" + id).remove();
+                            $("#assess-" + id).remove();
                         }
-                        
+
                     }
                 })
             })

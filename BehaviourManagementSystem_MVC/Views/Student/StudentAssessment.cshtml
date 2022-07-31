@@ -62,7 +62,7 @@
                                             <a href="/Student/StudentEdit?id=@item.Ind_Id" class="btn btn-sm bg-success-light mr-2">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a onclick=" deleteIndiLi('@item.Ind_Id', '@item.TeacherId')" class="btn btn-sm bg-danger-light">
+                                            <a onclick=" deleteIndiLi('@item.Ind_Id')" class="btn btn-sm bg-danger-light">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>
@@ -86,23 +86,23 @@
 </div>
 <script>
     //Warning Message
-    function deleteIndiLi(idind, idteacher) {
+    function deleteIndiLi(idind) {
         swal({
-            title: 'Bạn đã chắc chắn?',
-            text: "Xóa trường này!",
-            type: 'warning',
+            title: 'Bạn đã chắc chắn xóa?',
+            text: "",
+            type: '',
             showCancelButton: true,
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger m-l-10',
-            confirmButtonText: 'Yes!'
+            confirmButtonText: 'Có',
+            cancelButtonText: "Không"
         }).then(function () {
             $.ajax({
-                url: "/Student/Delete",
-                data: { "idIndi": idind, "idTeacher": idteacher },
+                url: "/Student/DeleteStudentAssement",
+                data: { "id": idind},
                 type: "DELETE",
                 success: function (result) {
                     if (result.status == true) {
-
                         $("#Assent-" + idind).remove();
                     }
                 }
