@@ -46,6 +46,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 {
                     return NotFound();
                 }
+                if (response.Success == false)
+                {
+                    toastNotification.AddErrorToastMessage(response.Message);
+                }
                 return View(response.Result);
             }
             catch(Exception)
