@@ -74,9 +74,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> StudentDetail(string id)
+        public async Task<IActionResult> StudentDetail(string id, int? page)
         {
-
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
             try
             {
                 dynamic mymodel = new ExpandoObject();
@@ -84,8 +85,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 var responseAssess = await _assessmentAPIClient.GetAll(id);
                 if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
                 {
+                    ViewBag.IdIndi = id;
                     mymodel.Individual = responseIndi.Result;
-                    mymodel.Assessment = responseAssess.Result;
+                    mymodel.Assessment = responseAssess.Result.ToPagedList(pageNumber, pageSize);
                     return View(mymodel);
                 }
             }
