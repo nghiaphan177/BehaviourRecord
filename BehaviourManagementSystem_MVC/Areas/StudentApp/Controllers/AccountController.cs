@@ -248,7 +248,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             }
             return View();
         }
-        [Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
+        //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ResetPasswordRequest request)
         {
@@ -268,7 +268,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                 }
                 else if (response.Success == false)
                 {
-                    _toastNotification.AddErrorToastMessage("Đổi mật khẩu thất bại");
+                    _toastNotification.AddErrorToastMessage(response.Message);
                     return RedirectToAction("ChangePassword");
                 }
             }
@@ -276,6 +276,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             _toastNotification.AddAlertToastMessage("Không thể đổi mật khẩu");
             return RedirectToAction("ChangePassword");
         }
+        //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {

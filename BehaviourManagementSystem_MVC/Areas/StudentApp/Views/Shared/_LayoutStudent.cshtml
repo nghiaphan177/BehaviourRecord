@@ -1,5 +1,21 @@
 ﻿<!DOCTYPE html>
-
+@using System.Security.Claims
+@using BehaviourManagementSystem_MVC.APIIntegration;
+@using BehaviourManagementSystem_ViewModels.Requests; 
+@inject IUserAPIClient _userAPIClient; 
+@{  var user_id = User.FindFirst("Id").Value;
+    var response = await _userAPIClient.GetUserById(user_id);
+    UserProfileRequest userProfileRequest;
+    userProfileRequest = response.Result;
+    var img = userProfileRequest.AvtName;
+    Uri uriResult;
+    bool result = Uri.TryCreate(userProfileRequest.AvtName, UriKind.Absolute, out uriResult)
+        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    if (result != true)
+    {
+        img = "/images/" + img;
+    }
+}
 <html lang="en">
 
 <!-- Mirrored from preschool.dreamguystech.com/html-template/students.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:43 GMT -->
@@ -35,28 +51,29 @@
             <a href="javascript:void(0);" id="toggle_btn">
                 <i class="fas fa-align-left"></i>
             </a>
-            <div class="top-nav-search">
+            @*<div class="top-nav-search">
                 <form>
                     <input type="text" class="form-control" placeholder="Search here">
                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                 </form>
-            </div>
+            </div>*@
             <a class="mobile_btn" id="mobile_btn">
                 <i class="fas fa-bars"></i>
             </a>
+
             <ul class="nav user-menu">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img class="rounded-circle" src="~/assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                        <span class="user-img"><img class="rounded-circle" src="@img" width="31" alt="@userProfileRequest.LastName @userProfileRequest.FirstName"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
                             <div class="avatar avatar-sm">
-                                <img src="~/assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+                                <img src="@img" alt="Ảnh đại diện" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>Ryan Taylor</h6>
-                                <p class="text-muted mb-0">Giáo viên</p>
+                                <h6>@userProfileRequest.LastName @userProfileRequest.FirstName</h6>
+                                <p class="text-muted mb-0">Học sinh</p>
                             </div>
                         </div>
                         <a class="dropdown-item" href="~/StudentApp/Home/StudentProfile">Hồ sơ</a>
@@ -77,11 +94,11 @@
                         </li>
 
                         <li class="submenu" id="menu-student">
-                            <a href="#"><i class="fas fa-"></i> <span> Học Sinh</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fas fa-user-graduate"></i> <span> Học Sinh</span> <span class="menu-arrow"></span></a>
                             <ul class="stMenu">
-                                <li><a asp-controller="Student" asp-action="StudentList" class="submenu-stList">Tổng quan</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAssessment" class="submenu-stList">Danh sách đánh giá</a></li>
-                                <li><a asp-controller="Student" asp-action="StudentAdd" class="submenu-stAdd">Danh sách can thiệp</a></li>
+                                <li><a asp-area="StudentApp" asp-controller="Home" asp-action="Index" class="submenu-stList">Tổng quan</a></li>
+                                @*<li><a href="~/StudentApp/Home/Assessment/@user_id" class="submenu-stList">Danh sách đánh giá</a></li>
+                                <li><a href="~/StudentApp/Home/Intervention/@user_id" class="submenu-stAdd">Danh sách can thiệp</a></li>*@
                             </ul>
                         </li>
 
@@ -159,7 +176,7 @@
             //    //window.location.href = a_href ;
             //});
         });
-                                                                    // Add active class to the current button (highlight it)
+                                                                            // Add active class to the current button (highlight it)
 
     </script>
 </body>

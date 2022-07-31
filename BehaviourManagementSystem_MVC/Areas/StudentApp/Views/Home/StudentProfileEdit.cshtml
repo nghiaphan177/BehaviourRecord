@@ -2,7 +2,6 @@
 @model UserProfileRequest
 @{
     ViewData["Title"] = "StudentProfileEdit";
-    //Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 @{
     ViewData["Title"] = "Thông tin người dùng";
@@ -51,6 +50,7 @@
                                     <h5 class="form-title"><span>Thông tin học sinh</span></h5>
                                 </div>
                                 <div class="row">
+                                    <input hidden asp-for="@Model.Id" value="@Model.Id" type="text" class="form-control">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label>Họ <span style="color: red;">*</span></label>

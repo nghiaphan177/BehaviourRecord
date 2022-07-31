@@ -147,8 +147,6 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         {
             try
             {
-
-
                 var response = await _userAPIClient.GetUserById(id);
                 if (response == null)
                 {
@@ -166,7 +164,6 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             }
             return View();
         }
-
 
         public async Task<IActionResult> StudentProfileEdit(IFormFile file, UserProfileRequest request)
         {
@@ -204,7 +201,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                     }
                 }
                 _toastNotification.AddSuccessToastMessage("Cập nhật thành công");
-                return RedirectToAction("TeacherProfileEdit", new { Id = User.FindFirst("Id").Value });
+                return RedirectToAction("StudentProfileEdit", new { Id = User.FindFirst("Id").Value });
             }
             return View();
         }
