@@ -89,6 +89,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                         "Student",
                         userPrincipal,
                         authProperties);
+            _toastNotification.AddSuccessToastMessage($"Xin chào {userPrincipal.Identity.Name}!");
             return LocalRedirect(ReturnUrl);
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
@@ -96,7 +97,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 "Student");
-
+            _toastNotification.AddSuccessToastMessage("Đăng xuất thành công");
             return RedirectToAction("Login");
         }
 
@@ -185,17 +186,18 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string userNameOrEmail)
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(string useremail)
         {
-            if (string.IsNullOrEmpty(userNameOrEmail))
+            if (string.IsNullOrEmpty(useremail))
                 return View(); // màn hình lỗi text rỗng
 
-            var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
+            var response = await _accountAPIClient.ForgotPassword(useremail);
 
             if (response.Success)
             {
                 // https://localhost:port/Account/ResetPassword?id=****&code=****/
-                var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ResetPassword");
+                var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/StudentApp/Account/ResetPassword/");
                 var query = HttpUtility.ParseQueryString(uri.Query);
                 query["id"] = response.Result.Id;
                 query["code"] = response.Result.Code;
@@ -218,10 +220,40 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                 }
                 catch { ok = false; }
 
-                if (!ok)
+                if (ok == false)
+                {
+                    _toastNotification.AddErrorToastMessage("Gửi mail không thành công");
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
+                }
             }
-            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm emaiil with method get
+            return RedirectToAction("SendMailSuccess");
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string id, string code)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(code))
+                return NotFound();// trang not found 
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
+
+            var response = await _accountAPIClient.ResetPassword(request);
+
+            if (!response.Success)
+                return View(); // reset pass không thành không
+            return RedirectToAction("ChangePassSuccess"); // reset thành công
+        }
+
+        public IActionResult SendMailSuccess()
+        {
+            _toastNotification.AddSuccessToastMessage("Gửi mail thành công");
+            return View();
         }
 
         [Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
@@ -248,6 +280,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             }
             return View();
         }
+
         //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ResetPasswordRequest request)
@@ -263,7 +296,6 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             {
                 if (response.Success)
                 {
-                    _toastNotification.AddSuccessToastMessage("Đổi mật khẩu thành công");
                     return RedirectToAction("ChangePassSuccess");
                 }
                 else if (response.Success == false)
@@ -276,10 +308,11 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             _toastNotification.AddAlertToastMessage("Không thể đổi mật khẩu");
             return RedirectToAction("ChangePassword");
         }
-        //[Authorize(AuthenticationSchemes = "Student", Policy = "StudentOnly")]
+
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {
+            _toastNotification.AddSuccessToastMessage("Đổi mật khẩu thành công");
             return View();
         }
 

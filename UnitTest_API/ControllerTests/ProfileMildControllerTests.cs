@@ -1,5 +1,6 @@
 using BehaviourManagementSystem_API.Controllers;
 using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -8,11 +9,11 @@ using Xunit;
 
 namespace UnitTest_API.ControllerTests
 {
-    public class ProfileMildController_Test
+    public class ProfileMildControllerTests
     {
         private readonly ProfileMildController _controller;
         private readonly IProfileMildService _service;
-        public ProfileMildController_Test()
+        public ProfileMildControllerTests()
         {
             _service = new ProfileMildServiceFakes();
             _controller = new ProfileMildController(_service);
@@ -25,18 +26,18 @@ namespace UnitTest_API.ControllerTests
             var okResult = await _controller.GetAll() as OkObjectResult;
             // Assert
             Assert.Equal(200, okResult.StatusCode);
-            Assert.IsType<OkObjectResult>(okResult as OkObjectResult);
+            Assert.IsType<OkObjectResult>(okResult);
         }
 
-        [Fact]
-        public async void Get_WithoutParam_Ok_Test()
-        {
-            // Act
-            var okResult = await _controller.GetAll() as OkObjectResult;
-            // Assert
-            Assert.Equal(200, okResult.StatusCode);
-            Assert.True((JsonConvert.SerializeObject(okResult.Value as string[]).Length == 4));
-        }
+        //[Fact]
+        //public async void Get_WithNoData_ThenBadRequest_Test()
+        //{
+        //    // Act
+        //    var badResponse = await _controller.GetAll() as BadRequestObjectResult;
+        //    // Assert
+        //    Assert.Equal(400, badResponse.StatusCode);
+        //    Assert.IsType<BadRequestObjectResult>(badResponse);
+        //}
 
         [Fact]
         public async Task GetById_WithNotExistingId_ThenBadRequest_TestAsync()
@@ -89,20 +90,47 @@ namespace UnitTest_API.ControllerTests
 
         }
 
-        //[Fact]
-        //public async void Update_Content_ThenOk_Test()
-        //{
-        //    // Arrange
-        //    var ExistingId = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c200";
-        //    string content = "UnitTest5";
+        [Fact]
+        public async void Update_WithNotExistingId_ThenBadRequest_Test()
+        {
+            // Arrange
+            var ExistingId = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c201";
+            string content = "UnitTest5";
+            OptionsRequest request = new OptionsRequest() { Id = ExistingId, Content = content };
+            // Act
+            var badResponse = await _controller.Update(request) as BadRequestObjectResult;
+            // Assert
+            Assert.Equal(400, badResponse.StatusCode);
+            Assert.IsType<BadRequestObjectResult>(badResponse);
+        }
 
-        //    // Act
-        //    var badResponse = await _controller.Update(content) as OkObjectResult;
-        //    // Assert
-        //    Assert.Equal(400, badResponse.StatusCode);
-        //    Assert.IsType<BadRequestObjectResult>(badResponse);
+        [Fact]
+        public async void Update_WithExistingContent_ThenBadRequest_Test()
+        {
+            // Arrange
+            var ExistingId = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c200";
+            string content = "UnitTest2";
+            OptionsRequest request = new OptionsRequest() { Id = ExistingId, Content = content };
+            // Act
+            var badResponse = await _controller.Update(request) as BadRequestObjectResult;
+            // Assert
+            Assert.Equal(400, badResponse.StatusCode);
+            Assert.IsType<BadRequestObjectResult>(badResponse);
+        }
 
-        //}
+        [Fact]
+        public async void Update_Content_ThenOk_Test()
+        {
+            // Arrange
+            var ExistingId = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c200";
+            string content = "UnitTest5";
+            OptionsRequest request = new OptionsRequest() { Id = ExistingId, Content = content };
+            // Act
+            var okResult = await _controller.Update(request) as OkObjectResult;
+            // Assert
+            Assert.Equal(200, okResult.StatusCode);
+            Assert.IsType<OkObjectResult>(okResult);
+        }
 
         [Fact]
         public async void Remove_WithNotExistingId_ThenBadRequest_Test()
