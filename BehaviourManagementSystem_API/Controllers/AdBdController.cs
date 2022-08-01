@@ -81,5 +81,20 @@ namespace BehaviourManagementSystem_API.Controllers
             var res = await _abBd.GetAllStudentAndTeacherAndAllAccount();
             return Ok(res);
         }
+
+        [HttpGet("GetAllAssessAndInterByMonthWithTeacher")]
+        public async Task<IActionResult> GetAllAssessAndInterByMonthWithTeacher([FromQuery] string id)
+        {
+            Guid teacherid;
+            if(!Guid.TryParse(id, out teacherid))
+                return BadRequest("Thông tin truy cập không hợp lệ.");
+
+            var res = await _abBd.GetAllAssessAndInterByMonthWithTeacher(teacherid);
+
+            if(!res.Success)
+                return BadRequest(res);
+
+            return Ok(res);
+        }
     }
 }

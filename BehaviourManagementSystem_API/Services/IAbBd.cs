@@ -16,5 +16,7 @@ namespace BehaviourManagementSystem_API.Services
         Task<ResponseResult<Tuple<int, int>>> GetAllAccountNotVerifyMail();
 
         Task<ResponseResult<Tuple<int, int, int>>> GetAllStudentAndTeacherAndAllAccount();
+
+        Task<ResponseResult<List<Tuple<int, int, int>>>> GetAllAssessAndInterByMonthWithTeacher(Guid teacherid);
     }
 }

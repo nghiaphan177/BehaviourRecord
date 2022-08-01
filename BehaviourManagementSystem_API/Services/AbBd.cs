@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +27,80 @@ namespace BehaviourManagementSystem_API.Services
             var total = await _context.Users.CountAsync();
 
             return new ResponseResultSuccess<Tuple<int, int>>(new Tuple<int, int>(count, total));
+        }
+
+        public async Task<ResponseResult<List<Tuple<int, int, int>>>> GetAllAssessAndInterByMonthWithTeacher(Guid teacherid)
+        {
+            try
+            {
+                if(!await _context.Individuals
+               .Where(prop => prop.TeacherId == teacherid)
+               .AnyAsync())
+                    return new ResponseResultError<List<Tuple<int, int, int>>>("Không tìn thấy dữ liệu được yêu cầu.");
+
+                var inds = await _context.Individuals
+                    .Where(prop => prop.TeacherId == teacherid)
+                    .ToListAsync();
+
+                var listAssessment = new List<Assessment>();
+                var listIntervention = new List<Intervention>();
+
+                foreach(var ind in inds)
+                {
+                    var list = await _context.Assessments
+                        .Where(prop => prop.IndividualId == ind.Id)
+                        .ToListAsync();
+
+                    if(list.Any())
+                        foreach(var item in list)
+                            listAssessment.Add(item);
+                }
+
+                foreach(var assess in listAssessment)
+                {
+                    var list = await _context.Interventions
+                        .Where(prop => prop.AssesetmentId == assess.Id)
+                        .ToListAsync();
+
+                    if(list.Any())
+                        foreach(var item in list)
+                            listIntervention.Add(item);
+                }
+
+                var result = new ResponseResultSuccess<List<Tuple<int, int, int>>>();
+
+                var year = DateTime.Now.Year;
+                var month = 0;
+                while(month < 12)
+                {
+                    var countAssess = listAssessment
+                        .Where(prop =>
+                        prop.CreateDate.Value.Year == year &&
+                        prop.CreateDate.Value.Month == (month + 1))
+                        .Count();
+
+                    var countInter = listIntervention
+                        .Where(prop =>
+                        prop.CreateDate.Value.Year == year &&
+                        prop.CreateDate.Value.Month == (month + 1))
+                        .Count();
+
+                    result.Result.Add(new Tuple<int, int, int>
+                    (
+                        countAssess,
+                        countInter,
+                        (month + 1)
+                    ));
+
+                    month++;
+                }
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                return new ResponseResultError<List<Tuple<int, int, int>>>(ex.Message);
+            }
         }
 
         public async Task<ResponseResult<Tuple<int, int, int>>> GetAllStudentAndTeacherAndAllAccount()
