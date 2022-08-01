@@ -111,67 +111,71 @@
                                                 {
                                                     @foreach (AssessmentRequest assessment in Model.Assessment)
                                                     {
-                                                        <tr id="assess-@assessment.Id" class="text-center">
-                                                            <td>@assessment.RecordDate?.ToShortDateString()</td>
-                                                            <td>@assessment.RecordStart</td>
-                                                            <td>
-                                                                @{
-                                                                    if (assessment.RecordIsCompeleted == true)
-                                                                    {
-                                                                        <span class="badge badge-success">Hoàn Thành</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                                                                    }
-                                                                }
+                                                <tr id="assess-@assessment.Id" class="text-center">
+                                                    @{
+                                                        DateTime date = Convert.ToDateTime(assessment.RecordDate);
+                                                        string formatdate = date.ToString("dd/MM/yyyy");
+                                                    }
+                                                    <td>@formatdate</td>
+                                                    <td>@assessment.RecordStart</td>
+                                                    <td>
+                                                        @{
+                                                            if (assessment.RecordIsCompeleted == true)
+                                                            {
+                                                                <span class="badge badge-success">Hoàn Thành</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                            }
+                                                        }
 
-                                                            </td>
-                                                            <td>
-                                                                @{
-                                                                    if (assessment.AnalyzeIsCompeleted == true)
-                                                                    {
-                                                                        <span class="badge badge-success">Hoàn Thành</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                                                                    }
-                                                                }
-                                                            </td>
-                                                            <td>
-                                                                @{
-                                                                    if (assessment.FunctionIsCompeleted == true)
-                                                                    {
-                                                                        <span class="badge badge-success">Hoàn Thành</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                                                                    }
-                                                                }
-                                                            </td>
-                                                            <td>Xin Chào</td>
-                                                            <td class="text-center">
-                                                                <div class="actions">
-                                                                    <a href="/Intervention/GetInterventionById?id=@assessment.Id" title="Xem Tất Cả Can Thiệp" class="btn btn-sm bg-warning-light mr-2">
-                                                                        <i class="fas fa-clipboard"></i>
-                                                                    </a>
-                                                                    <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chi Tiết Đánh Giá" class="btn bg-detail btn-sm mr-2">
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </a>
-                                                                    @*<a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
-                                        <i class="fas fa-plus-circle"></i>
-                                    </a>*@
-                                                                    <a asp-action="Edit" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chỉnh Sửa Đánh Giá" class="btn btn-sm bg-success-light mr-2">
-                                                                        <i class="fas fa-pen"></i>
-                                                                    </a>
-                                                                    <button title="Xóa Đánh Giá" onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            if (assessment.AnalyzeIsCompeleted == true)
+                                                            {
+                                                                <span class="badge badge-success">Hoàn Thành</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            if (assessment.FunctionIsCompeleted == true)
+                                                            {
+                                                                <span class="badge badge-success">Hoàn Thành</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>Xin Chào</td>
+                                                    <td class="text-center">
+                                                        <div class="actions">
+                                                            <a href="/Intervention/GetInterventionById?id=@assessment.Id" title="Xem Tất Cả Can Thiệp" class="btn btn-sm bg-warning-light mr-2">
+                                                                <i class="fas fa-clipboard"></i>
+                                                            </a>
+                                                            <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chi Tiết Đánh Giá" class="btn bg-detail btn-sm mr-2">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            @*<a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                    <i class="fas fa-plus-circle"></i>
+                </a>*@
+                                                            <a asp-action="Edit" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chỉnh Sửa Đánh Giá" class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-pen"></i>
+                                                            </a>
+                                                            <button title="Xóa Đánh Giá" onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                     }
                                                 }
                                                 @if (Model.Assessment == null)
