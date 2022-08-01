@@ -197,6 +197,33 @@
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                error: function (response) {
+                    $("#sumasse").text(0);
+                    $("#sumin").text(0);
+                    var options = {
+                        series: [],
+                        chart: {
+                            type: 'bar',
+                            height: 250
+                        },
+                                            
+                        noData: {
+                            text: 'Chưa có đánh giá hay can thiệp nào',
+                            align: 'center',
+                            verticalAlign: 'middle',
+                            xaxis: 0,
+                            yaxis: 0,
+                            style: {
+                                color: undefined,
+                                fontSize: '14px',
+                                fontFamily: undefined
+                            }
+                        },
+                                          
+                    };
+                    var chartBar = new ApexCharts(document.querySelector('#barai'), options);
+                    chartBar.render();
+                },
                 success: function (response) {
                     var dataasse = response.result.map(a => a.item1)
                     var datain = response.result.map(a => a.item2)
@@ -236,7 +263,7 @@
                                 "Tháng 12"],
                         },
                         noData: {
-                            text: 'Chưa có học sinh',
+                            text: 'Chưa có đánh giá hay can thiệp nào',
                             align: 'center',
                             verticalAlign: 'middle',
                             offsetX: 0,
