@@ -1,6 +1,6 @@
 ﻿@model UserProfileRequest
 @{
-    ViewData["Title"] = "Thông tin người dùng";
+    ViewData["Title"] = "Hồ sơ Admin";
     var img = Model.AvtName;
     Uri uriResult;
     bool result = Uri.TryCreate(Model.AvtName, UriKind.Absolute, out uriResult)
@@ -92,58 +92,53 @@
                 <p class="text-muted">@Model.Email</p>
             </div>
             <div class="col-sm-8">
-                <form id="useredit" asp-action="Edit" asp-controller="User" asp-area="Admin">
+                <form id="useredit" asp-action="Edit" asp-controller="Home" asp-area="Admin" enctype="multipart/form-data">
                     <input asp-for="@Model.Id" type="hidden" class="form-control" />
                     <input asp-for="@Model.Email" type="hidden" class="form-control" />
-                    <input asp-for="@Model.AvtName" type="hidden" class="form-control" />
                     <input asp-for="@Model.RoleId" type="hidden" class="form-control" />
                     <input asp-for="@Model.RoleName" type="hidden" class="form-control" />
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Tên đăng nhập</label>
                         <div class="col-sm-6">
-                            <input readonly asp-for="@Model.UserName" type="text" class="form-control" />
+                            <input readonly disabled asp-for="@Model.UserName" type="text" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3  col-form-label">Họ</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.FirstName" type="text" class="form-control" required />
+                            <input asp-for="@Model.FirstName" value="@Model.FirstName" type="text" class="form-control" />
                         </div>
 
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3  col-form-label">Tên</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.LastName" type="text" class="form-control" required />
+                            <input asp-for="@Model.LastName" value="@Model.LastName" type="text" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Ngày sinh</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.DOB" class="form-control" type="date" id="example-date-input">
-                        </div>
+                            <input asp-for="@Model.DOB" value="@Model.DOB?.ToShortDateString()" class="form-control" type="date" id="example-date-input">
+                        </div>  
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Số điện thoại</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.PhoneNumber" data-parsley-type="number" data-parsley-minlength="10" type="text"
+                            <input asp-for="@Model.PhoneNumber" value="@Model.PhoneNumber" data-parsley-type="number" data-parsley-minlength="10" type="text"
                                    class="form-control" />
                         </div>
                     </div>
-                    
-
                     <div class="form-group row">
-                        <label class="col-sm-3 mt-2">Vai trò</label>
-                        <div class="col-sm-6 mt-2">
-                            <span>
-                                @Model.RoleName
-                            </span>
+                        <label class="col-sm-3 col-form-label">Hình đại diện</label>
+                        <div class="col-sm-6">
+                            <input asp-for="@Model.AvtName" type="file" class="form-control" onchange="onFileSelected(event)">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Địa chỉ</label>
                         <div>
-                            <textarea asp-for="@Model.Address" class="form-control" rows="2"></textarea>
+                            <textarea asp-for="@Model.Address" value="@Model.Address" class="form-control" rows="2"></textarea>
                         </div>
                     </div>
                     <div class="form-group">

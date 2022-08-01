@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NToastNotify;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -25,12 +26,14 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         private readonly IUserAPIClient _userAPIClient;
         private readonly IConfiguration _config;
         private readonly IEmailSender _emailSender;
-        public AccountController(IAccountAPIClient accountAPIClient, IUserAPIClient userAPIClient, IConfiguration configuration, IEmailSender emailSender)
+        private readonly IToastNotification toastNotification;
+        public AccountController(IAccountAPIClient accountAPIClient, IUserAPIClient userAPIClient, IConfiguration configuration, IEmailSender emailSender, IToastNotification toastNotification)
         {
             _accountAPIClient = accountAPIClient;
             _userAPIClient = userAPIClient;
             _config = configuration;
             _emailSender = emailSender;
+            this.toastNotification = toastNotification;
         }
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
@@ -115,43 +118,60 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             if (string.IsNullOrEmpty(useremail))
                 return View(); // màn hình lỗi text rỗng
-
-            var response = await _accountAPIClient.ForgotPassword(useremail);
-
-            if (response.Success)
+            try
             {
-                // https://localhost:port/Account/ResetPassword?id=****&code=****/
-                var uri = new UriBuilder(_config["EmailSettings:MailBodyHtml"] + "/Admin/Account/ResetPassword");
-                var query = HttpUtility.ParseQueryString(uri.Query);
-                query["id"] = response.Result.Id;
-                query["code"] = response.Result.Code;
-                uri.Query = query.ToString();
-                var url = uri.ToString();
-                var subject = "Đặt lại mật khẩu của bạn";
-                var htmlMessage =
-                    $"Đặt lại mật khẩu của bạn." +
-                    $"<a href='{url}' style='color:red;'>" +
-                        $"<strong>" +
-                            $"<u>" +
-                                $"<i>link tại đây</i>" +
-                            $"</u>" +
-                        $"</strong>" +
-                    $"</a>";
-                var ok = true;
-                try
+                var response = await _accountAPIClient.ForgotPassword(useremail);
+                if(response == null)
                 {
-                    await _emailSender.SendEmailAsync(response.Result.UserOrEmail, subject, htmlMessage);
+                     toastNotification.AddErrorToastMessage("Gửi mail không thành công");
+                    return RedirectToAction("RecoverPass");
                 }
-                catch { ok = false; }
+                if(response.Success == false)
+                {
+                    toastNotification.AddErrorToastMessage(response.Message);
+                    return RedirectToAction("RecoverPass");
+                }
+                if (response.Success)
+                {
+                    // https://localhost:port/Account/ResetPassword?id=****&code=****/
+                    var uri = new UriBuilder(_config["EmailSettings:MailBodyHtml"] + "/Admin/Account/ResetPassword");
+                    var query = HttpUtility.ParseQueryString(uri.Query);
+                    query["id"] = response.Result.Id;
+                    query["code"] = response.Result.Code;
+                    uri.Query = query.ToString();
+                    var url = uri.ToString();
+                    var subject = "Đặt lại mật khẩu của bạn";
+                    var htmlMessage =
+                        $"Đặt lại mật khẩu của bạn." +
+                        $"<a href='{url}' style='color:red;'>" +
+                            $"<strong>" +
+                                $"<u>" +
+                                    $"<i>link tại đây</i>" +
+                                $"</u>" +
+                            $"</strong>" +
+                        $"</a>";
+                    var ok = true;
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(response.Result.UserOrEmail, subject, htmlMessage);
+                    }
+                    catch { ok = false; }
 
-                if (ok == false)
-                {
-                    ViewBag.Message = "Gửi mail không thành công";
-                    return View(); // cần UI (UI với hình thức gửi mail không thành công) 
+                    if (ok == false)
+                    {
+                        toastNotification.AddErrorToastMessage( "Gửi mail không thành công");
+                        return RedirectToAction("RecoverPass"); // cần UI (UI với hình thức gửi mail không thành công) 
+                    }
                 }
+                ViewBag.Message = "Gửi mail thành công";
+                return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
             }
-            ViewBag.Message = "Gửi mail thành công";
-            return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+            catch (Exception)
+            {
+
+                throw;
+            }
+             
         }
 
         [HttpGet]
