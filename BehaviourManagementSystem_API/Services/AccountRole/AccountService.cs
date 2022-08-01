@@ -172,6 +172,7 @@ namespace BehaviourManagementSystem_API.Services
                     user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
                 if(user == null)
                     return new ResponseResultError<string>("Tài khoản không tồn tại");
+
                 if(!await _userManager.CheckPasswordAsync(user, request.Password))
                     return new ResponseResultError<string>("Mật khẩu không chính xác");
 
@@ -389,11 +390,14 @@ namespace BehaviourManagementSystem_API.Services
                         DOB = request.DOB,
                         PhoneNumber = request.PhoneNumber,
                         Email = request.Email,
+                        NormalizedEmail = request.Email.ToUpper(),
                         EmailConfirmed = true,
                         Address = request.Address,
                         AvtName = request.AvtName == null ? "default_avt.png" : request.FirstName,
                         SecurityStamp = stamp,
-                        ConcurrencyStamp = stamp.ToUpper()
+                        ConcurrencyStamp = stamp.ToUpper(),
+                        CreateDate = DateTime.Now.Date,
+                        UpdateDate = DateTime.Now.Date
                     };
 
                     await _context.Users.AddAsync(user);
@@ -433,6 +437,7 @@ namespace BehaviourManagementSystem_API.Services
                         DOB = request.DOB,
                         PhoneNumber = request.PhoneNumber,
                         Email = request.Email,
+                        NormalizedEmail = request.Email.ToUpper(),
                         EmailConfirmed = true,
                         Address = request.Address,
                         AvtName = request.AvtName,

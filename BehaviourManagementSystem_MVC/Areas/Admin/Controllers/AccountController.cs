@@ -43,6 +43,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
+    
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequest request, string ReturnUrl = "/Admin/Home")
@@ -83,6 +84,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
             return LocalRedirect(ReturnUrl);
         }
+     
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
             HttpContext.Session.Remove("USER");
@@ -92,6 +94,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 
             return RedirectToAction("Login");
         }
+     
         public async Task<ActionResult> Detail(string id)
         {
             try
@@ -106,6 +109,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             }
 
         }
+      
         public IActionResult RecoverPass()
         {
             return View();
@@ -193,17 +197,20 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 return View(); // reset pass không thành không
             return RedirectToAction("ChangePassSuccess"); // reset thành công
         }
+     
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {
             return View();
         }
+     
         [HttpGet]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             return View();
         }
+    
         private ClaimsPrincipal ValidateToken(string token)
         {
             IdentityModelEventSource.ShowPII = true;
