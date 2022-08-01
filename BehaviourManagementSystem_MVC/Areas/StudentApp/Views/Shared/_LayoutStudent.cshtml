@@ -16,6 +16,7 @@
         img = "/images/" + img;
     }
 }
+
 <html lang="en">
 
 <!-- Mirrored from preschool.dreamguystech.com/html-template/students.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:43 GMT -->
@@ -64,7 +65,7 @@
             <ul class="nav user-menu ">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img class="rounded-circle" src="@img" width="31" alt="@userProfileRequest.LastName @userProfileRequest.FirstName"></span>
+                        <span class="user-img avatar avatar-sm"><img class="avatar-img rounded-circle" src="@img" width="31" alt="@userProfileRequest.LastName @userProfileRequest.FirstName"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
@@ -72,7 +73,7 @@
                                 <img src="@img" alt="Ảnh đại diện" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>@userProfileRequest.LastName @userProfileRequest.FirstName</h6>
+                                <h6>@userProfileRequest.FirstName @userProfileRequest.LastName</h6>
                                 <p class="text-muted mb-0">Học sinh</p>
                             </div>
                         </div>
