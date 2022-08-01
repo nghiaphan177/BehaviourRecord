@@ -42,14 +42,18 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                 if (responseIndi.Success == true && (responseAssess.Success == true || responseAssess.Message == "Hiện tại không có dữ liệu"))
                 {
                     List<InterventionRequest> intervention_list = new List<InterventionRequest>();
-                    foreach (var item in responseAssess.Result)
+                    if(responseAssess.Result != null)
                     {
-                        var response_intervention = await _IInterventionAPIClient.GetAll(item.Id);
-                        if(response_intervention != null && response_intervention.Success == true)
+                        foreach (var item in responseAssess.Result)
                         {
-                            response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
-                        }               
+                            var response_intervention = await _IInterventionAPIClient.GetAll(item.Id);
+                            if (response_intervention != null && response_intervention.Success == true)
+                            {
+                                response_intervention.Result.ForEach(inter => intervention_list.Add(inter));
+                            }
+                        }
                     }
+                    
                     mymodel.Individual = responseIndi.Result;
                     mymodel.Assessment = responseAssess.Result;
                     mymodel.Intervention = intervention_list;

@@ -82,7 +82,7 @@
                 <div class="col-sm-6">
                     <div class="form-group row">
                         <div class="media m-b-30">
-                            <img id="image" class="img-fluid" src="/images/users/user-4.jpg" alt="Generic placeholder image" style="max-width:70%;">
+                            <img id="image" class="img-fluid" src="/images/users/user-4.jpg" alt="Generic placeholder image" style="max-width:130px; max-height:130px;">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -97,27 +97,27 @@
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Tên Email</label>
                         <div class="col-sm-6">
-                            <input required asp-for="@Model.Email" class="form-control" />
+                            <input required asp-for="@Model.Email" class="form-control" data-parsley-required-message="Trường này là bắt buộc"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Tên đăng nhập</label>
                         <div class="col-sm-6">
-                            <input required asp-for="@Model.UserName" type="text" class="form-control" />
+                            <input required asp-for="@Model.UserName" type="text" class="form-control" data-parsley-required-message="Trường này là bắt buộc"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3  col-form-label">Họ</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.FirstName" type="text" class="form-control" required />
+                            <input asp-for="@Model.FirstName" type="text" class="form-control" required data-parsley-required-message="Trường này là bắt buộc"/>
                         </div>
 
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3  col-form-label">Tên</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.LastName" type="text" class="form-control" required />
+                            <input asp-for="@Model.LastName" type="text" class="form-control" required data-parsley-required-message="Trường này là bắt buộc"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -149,7 +149,7 @@
                         <label class="col-sm-3 col-form-label">Số điện thoại</label>
                         <div class="col-sm-6">
                             <input required asp-for="@Model.PhoneNumber" data-parsley-type="number" data-parsley-minlength="10" type="text"
-                                   class="form-control" />
+                                   class="form-control" data-parsley-required-message="Trường này là bắt buộc"/>
                         </div>
                     </div>
 
@@ -157,7 +157,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 mt-2">Vai trò</label>
                         <div class="col-sm-6 mt-2">
-                            <select asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles">
+                            <select required id="option-role" asp-for="@Model.RoleId" class="form-control" asp-items="@ViewBag.Roles" data-parsley-required-message="Trường này là bắt buộc">
                                 <option value="">--Chọn Quyền --</option>
                             </select>
                             @*<select id="option-role" asp-for="@Model.TeacherId" class="form-control">
@@ -195,40 +195,11 @@
     <script src="~/plugins/parsleyjs/parsley.min.js"></script>
     <script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
     <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
-    <script>
-        ////Warning Message
-        //function updateUser() {
-        //    swal({
-        //        title: 'Bạn đã chắc chắn?',
-        //        text: "Cập nhật người dùng này!",
-        //        type: 'warning',
-        //        showCancelButton: true,
-        //        confirmButtonClass: 'btn btn-success',
-        //        cancelButtonClass: 'btn btn-danger m-l-10',
-        //        confirmButtonText: 'Xác nhận !'
-        //    }).then(function () {
-        //        $.ajax({
-        //            url: "ExtremeIntervention/delete",
-        //            data: { "id": id },
-        //            type: "DELETE",
-        //            success: function (result) {
-        //                if (result.status == true) {
-        //                    swal(
-        //                        'Đã Xóa Thành Công!',
-        //                        '',
-        //                        'success'
-        //                    ),
-        //                        $("#extreme-" + id).remove();
-        //                }
-        //            }
-        //        })
-        //    })
-        //}
-    </script>
     <script type="text/javascript">
         //$(document).ready(function () {
+        //    console.log($('#option-role option:selected').text());
         //    $('#optionteacher').hide();
-        //    if ($('#option-role').val()=='1') {
+        //    if ($('#option-role option:selected').text() == 'Học Sinh') {               
         //        $('#optionteacher').fadeIn();
         //    } else {
         //        $('#optionteacher').hide();
@@ -237,8 +208,8 @@
         $(document).ready(function () {
             $('#optionteacher').hide();
             $('#option-role').on('change', function () {
-                var demovalue = $(this).val();
-                if (demovalue==1) {
+                var demovalue = $('#option-role option:selected').text();
+                if (demovalue =='Học sinh') {
                     $('#optionteacher').fadeIn();
                 } else {
                     $('#optionteacher').hide();

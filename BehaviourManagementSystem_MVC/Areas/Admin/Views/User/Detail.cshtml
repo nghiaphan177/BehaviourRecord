@@ -31,7 +31,7 @@
             <a type="button" href="/admin/user/edit/@Model.Teacher.Id" class="btn btn-primary waves-effect waves-light">
                 Sửa đổi thông tin
             </a>
-            <button onclick="deleteUser('@Model.Teacher.Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</button>
+            @*<button onclick="deleteUser('@Model.Teacher.Id')" type="button" class="btn btn-danger waves-effect waves-light">Xóa tài khoản</button>*@
         </div>
     </div>
     <div class="card-body">
@@ -50,7 +50,7 @@
                     <label class="col-sm-3 mt-2">Tên đăng nhập</label>
                     <div class="col-sm-6 mt-2">
                         <span>
-                            @Model.Teacher.Email
+                            @Model.Teacher.UserName
                         </span>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <label class="col-sm-3 mt-2">Ngày sinh</label>
                     <div class="col-sm-6 mt-2">
                         <span>
-                            @(Model.Teacher.DOB?.ToShortDateString())
+                            @(Model.Teacher.DOB?.ToString("dd/MM/yyyy"))
                         </span>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <label class="col-sm-3 mt-2">Vai trò</label>
                     <div class="col-sm-6 mt-2">
                         <span>
-                            @Model.Teacher.RoleName
+                            @(Model.Teacher.RoleName == "TEACHER"?"Giáo viên":"Học sinh")
                         </span>
                     </div>
 
