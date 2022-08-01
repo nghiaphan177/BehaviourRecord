@@ -12,6 +12,7 @@ using X.PagedList;
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class AnalyzeAntecedentPerceivedController : Controller
     {
         private readonly IAntecedentPerceivedAPIClient _IAntecedentPerceivedAPIClient;

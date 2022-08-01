@@ -95,7 +95,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 
             return RedirectToAction("Login");
         }
-     
+        [Authorize(AuthenticationSchemes = "Admin",Policy ="AdminOnly")]
         public async Task<ActionResult> Detail(string id)
         {
             try
