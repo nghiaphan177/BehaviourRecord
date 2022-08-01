@@ -189,7 +189,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                         userPrincipal,
                         authProperties);
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
-            //toastNotification.AddSuccessToastMessage($"Xin chào {userPrincipal.}!");
+            toastNotification.AddSuccessToastMessage($"Xin chào {userPrincipal.Identity.Name}!");
             return LocalRedirect(ReturnUrl);
         }
 

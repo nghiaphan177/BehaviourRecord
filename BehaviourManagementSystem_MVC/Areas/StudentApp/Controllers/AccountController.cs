@@ -89,6 +89,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
                         "Student",
                         userPrincipal,
                         authProperties);
+            _toastNotification.AddSuccessToastMessage($"Xin chào {userPrincipal.Identity.Name}!");
             return LocalRedirect(ReturnUrl);
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
@@ -96,7 +97,7 @@ namespace BehaviourManagementSystem_MVC.Area.StudentApp.Controllers
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 "Student");
-
+            _toastNotification.AddSuccessToastMessage("Đăng xuất thành công");
             return RedirectToAction("Login");
         }
 
