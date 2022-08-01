@@ -63,25 +63,65 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         public async Task<IActionResult> CreateAssement(string id)
         {
-            var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
-            var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
-            var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
-            ViewBag.AntecedentPerceived = responseAnaPer.Result;
-            ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
-            ViewBag.AntecedentActivity = responseAnaActi.Result;
-            var response = await _assessmentAPIClient.Get(id);
-            return View(response.Result);
+            try
+            {
+                var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
+                var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
+                var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
+                ViewBag.AntecedentPerceived = responseAnaPer.Result;
+                ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
+                ViewBag.AntecedentActivity = responseAnaActi.Result;
+                var response = await _assessmentAPIClient.Get(id);
+                if(response == null)
+                {
+                    toastNotification.AddErrorToastMessage("Trang bị lỗi");
+                    return RedirectToAction("StudentDetail", "Student", new { id = id });
+                }
+                if(response.Success == false)
+                {
+                    toastNotification.AddErrorToastMessage(response.Message);
+                    return RedirectToAction("StudentDetail", "Student", new { id = id });
+                }
+                return View(response.Result);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage("Trang bị lỗi");
+                return RedirectToAction("StudentDetail", "Student", new { id = id });
+                throw;
+            }
+           
+            
         }
 
         public async Task<IActionResult> Create(string id)
         {
-            var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
-            var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
-            var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
-            ViewBag.AntecedentPerceived = responseAnaPer.Result;
-            ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
-            ViewBag.AntecedentActivity = responseAnaActi.Result;
-            return View(new AssessmentRequest() { Id = "", IndividualId = id });
+            try
+            {
+                var responseAnaPer = await _iAntecedentPerceivedAPIClient.GetAll();
+                var responseAnaEnvi = await _iAntecedentEnvironmentalAPIClient.GetAll();
+                var responseAnaActi = await _iAntecedentActivityAPIClient.GetAll();
+                ViewBag.AntecedentPerceived = responseAnaPer.Result;
+                ViewBag.AntecedentEnvironment = responseAnaEnvi.Result;
+                ViewBag.AntecedentActivity = responseAnaActi.Result;
+                if (responseAnaPer == null || responseAnaEnvi == null || responseAnaActi == null)
+                {
+                    toastNotification.AddErrorToastMessage("Trang bị lỗi");
+                    return RedirectToAction("StudentDetail", "Student", new { id = id });
+                }
+                if (responseAnaPer.Success == false|| responseAnaEnvi.Success == false || responseAnaActi.Success == false)
+                {
+                    toastNotification.AddErrorToastMessage("Truy xuất thông tin lỗi");
+                    return RedirectToAction("StudentDetail", "Student", new { id = id });
+                }
+                return View(new AssessmentRequest() { Id = "", IndividualId = id });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         [HttpPost]
         public async Task<IActionResult> Create(AssessmentRequest request)

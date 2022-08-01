@@ -164,8 +164,17 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                             $"</u>" +
                         $"</strong>" +
                     $"</a>";
+                try
+                {
+                    await _emailSender.SendEmailAsync(request.Email, subject, htmlMessage);
+                }
+                catch (Exception)
+                {
 
-                await _emailSender.SendEmailAsync(request.Email, subject, htmlMessage);
+                    toastNotification.AddErrorToastMessage("Gửi mail không thành công");
+                    return RedirectToAction(nameof(Index));
+                }
+               
                 toastNotification.AddSuccessToastMessage("Thêm người dùng thành công");
                 return RedirectToAction(nameof(Index));
             }
