@@ -7,7 +7,7 @@
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
-            <h3 class="page-title">Students</h3>
+            <h3 class="page-title">Chỉnh Sửa Đánh Giá</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="/">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Học Sinh</li>
@@ -21,7 +21,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title text-center text-info text-uppercase">Đánh Giá Hành Vi</h5>
+                <h5 class="card-title text-center text-info text-uppercase">Chỉnh Sửa Đánh Giá Hành Vi</h5>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
@@ -75,23 +75,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Ở Đâu<span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Ở Đâu</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWhere" type="text" value="@Model.RecordWhere"
+                                    <input asp-for="RecordWhere" type="text" value="@Model.RecordWhere"
                                            class="form-control"
                                            placeholder="Nhập địa điểm..." />
-                                    <div class="invalid-feedback">
-                                        Trường này là bắt buộc
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Học sinh vi phạm<span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Học sinh cùng vi phạm</label>
                                 <div class="col-md-10">
-                                    <input required asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
-                                    <div class="invalid-feedback">
-                                        Trường này là bắt buộc
-                                    </div>
+                                    <input asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
                             </div>
                                 <div style="margin-bottom:1rem;" class="col-sm-3 mx-auto text-center">

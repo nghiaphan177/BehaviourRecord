@@ -7,7 +7,7 @@
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
-            <h3 class="page-title">Students</h3>
+            <h3 class="page-title">Thêm Can Thiệp</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="index.html">Trang chủ</a></li>
                 <li class="breadcrumb-item active">Học Sinh</li>
@@ -35,13 +35,13 @@
                            href="#hoso" data-toggle="tab">Hồ Sơ Can Thiệp</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link disabled"
-                               href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled"
-                               href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
-                        </li>
+                        <a class="nav-link disabled"
+                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled"
+                           href="#nganchantaipham" data-toggle="tab">Ngăn ngừa Tái Phạm</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <!-- Tab Giai Đoạn Start -->
@@ -182,7 +182,6 @@
                             <div class="col">
                                 <div class="col-sm-3 mx-auto text-center">
                                     <button type="submit" id="" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Thoát</button>
                                 </div>
                             </div>
                         </form>
@@ -202,13 +201,13 @@
                             <div id="input-ql-vua-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Vừa <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate"  class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" id="ql-vua-sua" name="ManageModerate" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div id="input-ql-kn-sua" class="form-group row">
                                 <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme"  class="form-control" placeholder="Nhập ..." />
+                                    <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" class="form-control" placeholder="Nhập ..." />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -238,19 +237,19 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Hoạt Động <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" required autocomplete="off" name="PreventActivity"  id="text-key" class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" required autocomplete="off" name="PreventInteraction"  class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Chiến Lược Môi Trường <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" required autocomplete="off" name="PreventInvironmental"  class="form-control text-key" placeholder="Nhập..." />
+                                    <input type="text" required autocomplete="off" name="PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
                                 </div>
                             </div>
                             <div class="col">
@@ -265,6 +264,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div style="padding: 0 27px; margin-top: -2.5rem;" class="col-sm-3 mx-auto text-center">
+        <a href="/Intervention/GetInterventionById?id=@ViewBag.IdAssement">
+            <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
+        </a>
     </div>
 </div>
 <!-- Can Thiệp End -->
