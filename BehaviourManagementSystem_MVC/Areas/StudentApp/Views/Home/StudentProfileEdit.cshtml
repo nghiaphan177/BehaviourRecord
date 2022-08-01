@@ -14,7 +14,6 @@
         img = "/images/" + img;
     }
 }
-
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -30,15 +29,14 @@
     <div class="col-sm-12">
         <div class="profile-header">
             <div class="row align-items-center">
-                <div class="col-auto profile-image">
-                    <a href="#">
-                        <img id="image" class="rounded-circle" alt="User Image" src="@img">
-                    </a>
+                <div  class="profile-image">
+                   <img style="object-fit: cover; border-radius: 50%; height: 100px; width: 100px; "  alt="Profile Image" src="@img">
                 </div>
                 <div class="col ml-md-n2 profile-user-info">
                     <h4 class="user-name mb-0">@(Model.FirstName+" "+Model.LastName)</h4>
                     <h6 class="text-muted">Học sinh</h6>
                 </div>
+                
             </div>
         </div>
         <div class="row">
@@ -97,7 +95,7 @@
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label>Số điên thoại</label>
-                                            <input asp-for="@Model.PhoneNumber" value="@Model.PhoneNumber" type="text" class="form-control" >
+                                            <input asp-for="@Model.PhoneNumber" value="@Model.PhoneNumber" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
