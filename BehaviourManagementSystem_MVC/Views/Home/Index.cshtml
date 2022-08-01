@@ -53,8 +53,8 @@
                         <i class="fas fa-book-open"></i>
                     </div>
                     <div class="db-info">
-                        <h3>30/50</h3>
-                        <h6>Total Lessons</h6>
+                        <h3 id="sumasse"></h3>
+                        <h6>Tổng đánh giá</h6>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,8 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="db-info">
-                        <h3>15/20</h3>
-                        <h6>Total Hours</h6>
+                        <h3 id="sumin"></h3>
+                        <h6>Tổng can thiệp</h6>
                     </div>
                 </div>
             </div>
@@ -94,6 +94,28 @@
             </div>
             <div class="card-body">
                 <div id="bar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">Số đánh giá can thiệp</h5>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-inline-group text-right mb-0 pl-0">
+                            <li class="list-inline-item">
+                                <div class="form-group mb-0 amount-spent-select">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="barai"></div>
             </div>
         </div>
     </div>
@@ -167,10 +189,91 @@
                 }
             })
         };
+        function LoadChartAI(idteacher) {
+            var obj = {};
+            $.ajax({
+                type: "GET",
+                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetAllAssessAndInterByMonthWithTeacher?id=" + idteacher,
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var dataasse = response.result.map(a => a.item1)
+                    var datain = response.result.map(a => a.item2)
+                    $("#sumasse").text(dataasse.reduce((a, b) => a + b, 0));
+                    $("#sumin").text(datain.reduce((a, b) => a + b, 0));
+                    var options = {
+                        series: [
+                            { name: 'Đánh giá', data: dataasse },
+                            { name: 'Can thiệp', data: datain }],
+                        chart: {
+                            type: 'bar',
+                            height: 250
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: '60%',
+                                endingShape: 'rounded'
+                            },
+                        },
+                        xaxis: {
+                            categories: [
+                                "Tháng 1",
+                                "Tháng 2",
+                                "Tháng 3",
+                                "Tháng 4",
+                                "Tháng 5",
+                                "Tháng 6",
+                                "Tháng 7",
+                                "Tháng 8",
+                                "Tháng 9",
+                                "Tháng 10",
+                                "Tháng 11",
+                                "Tháng 12"],
+                        },
+                        noData: {
+                            text: 'Chưa có học sinh',
+                            align: 'center',
+                            verticalAlign: 'middle',
+                            offsetX: 0,
+                            offsetY: 0,
+                            style: {
+                                color: undefined,
+                                fontSize: '14px',
+                                fontFamily: undefined
+                            }
+                        },
+                        yaxis: [
+                            {
+                                labels: {
+                                    formatter: function (val) {
+                                        return val;
+                                    }
+                                }
+                            }
+                        ],
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return val 
+                                }
+                            }
+                        }
+                    };
+                    var chartBar = new ApexCharts(document.querySelector('#barai'), options);
+                    chartBar.render();
+                }
+            })
+        };
         $(document).ready(function () {
             // Bar chart
             var id = '@User.FindFirst("Id").Value';
             LoadChart(id);
+            LoadChartAI(id);
         });       
     </script>
 }
