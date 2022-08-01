@@ -35,6 +35,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             _emailSender = emailSender;
             this.toastNotification = toastNotification;
         }
+      
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync(string ReturnUrl = "/Admin/Home")
         {
