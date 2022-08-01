@@ -24,7 +24,8 @@ namespace BehaviourManagementSystem_API.Services
                 return new ResponseResultError<Tuple<int, int>>("Hệ thống chưa có tài khoản người dùng.");
 
             var count = await _context.Users.CountAsync(prop => prop.EmailConfirmed == false);
-            var total = await _context.Users.CountAsync();
+            var total = await _context.Users.CountAsync(
+                prop=>prop.UserName != "admin" && prop.UserName != "admin01");
 
             return new ResponseResultSuccess<Tuple<int, int>>(new Tuple<int, int>(count, total));
         }
@@ -124,14 +125,34 @@ namespace BehaviourManagementSystem_API.Services
 
             try
             {
+                var role = await _context.Roles.FirstOrDefaultAsync(prop => prop.Name == "admin");
+
+                var userRoles = await _context.UserRoles
+                    .Where(prop => prop.RoleId == role.Id).
+                    ToListAsync();
+
+                var listUser = new List<User>();
+                foreach(var user in await _context.Users.ToListAsync())
+                {
+                    var count = 0;
+                    foreach(var userRole in userRoles)
+                    {
+                        if(user.Id == userRole.UserId)
+                            break;
+                        count++;
+                        if(count == userRoles.Count)
+                            listUser.Add(user);
+                    }
+                }
+
                 int days = DateTime.DaysInMonth(y, m);
                 var index = 0;
                 var result = new List<Tuple<int, int>>();
 
                 while(index < days)
                 {
-                    var count_user = await _context.Users
-                        .CountAsync(prop => prop.CreateDate.Value.Year == y &&
+                    var count_user = listUser
+                        .Count(prop => prop.CreateDate.Value.Year == y &&
                         prop.CreateDate.Value.Month == m &&
                         prop.CreateDate.Value.Day == (index + 1));
                     index++;
@@ -150,13 +171,33 @@ namespace BehaviourManagementSystem_API.Services
         {
             try
             {
+                var role = await _context.Roles.FirstOrDefaultAsync(prop => prop.Name == "admin");
+
+                var userRoles = await _context.UserRoles
+                    .Where(prop => prop.RoleId == role.Id).
+                    ToListAsync();
+
+                var listUser = new List<User>();
+                foreach(var user in await _context.Users.ToListAsync())
+                {
+                    var count = 0;
+                    foreach(var userRole in userRoles)
+                    {
+                        if(user.Id == userRole.UserId)
+                            break;
+                        count++;
+                        if(count == userRoles.Count)
+                            listUser.Add(user);
+                    }
+                }
+
                 var index = 0;
                 var result = new List<Tuple<int, int>>();
 
                 while(index < 12)
                 {
-                    var count_user = await _context.Users
-                        .CountAsync(prop => prop.CreateDate.Value.Month == (index + 1) &&
+                    var count_user = listUser
+                        .Count(prop => prop.CreateDate.Value.Month == (index + 1) &&
                         prop.CreateDate.Value.Year == int.Parse(year));
                     index++;
                     result.Add(new Tuple<int, int>(index, count_user));

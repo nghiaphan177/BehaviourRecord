@@ -235,7 +235,6 @@
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('donut').getContext('2d');
-                    console.log(response["result"]);
                     $("#teacount").text(response["result"]['item2']);
                     $("#stucount").text(response["result"]['item1']);
                     $("#sumacc").text(response["result"]['item3']);
@@ -269,7 +268,6 @@
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('pie').getContext('2d');
-                    console.log(response["result"]);
                     $("#sumaccpie").text(response["result"]['item2']);
                     var data1 = [(response["result"]['item2'] - response["result"]['item1']), response["result"]['item1']];
                     var mychar = new Chart(chart, {
