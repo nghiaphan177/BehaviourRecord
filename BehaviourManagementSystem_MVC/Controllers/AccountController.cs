@@ -189,6 +189,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                         userPrincipal,
                         authProperties);
             //return RedirectToAction("Index", "Home",new {area = "Admin" });
+            //toastNotification.AddSuccessToastMessage($"Xin chào {userPrincipal.}!");
             return LocalRedirect(ReturnUrl);
         }
 
@@ -197,7 +198,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 "Teacher");
-
+            toastNotification.AddSuccessToastMessage($"Đăng xuất thành công");
             return RedirectToAction("Login");
         }
 
@@ -269,6 +270,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         public IActionResult SendMailSuccess()
         {
+            toastNotification.AddSuccessToastMessage("Gửi mail thành công");
             return View();
         }
 
@@ -419,9 +421,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 return View(); // reset pass không thành không
             return RedirectToAction("ChangePassSuccess"); // reset thành công
         }
+
         [HttpGet]
         public IActionResult ChangePassSuccess()
         {
+            toastNotification.AddSuccessToastMessage("Đổi mật khẩu thành công");
             return View();
         }
 

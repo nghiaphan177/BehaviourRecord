@@ -1,54 +1,15 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Đổi mật khẩu thành công</title>
-    <link rel="shortcut icon" href="~/assets/img/favicon.png">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/icons.css" />
-    <link rel="stylesheet" href="~/css/metismenu.min.css" />
-    <link rel="stylesheet" href="~/css/app.min.css" />
-</head>
-<body>
-    <!-- Begin page -->
-       <div class="account-pages my-5 pt-sm-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card overflow-hidden">
-                        <div class="card-body pt-0">
-
-                            <div class="ex-page-content text-center">
-                                <h2 class="text-dark">Thành Công!</h2>
-                                <h3 class="">Đổi mật khẩu thành công</h3>
-                                <br>
-
-                                <a class="btn btn-info mb-4 waves-effect waves-light" href="~/StudentApp/Account/Login"><i class="mdi mdi-home"></i> Trở lại trang đăng nhập</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Begin page -->
+<div class="container-login100">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        <div class="ex-page-content text-center">
+            <span class="login100-form-title p-b-49">Thành Công!</span>
+            <h3 class="">Đổi mật khẩu thành công</h3>
+            <br>
+            <a class="btn btn-info mb-4 waves-effect waves-light" href="/StudentApp/Account/Login"><i class="mdi mdi-home"></i> Trở lại trang đăng nhập</a>
         </div>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/jquery.slimscroll.js"></script>
-    <script src="~/js/jquery.sparkline.min.js"></script>
-    <script src="~/js/metisMenu.min.js"></script>
-    <script src="~/js/waves.min.js"></script>
-    <script src="~/plugins/parsleyjs/parsley.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form').parsley();
-        });
-    </script>
-</body>
-</html>
+</div>
+@await Component.InvokeAsync("NToastNotify")
