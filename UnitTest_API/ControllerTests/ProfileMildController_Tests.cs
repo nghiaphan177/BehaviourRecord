@@ -8,11 +8,11 @@ using Xunit;
 
 namespace UnitTest_API.ControllerTests
 {
-    public class ProfileMildControllerTests
+    public class ProfileMildController_Tests
     {
         private readonly ProfileMildController _controller;
         private readonly IProfileMildService _service;
-        public ProfileMildControllerTests()
+        public ProfileMildController_Tests()
         {
             _service = new ProfileMildServiceFakes();
             _controller = new ProfileMildController(_service);
