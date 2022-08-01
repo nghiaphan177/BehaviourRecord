@@ -26,6 +26,11 @@ namespace UnitTest_API.Services
             };
         }
 
+        public ProfileMildServiceFakes(List<ProfileMild> profilemild)
+        {
+            _profilemild = profilemild;
+        }
+
         public async Task<ResponseResult<List<ProfileMild>>> Create(string content)
         {
             if (_profilemild.Any(prop => prop.Content == content))
@@ -47,11 +52,12 @@ namespace UnitTest_API.Services
             var obj = _profilemild.Find(a => a.Id.ToString() == id);
             _profilemild.Remove(obj);
             return new ResponseResultSuccess<List<ProfileMild>>(_profilemild.ToList());
-
         }
 
         public async Task<ResponseResult<List<OptionsRequest>>> GetAll()
         {
+            if (! _profilemild.Any())
+                return new ResponseResultError<List<OptionsRequest>>("Hiện tại không có dữ liệu");
             var mild = _profilemild.ToList();
             var result = new List<OptionsRequest>();
             int stt = 0;
