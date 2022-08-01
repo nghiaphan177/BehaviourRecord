@@ -67,7 +67,7 @@ namespace BehaviourManagementSystem_API.Services
                             listIntervention.Add(item);
                 }
 
-                var result = new ResponseResultSuccess<List<Tuple<int, int, int>>>();
+                var result = new List<Tuple<int, int, int>>();
 
                 var year = DateTime.Now.Year;
                 var month = 0;
@@ -85,7 +85,7 @@ namespace BehaviourManagementSystem_API.Services
                         prop.CreateDate.Value.Month == (month + 1))
                         .Count();
 
-                    result.Result.Add(new Tuple<int, int, int>
+                    result.Add(new Tuple<int, int, int>
                     (
                         countAssess,
                         countInter,
@@ -95,7 +95,7 @@ namespace BehaviourManagementSystem_API.Services
                     month++;
                 }
 
-                return result;
+                return new ResponseResultSuccess<List<Tuple<int, int, int>>>(result);
             }
             catch(Exception ex)
             {
