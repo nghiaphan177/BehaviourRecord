@@ -1,16 +1,10 @@
 ﻿using BehaviourManagementSystem_API.Controllers;
-using BehaviourManagementSystem_API.Data.EF;
-using BehaviourManagementSystem_API.Models;
 using BehaviourManagementSystem_API.Services;
-using BehaviourManagementSystem_API.Utilities.JwtGenarator;
-using BehaviourManagementSystem_ViewModels.Requests;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
 using FakeItEasy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTest_API.ControllerTests
