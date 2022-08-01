@@ -4,7 +4,16 @@
     ViewData["Title"] = "Thông tin tài khoản";
     //var base64 = Convert.ToBase64String(Model.AvtName);
     //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-    var imgSrc = ""; // src avt
+    //var imgSrc = ""; // src avt
+    var img = Model.AvtName;
+    Uri uriResult;
+    bool result = Uri.TryCreate(Model.AvtName, UriKind.Absolute, out uriResult)
+     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    if (result != true)
+    {
+        img = "/images/" + img;
+    }
+
 }
 <style>
     .form-check {
@@ -75,78 +84,80 @@
         </div>
     </div>
 </div>
+
 <div class="card m-b-20">
     <div class="card-body">
         <div class="row">
             <div class="col-sm-3">
                 <div class="media m-b-30">
-                    <img class="img-fluid" src="/images/@imgSrc" alt="Generic placeholder image">
+                    <img class="rounded img-fluid img-thumbnail" src="@img" alt="Generic placeholder image">
 
                 </div>
-                <h4 class="font-18 m-0">@(Model.FirstName+" "+Model.LastName)</h4>
+                <h4 class="font-18">@(Model.FirstName+" "+Model.LastName)</h4>
                 <p class="text-muted">@Model.Email</p>
             </div>
             <div class="col-sm-9">
                 <h4 class="mt-0 header-title">Thông tin</h4>
                 <hr />
-                    <div class="row">
-                        <label class="col-sm-3 mt-2">Tên đăng nhập</label>
-                        <div class="col-sm-6 mt-2">
-                           <span>
-                                @Model.Email
-                            </span>
-                        </div>
+                <div class="row">
+                    <label class="col-sm-3 mt-2">Tên đăng nhập :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>
+                            @Model.UserName
+                        </span>
                     </div>
-                    <div class="row">
-                        <label class="col-sm-3 mt-2">Ngày sinh</label>
-                        <div class="col-sm-6 mt-2">
-                           <span>
-                                @(Model.DOB?.ToShortDateString())
-                            </span>
-                        </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 mt-2">Ngày sinh :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>
+                            @(Model.DOB?.ToShortDateString())
+                        </span>
                     </div>
-                    <div class=" row">
-                        <label class="col-sm-3 mt-2">Số điện thoại</label>
-                        <div class="col-sm-6 mt-2">
-                            <span>
-                                @Model.PhoneNumber
-                            </span>
-                        </div>
+                </div>
+                <div class=" row">
+                    <label class="col-sm-3 mt-2">Số điện thoại :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>
+                            @Model.PhoneNumber
+                        </span>
                     </div>
-                    <div class="row">
-                        <label class="col-sm-3 mt-2">Vai trò</label>
-                        <div class="col-sm-6 mt-2">
-                            <span>
-                                @Model.RoleName
-                            </span>
-                        </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 mt-2">Vai trò :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>
+                            @Model.RoleName
+                        </span>
+                    </div>
 
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 mt-2">Địa chỉ :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>@Model.Address</span>
                     </div>
-                    <div class="row">
-                        <label class="col-sm-3 mt-2">Địa chỉ</label>
-                        <div class="col-sm-6 mt-2">
-                           <span>@Model.Address</span>
-                        </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 mt-2">Giới tính :</label>
+                    <div class="col-sm-6 mt-2">
+                        <span>@Model.Gender</span>
                     </div>
-                    <div class="row">
-                        <label class="col-sm-3 mt-2">Giới tính</label>
-                        <div class="col-sm-6 mt-2">
-                           <span>@Model.Gender</span>
-                        </div>
-                    </div>
+                </div>
             </div>
         </div>
 
 
     </div>
 </div>
+
 @section scripts{
-<script src="~/plugins/parsleyjs/parsley.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('form').parsley();
-    });
-</script>
+    <script src="~/plugins/parsleyjs/parsley.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').parsley();
+        });
+    </script>
 }
 
 

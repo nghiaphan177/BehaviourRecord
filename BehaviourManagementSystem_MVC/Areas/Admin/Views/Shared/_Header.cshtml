@@ -1,11 +1,26 @@
 ﻿@using System.Security.Claims
-
+@using BehaviourManagementSystem_MVC.APIIntegration;
+@using BehaviourManagementSystem_ViewModels.Requests;
+@inject IUserAPIClient _userAPIClient
+@{  var user_id = User.FindFirst("Id").Value;
+    var response = await _userAPIClient.GetUserById(user_id);
+    UserProfileRequest userProfileRequest;
+    userProfileRequest = response.Result;
+    var img = userProfileRequest.AvtName;
+    Uri uriResult;
+    bool result = Uri.TryCreate(userProfileRequest.AvtName, UriKind.Absolute, out uriResult)
+        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    if (result != true)
+    {
+        img = "/images/" + img;
+    }
+}
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="#" class="logo logo-light">
+                <a href="/Admin" class="logo logo-light">
 
                     <span class="logo-sm">
                         <img src="~/assets/img/favicon.png" alt="" height="22">
@@ -28,12 +43,14 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="/images/default_avt.png"
-                         alt="Header Avatar">
-                </button>
+                    <span class="user-img">
+                        <img class="rounded-circle header-profile-user" style="object-fit : cover" src="@img"
+                             alt="Header Avatar">
+                    </span>
+</button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <!-- item-->
-                    <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle font-size-17 text-muted align-middle mr-1"></i> Hồ sơ</a>               
+                    <a class="dropdown-item" href="/admin/account/detail/@User.FindFirst("Id")?.Value"><i class="mdi mdi-account-circle font-size-17 text-muted align-middle mr-1"></i> Hồ sơ</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" asp-action="Logout" asp-controller="Account" asp-area="Admin" asp-route-returnUrl="@ViewBag.ReturnUrl"><i class="mdi mdi-power font-size-17 text-muted align-middle mr-1 text-danger"></i> Đăng xuất</a>
                 </div>
@@ -61,11 +78,11 @@
                         <i class="mdi mdi-account-location"></i><span> Tài khoản </span>
                     </a>
                 </li>
-                          
+
                 <li>
                     <a href="javascript:void(0);" class="has-arrow waves-effect">
-                    <i class="mdi mdi-clipboard-outline"></i>
-                    <span>Quản lý phân tích sự cố</span>
+                        <i class="mdi mdi-clipboard-outline"></i>
+                        <span>Quản lý phân tích sự cố</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/Admin/AnalyzeAntecedentPerceived">Trạng thái cảm xúc</a></li>
@@ -88,8 +105,8 @@
 
                 <li>
                     <a href="javascript:void(0);" class="has-arrow waves-effect">
-                    <i class="mdi mdi-emoticon"></i>
-                    <span>Quản lý can thiệp</span>
+                        <i class="mdi mdi-emoticon"></i>
+                        <span>Quản lý can thiệp</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/Admin/MildIntervention">Giai đoạn nhẹ</a></li>

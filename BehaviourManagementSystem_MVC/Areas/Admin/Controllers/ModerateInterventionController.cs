@@ -1,6 +1,7 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration.ProfileMild;
 using BehaviourManagementSystem_MVC.APIIntegration.ProfileModerate;
 using BehaviourManagementSystem_ViewModels.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System;
@@ -12,6 +13,7 @@ using X.PagedList;
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class ModerateInterventionController : Controller
     {
         private readonly IOptionAPIClientModerate _IOptionAPIClientModerate;

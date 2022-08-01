@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "Admin", Policy = "AdminOnly")]
     public class StudentController : Controller
     {
         private readonly IIndividualAPIClient _IIndividualAPIClient;
