@@ -48,7 +48,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         }
 
         
-        public async Task<IActionResult> GetInterventionById(string id, int? page)
+        public async Task<IActionResult> GetInterventionById(string id, int? page, string? idindi)
         {
             int pageSize = 2;
             int pageNumber = (page ?? 1);
@@ -58,7 +58,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 if (response.Success == true)
                 {
                     ViewBag.IdAssiment = id;
-
+                    ViewBag.IdIndividual = idindi;
                     return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
                 ViewBag.IdAssiment = id;
