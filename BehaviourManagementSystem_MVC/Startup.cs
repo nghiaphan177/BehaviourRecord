@@ -88,11 +88,11 @@ namespace BehaviourManagementSystem_MVC
             var mailsettings = Configuration.GetSection("EmailSettings");  // đọc config
             services.Configure<EmailSettings>(mailsettings);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddControllersWithViews().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
+            services.AddMvc().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
             {
                 ProgressBar = true,
                 Timeout = 3000,
-                Theme = "metroui"
+                //Theme = "metroui",
             });
         }
 

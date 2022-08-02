@@ -64,12 +64,15 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         {
             try
             {
-
-
                 var response = await _IUserAPIClient.GetUserById(id);
                 if (response == null)
                 {
                     return NoContent();
+                }
+                if (response.Success == false)
+                {
+                    _toastNotification.AddInfoToastMessage("Không tìm thấy người dùng này");
+                    return RedirectToAction("Index","User");
                 }
                 if (response.Success == true)
                 {

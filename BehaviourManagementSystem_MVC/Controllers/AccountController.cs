@@ -57,10 +57,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> NewPass(ResetPasswordRequest req)
         {
-            if(req == null)
+            if (req == null)
                 return View(ModelState); // view hiện tại khi model null
 
-            if(string.IsNullOrEmpty(req.PasswordNew) ||
+            if (string.IsNullOrEmpty(req.PasswordNew) ||
             string.IsNullOrEmpty(req.PasswordConfirm) ||
             req.PasswordNew != req.PasswordConfirm)
                 return View(ModelState); // view hiện tại không validate
@@ -69,7 +69,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var res = await _accountAPIClient.NewPassOfAccountGoogle(req);
 
-            if(!res.Success)
+            if (!res.Success)
                 return NotFound();
 
             var userPrincipal = ValidateToken(res.Result);
@@ -94,7 +94,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> GoogleSigin(string token)
         {
-            if(string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
                 return RedirectToAction("Login");
 
             var userPrincipal = ValidateToken(token);
@@ -103,7 +103,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             HttpContext.Session.SetString("google", token);
 
-            if(!await CheckPasswordIsExist(id))
+            if (!await CheckPasswordIsExist(id))
             {
                 HttpContext.Session.SetString("googleid", id);
                 return RedirectToAction("NewPass", "Account");
@@ -127,12 +127,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         private async Task<bool> CheckPasswordIsExist(string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
                 return false;
 
             var res = await _accountAPIClient.CheckPasswordNull(id);
 
-            if(!res.Success)
+            if (!res.Success)
                 return false;
 
             return true;
@@ -147,11 +147,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             ViewBag.GoogleClientId = res.Result;
 
-            if(ReturnUrl == null)
+            if (ReturnUrl == null)
             {
                 ReturnUrl = "/Home";
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Đăng nhập không thành công");
                 return View(request);
@@ -159,12 +159,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var result = await _accountAPIClient.Login(request);
 
-            if(result == null)
+            if (result == null)
             {
                 ModelState.AddModelError("", "Đăng nhập không thành công");
                 return View();
             }
-            if(result.Success == false)
+            if (result.Success == false)
             {
                 ModelState.AddModelError("", result.Message);
                 return View();
@@ -177,7 +177,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 IsPersistent = request.Remember
             };
 
-            if(request.Remember)
+            if (request.Remember)
             {
                 authProperties.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1);
             }
@@ -211,14 +211,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 string a = ViewData.ModelState[String.Empty].Errors[0].ErrorMessage;
                 toastNotification.AddErrorToastMessage(a);
                 return View(request);
             }
 
-            if(request.Password != request.RePassword)
+            if (request.Password != request.RePassword)
             {
                 toastNotification.AddErrorToastMessage("Mật Khẩu Nhập Lại Không Khớp!");
                 return View(request);
@@ -227,9 +227,9 @@ namespace BehaviourManagementSystem_MVC.Controllers
             var response = await _accountAPIClient.Register(request);
 
             // nếu respose success true thì tiến hành gửi mail với giá trị trả về là id và code
-            if(response.Success)
+            if (response.Success)
             {
-                if(response.Result.Id == null || response.Result.Code == null)
+                if (response.Result.Id == null || response.Result.Code == null)
                     return NotFound(); // cần UI
 
                 // https://localhost:port/Account/ConfirmEmail?id=****&code=****/
@@ -256,7 +256,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 catch { ok = false; }
 
-                if(!ok)
+                if (!ok)
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
             }
             else
@@ -277,18 +277,19 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string id, string code)
         {
-            if(id == null || code == null)
+            if (id == null || code == null)
                 return NotFound();
 
             var request = new ConfirmEmailRequest { Id = id, Code = code };
 
             var response = await _accountAPIClient.ConfirmEmail(request);
 
-            if(!response.Success)
+            if (!response.Success)
             {
                 return NotFound();
             }
-            return View();
+            toastNotification.AddSuccessToastMessage("Xác thực email thành công!");
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -298,11 +299,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var response = await _accountAPIClient.GetEmailConfirmed(email);
 
-            if(response == null)
+            if (response == null)
                 return NotFound(); // trang not found
 
-            if(response.Success)
-                if(response.Result)
+            if (response.Success)
+                if (response.Result)
                     return RedirectToAction("Index", "Home");// trang home
             return View(); // trang chờ confirm email
         }
@@ -310,12 +311,12 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ResendConfirmEmail(string email)
         {
-            if(string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email))
                 return View(); // lỗi không có email
 
             var response = await _accountAPIClient.ResendConfirmEmail(email);
 
-            if(response.Success)
+            if (response.Success)
             {
                 // https://localhost:port/Account/ConfirmEmail?id=****&code=****/
                 var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ConfirmEmail");
@@ -341,7 +342,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 catch { ok = false; }
 
-                if(!ok)
+                if (!ok)
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
             }
             return View(); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
@@ -356,14 +357,14 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(string userNameOrEmail)
         {
-            if(string.IsNullOrEmpty(userNameOrEmail))
+            if (string.IsNullOrEmpty(userNameOrEmail))
             {
                 return View(); // màn hình lỗi text rỗng
             }
-                
+
             var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
 
-            if(response.Success)
+            if (response.Success)
             {
                 // https://localhost:port/Account/ResetPassword?id=****&code=****/
                 var uri = new UriBuilder(_configuration["EmailSettings:MailBodyHtml"] + "/Account/ResetPassword");
@@ -389,16 +390,18 @@ namespace BehaviourManagementSystem_MVC.Controllers
                 }
                 catch { ok = false; }
 
-                if(!ok)
+                if (!ok)
                     return View(); // cần UI (UI với hình thức gửi mail không thành công) 
+                return RedirectToAction("SendMailSuccess"); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
             }
-            return RedirectToAction("SendMailSuccess"); // cần UI (UI với hình thức đã gửi mail thành công) action confirm eamil with method get
+            toastNotification.AddErrorToastMessage(response.Message);
+            return View();
         }
 
         [HttpGet]
         public IActionResult ResetPassword(string id, string code)
         {
-            if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(code))
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(code))
                 return NotFound();// trang not found 
             return View();
         }
@@ -406,10 +409,10 @@ namespace BehaviourManagementSystem_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(ModelState);
 
-            if(request.PasswordNew != request.PasswordConfirm)
+            if (request.PasswordNew != request.PasswordConfirm)
             {
                 ViewBag.Error = "Mật khẩu không giống nhau";
                 return View(ModelState);
@@ -417,7 +420,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
             var response = await _accountAPIClient.ResetPassword(request);
 
-            if(!response.Success)
+            if (!response.Success)
                 return View(); // reset pass không thành không
             return RedirectToAction("ChangePassSuccess"); // reset thành công
         }
