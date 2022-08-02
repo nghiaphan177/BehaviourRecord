@@ -84,7 +84,11 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Ngày</label>
                                 <div class="col-md-10">
-                                    <input readonly type="text" value="@Model.ProfileDate?.ToShortDateString()" name="ProfileDate" class="form-control" />
+                                    @{
+                                        DateTime d = Convert.ToDateTime(Model.ProfileDate);
+                                        string s = d.ToString("dd/MM/yyyy");
+                                    }
+                                    <input readonly type="text" value="@s" name="ProfileDate" class="form-control" />
                                 </div>
                             </div>
                         @if(Model.ProfileMildDesciption!=null)

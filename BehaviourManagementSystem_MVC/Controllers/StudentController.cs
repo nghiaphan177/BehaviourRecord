@@ -33,15 +33,17 @@ namespace BehaviourManagementSystem_MVC.Controllers
             this.toastNotification = toastNotification;
             _userAPIClient = userAPIClient;
         }
-        public async Task<IActionResult> StudentAssessment()
+        public async Task<IActionResult> StudentAssessment(int? page)
         {
             var id = User.FindFirst("Id").Value;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
             try
             {
                 var response = await _IIndividualAPIClient.GetAll(id);
                 if (response.Success == true)
                 {
-                    return View(response.Result);
+                    return View(response.Result.ToPagedList(pageNumber, pageSize));
                 }
             }
             catch (Exception)
