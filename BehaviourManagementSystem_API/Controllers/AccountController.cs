@@ -44,7 +44,7 @@ namespace BehaviourManagementSystem_API.Controllers
 
             var response = await _accountService.Login(request);
 
-            if(string.IsNullOrEmpty(response.Result))
+            if(response == null)
                 return BadRequest(response);
 
             return Ok(response);
