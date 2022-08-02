@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="col-auto text-right float-right ml-auto">
-            <a href="/Student/StudentAdd" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a title="Thêm Học Sinh" href="/Student/StudentAdd" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@
                 @if (Model != null)
                 {
                 <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0 datatable">
+                    <table id="example" class="table table-hover table-center mb-0">
                         <thead>
                             <tr>
                                 <th>Tên</th>
@@ -61,10 +61,10 @@
                                     <td>@item.Address</td>
                                     <td class="text-right">
                                         <div class="actions">
-                                            <a href="/Student/StudentEdit?id=@item.Ind_Id" class="btn btn-sm bg-success-light mr-2">
+                                            <a title="Chỉnh Sửa" href="/Student/StudentEdit?id=@item.Ind_Id" class="btn btn-sm bg-success-light mr-2">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a onclick=" deleteIndi('@item.Ind_Id', '@item.TeacherId')" class="btn btn-sm bg-danger-light">
+                                            <a title="Xóa" onclick=" deleteIndi('@item.Ind_Id', '@item.TeacherId')" class="btn btn-sm bg-danger-light">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>

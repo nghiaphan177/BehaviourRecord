@@ -54,7 +54,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         public async Task<IActionResult> StudentList(int? page)
         {
-            int pageSize = 2;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             try
             {
@@ -76,7 +76,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
 
         public async Task<IActionResult> StudentDetail(string id, int? page)
         {
-            int pageSize = 4;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             try
             {
