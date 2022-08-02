@@ -39,7 +39,7 @@ namespace BehaviourManagementSystem_MVC
                  {
                      options.Cookie.Name = "Teacher";
                      options.SlidingExpiration = true;
-                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                     options.ExpireTimeSpan = TimeSpan.FromDays(1);
                      options.LoginPath = "/Account/Login";
                      options.LogoutPath = "/Account/Logout";
                  })
@@ -47,7 +47,7 @@ namespace BehaviourManagementSystem_MVC
                 {
                     options.Cookie.Name = "Admin";
                     options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                    options.ExpireTimeSpan = TimeSpan.FromDays(1);
                     options.LoginPath = "/Admin/Account/Login";
                     options.LogoutPath = "/Admin/Account/Logout";
                     options.AccessDeniedPath = new PathString("/Admin/Account/AccessDenined");
@@ -55,7 +55,7 @@ namespace BehaviourManagementSystem_MVC
                 {
                     options.Cookie.Name = "Student";
                     options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                    options.ExpireTimeSpan = TimeSpan.FromDays(1);
                     options.LoginPath = "/StudentApp/Account/Login";
                     options.LogoutPath = "/StudentApp/Account/Logout";
                 });

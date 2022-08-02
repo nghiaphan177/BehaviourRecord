@@ -198,7 +198,6 @@
                                                     <th>Hồ Sơ</th>
                                                     <th>Quản Lý</th>
                                                     <th>Ngăn Chặn</th>
-                                                    <th>Tóm Tắt</th>
                                                     <th class="text-right">Tùy Chọn</th>
                                                 </tr>
                                             </thead>
@@ -222,7 +221,6 @@
                                                     <td>
                                                         <span class="badge @(item.PreventIsCompleted == true ? "badge-success" : "badge-danger")">@(item.PreventIsCompleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
                                                     </td>
-                                                    <td>@item.Summary</td>
                                                     <td class="text-right">
                                                         <div class="actions">
                                                             <a href="/StudentApp/Home/Intervention/@item.Id"
