@@ -23,7 +23,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title text-center text-info text-uppercase">Đánh Giá Hành Vi</h5>
+                <h5 class="card-title text-center text-info text-uppercase">Thêm Đánh Giá Hành Vi</h5>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded nav-justified">
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Học sinh cùng vi phạm</label>
+                                <label class="col-form-label col-md-2">Nạn Nhân</label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordWho" type="text" class="form-control" placeholder="Nhập tên học sinh..." data-parsley-required-message="Trường này là bắt buộc" />
                                     <div class="invalid-feedback">
@@ -267,7 +267,7 @@
             <!-- Đánh giá End -->
         </div>
     </div>
-    <div style="padding: 0 25px; margin-top: -2.5rem;" class="col-sm-3 mx-auto text-center">
+    <div id="exitbuttonassiment" style="padding: 0 25px; margin-top: -2.5rem;" class="col-sm-3 mx-auto text-center">
         <a href="/Student/StudentDetail?id=@Model.IndividualId">
             <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
         </a>

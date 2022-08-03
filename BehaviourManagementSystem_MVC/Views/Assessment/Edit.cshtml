@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Học sinh cùng vi phạm</label>
+                                <label class="col-form-label col-md-2">Nạn Nhân</label>
                                 <div class="col-md-10">
                                     <input asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
@@ -126,7 +126,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
+                                        <div style="padding: 0 7px;" class="col-sm-3 mx-auto text-center">
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                         </div>
                                     </form>
@@ -187,8 +187,8 @@
                                         <div class="form-group row">
                                             <label class="col-form-label col-md-2">Hành Động<span style="color: red;">*</span></label>
                                             <div class="col-md-10">
-                                                <input required name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" placeholder="Chọn hoặc viết vào đây..." />
-                                                <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
+                                                <input required name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong1" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
+                                                <ul class="dropdown-menu" id="multiselect-drop-hanhdong1">
                                                     @if (ViewBag.AntecedentActivity != null)
                                                     {
                                                         @foreach (var item in ViewBag.AntecedentActivity)
@@ -208,7 +208,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
+                                        <div style="padding: 0 7px;" class="col-sm-3 mx-auto text-center">
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                         </div>
                                     </form>
@@ -265,7 +265,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
+                                        <div style="padding: 0 7px;" class="col-sm-3 mx-auto text-center">
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                         </div>
                                     </form>
@@ -321,7 +321,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-3 mx-auto text-center">
+                                        <div style="padding: 0 7px;" class="col-sm-3 mx-auto text-center">
                                             <button type="submit" id="button-ct1" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                         </div>
                                     </form>
@@ -358,7 +358,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 mx-auto text-center">
+                                        <div style="padding: 0 7px;" class="col-sm-3 mx-auto text-center">
                                             <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
                                         </div>
                                     </form>
@@ -372,12 +372,12 @@
             </div>
         </div>
     </div>
-
-    <div style="padding: 0 22px; margin-top: -3.5rem;" class="col-sm-3 mx-auto text-center">
-        <a href="/Student/StudentDetail?id=@Model.IndividualId">
-            <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
-        </a>
-    </div>
+    
+        <div id="exitbuttonassiment" style="padding: 0 22px; margin-top: -3.5rem;" class="col-sm-3 mx-auto text-center">
+            <a href="/Student/StudentDetail?id=@Model.IndividualId">
+                <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
+            </a>
+        </div>
 </div>
 <!-- Đánh giá End -->
 
@@ -438,25 +438,25 @@
 
 
 
-            //function submitAssessment() {
+        //function submitAssessment() {
 
-            //    var form = $(this);
-            //    var actionUrl = form.attr('action');
-            //    var data = $("#assessform").serialize();
-            //    $.ajax({
-            //        type: "POST",
-            //        url: actionUrl,
-            //        data: data, // serializes the form's elements.
-            //        success: function (result) {
-            //            if (result.success == true) {
-            //                $('.nav a[href="#phantich"]').tab('show');
+        //    var form = $(this);
+        //    var actionUrl = form.attr('action');
+        //    var data = $("#assessform").serialize();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: actionUrl,
+        //        data: data, // serializes the form's elements.
+        //        success: function (result) {
+        //            if (result.success == true) {
+        //                $('.nav a[href="#phantich"]').tab('show');
 
-            //                $('.nav a[href="#phantich"]').removeClass("disabled")
-            //            }
+        //                $('.nav a[href="#phantich"]').removeClass("disabled")
+        //            }
 
-            //        }
-            //    });
-            //}
+        //        }
+        //    });
+        //}
 
     </script>
 

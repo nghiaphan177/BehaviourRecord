@@ -166,6 +166,9 @@ ul, ol {
 	border-top: 0;
 	padding: 10px 8px;
 }
+.dataTables_empty {
+	display: none !important;
+}
 .table-nowrap td,
 .table-nowrap th {
 	white-space: nowrap
@@ -3248,6 +3251,14 @@ table.table-inbox tbody tr.checked {
 	.page-header .breadcrumb {
 		font-size: 15px;
 	}
+	#exitbutton {
+		padding: 0 64px !important;
+		margin-top: -1.5rem !important;
+	}
+	#exitbuttonassiment {
+		padding: 0 50px !important;
+		margin-top: -1.5rem !important;
+	}
 }
 
 @media (max-width: 767.98px) {
@@ -3367,6 +3378,14 @@ table.table-inbox tbody tr.checked {
 	.db-info h3 {
 		font-size: 22px;
 	}
+	#exitbutton {
+		padding: 0 64px !important;
+		margin-top: -1.5rem !important;
+	}
+	#exitbuttonassiment {
+		padding: 0 50px !important;
+		margin-top: -1.5rem !important;
+	}
 }
 
 @media (max-width: 575.98px) {
@@ -3462,9 +3481,25 @@ table.table-inbox tbody tr.checked {
 	.view-link {
 	    font-size: 13px;
 	}
+	#exitbutton {
+		padding: 0 64px !important;
+		margin-top: -1.5rem !important;
+	}
+	#exitbuttonassiment {
+		padding: 0 50px !important;
+		margin-top: -1.5rem !important;
+	}
 }
 
 @media (max-width: 479px) {
+	#exitbutton {
+		padding: 0 64px !important;
+		margin-top: -1.5rem !important;
+	}
+	#exitbuttonassiment {
+		padding: 0 50px !important;
+		margin-top: -1.5rem !important;
+	}
 	.page-header .breadcrumb {
 		display: none;
 	}
