@@ -166,6 +166,9 @@ ul, ol {
 	border-top: 0;
 	padding: 10px 8px;
 }
+.dataTables_empty {
+	display: none !important;
+}
 .table-nowrap td,
 .table-nowrap th {
 	white-space: nowrap
