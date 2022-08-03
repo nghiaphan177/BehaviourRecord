@@ -100,16 +100,20 @@
                                         Trường này là bắt buộc
                                     </div>
                                     <ul class="dropdown-menu" id="multiselect-drop">
-                                        @foreach (var item in ViewBag.Mild)
+                                        @if (ViewBag.Mild != null)
                                         {
-                                            <li class="dropdown-item">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input class="checkbox-nhe" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                    </label>
-                                                </div>
-                                            </li>
+                                            @foreach (var item in ViewBag.Mild)
+                                            {
+                                                <li class="dropdown-item">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input class="checkbox-nhe" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            }
                                         }
+
                                     </ul>
                                 </div>
                             </div>
@@ -121,17 +125,21 @@
                                         Trường này là bắt buộc
                                     </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tb">
-                                        @foreach (var item in ViewBag.Moderate)
+                                        @if (ViewBag.Moderate != null)
                                         {
-                                            <li class="dropdown-item">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input class="checkbox-vua" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                    </label>
-                                                </div>
-                                            </li>
+                                            @foreach (var item in ViewBag.Moderate)
+                                            {
+                                                <li class="dropdown-item">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input class="checkbox-vua" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
 
+                                            }
                                         }
+
                                     </ul>
                                 </div>
                             </div>
@@ -143,17 +151,21 @@
                                         Trường này là bắt buộc
                                     </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-kn">
-                                        @foreach (var item in ViewBag.Extreme)
+                                        @if (ViewBag.Extreme != null)
                                         {
-                                            <li class="dropdown-item">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input class="checkbox-khac-nghiet" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                    </label>
-                                                </div>
-                                            </li>
+                                            @foreach (var item in ViewBag.Extreme)
+                                            {
+                                                <li class="dropdown-item">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input class="checkbox-khac-nghiet" value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
 
+                                            }
                                         }
+
                                     </ul>
                                 </div>
                             </div>
@@ -165,17 +177,21 @@
                                         Trường này là bắt buộc
                                     </div>
                                     <ul class="dropdown-menu" id="multiselect-drop-tbphuchoi">
-                                        @foreach (var item in ViewBag.Recovery)
+                                        @if (ViewBag.Recovery != null)
                                         {
-                                            <li class="dropdown-item">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                    </label>
-                                                </div>
-                                            </li>
+                                            @foreach (var item in ViewBag.Recovery)
+                                            {
+                                                <li class="dropdown-item">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
 
+                                            }
                                         }
+
                                     </ul>
                                 </div>
                             </div>

@@ -141,15 +141,18 @@
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentPerceivedDescription" type="text" id="camxuc" value="@Model.AnalyzeAntecedentPerceivedDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu " id="multiselect-drop-camxuc">
-                                                    @foreach (var item in ViewBag.AntecedentPerceived)
+                                                    @if (ViewBag.AntecedentPerceived != null)
                                                     {
-                                                        <li class="dropdown-item">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
+                                                        @foreach (var item in ViewBag.AntecedentPerceived)
+                                                        {
+                                                            <li class="dropdown-item">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        }
                                                     }
                                                 </ul>
                                                 <div class="invalid-feedback">
@@ -162,15 +165,18 @@
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentEnvironmentalDescription" type="text" id="moitruong" value="@Model.AnalyzeAntecedentEnvironmentalDescription" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-moitruong">
-                                                    @foreach (var item in ViewBag.AntecedentEnvironment)
+                                                    @if (ViewBag.AntecedentEnvironment != null)
                                                     {
-                                                        <li class="dropdown-item">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
+                                                        @foreach (var item in ViewBag.AntecedentEnvironment)
+                                                        {
+                                                            <li class="dropdown-item">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        }
                                                     }
                                                 </ul>
                                                 <div class="invalid-feedback">
@@ -183,15 +189,18 @@
                                             <div class="col-md-10">
                                                 <input required name="AnalyzeAntecedentActivityDescription" type="text" id="hanhdong" value="@Model.AnalyzeAntecedentActivityDescription" class="form-control dropdown-toggle" placeholder="Chọn hoặc viết vào đây..." />
                                                 <ul class="dropdown-menu" id="multiselect-drop-hanhdong">
-                                                    @foreach (var item in ViewBag.AntecedentActivity)
+                                                    @if (ViewBag.AntecedentActivity != null)
                                                     {
-                                                        <li class="dropdown-item">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
+                                                        @foreach (var item in ViewBag.AntecedentActivity)
+                                                        {
+                                                            <li class="dropdown-item">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input value="@item.Content" type="checkbox"><span style="margin-left:8px;">@item.Content</span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        }
                                                     }
                                                 </ul>
                                                 <div class="invalid-feedback">
