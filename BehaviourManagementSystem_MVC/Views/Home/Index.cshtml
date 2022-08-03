@@ -127,7 +127,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetCountAllStudentOfAllClasses?teacherId=" + idteacher,
+                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetCountAllStudentOfAllClasses?teacherId=" + idteacher,
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -193,7 +193,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetAllAssessAndInterByMonthWithTeacher?id=" + idteacher,
+                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllAssessAndInterByMonthWithTeacher?id=" + idteacher,
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
