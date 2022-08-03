@@ -134,7 +134,6 @@
                 success: function (response) {
                     var label = response["result"].map(a => 'Lớp ' +a.item1);
                     var data = response["result"].map(a => a.item2);
-                    console.log(data);
                     $("#totalclass").text(label.length);
                     $("#totalstu").text(data.reduce((a, b) => a + b, 0));
                     var options = {

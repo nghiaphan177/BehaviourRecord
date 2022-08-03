@@ -6,7 +6,8 @@
         "info": false,
         "lengthChange": false,
         "language": {
-            "search": "Tìm Kiếm:"
+            "search": "Tìm Kiếm:",
+            "emptyTable": "Không có dữ liệu"    
         }
     });
 });

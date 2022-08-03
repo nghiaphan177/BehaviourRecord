@@ -50,8 +50,8 @@
                                         DateTime d = Convert.ToDateTime(Model.RecordDate);
                                         string date = d.ToString("yyyy-MM-dd");
                                     }
-                                    <input required asp-for="RecordDate" type="date" value="@date" class="form-control" />
-                                    <div class="invalid-feedback">
+                                    <input required id="RecordDate" asp-for="RecordDate" type="date" value="@date" class="form-control" />
+                                    <div id="checkdate" class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
                                 </div>
@@ -88,9 +88,9 @@
                                     <input asp-for="RecordWho" type="text" value="@Model.RecordWho" class="form-control" placeholder="Nhập tên học sinh..." />
                                 </div>
                             </div>
-                                <div style="margin-bottom:1rem;" class="col-sm-3 mx-auto text-center">
-                                    <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
-                                </div>
+                            <div style="margin-bottom:1rem;" class="col-sm-3 mx-auto text-center">
+                                <button type="submit" class="btn btn-success btn-sm btn-block">Lưu và Tiếp Tục</button>
+                            </div>
 
                         </form>
                     </div>
@@ -372,12 +372,12 @@
             </div>
         </div>
     </div>
-    
-        <div style="padding: 0 22px; margin-top: -3.5rem;" class="col-sm-3 mx-auto text-center">
-            <a href="/Student/StudentDetail?id=@Model.IndividualId">
-                <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
-            </a>
-        </div>
+
+    <div style="padding: 0 22px; margin-top: -3.5rem;" class="col-sm-3 mx-auto text-center">
+        <a href="/Student/StudentDetail?id=@Model.IndividualId">
+            <button type="submit" class="btn btn-danger btn-sm btn-block">Thoát</button>
+        </a>
+    </div>
 </div>
 <!-- Đánh giá End -->
 
@@ -402,49 +402,61 @@
                 });
             }, false);
         });
-    </script>    
-<script>
-    $(document).ready(function () {
-        $('.timepicker').timepicker({
-            timeFormat: 'HH:mm',
-            interval: 30,
-            minTime: '00:00',
-            maxTime: '23:30',
-            defaultTime: '',
-            startTime: '',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
-        $('#tp1')
-            .timepicker('option', 'change', function (time) {
-                // update startTime option in timepicker-2
-                $('#tp2').timepicker('option', 'minTime', time);
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.timepicker').timepicker({
+                timeFormat: 'HH:mm',
+                interval: 30,
+                minTime: '00:00',
+                maxTime: '23:30',
+                defaultTime: '',
+                startTime: '',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
             });
-    });
+            $('#tp1')
+                .timepicker('option', 'change', function (time) {
+                    // update startTime option in timepicker-2
+                    $('#tp2').timepicker('option', 'minTime', time);
+                });
+            var mydate = document.getElementById('RecordDate');
+            mydate.addEventListener('input', function () {
+                var max = new Date(mydate.max);
+                var value = new Date(mydate.value);
+                if (value > max) {
+                    $('#assessform').addClass('was-validated');
+                    $("#checkdate").addClass("d-block").text("Ngày không được lớn hơn hiện tại");
+                }
+                else {
+                    $("#checkdate").removeClass("d-block").text("Trường này là bắt buộc");;
+                }
+            });
+        });
 
 
 
 
-        //function submitAssessment() {
+            //function submitAssessment() {
 
-        //    var form = $(this);
-        //    var actionUrl = form.attr('action');
-        //    var data = $("#assessform").serialize();
-        //    $.ajax({
-        //        type: "POST",
-        //        url: actionUrl,
-        //        data: data, // serializes the form's elements.
-        //        success: function (result) {
-        //            if (result.success == true) {
-        //                $('.nav a[href="#phantich"]').tab('show');
+            //    var form = $(this);
+            //    var actionUrl = form.attr('action');
+            //    var data = $("#assessform").serialize();
+            //    $.ajax({
+            //        type: "POST",
+            //        url: actionUrl,
+            //        data: data, // serializes the form's elements.
+            //        success: function (result) {
+            //            if (result.success == true) {
+            //                $('.nav a[href="#phantich"]').tab('show');
 
-        //                $('.nav a[href="#phantich"]').removeClass("disabled")
-        //            }
+            //                $('.nav a[href="#phantich"]').removeClass("disabled")
+            //            }
 
-        //        }
-        //    });
-        //}
+            //        }
+            //    });
+            //}
 
     </script>
 
@@ -456,7 +468,7 @@
             //$('#phantich-hanhvi-link').addClass('active');
             //$('#pt-hanhvi').addClass('show');
             //$('#pt-hanhvi').addClass('active');
-            
+
 
 
         </script>
@@ -471,7 +483,7 @@
             $('#pt-hanhvi').removeClass('active');
             $('#pt-tiende').addClass('show');
             $('#pt-tiende').addClass('active');
-            
+
 
         </script>
     }
