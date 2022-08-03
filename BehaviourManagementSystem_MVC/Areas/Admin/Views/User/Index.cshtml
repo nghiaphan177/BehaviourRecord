@@ -54,7 +54,7 @@
                                                 <th>@(i + 1)</th>
                                                 <td>@(@Model[i].FirstName + " " + @Model[i].LastName)</td>
                                                 <td>@Model[i].Email</td>
-                                                <td><span style="font-size:14px; text-align:center;" class="badge @(Model[i].RoleName=="TEACHER"? "badge-success":"badge-info")">@Model[i].RoleName</span></td>
+                                                <td><span style="font-size:14px; text-align:center;" class="badge @(Model[i].RoleName=="TEACHER"? "badge-success":"badge-info")">@(Model[i].RoleName=="TEACHER"?"Giáo viên":"Học sinh")</span></td>
                                                 <td>
                                                     @Model[i].PhoneNumber
                                                 </td>

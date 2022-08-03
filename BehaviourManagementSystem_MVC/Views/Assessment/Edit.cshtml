@@ -59,7 +59,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Bắt Đầu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input asp-for="RecordStart" asp type="text" value="@Model.RecordStart" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input id="tp1" asp-for="RecordStart" asp type="text" value="@Model.RecordStart" class="timepicker form-control" placeholder="Nhập giờ...">
                                     <div class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
@@ -68,7 +68,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Kết Thúc<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input asp-for="RecordEnd" type="text" value="@Model.RecordEnd" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input id="tp2" asp-for="RecordEnd" type="text" value="@Model.RecordEnd" class="timepicker form-control" placeholder="Nhập giờ...">
                                     <div class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
@@ -395,6 +395,7 @@
         });
     </script>    
 <script>
+    $(document).ready(function () {
         $('.timepicker').timepicker({
             timeFormat: 'HH:mm',
             interval: 30,
@@ -406,6 +407,12 @@
             dropdown: true,
             scrollbar: true
         });
+        $('#tp1')
+            .timepicker('option', 'change', function (time) {
+                // update startTime option in timepicker-2
+                $('#tp2').timepicker('option', 'minTime', time);
+            });
+    });
 
 
 

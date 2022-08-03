@@ -3,19 +3,19 @@
     ViewData["Title"] = "Thông tin người dùng";
     var img = Model.Teacher.AvtName;
     Uri uriResult;
-    bool result = Uri.TryCreate(Model.Teacher.AvtName, UriKind.Absolute, out uriResult) 
+    bool result = Uri.TryCreate(Model.Teacher.AvtName, UriKind.Absolute, out uriResult)
      && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-    if(result != true)
+    if (result != true)
     {
         img = "/images/" + img;
     }
 }
 @section styles {
-<link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
-<link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-<link href="~/lib/datatables.net-button/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-<link href="~/lib/datatables.net-reponsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-<link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="~/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-button/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datatables.net-reponsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">*@
 }
 
 <div class="row">
@@ -95,48 +95,44 @@
         </div>
         <div class="row m-t-20">
             <div class="col-12">
-                <div class="card m-b-20 ">
+                <div class="m-b-20 ">
                     <div class="card-body">
                         <h4 class="card-title">Danh sách học sinh</h4>
                         @if (Model.Students != null)
                         {
-                            <div class="table-rep-plugin">
-                                <div class="table-responsive b-0" data-pattern="priority-columns">
-                                    <table id="tech-companies-1" class="table  table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Tên</th>
-                                                <th>Lớp</th>
-                                                <th>Ngày sinh</th>
-                                                <th>Địa chỉ</th>
-                                                <th class="text-right">Tùy chọn</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Students)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @(item.FirstName + " " + item.LastName)
-                                                    </td>
-                                                    <td>@item.Classes</td>
-                                                    @{
-                                                        DateTime d = Convert.ToDateTime(item.DOB);
-                                                        string s = d.ToString("dd/MM/yyyy");
-                                                    }
-                                                    <td>@s</td>
-                                                    <td>@item.Address</td>
-                                                    <td class="text-right">
-                                                        <a href="/admin/Student/Details/@item.Ind_Id" type="button" class="btn btn-primary waves-effect waves-light">Xem thông tin</a>
-                                                    </td>
-                                                </tr>
 
+                            <table id="datatable" class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Lớp</th>
+                                        <th>Ngày sinh</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Tùy chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Students)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @(item.FirstName + " " + item.LastName)
+                                            </td>
+                                            <td>@item.Classes</td>
+                                            @{
+                                                DateTime d = Convert.ToDateTime(item.DOB);
+                                                string s = d.ToString("dd/MM/yyyy");
                                             }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            <td>@s</td>
+                                            <td>@item.Address</td>
+                                            <td class="text-center">
+                                                <a href="/admin/Student/Details/@item.Ind_Id" type="button" class="btn btn-primary waves-effect waves-light">Xem thông tin</a>
+                                            </td>
+                                        </tr>
 
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         }
                         else
                         {
@@ -152,29 +148,33 @@
 </div>
 @section scripts {
     @*<script src="~/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>*@
-<script src="~/lib/datables.net/js/jquery.dataTables.min.js"></script>
-<script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
-<script src="~/lib/datatables.net-reponsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<script>
-    //Warning Message
-    function deleteUser(id) {
-        swal({
-            title: 'Bạn đã chắc chắn?',
-            text: "Xóa người dùng này!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger m-l-10',
-            confirmButtonText: 'Yes!'
-        }).then(function () {
-            $.ajax({
-                url: "/Admin/User/delete",
-                data: { "id": id },
-                type: "DELETE"                                               
-           
-            })
-        })
-    }
-</script>
+    <script src="~/lib/datables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="~/lib/datatables.net-reponsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script>
+        //Warning Message
+        //function deleteUser(id) {
+        //    swal({
+        //        title: 'Bạn đã chắc chắn?',
+        //        text: "Xóa người dùng này!",
+        //        type: 'warning',
+        //        showCancelButton: true,
+        //        confirmButtonClass: 'btn btn-success',
+        //        cancelButtonClass: 'btn btn-danger m-l-10',
+        //        confirmButtonText: 'Yes!'
+        //    }).then(function () {
+        //        $.ajax({
+        //            url: "/Admin/User/delete",
+        //            data: { "id": id },
+        //            type: "DELETE"
+
+        //        })
+        //    })
+        //}
+        $(document).ready(function () {
+            $("#datatable").DataTable({ lengthMenu: [4] });
+            $("#datatable-buttons").DataTable({ lengthChange: !1, buttons: ["colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+        });
+    </script>
 }

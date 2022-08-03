@@ -2,7 +2,7 @@
     ViewData["Title"] = "Trang chủ";
 }
 @section styles{
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 }
 <div class="row">
     <div class="col-sm-12">
@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-xl-4 col-md-6">
         <div class="card mini-stat bg-primary">
-            <div class="card-body mini-stat-img">
+            <div class="card-body ">
                 <div class="mini-stat-icon">
                     <i class="mdi mdi-human-male float-right"></i>
                 </div>
@@ -27,7 +27,7 @@
     </div>
     <div class="col-xl-4 col-md-6">
         <div class="card mini-stat bg-primary">
-            <div class="card-body mini-stat-img">
+            <div class="card-body ">
                 <div class="mini-stat-icon">
                     <i class="mdi mdi-human-male-female float-right"></i>
                 </div>
@@ -85,25 +85,34 @@
             <div class="card-body">
 
                 <h4 class="card-title mb-4">Số lượng tài khoản mới theo năm</h4>
-                <div class="row text-right mt-4">
+                @*<div class="row text-right mt-4">
                     <div class="col-sm-12">
                         Năm: <input readonly type="text" name="datepicker" id="datepicker" style="width:45px;" />
                     </div>
+                </div>*@
+                <div class="col-sm-12">
+                    <div class="form-group row text-right">
+                        <label class="col-sm-10 col-lg-11 col-9 col-form-label">Năm:</label>
+                        <div class="col-sm-2 col-lg-1 col-3 input-group date">
+                            <input type="text" readonly class="form-control" id="datepicker">
+
+                        </div>
+                    </div>
                 </div>
                 @*<div class="row text-center mt-4">
-                        <div class="col-sm-4">
-                            <h5 class="mb-0 font-size-20">2541</h5>
-                            <p class="text-muted">Activated</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <h5 class="mb-0 font-size-20">84845</h5>
-                            <p class="text-muted">Pending</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <h5 class="mb-0 font-size-20">12001</h5>
-                            <p class="text-muted">Deactivated</p>
-                        </div>
-                    </div>*@
+            <div class="col-sm-4">
+                <h5 class="mb-0 font-size-20">2541</h5>
+                <p class="text-muted">Activated</p>
+            </div>
+            <div class="col-sm-4">
+                <h5 class="mb-0 font-size-20">84845</h5>
+                <p class="text-muted">Pending</p>
+            </div>
+            <div class="col-sm-4">
+                <h5 class="mb-0 font-size-20">12001</h5>
+                <p class="text-muted">Deactivated</p>
+            </div>
+        </div>*@
 
                 <canvas id="bar" height="100"></canvas>
 
@@ -117,9 +126,17 @@
             <div class="card-body">
 
                 <h4 class="card-title mb-4">Số lượng tài khoản mới theo tháng</h4>
-                <div class="row text-right mt-4">
-                    <div class="col-sm-12">
-                        Tháng: <input readonly type="text" name="monthpicker" id="monthpicker"style="width:65px;" />
+                @*<div class="col-sm-4 input-group date">
+                        <label class="label-input100">Tháng</label> <input class="form-control" readonly type="text" name="monthpicker" id="monthpicker" style="width:65px;" />
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>*@
+                <div class="col-sm-12">
+                    <div class="form-group row text-right">
+                        <label class="col-sm-10 col-lg-11 col-9 col-form-label">Tháng:</label>
+                        <div class="col-sm-2 col-lg-1 col-3 input-group date">
+                            <input type="text" readonly class="form-control" id="monthpicker">
+
+                        </div>
                     </div>
                 </div>
                 @*<div class="row text-center mt-4">
@@ -147,18 +164,18 @@
     <script src="~/lib/morris.js/morris.min.js"></script>
     <script src="~/lib/raphael/raphael.min.js"></script>
     <script src="~/lib/chart.js/Chart.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         function LoadChart(year) {
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetCountAllAccountRegisterOfYear?year=" + year,
+                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetCountAllAccountRegisterOfYear?year=" + year,
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var chart = document.getElementById('bar').getContext('2d');                    
+                    var chart = document.getElementById('bar').getContext('2d');
                     var data1 = response["result"].map(a => a.item2)
                     var mychar = new Chart(chart, {
                         type: 'bar',
@@ -197,7 +214,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd//GetCountAllAccountRegisterOfMonth?month=" + month + " &year=" + year,
+                url: "https://bmsapis.azurewebsites.net/api/AdBd//GetCountAllAccountRegisterOfMonth?month=" + month + " &year=" + year,
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -205,21 +222,27 @@
                     var chart = document.getElementById('baraccountmonth').getContext('2d');
                     var datalabel = response["result"].map(a => ("ngày " + a.item1))
                     var data1 = response["result"].map(a => a.item2)
+                    var max = Math.max(...data1);
                     var mychar = new Chart(chart, {
-                        type: 'bar',
+                        type: 'line',
                         data: {
                             labels: datalabel,
                             datasets: [
                                 {
                                     label: "Tài khoản đăng ký",
-                                    backgroundColor: "#28bbe3",
                                     borderColor: "#28bbe3",
-                                    borderWidth: 1,
-                                    hoverBackgroundColor: "#28bbe3",
-                                    hoverBorderColor: "#28bbe3",
+                                    fill: false,
+                                    cubicInterpolationMode: 'monotone',
+                                    tension: 0.6,
                                     data: data1,
                                 },
                             ],
+                        },
+                        options: {
+                            legend: { display: false },
+                            scales: {
+                                yAxes: [{ ticks: { min: 0, max: (max + 3) } }],
+                            }
                         }
                     });
                 }
@@ -229,7 +252,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetAllStudentAndTeacherAndAllAccount",
+                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllStudentAndTeacherAndAllAccount",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -262,7 +285,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://gr4bms.azurewebsites.net/api/AdBd/GetAllAccountNotVerifyMail",
+                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllAccountNotVerifyMail",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -299,7 +322,6 @@
             $("#monthpicker").val(d.getMonth() + 1 + "-" + d.getFullYear());
             $("#monthpicker").datepicker({
                 language: 'vi',
-                locale: 'vi',
                 format: "mm-yyyy",
                 startView: "months",
                 minViewMode: "months"

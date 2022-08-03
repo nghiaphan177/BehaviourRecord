@@ -100,6 +100,16 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             try
             {
                 var user = await _userAPIClient.GetUserById(id);
+                if(user == null)
+                {
+                    toastNotification.AddErrorToastMessage("Không tìm thấy người dùng này");
+                    return RedirectToAction("Index", "Home");
+                }
+                if (user.Success == false)
+                {
+                    toastNotification.AddErrorToastMessage(user.Message);
+                    return RedirectToAction("Index", "Home");
+                }
                 return View(user.Result);
             }
             catch (Exception)

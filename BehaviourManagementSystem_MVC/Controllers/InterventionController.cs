@@ -50,7 +50,7 @@ namespace BehaviourManagementSystem_MVC.Controllers
         
         public async Task<IActionResult> GetInterventionById(string id, int? page, string? idindi)
         {
-            int pageSize = 2;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             try
             {
