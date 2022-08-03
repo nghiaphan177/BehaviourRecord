@@ -31,7 +31,7 @@ namespace BehaviourManagementSystem_API.Extensions
                     Email = "lhduy12cb34@gmail.com",
                     NormalizedEmail = "lhduy12cb34@gmail.com".ToUpper(),
                     EmailConfirmed = true,
-                    PhoneNumber = "0334102197",
+                    PhoneNumber = "0779863007",
                     PhoneNumberConfirmed = true,
                     SecurityStamp = stamp.ToString(),
                     ConcurrencyStamp = stamp.ToString().ToUpper(),

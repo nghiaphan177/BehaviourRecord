@@ -151,30 +151,34 @@
                                             {
                                                 @foreach (var item in assessmentRequests)
                                                 {
-                                                <tr class="text-center">
-                                                    <td>@item.RecordDate?.ToShortDateString()</td>
-                                                    <td>@item.RecordStart</td>
-                                                    <td>
-                                                        <span class="badge @(item.RecordIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.RecordIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge @(item.AnalyzeIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.AnalyzeIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge @(item.FunctionIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.FunctionIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
-                                                    </td>
-                                                    <td>
-                                                        @item.AnalyzeBehaviour
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <div class="actions">
-                                                            <a href="/StudentApp/Home/Assessment/@item.Id"
-                                                               class="btn btn-sm bg-success-light mr-2">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <tr class="text-center">
+                                                @{
+                                                    DateTime date = Convert.ToDateTime(item.RecordDate);
+                                                    string formatdate = date.ToString("dd/MM/yyyy");
+                                                }
+                                                <td>@formatdate</td>
+                                                <td>@item.RecordStart</td>
+                                                <td>
+                                                    <span class="badge @(item.RecordIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.RecordIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge @(item.AnalyzeIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.AnalyzeIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge @(item.FunctionIsCompeleted == true ? "badge-success" : "badge-danger")">@(item.FunctionIsCompeleted == true ? "Hoàn Thành" : "Chưa hoàn thành")</span>
+                                                </td>
+                                                <td>
+                                                    @item.AnalyzeBehaviour
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="actions">
+                                                        <a href="/StudentApp/Home/Assessment/@item.Id"
+                                                           class="btn btn-sm bg-success-light mr-2">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                                 }
                                             }
                                             </tbody>

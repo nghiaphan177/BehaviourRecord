@@ -9,10 +9,6 @@ using System.Threading.Tasks;
 
 namespace BehaviourManagementSystem_API.Services
 {
-    /// <summary>
-    /// Class RoleService Implement IRoleService. Design parttern repository.
-    /// WriterL DuyLH4
-    /// </summary>
     public class RoleService : IRoleService
     {
         private readonly ApplicationDbContext _context;

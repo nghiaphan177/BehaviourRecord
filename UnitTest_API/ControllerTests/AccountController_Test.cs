@@ -1,9 +1,9 @@
 ﻿using BehaviourManagementSystem_API.Controllers;
 using BehaviourManagementSystem_API.Services;
 using BehaviourManagementSystem_ViewModels.Responses.Common;
-using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Moq;
 using System.IO;
 using Xunit;
 
@@ -11,9 +11,7 @@ namespace UnitTest_API.ControllerTests
 {
     public class AccountController_Test
     {
-        private readonly IAccountService _accountService;
-        private readonly IConfiguration _configuration;
-        private readonly AccountController _accountController;
+        private readonly IConfigurationRoot _configuration;
 
         public AccountController_Test()
         {
@@ -22,19 +20,18 @@ namespace UnitTest_API.ControllerTests
                .AddJsonFile(@"appsettings.json")
                .AddEnvironmentVariables()
                .Build();
-
-            _accountService = A.Fake<IAccountService>();
-
-            _accountController = new AccountController(_accountService, _configuration);
         }
 
         [Fact]
         public void GetGoogleClientId_ReturnOK()
         {
             var pass = _configuration["Google:ClientId"];
-            var controller = new AccountController(_accountService, _configuration);
 
-            var result = (ObjectResult)_accountController.GetGoogleClientId();
+            var mock = new Mock<IAccountService>();
+
+            var controller = new AccountController(mock.Object, _configuration);
+
+            var result = (ObjectResult)controller.GetGoogleClientId();
             var resultObj = (ResponseResult<string>)result.Value;
 
             Assert.Equal(200, result.StatusCode);

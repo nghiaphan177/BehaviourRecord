@@ -94,15 +94,27 @@
                             <div class="card card-table">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-center mb-0 datatable">
+                                        <div class="row" style="margin-bottom:2rem;">
+                                            <div class="col-sm-3">
+                                                <span>Từ Ngày:</span>
+                                                <input style="border-radius: 10px;" type="text" id="min" name="min">
+                                            </div>
+                                            <div class="col">
+                                                <span>Đến Ngày:</span>
+                                                <input style="border-radius: 10px;" type="text" id="max" name="max">
+                                            </div>
+
+                                        </div>
+
+                                        <table id="example" class="table table-hover table-center mb-0">
                                             <thead>
-                                                <tr class="text-center">
-                                                    <th class="">Ngày</th>
-                                                    <th class="">Thời Gian</th>
-                                                    <th>Tường Trình</th>
-                                                    <th>Phân Tích</th>
-                                                    <th>Chi Tiết</th>
-                                                    <th class="">Tóm Tắt</th>
+                                                <tr>
+                                                    <th class="text-center">Ngày</th>
+                                                    <th class="text-center">Thời Gian</th>
+                                                    <th class="text-center">Tường Trình</th>
+                                                    <th class="text-center">Phân Tích</th>
+                                                    <th class="text-center">Chi Tiết</th>
+                                                    <th class="text-center">Tóm Tắt</th>
                                                     <th class="text-center">Tùy Chọn</th>
                                                 </tr>
                                             </thead>
@@ -111,71 +123,80 @@
                                                 {
                                                     @foreach (AssessmentRequest assessment in Model.Assessment)
                                                     {
-                                                <tr id="assess-@assessment.Id" class="text-center">
-                                                    @{
-                                                        DateTime date = Convert.ToDateTime(assessment.RecordDate);
-                                                        string formatdate = date.ToString("dd/MM/yyyy");
-                                                    }
-                                                    <td>@formatdate</td>
-                                                    <td>@assessment.RecordStart</td>
-                                                    <td>
-                                                        @{
-                                                            if (assessment.RecordIsCompeleted == true)
-                                                            {
-                                                                <span class="badge badge-success">Hoàn Thành</span>
+                                                        <tr id="assess-@assessment.Id" class="text-center">
+                                                            @{
+                                                                DateTime date = Convert.ToDateTime(assessment.RecordDate);
+                                                                string formatdate = date.ToString("dd/MM/yyyy");
                                                             }
-                                                            else
-                                                            {
-                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                                                            }
-                                                        }
+                                                            <td>@formatdate</td>
+                                                            <td>@assessment.RecordStart</td>
+                                                            <td>
+                                                                @{
+                                                                    if (assessment.RecordIsCompeleted == true)
+                                                                    {
+                                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                                    }
+                                                                }
 
-                                                    </td>
-                                                    <td>
-                                                        @{
-                                                            if (assessment.AnalyzeIsCompeleted == true)
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    if (assessment.AnalyzeIsCompeleted == true)
+                                                                    {
+                                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    if (assessment.FunctionIsCompeleted == true)
+                                                                    {
+                                                                        <span class="badge badge-success">Hoàn Thành</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                            @if (assessment.AnalyzeBehaviour != null)
                                                             {
-                                                                <span class="badge badge-success">Hoàn Thành</span>
+                                                                <td>@(assessment.AnalyzeBehaviour.Substring(0, 20) + "...")</td>
                                                             }
                                                             else
                                                             {
-                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
+                                                                <td>Chưa có dữ liệu</td>
+
                                                             }
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @{
-                                                            if (assessment.FunctionIsCompeleted == true)
-                                                            {
-                                                                <span class="badge badge-success">Hoàn Thành</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span class="badge badge-danger">Chưa Hoàn Thành</span>
-                                                            }
-                                                        }
-                                                    </td>
-                                                    <td>Xin Chào</td>
-                                                    <td class="text-center">
-                                                        <div class="actions">
-                                                            <a href="/Intervention/GetInterventionById?id=@assessment.Id&idindi=@assessment.IndividualId" title="Xem Tất Cả Can Thiệp" class="btn btn-sm bg-warning-light mr-2">
-                                                                <i class="fas fa-clipboard"></i>
-                                                            </a>
-                                                            <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chi Tiết Đánh Giá" class="btn bg-detail btn-sm mr-2">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                            @*<a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
-                    <i class="fas fa-plus-circle"></i>
-                </a>*@
-                                                            <a asp-action="Edit" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chỉnh Sửa Đánh Giá" class="btn btn-sm bg-success-light mr-2">
-                                                                <i class="fas fa-pen"></i>
-                                                            </a>
-                                                            <button title="Xóa Đánh Giá" onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+
+                                                            <td class="text-center">
+                                                                <div class="actions">
+                                                                    <a href="/Intervention/GetInterventionById?id=@assessment.Id&idindi=@assessment.IndividualId" title="Xem Tất Cả Can Thiệp" class="btn btn-sm bg-warning-light mr-2">
+                                                                        <i class="fas fa-clipboard"></i>
+                                                                    </a>
+                                                                    <a asp-action="Detail" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chi Tiết Đánh Giá" class="btn bg-detail btn-sm mr-2">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>
+                                                                    @*<a asp-action="Create" asp-controller="Intervention" asp-route-id="@assessment.Id" class="btn btn-sm bg-success-light mr-2">
+                                                                            <i class="fas fa-plus-circle"></i>
+                                                                        </a>*@
+                                                                    <a asp-action="Edit" asp-controller="Assessment" asp-route-assid="@assessment.Id" title="Chỉnh Sửa Đánh Giá" class="btn btn-sm bg-success-light mr-2">
+                                                                        <i class="fas fa-pen"></i>
+                                                                    </a>
+                                                                    <button title="Xóa Đánh Giá" onclick="deleteAssessment('@assessment.Id')" class="btn btn-sm bg-danger-light">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     }
                                                 }
                                                 @if (Model.Assessment == null)
@@ -253,5 +274,6 @@
         }
     </script>
 
+    <script src="~/js/Datable.js"></script>
 }
 

@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="col-auto text-right float-right ml-auto">
-            <a href="/Student/StudentAdd" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a title="Thêm Học Sinh" href="/Student/StudentAdd" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -26,70 +26,70 @@
             <div class="card-body">
                 @if (Model != null)
                 {
-                <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0 datatable">
-                        <thead>
-                            <tr>
-                                <th>Tên</th>
-                                <th>Lớp</th>
-                                <th>Ngày sinh</th>
-                                <!-- <th>Parent Name</th>
-                <th>Mobile Number</th> -->
-                                <th>Địa chỉ</th>
-                                <th class="text-right">Tùy chọn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr id="Individual-@item.Ind_Id">
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            @*<a href="/Student/StudentDetail?id=@item.Ind_Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/images/99274b606d0b43fca6d4dec21388d186huynq6.png" alt="User Image"></a>*@
-                                            @{
-                                                var fullName = item.FirstName + " " + item.LastName;
-                                                <a href="/Student/StudentDetail?id=@item.Ind_Id">@fullName</a>
-                                            }
-                                        </h2>
-                                    </td>
-                                    <td>@item.Classes</td>
-                                    @{
-                                        DateTime d = Convert.ToDateTime(item.DOB);
-                                        string s = d.ToString("dd/MM/yyyy");
-                                    }
-                                    <td>@s</td>
-                                    <td>@item.Address</td>
-                                    <td class="text-right">
-                                        <div class="actions">
-                                            <a href="/Student/StudentEdit?id=@item.Ind_Id" class="btn btn-sm bg-success-light mr-2">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                            <a onclick=" deleteIndi('@item.Ind_Id', '@item.TeacherId')" class="btn btn-sm bg-danger-light">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                    <div class="table-responsive">
+                        <table id="example" class="table table-hover table-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Lớp</th>
+                                    <th>Ngày sinh</th>
+                                    <!-- <th>Parent Name</th>
+                                    <th>Mobile Number</th> -->
+                                    <th>Địa chỉ</th>
+                                    <th class="text-right">Tùy chọn</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr id="Individual-@item.Ind_Id">
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                @*<a href="/Student/StudentDetail?id=@item.Ind_Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/images/99274b606d0b43fca6d4dec21388d186huynq6.png" alt="User Image"></a>*@
+                                                @{
+                                                    var fullName = item.FirstName + " " + item.LastName;
+                                                    <a href="/Student/StudentDetail?id=@item.Ind_Id">@fullName</a>
+                                                }
+                                            </h2>
+                                        </td>
+                                        <td>@item.Classes</td>
+                                        @{
+                                            DateTime d = Convert.ToDateTime(item.DOB);
+                                            string s = d.ToString("dd/MM/yyyy");
+                                        }
+                                        <td>@s</td>
+                                        <td>@item.Address</td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a title="Chỉnh Sửa" href="/Student/StudentEdit?id=@item.Ind_Id" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <a title="Xóa" onclick=" deleteIndi('@item.Ind_Id', '@item.TeacherId')" class="btn btn-sm bg-danger-light">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                            }
+                                }
 
-                        </tbody>
-                    </table>
-                    @if (Model != null)
-                    {
-                        <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
-                        @Html.PagedListPager(Model,
-                                page => Url.Action("StudentList", new { page }),
-                                new PagedListRenderOptions
-                            {
-                                DisplayLinkToIndividualPages = true,
-                                DisplayPageCountAndCurrentLocation = false,
-                                MaximumPageNumbersToDisplay = 3,
-                                LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" },
-                            })
-                    }
-                </div>
+                            </tbody>
+                        </table>
+                        @if (Model != null)
+                        {
+                            <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                            @Html.PagedListPager(Model,
+                                    page => Url.Action("StudentList", new { page }),
+                                    new PagedListRenderOptions
+                                {
+                                    DisplayLinkToIndividualPages = true,
+                                    DisplayPageCountAndCurrentLocation = false,
+                                    MaximumPageNumbersToDisplay = 3,
+                                    LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" },
+                                })
+                        }
+                    </div>
 
                 }
                 else
@@ -129,3 +129,17 @@
         })
     }
 </script>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[0, 'asc']],
+                "info": false,
+                "lengthChange": false,
+                "language": {
+                    "search": "Tìm Kiếm:"
+                }
+            });
+        });
+    </script>
+}
