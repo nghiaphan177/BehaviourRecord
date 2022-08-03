@@ -36,7 +36,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                           href="#quanlycanthiep" data-toggle="tab">Chi Tiết Can Thiệp</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
@@ -78,16 +78,16 @@
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label style="margin-left: 62px;">
+                                        <label style="margin-left: 5rem;">
                                             @if (Model.ProfileExtremeDesciption == null && Model.ManageExtreme == null)
                                             {
-                                                <input type="checkbox" id="check-kn-sua" name="checkboxkn" value="Can Thiệp Khắc Nghiệt" />
+                                                <input type="checkbox" id="check-kn-sua" name="checkboxkn" value="Can Thiệp Nghiêm Trọng" />
                                             }
                                             else
                                             {
-                                                <input type="checkbox" checked id="check-kn-sua" name="checkboxkn" value="Can Thiệp Khắc Nghiệt" />
+                                                <input type="checkbox" checked id="check-kn-sua" name="checkboxkn" value="Can Thiệp Nghiêm Trọng" />
                                             }
-                                            Can Thiệp Khắc Nghiệt
+                                            Can Thiệp Nghiêm Trọng
                                         </label>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
 
 
                             <div id="input-kn-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Nghiêm Trọng <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" placeholder="--Chọn Hoặc Nhập--" autocomplete="off" id="khacnghiet-sua" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption" class="form-control dropdown-toggle" data-toggle="dropdown" />
                                     <div class="invalid-feedback">
@@ -254,7 +254,7 @@
                                 </div>
                             </div>
                             <div id="input-ql-kn-sua" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Nghiêm Trọng <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" autocomplete="off" id="ql-khacnghiet-sua" name="ManageExtreme" value="@Model.ManageExtreme" class="form-control" placeholder="Nhập ..." />
                                     <div class="invalid-feedback">
@@ -284,7 +284,7 @@
                         <form action="/Intervention/EditPrevent" method="post" class="needs-validation" novalidate>
                             <input hidden name="Id" value="@Model.Id">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Tính Cách <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Thái Độ<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventStatus" value="@Model.PreventStatus" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                     <div class="invalid-feedback">
@@ -293,7 +293,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Hoạt Động <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Kế Hoạch Hoạt Động <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventActivity" value="@Model.PreventActivity" id="text-key" class="form-control text-key" placeholder="Nhập..." />
                                     <div class="invalid-feedback">
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Kế Hoạch Tương Tác <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInteraction" value="@Model.PreventInteraction" class="form-control text-key" placeholder="Nhập..." />
                                     <div class="invalid-feedback">
@@ -311,7 +311,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2">Chiến Lược Môi Trường <span style="color: red;">*</span></label>
+                                <label class="col-form-label col-md-2">Địa Điểm Tương Tác <span style="color: red;">*</span></label>
                                 <div class="col-md-10">
                                     <input type="text" required autocomplete="off" name="PreventInvironmental" value="@Model.PreventInvironmental" class="form-control text-key" placeholder="Nhập..." />
                                     <div class="invalid-feedback">

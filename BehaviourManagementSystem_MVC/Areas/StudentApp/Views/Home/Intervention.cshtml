@@ -35,7 +35,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="#quanlycanthiep" data-toggle="tab">Quản Lý Can Thiệp</a>
+                           href="#quanlycanthiep" data-toggle="tab">Chi Tiết Can Thiệp</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
@@ -60,8 +60,8 @@
                                         </label>
                                     </div>
                                     <div class="checkbox">
-                                        <label style="margin-left: 62px;">
-                                            <input readonly disabled type="checkbox" id="check-kn" name="checkbox" @((Model.ProfileExtremeDesciption != null) ? "checked" :"")/> Can Thiệp Khắc Nghiệt
+                                        <label style="margin-left: 5rem;">
+                                            <input readonly disabled type="checkbox" id="check-kn" name="checkbox" @((Model.ProfileExtremeDesciption != null) ? "checked" : "") /> Can Thiệp Nghiêm Trọng
                                         </label>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                         @if(Model.ProfileExtremeDesciption!=null)
                         {
                             <div id="input-kn" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Nghiêm Trọng</label>
                                 <div class="col-md-10">
                                     <input readonly type="text" autocomplete="off" id="khacnghiet" name="ProfileExtremeDesciption" value="@Model.ProfileExtremeDesciption"  class="form-control" />
                                 </div>
@@ -152,7 +152,7 @@
                                 </div>
                             </div>
                             <div id="input-quanly-kn" class="form-group row">
-                                <label class="col-form-label col-md-2">Giai Đoạn Khắc Nghiệt</label>
+                                <label class="col-form-label col-md-2">Giai Đoạn Nghiêm Trọng</label>
                                 <div class="col-md-10">
                                     <input readonly type="text" value="@Model.ManageExtreme" class="form-control"  />
                                 </div>
@@ -180,19 +180,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2">Chiến Lược Hoạt Động</label>
+                            <label class="col-form-label col-md-2">Kế Hoạch Hoạt Động</label>
                             <div class="col-md-10">
                                 <input readonly type="text" value="@Model.PreventActivity" id="text-key" class="form-control text-key" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2">Chiến Lược Tiếp Cận</label>
+                            <label class="col-form-label col-md-2">Kế Hoạch Tương Tác</label>
                             <div class="col-md-10">
                                 <input readonly type="text" value="@Model.PreventInteraction" class="form-control text-key" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-md-2">Chiến Lược Môi Trường</label>
+                            <label class="col-form-label col-md-2">Địa Điểm Tương Tác</label>
                             <div class="col-md-10">
                                 <input readonly type="text" value="@Model.PreventInvironmental" class="form-control text-key" />
                             </div>
