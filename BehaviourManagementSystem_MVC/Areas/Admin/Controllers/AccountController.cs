@@ -92,7 +92,6 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 "Admin");
-
             return RedirectToAction("Login");
         }
         [Authorize(AuthenticationSchemes = "Admin",Policy ="AdminOnly")]
