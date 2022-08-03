@@ -25,7 +25,7 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         }
         public async Task<IActionResult> Index(int? page)
         {
-            int pageSize = 2;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             try
             {

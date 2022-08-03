@@ -109,11 +109,11 @@ namespace BehaviourManagementSystem_MVC.Controllers
                     toastNotification.AddErrorToastMessage("Trang bị lỗi");
                     return RedirectToAction("StudentDetail", "Student", new { id = id });
                 }
-                if (responseAnaPer.Success == false|| responseAnaEnvi.Success == false || responseAnaActi.Success == false)
-                {
-                    toastNotification.AddErrorToastMessage("Truy xuất thông tin lỗi");
-                    return RedirectToAction("StudentDetail", "Student", new { id = id });
-                }
+                //if (responseAnaPer.Success == false|| responseAnaEnvi.Success == false || responseAnaActi.Success == false)
+                //{
+                //    toastNotification.AddErrorToastMessage("Truy xuất thông tin lỗi");
+                //    return RedirectToAction("StudentDetail", "Student", new { id = id });
+                //}
                 return View(new AssessmentRequest() { Id = "", IndividualId = id });
             }
             catch (Exception)
