@@ -55,7 +55,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Bắt Đầu<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input required id="tp1" asp-for="RecordStart" readonly asp type="text" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input required id="tp1" asp-for="RecordStart" asp type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                     <div class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
@@ -64,7 +64,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2">Giờ Kết Thúc<span style="color: red;">*</span></label>
                                 <div class="col-md-10">
-                                    <input required id="tp2" asp-for="RecordEnd" readonly type="text" class="timepicker form-control" placeholder="Nhập giờ...">
+                                    <input required id="tp2" asp-for="RecordEnd" type="text" class="timepicker form-control" placeholder="Nhập giờ...">
                                     <div class="invalid-feedback">
                                         Trường này là bắt buộc
                                     </div>
@@ -408,8 +408,10 @@
                     $("#checkdate").addClass("d-block").text("Ngày không được lớn hơn hiện tại");
                 }
                 else {
+                    $('#assessform').removeClass('was-validated');
                     $("#checkdate").removeClass("d-block").text("Trường này là bắt buộc");;
                 }
+            });
         });
     </script>
     @if (TempData["MessageCreateAss"] != null)

@@ -95,9 +95,11 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
             string webrootpath = webHostEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
             string fileName = null;
+            string oldfile = null;
             if (files.Count != 0)
             {
                 fileName = Guid.NewGuid().ToString().Replace("-", "") + request.UserName + Path.GetExtension(files[0].FileName);
+                oldfile = request.AvtName;
                 request.AvtName = fileName;
             }
             var response = await _IUserAPIClient.UpdateUser(request);
@@ -121,6 +123,14 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
                     using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
                     {
                         files[0].CopyTo(filestream);
+                    }
+                    if (oldfile != null && oldfile != "default_avt.png")
+                    {
+                        string _imageToBeDeleted = Path.Combine(webrootpath, @"images", oldfile);
+                        if (System.IO.File.Exists(_imageToBeDeleted))
+                        {
+                            System.IO.File.Delete(_imageToBeDeleted);
+                        }
                     }
                 }
                 _toastNotification.AddSuccessToastMessage("Cập nhật thành công");

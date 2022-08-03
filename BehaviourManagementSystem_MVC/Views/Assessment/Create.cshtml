@@ -298,10 +298,11 @@
                 var max = new Date(mydate.max);
                 var value = new Date(mydate.value);
                 if (value > max) {
-                    $('form').addClass('was-validated');
+                    $('#assessform').addClass('was-validated');
                     $("#checkdate").addClass("d-block").text("Ngày không được lớn hơn hiện tại");
                 }
                 else {
+                    $('#assessform').removeClass('was-validated');
                     $("#checkdate").removeClass("d-block").text("Trường này là bắt buộc");;
                 }
         });

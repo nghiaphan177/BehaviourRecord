@@ -214,7 +214,7 @@
                                         </table>
                                         @if (assePages != null)
                                         {
-                                            <span class="show-page-text text-black">Trang @(Model.Assessment.PageCount < Model.Assessment.PageNumber ? 0 : Model.Assessment.PageNumber) / @Model.Assessment.PageCount</span>
+                                            @*<span class="show-page-text text-black">Trang @(Model.Assessment.PageCount < Model.Assessment.PageNumber ? 0 : Model.Assessment.PageNumber) / @Model.Assessment.PageCount</span>*@
                                             @Html.PagedListPager(assePages,
                                                     page => Url.Action("StudentDetail", new { id = ViewBag.IdIndi, page }),
                                                     new PagedListRenderOptions

@@ -76,8 +76,7 @@
                             </tbody>
                         </table>
                         @if (Model != null)
-                        {
-                            <span class="show-page-text text-black">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                        {                           
                             @Html.PagedListPager(Model,
                                     page => Url.Action("StudentList", new { page }),
                                     new PagedListRenderOptions

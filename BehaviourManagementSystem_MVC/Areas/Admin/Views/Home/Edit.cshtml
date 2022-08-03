@@ -119,7 +119,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Ngày sinh</label>
                         <div class="col-sm-6">
-                            <input asp-for="@Model.DOB" value="@Model.DOB?.ToShortDateString()" class="form-control" type="date" id="example-date-input">
+                            <input asp-for="@Model.DOB" class="form-control" type="date" id="example-date-input">
                         </div>  
                     </div>
                     <div class="form-group row">
@@ -132,7 +132,8 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Hình đại diện</label>
                         <div class="col-sm-6">
-                            <input onchange="onFileSelected(event)" asp-for="@Model.AvtName" type="file" class="form-control" onchange="onFileSelected(event)">
+                            <input hidden asp-for="@Model.AvtName" type="text" class="form-control">
+                            <input onchange="onFileSelected(event)" asp-for="@Model.AvtName" type="file" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
