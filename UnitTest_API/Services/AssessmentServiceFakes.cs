@@ -176,29 +176,95 @@ namespace UnitTest_API.Services
             return new ResponseResultSuccess<List<AssessmentRequest>>(result);
         }
 
-        public Task<ResponseResult<Assessment>> UpdateAnalyzeAntecedent(string ass_id, string ana_ant_per, string ana_ant_envi, string ana_ant_act)
+        public async Task<ResponseResult<Assessment>> UpdateAnalyzeAntecedent(string ass_id, string ana_ant_per, string ana_ant_envi, string ana_ant_act)
         {
-            throw new NotImplementedException();
+            if (! _assessment.Any(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+            var obj = _assessment.Find(prop => prop.Id.ToString() == ass_id);
+            if (ana_ant_per == null || ana_ant_envi == null || ana_ant_act == null)
+            {
+                return new ResponseResultError<Assessment>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.AnalyzeAntecedentPerceivedDescription = ana_ant_per;
+                obj.AnalyzeAntecedentEnvironmentalDescription = ana_ant_envi;
+                obj.AnalyzeAntecedentActivityDescription = ana_ant_act;
+                obj.UpdateDate = DateTime.Now;
+            }
+            return new ResponseResultSuccess<Assessment>(obj);
         }
 
-        public Task<ResponseResult<Assessment>> UpdateAnalyzeBehaviour(string ass_id, string ana_behaviour)
+        public async Task<ResponseResult<Assessment>> UpdateAnalyzeBehaviour(string ass_id, string ana_behaviour)
         {
-            throw new NotImplementedException();
+            if (! _assessment.Any(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+            var obj = _assessment.Find(prop => prop.Id.ToString() == ass_id);
+            if (ana_behaviour == null)
+            {
+                return new ResponseResultError<Assessment>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.AnalyzeBehaviour = ana_behaviour;
+                obj.UpdateDate = DateTime.Now;
+            }
+            return new ResponseResultSuccess<Assessment>(obj);
         }
 
-        public Task<ResponseResult<Assessment>> UpdateAnalyzeConsequence(string ass_id, string ana_con_per, string ana_con_envi, string ana_con_act)
+        public async Task<ResponseResult<Assessment>> UpdateAnalyzeConsequence(string ass_id, string ana_con_per, string ana_con_envi, string ana_con_act)
         {
-            throw new NotImplementedException();
+            if (! _assessment.Any(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+            var obj = _assessment.Find(prop => prop.Id.ToString() == ass_id);
+            if (ana_con_per == null || ana_con_envi == null || ana_con_act == null)
+            {
+                return new ResponseResultError<Assessment>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.AnalyzeConsequencesPerceive = ana_con_per;
+                obj.AnalyzeConsequenceEnvironmental = ana_con_envi;
+                obj.AnalyzeConsequencesActivity = ana_con_act;
+                obj.AnalyzeIsCompeleted = true;
+                obj.UpdateDate = DateTime.Now;
+            }
+            return new ResponseResultSuccess<Assessment>(obj);
         }
 
-        public Task<ResponseResult<Assessment>> UpdateFuntionAntecedent(string ass_id, string fun_ant)
+        public async Task<ResponseResult<Assessment>> UpdateFuntionAntecedent(string ass_id, string fun_ant)
         {
-            throw new NotImplementedException();
+            if (!_assessment.Any(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+            var obj = _assessment.Find(prop => prop.Id.ToString() == ass_id);
+            if (fun_ant == null)
+            {
+                return new ResponseResultError<Assessment>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.FunctionAntecedent = fun_ant;
+                obj.UpdateDate = DateTime.Now;
+            }
+            return new ResponseResultSuccess<Assessment>(obj);
         }
 
-        public Task<ResponseResult<Assessment>> UpdateFuntionConsequece(string ass_id, string fun_con)
+        public async Task<ResponseResult<Assessment>> UpdateFuntionConsequece(string ass_id, string fun_con)
         {
-            throw new NotImplementedException();
+            if (!_assessment.Any(prop => prop.Id.ToString() == ass_id))
+                return new ResponseResultError<Assessment>("Id assessment không tồn tại");
+            var obj = _assessment.Find(prop => prop.Id.ToString() == ass_id);
+            if (fun_con == null)
+            {
+                return new ResponseResultError<Assessment>("Chưa có dữ liệu");
+            }
+            else
+            {
+                obj.FunctionConsequece = fun_con;
+                obj.FunctionIsCompeleted = true;
+                obj.UpdateDate = DateTime.Now;
+            }
+            return new ResponseResultSuccess<Assessment>(obj);
         }
 
         public async Task<ResponseResult<Assessment>> UpdateRecord(string ass_id, DateTime r_date, string r_start, string r_end, string r_where, string r_who)
