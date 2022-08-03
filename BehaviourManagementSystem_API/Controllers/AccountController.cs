@@ -86,7 +86,7 @@ namespace BehaviourManagementSystem_API.Controllers
             if(email.CheckRequest())
                 return BadRequest(email);
 
-            var response = await _accountService.ResenConfirmEmail(email);
+            var response = await _accountService.ResendConfirmEmail(email);
 
             if(!response.Success)
                 return BadRequest(response);
@@ -135,7 +135,7 @@ namespace BehaviourManagementSystem_API.Controllers
         }
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangPassword([FromBody] ResetPasswordRequest repuest)
+        public async Task<IActionResult> ChangePassword([FromBody] ResetPasswordRequest repuest)
         {
             if(!ModelState.IsValid)
                 return BadRequest(repuest);
@@ -267,7 +267,7 @@ namespace BehaviourManagementSystem_API.Controllers
             if(!Guid.TryParse(id, out guid))
                 return BadRequest("Truy cập không hợp lệ.");
 
-            var res = await _accountService.CheckPassworkNull(id);
+            var res = await _accountService.CheckPasswordNull(id);
 
             if(!res.Success)
                 return BadRequest(res);
