@@ -257,7 +257,7 @@ namespace UnitTest_API.ControllerTests
             string ana_con_envi = "Nhiều người xung quanh";
             string ana_con_act = "Chạy trốn";
             // Act
-            var okResult = await _controller.UpdateAnalyzeAntecedent(ass_id, ana_con_per, ana_con_envi, ana_con_act) as OkObjectResult;
+            var okResult = await _controller.UpdateAnalyzeConsequence(ass_id, ana_con_per, ana_con_envi, ana_con_act) as OkObjectResult;
             var item = (ResponseResultSuccess<Assessment>)okResult.Value;
             // Assert
             Assert.Equal(200, okResult.StatusCode);
@@ -273,7 +273,7 @@ namespace UnitTest_API.ControllerTests
             string ana_con_envi = "Nhiều người xung quanh";
             string ana_con_act = "Chạy trốn";
             // Act
-            var badResponse = await _controller.UpdateAnalyzeAntecedent(ass_id_NotExisting, ana_con_per, ana_con_envi, ana_con_act) as BadRequestObjectResult;
+            var badResponse = await _controller.UpdateAnalyzeConsequence(ass_id_NotExisting, ana_con_per, ana_con_envi, ana_con_act) as BadRequestObjectResult;
             var item = (ResponseResultError<Assessment>)badResponse.Value;
             // Assert
             Assert.Equal(400, badResponse.StatusCode);
@@ -290,7 +290,7 @@ namespace UnitTest_API.ControllerTests
             string ana_con_envi = null;
             string ana_con_act = null;
             // Act
-            var badResponse = await _controller.UpdateAnalyzeAntecedent(ass_id, ana_con_per, ana_con_envi, ana_con_act) as BadRequestObjectResult;
+            var badResponse = await _controller.UpdateAnalyzeConsequence(ass_id, ana_con_per, ana_con_envi, ana_con_act) as BadRequestObjectResult;
             var item = (ResponseResultError<Assessment>)badResponse.Value;
             // Assert
             Assert.Equal(400, badResponse.StatusCode);
@@ -407,7 +407,7 @@ namespace UnitTest_API.ControllerTests
             string ass_id_NotExisting = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c201";
             string fun_con = "Sau đó chạy trốn khỏi hiện trường";
             // Act
-            var badResponse = await _controller.UpdateFuntionAntecedent(ass_id_NotExisting, fun_con) as BadRequestObjectResult;
+            var badResponse = await _controller.UpdateFuntionConsequece(ass_id_NotExisting, fun_con) as BadRequestObjectResult;
             var item = (ResponseResultError<Assessment>)badResponse.Value;
             // Assert
             Assert.Equal(400, badResponse.StatusCode);
@@ -422,7 +422,7 @@ namespace UnitTest_API.ControllerTests
             string ass_id = "ab2bd817-98cd-4cf3-a80a-53ea0cd9c200";
             string fun_con = null;
             // Act
-            var badResponse = await _controller.UpdateFuntionAntecedent(ass_id, fun_con) as BadRequestObjectResult;
+            var badResponse = await _controller.UpdateFuntionConsequece(ass_id, fun_con) as BadRequestObjectResult;
             var item = (ResponseResultError<Assessment>)badResponse.Value;
             // Assert
             Assert.Equal(400, badResponse.StatusCode);
