@@ -111,60 +111,6 @@ namespace BehaviourManagementSystem_API
                             Configuration["Tokens:Dep:Key"]))
                 };
             })
-            .AddJwtBearer("jwt_ad_3011", options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = Configuration["Tokens:Dep:Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Tokens:Dep:Issuer"],
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(
-                            Configuration["Tokens:Student:Key"]))
-                };
-            })
-            .AddJwtBearer("jwt_tc_3011", options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = Configuration["Tokens:Dep:Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Tokens:Dep:Issuer"],
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(
-                            Configuration["Tokens:Student:Key"]))
-                };
-            })
-            .AddJwtBearer("jwt_sd_3011", options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = Configuration["Tokens:Dep:Issuer"],
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Tokens:Dep:Issuer"],
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(
-                            Configuration["Tokens:Student:Key"]))
-                };
-            })
             .AddGoogle(options =>
             {
                 options.ClientId = Configuration["Google:ClientId"];
@@ -185,33 +131,6 @@ namespace BehaviourManagementSystem_API
                     BearerFormat = "JWT",
                     Scheme = "Bearer"
                 });
-                option.AddSecurityDefinition("jwt_ad_3011", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT",
-                    Scheme = "jwt-ad"
-                });
-                option.AddSecurityDefinition("jwt_tc_3011", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT",
-                    Scheme = "jwt-tc"
-                });
-                option.AddSecurityDefinition("jwt_sd_3011", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT",
-                    Scheme = "jwt-sd"
-                });
                 // bearer
                 option.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -225,60 +144,6 @@ namespace BehaviourManagementSystem_API
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                    },
-                });
-                // ad
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "jwt_ad_3011"
-                            },
-                            Scheme = "oauth2",
-                            Name = "jwt_ad_3011",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                    },
-                });
-                // tc
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "jwt_tc_3011"
-                            },
-                            Scheme = "oauth2",
-                            Name = "jwt_tc_3011",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                    },
-                });
-                //sd
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "jwt_sd_3011"
-                            },
-                            Scheme = "oauth2",
-                            Name = "jwt_sd_3011",
                             In = ParameterLocation.Header,
                         },
                         new List<string>()
