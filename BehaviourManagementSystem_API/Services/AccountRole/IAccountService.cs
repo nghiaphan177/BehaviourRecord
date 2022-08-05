@@ -20,7 +20,7 @@ namespace BehaviourManagementSystem_API.Services
         
         Task<ResponseResult<UserProfileRequest>> VerifyEmail(ConfirmEmailRequest request);
         
-        Task<ResponseResult<ConfirmEmailRequest>> ResenConfirmEmail(string email);
+        Task<ResponseResult<ConfirmEmailRequest>> ResendConfirmEmail(string email);
         
         Task<ResponseResult<ResetPasswordRequest>> ForgotPassword(string userNameOfEmail);
         
@@ -40,7 +40,7 @@ namespace BehaviourManagementSystem_API.Services
         
         Task<ResponseResult<string>> GetImg(string id);
         
-        Task<ResponseResult<bool>> CheckPassworkNull(string id);
+        Task<ResponseResult<bool>> CheckPasswordNull(string id);
 
         Task<ResponseResult<string>> NewPassOfAccountGoogle(ResetPasswordRequest req);
     }

@@ -250,7 +250,7 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultError<ConfirmEmailRequest>("Đăng ký không thành công.");
         }
 
-        public async Task<ResponseResult<ConfirmEmailRequest>> ResenConfirmEmail(string email)
+        public async Task<ResponseResult<ConfirmEmailRequest>> ResendConfirmEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if(user == null)
@@ -836,7 +836,7 @@ namespace BehaviourManagementSystem_API.Services
             return new ResponseResultSuccess<string>(user.AvtName);
         }
 
-        public async Task<ResponseResult<bool>> CheckPassworkNull(string id)
+        public async Task<ResponseResult<bool>> CheckPasswordNull(string id)
         {
             if(!await _context.Users.AnyAsync())
                 return new ResponseResultError<bool>("Dữ liêu tồn tại không.");
