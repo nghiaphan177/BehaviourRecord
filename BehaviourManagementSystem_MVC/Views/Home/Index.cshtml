@@ -123,17 +123,17 @@
 @section Scripts{
     <script src="~/assets/plugins/apexchart/apexcharts.min.js"></script>
     <script>
-        function LoadChart(idteacher) {
+        function LoadChart() {
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetCountAllStudentOfAllClasses?teacherId=" + idteacher,
+                url: "/Home/GetAllStudentTeacher",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var label = response["result"].map(a => 'Lớp ' +a.item1);
-                    var data = response["result"].map(a => a.item2);
+                    var label = response.map(a => 'Lớp ' +a.item1);
+                    var data = response.map(a => a.item2);
                     $("#totalclass").text(label.length);
                     $("#totalstu").text(data.reduce((a, b) => a + b, 0));
                     var options = {
@@ -182,9 +182,9 @@
                                 }
                             }
                         }]
-                    };                    
+                    };
                     var chartBar = new ApexCharts(document.querySelector('#bar'), options);
-                    chartBar.render();                    
+                    chartBar.render();
                 }
             })
         };
@@ -192,7 +192,7 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllAssessAndInterByMonthWithTeacher?id=" + idteacher,
+                url: "/Home/GetAllAssesStudent",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -205,7 +205,7 @@
                             type: 'bar',
                             height: 250
                         },
-                                            
+
                         noData: {
                             text: 'Chưa có đánh giá hay can thiệp nào',
                             align: 'center',
@@ -218,14 +218,14 @@
                                 fontFamily: undefined
                             }
                         },
-                                          
+
                     };
                     var chartBar = new ApexCharts(document.querySelector('#barai'), options);
                     chartBar.render();
                 },
                 success: function (response) {
-                    var dataasse = response.result.map(a => a.item1)
-                    var datain = response.result.map(a => a.item2)
+                    var dataasse = response.map(a => a.item1)
+                    var datain = response.map(a => a.item2)
                     $("#sumasse").text(dataasse.reduce((a, b) => a + b, 0));
                     $("#sumin").text(datain.reduce((a, b) => a + b, 0));
                     var options = {
@@ -285,7 +285,7 @@
                         tooltip: {
                             y: {
                                 formatter: function (val) {
-                                    return val 
+                                    return val
                                 }
                             }
                         }
@@ -297,10 +297,9 @@
         };
         $(document).ready(function () {
             // Bar chart
-            var id = '@User.FindFirst("Id").Value';
-            LoadChart(id);
-            LoadChartAI(id);
-        });       
+            LoadChart();
+            LoadChartAI();
+        });
     </script>
 }
 

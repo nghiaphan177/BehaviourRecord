@@ -167,16 +167,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         function LoadChart(year) {
-            var obj = {};
-            $.ajax({
-                type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetCountAllAccountRegisterOfYear?year=" + year,
-                data: JSON.stringify(obj),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    var chart = document.getElementById('bar').getContext('2d');
-                    var data1 = response["result"].map(a => a.item2)
+            //var obj = {};
+            //$.ajax({
+            //    type: "GET",
+            //    url: /*"https://bmsapis.azurewebsites.net/api/AdBd/GetCountAllAccountRegisterOfYear?year="*/"/Admin/Home/GetAcc?year=" + year,
+            //    data: JSON.stringify(obj),
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    success: function (response) {
+            //        console.log(response);
+            //        var chart = document.getElementById('bar').getContext('2d');
+            //        var data1 = response.map(a => a.item2);
+            //        var mychar = new Chart(chart, {
+            //            type: 'bar',
+            //            data: {
+            //                labels: [
+            //                    "Tháng 1",
+            //                    "Tháng 2",
+            //                    "Tháng 3",
+            //                    "Tháng 4",
+            //                    "Tháng 5",
+            //                    "Tháng 6",
+            //                    "Tháng 7",
+            //                    "Tháng 8",
+            //                    "Tháng 9",
+            //                    "Tháng 10",
+            //                    "Tháng 11",
+            //                    "Tháng 12",
+            //                ],
+            //                datasets: [
+            //                    {
+            //                        label: "Tài khoản đăng ký",
+            //                        backgroundColor: "#28bbe3",
+            //                        borderColor: "#28bbe3",
+            //                        borderWidth: 1,
+            //                        hoverBackgroundColor: "#28bbe3",
+            //                        hoverBorderColor: "#28bbe3",
+            //                        data: data1,
+            //                    },
+            //                ],
+            //            }
+            //        });
+            //    }
+            //});
+            $.getJSON("/Admin/Home/GetAccOfYear?year=" + year, function (data) {
+                var data1 = data.map(a => a.item2);
+                var chart = document.getElementById('bar').getContext('2d');
                     var mychar = new Chart(chart, {
                         type: 'bar',
                         data: {
@@ -207,21 +243,20 @@
                             ],
                         }
                     });
-                }
             });
         }
         function LoadChartMonth(month, year) {
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd//GetCountAllAccountRegisterOfMonth?month=" + month + " &year=" + year,
+                url: "/Admin/Home/GetAccOfMonth?month=" + month + " &year=" + year,
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('baraccountmonth').getContext('2d');
-                    var datalabel = response["result"].map(a => ("ngày " + a.item1))
-                    var data1 = response["result"].map(a => a.item2)
+                    var datalabel = response.map(a => ("ngày " + a.item1))
+                    var data1 = response.map(a => a.item2)
                     var max = Math.max(...data1);
                     var mychar = new Chart(chart, {
                         type: 'line',
@@ -252,16 +287,16 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllStudentAndTeacherAndAllAccount",
+                url: "/Admin/Home/GetAllAcc",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('donut').getContext('2d');
-                    $("#teacount").text(response["result"]['item2']);
-                    $("#stucount").text(response["result"]['item1']);
-                    $("#sumacc").text(response["result"]['item3']);
-                    var data1 = [response["result"]['item1'], response["result"]['item2']];
+                    $("#teacount").text(response['item2']);
+                    $("#stucount").text(response['item1']);
+                    $("#sumacc").text(response['item3']);
+                    var data1 = [response['item1'], response['item2']];
                     var mychar = new Chart(chart, {
                         type: 'doughnut',
                         data: {
@@ -285,14 +320,14 @@
             var obj = {};
             $.ajax({
                 type: "GET",
-                url: "https://bmsapis.azurewebsites.net/api/AdBd/GetAllAccountNotVerifyMail",
+                url: "/Admin/Home/GetAllVerify",
                 data: JSON.stringify(obj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     var chart = document.getElementById('pie').getContext('2d');
-                    $("#sumaccpie").text(response["result"]['item2']);
-                    var data1 = [(response["result"]['item2'] - response["result"]['item1']), response["result"]['item1']];
+                    $("#sumaccpie").text(response['item2']);
+                    var data1 = [(response['item2'] - response['item1']), response['item1']];
                     var mychar = new Chart(chart, {
                         type: 'pie',
                         data: {

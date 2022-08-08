@@ -363,7 +363,16 @@ namespace BehaviourManagementSystem_MVC.Controllers
             }
 
             var response = await _accountAPIClient.ForgotPassword(userNameOrEmail);
-
+            if(response == null)
+            {
+                toastNotification.AddErrorToastMessage("Hệ thống đang bận");
+                return RedirectToAction("ForgotPassword");
+            }
+            if (response.Success == false)
+            {
+                toastNotification.AddErrorToastMessage(response.Message);
+                return RedirectToAction("ForgotPassword");
+            }
             if (response.Success)
             {
                 // https://localhost:port/Account/ResetPassword?id=****&code=****/

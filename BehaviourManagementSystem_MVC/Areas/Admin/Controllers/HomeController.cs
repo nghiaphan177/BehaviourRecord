@@ -1,4 +1,5 @@
 ﻿using BehaviourManagementSystem_MVC.APIIntegration;
+using BehaviourManagementSystem_MVC.APIIntegration.Dashboard;
 using BehaviourManagementSystem_ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -18,17 +19,77 @@ namespace BehaviourManagementSystem_MVC.Area.Admin.Controllers
         private readonly IUserAPIClient _IUserAPIClient;
         private readonly IToastNotification _toastNotification;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IDashB _dashB;
 
-        public HomeController(IUserAPIClient IUserAPIClient, IWebHostEnvironment webHostEnvironment, IToastNotification toastNotification)
+        public HomeController(IUserAPIClient IUserAPIClient, IWebHostEnvironment webHostEnvironment, IToastNotification toastNotification,IDashB dashB)
         {
             _IUserAPIClient = IUserAPIClient;
             this.webHostEnvironment = webHostEnvironment;
-            this._toastNotification = toastNotification;
+            _toastNotification = toastNotification;
+            _dashB = dashB;
         }
         // GET: HomeController
         public ActionResult Index()
         {
             return View();
+        }
+        public async Task<JsonResult> GetAccOfYear(string year)
+        {
+            var response = await _dashB.GetCountAllAccountRegisterOfYear(year);
+            return Json(response.Result);
+        }
+        public async Task<JsonResult> GetAccOfMonth(string month,string year)
+        {
+            try
+            {
+                var response = await _dashB.GetCountAllAccountRegisterOfMonth(month, year);
+                if (response != null)
+                {
+                    return Json(response.Result);
+                }
+                return Json(null);
+            }
+            catch (Exception)
+            {
+                return Json(null);
+                throw;
+            }
+            
+        }
+        public async Task<JsonResult> GetAllAcc()
+        {
+            try
+            {
+                var response = await _dashB.GetAllStudentAndTeacherAndAllAccount();
+                if (response != null)
+                {
+                    return Json(response.Result);
+                }
+                return Json(null);
+            }
+            catch (Exception)
+            {
+                return Json(null);
+                throw;
+            }
+            
+        }
+        public async Task<JsonResult> GetAllVerify()
+        {
+            try
+            {
+                var response = await _dashB.GetAllAccountNotVerifyMail();
+                if(response != null)
+                {
+                    return Json(response.Result);
+                }
+                return Json(null);
+            }
+            catch (Exception)
+            {
+                return Json(null);
+                throw;
+            }
         }
 
         // GET: HomeController/Details/5
