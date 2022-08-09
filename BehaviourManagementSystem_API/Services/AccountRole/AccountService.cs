@@ -448,7 +448,6 @@ namespace BehaviourManagementSystem_API.Services
                     };
 
                     await _context.Users.AddAsync(user);
-                    await _context.SaveChangesAsync();
 
                     var userRole = new IdentityUserRole<Guid>
                     {
@@ -457,7 +456,6 @@ namespace BehaviourManagementSystem_API.Services
                     };
 
                     await _context.UserRoles.AddAsync(userRole);
-                    await _context.SaveChangesAsync();
 
                     var ind = new Individual
                     {
