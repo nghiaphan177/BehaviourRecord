@@ -332,7 +332,7 @@ namespace UnitTest_API.ControllerTests
             Assert.NotNull(resultObj);
             Assert.True(resultObj.Success);
         }
-        
+
         [Fact]
         public async Task DeleteUserProfile_ReturnOk()
         {
@@ -350,7 +350,7 @@ namespace UnitTest_API.ControllerTests
             Assert.NotNull(resultObj);
             Assert.True(resultObj.Success);
         }
-        
+
         [Fact]
         public async Task GoogleSigin_ReturnOk()
         {
@@ -368,7 +368,7 @@ namespace UnitTest_API.ControllerTests
             Assert.NotNull(resultObj);
             Assert.True(resultObj.Success);
         }
-        
+
         [Fact]
         public async Task CheckPasswordNull_ReturnOk()
         {
@@ -386,7 +386,7 @@ namespace UnitTest_API.ControllerTests
             Assert.NotNull(resultObj);
             Assert.True(resultObj.Success);
         }
-        
+
         [Fact]
         public async Task NewPassOfAccountGoogle_ReturnOk()
         {
@@ -403,8 +403,8 @@ namespace UnitTest_API.ControllerTests
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(resultObj);
             Assert.True(resultObj.Success);
-        } 
-        
+        }
+
         [Fact]
         public async Task GetImg_ReturnOk()
         {

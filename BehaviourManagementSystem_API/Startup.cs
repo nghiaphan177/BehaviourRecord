@@ -1,20 +1,20 @@
-using System;
-using System.Text;
-using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
+using BehaviourManagementSystem_API.Data.EF;
+using BehaviourManagementSystem_API.Models;
+using BehaviourManagementSystem_API.Services;
+using BehaviourManagementSystem_API.Utilities.JwtGenarator;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using BehaviourManagementSystem_API.Models;
-using BehaviourManagementSystem_API.Data.EF;
-using BehaviourManagementSystem_API.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using BehaviourManagementSystem_API.Utilities.JwtGenarator;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace BehaviourManagementSystem_API
 {
@@ -288,13 +288,13 @@ namespace BehaviourManagementSystem_API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
             }
-            else if(env.IsProduction())
+            else if (env.IsProduction())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BehaviourManagementSystem API v1"));
